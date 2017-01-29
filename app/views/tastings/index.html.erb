@@ -1,0 +1,27 @@
+<%= render partial: "shared/title", locals: {title: "Tastings"} %>
+
+<% if !@taster_tastings.empty? %>
+  <div class="card">
+    <div class="card-header">
+      Your Tasting Invitations
+    </div>
+    <div class="list-group list-group-flush">
+      <% @taster_tastings.each do |tt| %>
+        <a href class="list-group-item"><%= tt.tasting.name %></a>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if !@public_tastings.empty? %>
+  <div class="card mt-4">
+    <div class="card-header">
+      Upcoming Public Tastings
+    </div>
+    <div class="list-group list-group-flush">
+      <% @public_tastings.each do |t| %>
+        <a href class="list-group-item"><%= t.name %></a>
+      <% end %>
+    </div>
+  </div>
+<% end %>
