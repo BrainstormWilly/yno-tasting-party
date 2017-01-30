@@ -1,0 +1,19 @@
+<%= form_for(current_taster) do |f| %>
+
+  <h3>Taster Info</h3>
+
+  <div class="form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :handle %><br />
+    <%= f.text_field :handle, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Update Taster", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+
+<% end %>

@@ -24,8 +24,17 @@
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form> -->
-
-      <%= link_to "Sign Out", destroy_user_session_path, class: "nav-link ml-auto", method: :delete %>
+      <% if current_taster_exists? %>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <%= link_to current_taster.handle, edit_user_registration_path, class: "nav-link" %>
+          </li>
+          <li class="navbar-text">|</li>
+          <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path, class: "nav-link", method: :delete %>
+          </li>
+        </ul>
+      <% end %>
 
     </div>
   </nav>

@@ -1,0 +1,22 @@
+<%= render partial: "shared/title", locals: {title: "New Taster"} %>
+
+<%= form_for(@taster) do |f| %>
+
+  <h3>Taster Info for <%= current_user.email %></h3>
+
+  <div class="form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    What would you like other tasters to know as? <em>(default = name)</em><br/>
+    <%= f.label :handle %><br />
+    <%= f.text_field :handle, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Taster", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+
+<% end %>

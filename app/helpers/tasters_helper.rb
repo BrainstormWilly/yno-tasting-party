@@ -1,0 +1,2 @@
+module TastersHelper
+end
