@@ -1,66 +1,93 @@
 <%= render partial: "shared/title", locals: {title: current_taster.name} %>
 
-<%= form_for(current_taster) do |f| %>
+<div class="card" style="margin-top: 1rem">
+  <div class="card-block">
+    <% if current_host %>
+      <%= form_for(current_host) do |f| %>
 
-  <h3>Taster Info</h3>
+        <h3>Update Host</h3>
 
-  <div class="form-group">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
+        <div class="form-group">
+          <%= f.label :phone %><br />
+          <%= f.telephone_field :phone, class: "form-control" %>
+        </div>
 
-  <div class="form-group">
-    <%= f.label :handle %><br />
-    <%= f.text_field :handle, class: "form-control" %>
-  </div>
+        <div class="form-group">
+          <%= f.submit "Update Host", class: "btn btn-primary btn-block btn-lg" %>
+        </div>
 
-  <div class="form-group">
-    <%= f.submit "Update Taster", class: "btn btn-primary btn-block btn-lg" %>
-  </div>
-
-<% end %>
-
-<hr/>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <h3>User Info</h3>
-
-  <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, class: "form-control" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
     <% end %>
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
-  </div>
+<div class="card" style="margin-top: 1rem">
+  <div class="card-block">
+    <%= form_for(current_taster) do |f| %>
 
-  <div class="form-group">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
-  </div>
+      <h3>Update Taster</h3>
 
-  <div class="form-group row">
-    <div class="col">
-      <%= f.submit "Update User", class: "btn btn-primary btn-block btn-lg" %>
-    </div>
-    <div class="col">
-      <%= button_to "Delete User", registration_path(resource_name), data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-block btn-lg", method: :delete %>
-    </div>
+      <div class="form-group">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :handle %><br />
+        <%= f.text_field :handle, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit "Update Taster", class: "btn btn-primary btn-block btn-lg" %>
+      </div>
+
+    <% end %>
   </div>
-<% end %>
+</div>
+
+<div class="card" style="margin-top: 1rem">
+  <div class="card-block">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <h3>Update/Remove User</h3>
+
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em><%= @minimum_password_length %> characters minimum</em>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+        <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
+      </div>
+
+      <div class="form-group row">
+        <div class="col">
+          <%= f.submit "Update User", class: "btn btn-primary btn-block btn-lg" %>
+        </div>
+        <div class="col">
+          <%= button_to "Delete User", registration_path(resource_name), data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-block btn-lg", method: :delete %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

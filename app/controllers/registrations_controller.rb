@@ -1,7 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def destroy
-    taster = Taster.where(user: current_user).first
+    taster = Taster.find_by(user: current_user)
+    host = Host.find_by(taster: taster)
+    host.delete if host
     taster.delete if taster
     super
   end

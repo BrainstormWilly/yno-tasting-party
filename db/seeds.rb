@@ -10,16 +10,37 @@
 ######################### USERS #########################
 #########################################################
 
+5.times do
+  user = User.create(
+    email: Faker::Internet.email,
+    password: "123456",
+    password_confirmation: "123456"
+  )
+  taster = Taster.create(
+    name: Faker::Name.name,
+    user_id: user.id,
+    handle: user.email
+  )
+end
+users = User.all
+tasters = Taster.all
+
 user_me = User.create(
   email: "bill@ynoguy.com",
   password: "123456",
   password_confirmation: "123456"
 )
 
+
 taster_me = Taster.create(
   user_id: user_me.id,
   name: "Bill Langley",
   handle: "WillyTheYno"
+)
+
+host_me = Host.create(
+  taster_id: taster_me.id,
+  phone: "707-237-6904"
 )
 
 
@@ -29,6 +50,7 @@ taster_me = Taster.create(
 
 # Current tasting invitation for taster_me
 tasting_me = Tasting.create(
+  host_id: host_me.id,
   name: "Pinot or PinYes",
   description: "Pinots around the world",
   open_at: DateTime.now,

@@ -1,5 +1,3 @@
-<h1>New Tasting</h1>
+<%= render partial: "shared/title", locals: {title: "New Tasting"} %>
 
-<%= render 'form', tasting: @tasting %>
-
-<%= link_to 'Back', tastings_path %>
+<%= render partial: 'form', locals: {tasting: @tasting} %>

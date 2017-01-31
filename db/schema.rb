@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170129051801) do
+ActiveRecord::Schema.define(version: 20170130135907) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20170129051801) do
     t.boolean  "private"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "host_id"
+    t.index ["host_id"], name: "index_tastings_on_host_id"
   end
 
   create_table "users", force: :cascade do |t|

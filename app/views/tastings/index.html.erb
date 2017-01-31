@@ -1,5 +1,13 @@
 <%= render partial: "shared/title", locals: {title: "Tastings"} %>
 
+<div class="card" style="margin-bottom: 1rem">
+  <% if current_host %>
+    <%= link_to "Host a New Tasting", new_tasting_path, class: "btn btn-success" %>
+  <% else %>
+    <%= link_to "Host Your Own Tasting Party. It's Free!", new_host_path, class: "btn btn-success" %>
+  <% end %>
+</div>
+
 <% if !@taster_tastings.empty? %>
   <div class="card">
     <div class="card-header">

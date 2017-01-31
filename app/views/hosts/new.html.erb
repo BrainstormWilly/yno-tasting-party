@@ -1,0 +1,17 @@
+<%= render partial: "shared/title", locals: {title: "New Host"} %>
+
+<%= form_for(@host) do |f| %>
+
+  <h3>Enter Your Host Info</h3>
+  <p>Signing up as host enables you to create and host your own tasting parties</p>
+
+  <div class="form-group">
+    <%= f.label :phone %><br />
+    <%= f.telephone_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Host", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+
+<% end %>

@@ -1,7 +1,11 @@
 module ApplicationHelper
 
   def current_taster
-    Taster.where(user: current_user).first
+    Taster.find_by(user: current_user)
+  end
+
+  def current_host
+    Host.find_by(taster: current_taster)
   end
 
   def current_taster_exists?

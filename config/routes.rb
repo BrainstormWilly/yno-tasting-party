@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   get 'welcome/index'
 
   resources :tastings
-  resources :tasters, except: [:edit]
+  resources :tasters, only: [:new, :update, :create]
+  resources :hosts, only: [:new, :update, :create]
 
   authenticated :user do
     root to: 'tastings#index', as: :authenticated_root
