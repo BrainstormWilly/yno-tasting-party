@@ -4,9 +4,14 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
 
-  resources :tastings
+  resources :tastings do
+    resources :tasting_wines, only: [:create, :destroy]
+    resources :wines, only: [:new, :create, :destroy]
+  end
+
   resources :tasters, only: [:new, :update, :create]
   resources :hosts, only: [:new, :update, :create]
+  # resources :wines
 
   authenticated :user do
     root to: 'tastings#index', as: :authenticated_root

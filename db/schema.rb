@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130135907) do
+ActiveRecord::Schema.define(version: 20170201172757) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 20170130135907) do
     t.index ["user_id"], name: "index_tasters_on_user_id"
   end
 
+  create_table "tasting_wines", force: :cascade do |t|
+    t.integer  "tasting_id"
+    t.integer  "wine_id"
+    t.integer  "wine_number", default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["tasting_id"], name: "index_tasting_wines_on_tasting_id"
+    t.index ["wine_id"], name: "index_tasting_wines_on_wine_id"
+  end
+
   create_table "tastings", force: :cascade do |t|
     t.string   "name"
     t.datetime "open_at"
@@ -71,6 +81,14 @@ ActiveRecord::Schema.define(version: 20170130135907) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "wines", force: :cascade do |t|
+    t.integer  "vintage",                             default: 0
+    t.string   "name"
+    t.decimal  "price",      precision: 10, scale: 2
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
 end

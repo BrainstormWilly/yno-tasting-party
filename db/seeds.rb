@@ -45,10 +45,46 @@ host_me = Host.create(
 
 
 #########################################################
+######################### WINES #########################
+#########################################################
+
+regions = [
+  "California",
+  "Russian River",
+  "Napa Valley",
+  "Walla Walla",
+  "Knights Valley",
+  "Santa Maria",
+  "Lodi"
+]
+varietals = [
+  "Pinot Noir",
+  "Cabernet Sauvignon",
+  "Merlot",
+  "Syrah",
+  "Chardonnay",
+  "Sauvignon Blanc",
+  "Riesling"
+]
+vintages = (2000..2014).to_a
+prices = (9..60).to_a
+wine_sufs = ["Family Vineyards", "Cellars", "Estates", "Winery"]
+
+
+20.times do
+  Wine.create(
+    price: prices.sample,
+    vintage: vintages.sample,
+    name: "#{Faker::Name.last_name} #{wine_sufs.sample} #{regions.sample} #{varietals.sample}"
+  )
+end
+
+
+#########################################################
 ####################### TASTINGS ########################
 #########################################################
 
-# Current tasting invitation for taster_me
+# host taster_me tasting
 tasting_me = Tasting.create(
   host_id: host_me.id,
   name: "Pinot or PinYes",
@@ -60,6 +96,15 @@ tasting_taster_me = TasterTasting.create(
   tasting_id: tasting_me.id,
   taster_id: taster_me.id
 )
+
+# Host taster_me tasting wines
+tasting_wines = Wine.all
+6.times do |i|
+  TastingWine.create(
+    wine_id: tasting_wines.shuffle.pop.id,
+    tasting_id: tasting_me.id
+  )
+end
 
 # Public tastings
 2.times do

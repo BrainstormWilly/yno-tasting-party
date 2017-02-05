@@ -1,6 +1,6 @@
 <%= render partial: "shared/title", locals: {title: "Tastings"} %>
 
-<div class="card" style="margin-bottom: 1rem">
+<div class="card">
   <% if current_host %>
     <%= link_to "Host a New Tasting", new_tasting_path, class: "btn btn-success" %>
   <% else %>
@@ -8,14 +8,27 @@
   <% end %>
 </div>
 
-<% if !@taster_tastings.empty? %>
-  <div class="card">
+<% if current_host && !current_host.tastings.empty? %>
+  <div class="card mt-4">
     <div class="card-header">
-      Your Tasting Invitations
+      Your Hosted Tastings
     </div>
     <div class="list-group list-group-flush">
-      <% @taster_tastings.each do |tt| %>
-        <a href class="list-group-item"><%= tt.tasting.name %></a>
+      <% current_host.tastings.each do |t| %>
+        <%= link_to t.name, t, class:"list-group-item list-group-item-action" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if !current_taster.tastings.empty? %>
+  <div class="card mt-4">
+    <div class="card-header">
+      Your Guest Tastings
+    </div>
+    <div class="list-group list-group-flush">
+      <% current_taster.tastings.each do |t| %>
+        <a href class="list-group-item list-group-item-action"><%= t.name %></a>
       <% end %>
     </div>
   </div>
@@ -28,7 +41,7 @@
     </div>
     <div class="list-group list-group-flush">
       <% @public_tastings.each do |t| %>
-        <a href class="list-group-item"><%= t.name %></a>
+        <a href class="list-group-item list-group-item-action"><%= t.name %></a>
       <% end %>
     </div>
   </div>

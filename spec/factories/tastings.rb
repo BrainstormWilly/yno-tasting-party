@@ -4,5 +4,6 @@ FactoryGirl.define do
     open_at DateTime.now
     close_at 4.hours.from_now
     description Faker::Lorem.sentences([1..5].sample)
+    host_id nil
   end
 end

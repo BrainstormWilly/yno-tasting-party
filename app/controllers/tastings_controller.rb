@@ -7,12 +7,12 @@ class TastingsController < ApplicationController
   # GET /tastings.json
   def index
     @public_tastings = Tasting.where(private:false)
-    @taster_tastings = TasterTasting.where(taster: current_taster)
   end
 
   # GET /tastings/1
   # GET /tastings/1.json
   def show
+    p @tasting.wines.count
   end
 
   # GET /tastings/new

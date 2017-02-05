@@ -24,7 +24,7 @@ RSpec.describe TastingsController, type: :controller do
   # Tasting. As you add validations to Tasting, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name: "My Tasting", open_at:DateTime.now, close_at:3.hours.from_now}
   }
 
   let(:invalid_attributes) {
@@ -37,43 +37,65 @@ RSpec.describe TastingsController, type: :controller do
   let(:valid_session) { {} }
   let(:user){ create(:user) }
   let(:taster){ create(:taster, user: user) }
+  let(:host){ create(:host, taster: taster) }
 
-  context "Taster CRUD" do
+  context "Host CRUD" do
     before do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user, scope: :user
     end
     describe "GET #index" do
+      it "returns http success" do
+        tasting = create(:tasting, host: host)
+        get :index
+        expect(response).to have_http_status(:success)
+      end
       it "assigns public tastings as @public_tastings" do
-        tasting = create(:tasting, private: false)
+        tasting = create(:tasting, private: false, host: host)
         get :index
         expect(assigns(:public_tastings)).to eq([tasting])
       end
       it "assigns taster tastings as @taster_tastings" do
-        tasting = create(:tasting)
+        tasting = create(:tasting, host: host)
         taster_tasting = create(:taster_tasting, tasting: tasting, taster: taster)
         get :index
         expect(assigns(:taster_tastings)).to eq([taster_tasting])
       end
       it "renders #index template" do
-        tasting = create(:tasting)
+        tasting = create(:tasting, host: host)
         get :index
         expect(response).to render_template(:index)
       end
     end
-
     describe "GET #show" do
+      it "returns http success" do
+        tasting = create(:tasting, host: host)
+        get :show, params: {id: tasting.id}
+        expect(response).to have_http_status(:success)
+      end
       it "assigns the requested tasting as @tasting" do
-        tasting = Tasting.create! valid_attributes
-        get :show, params: {id: tasting.to_param}, session: valid_session
+        tasting = create(:tasting, host: host)
+        get :show, params: {id: tasting.id}
         expect(assigns(:tasting)).to eq(tasting)
       end
+      it "renders #show template" do
+        tasting = create(:tasting, host: host)
+        get :show, params: {id: tasting.id}
+        expect(response).to render_template(:show);
+      end
     end
-
     describe "GET #new" do
+      it "returns http success" do
+        get :new
+        expect(response).to have_http_status(:success)
+      end
       it "assigns a new tasting as @tasting" do
-        get :new, params: {}, session: valid_session
+        get :new
         expect(assigns(:tasting)).to be_a_new(Tasting)
+      end
+      it "renders #new template" do
+        get :new
+        expect(response).to render_template(:new);
       end
     end
 

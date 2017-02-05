@@ -1,4 +1,30 @@
-<p id="notice"><%= notice %></p>
+<%= render partial: "shared/title", locals: {title: @tasting.name} %>
 
-<%= link_to 'Edit', edit_tasting_path(@tasting) %> |
-<%= link_to 'Back', tastings_path %>
+<% if !@tasting.description.blank? %>
+  <div class="card" style="margin-bottom: 1rem">
+    <div class="card-block">
+      <h4 class="card-title">
+        Description
+        <% if @tasting.host==current_host %>
+          <%= link_to 'Edit Tasting', edit_tasting_path(@tasting), class: "btn btn-secondary" %>
+        <% end %>
+      </h4>
+      <p class="card-text"><%= @tasting.description %></p>
+
+    </div>
+  </div>
+
+<% end %>
+
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">
+      Wines
+    </h4>
+    <div class="list-group">
+      <% @tasting.tasting_wines.each do |tw| %>
+        <a href class="list-group-item list-group-item-action"><%= tw.wine.full_name %></a>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,21 @@
-<h1>Editing Tasting</h1>
+<%= render partial: "shared/title", locals: {title: @tasting.name} %>
 
-<%= render 'form', tasting: @tasting %>
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">Tasting</h4>
+    <%= render 'form', tasting: @tasting %>
+  </div>
+</div>
 
-<%= link_to 'Show', @tasting %> |
-<%= link_to 'Back', tastings_path %>
+<div class="card mt-4">
+  <div class="card-block">
+    <h4 class="card-title">Wines <%= link_to "Add Wine", new_tasting_wine_path(@tasting), class: "btn btn-success" %></h4>
+    <div class="list-group">
+      <% @tasting.tasting_wines.each do |tw| %>
+        <%= link_to tw.wine.full_name, tasting_tasting_wine_path(@tasting, tw), class: "list-group-item list-group-item-action list-group-item-danger", data: { confirm: "Remove this wine and its ratings from tasting?" }, method: :delete %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Back to Tasting', @tasting, class:"btn btn-secondary mt-4 mb-4" %>
