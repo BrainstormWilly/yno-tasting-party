@@ -1,0 +1,31 @@
+<%= render partial: "shared/title", locals: {title: "Wine #{@wine_review.wine_number}"} %>
+
+<%= form_for(@wine_review) do |f| %>
+
+  <% if @wine_review.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@wine_review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+      <% @wine_review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :rating, class: "form-label" %>
+    <%= f.number_field :rating, in: 1..5, step: 1, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :comments, class: "form-label" %>
+    <%= f.text_area :comments, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+
+<% end %>

@@ -8,8 +8,8 @@ module ApplicationHelper
     Host.find_by(taster: current_taster)
   end
 
-  def current_taster_exists?
-    Taster.where(user: current_user).count > 0
-  end
+  # def current_taster_exists?
+  #   Taster.where(user: current_user).count > 0
+  # end
 
 end

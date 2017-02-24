@@ -1,0 +1,22 @@
+<%= render partial: "shared/title", locals: {title: @taster.name} %>
+
+<div class="card mb-4">
+  <div class="card-block">
+    <h4 class="card-title">Your Profile</h4>
+    <p><strong>Handle:</strong> <%= @taster.handle %></p>
+    <p><strong>Email:</strong> <%= @taster.user.email %></p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">Pending Tasting Invites</h4>
+    <div class="list-group">
+      <% @taster.guests.each do |g| %>
+        <% if g.invitation_open? %>
+          <%= link_to g.tasting.name, guest_confirm_path(g), class:"list-group-item list-group-item-action", method: :put %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

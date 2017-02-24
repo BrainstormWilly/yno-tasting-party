@@ -36,25 +36,13 @@ class WinesController < ApplicationController
   end
 
   def destroy
-    @tasting = Tasting.find(params[:tasting_id]) if params[:tasting_id]
     @wine = Wine.find(params[:id])
     if @wine.destroy
-      if @tasting
-        TastingWine.where(tasting:@tasting).where(wine:@wine).destroy_all
-        flash[:notice] = 'Wine has been deleted from tasting and system.'
-        redirect_to edit_tasting_path(@tasting)
-      else
-        # temporary
-        flash[:notice] = 'Wine has been deleted from system.'
-        redirect_to authenticated_root_path
-      end
+      flash[:notice] = 'Wine has been deleted from system.'
+      redirect_to authenticated_root_path
     else
       flash.now[:alert] = 'There was an error deleting wine. Please try again later.'
-      if @tasting
-        redirect_to edit_tasting_path(@tasting)
-      else
-        redirect_to authenticated_root_path
-      end
+      redirect_to authenticated_root_path
     end
   end
 

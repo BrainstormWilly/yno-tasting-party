@@ -19,9 +19,14 @@ class TastingWinesController < ApplicationController
 
   def create
     @tasting_wine = TastingWine.new(valid_params)
+    @tasting_tasters = TastingTaster.where(tasting: @tasting_wine.tasting)
+
     if @tasting_wine.save
+      @tasting_tasters.each do |tt|
+        WineReview.create_next_in_sequence(@tasting_wine.tasting_id, tt.taster_id)
+      end
       flash[:notice] = "Wine added successfully."
-      redirect_to tasting_path(@tasting_wine.tasting)
+      redirect_to edit_tasting_path(@tasting_wine.tasting)
     else
       flash[:alert] = 'There was an error creating tasting wine. Please try again later.'
       redirect_to new_tasting_wine_path(@tasting_wine.tasting)
@@ -30,10 +35,12 @@ class TastingWinesController < ApplicationController
 
   def destroy
     if @tasting_wine.destroy
-      redirect_to tasting_path(@tasting_wine.tasting)
+      WineReview.delete_all_last_in_sequence(@tasting_wine.tasting_id)
+      flash[:notice] = "Tasting wine successfully removed from tasting."
+      redirect_to edit_tasting_path(@tasting_wine.tasting)
     else
-      flash.now[:alert] = 'There was an error deleting tasting wine. Please try again later.'
-      render_template(:show)
+      flash[:alert] = 'There was an error deleting tasting wine. Please try again later.'
+      redirect_to edit_tasting_path(@tasting_wine.tasting)
     end
   end
 

@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
       Host.find_by(taster_id: current_taster.id)
     end
 
+    def invited_by_host
+      taster = Taster.find_by(user_id: current_user.invited_by_id)
+      Host.find_by(taster: taster)
+    end
+
 end

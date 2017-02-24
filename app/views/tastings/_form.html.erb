@@ -1,4 +1,5 @@
 <%= form_for(tasting) do |f| %>
+
   <% if tasting.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(tasting.errors.count, "error") %> prohibited this tasting from being saved:</h2>

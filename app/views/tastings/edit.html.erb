@@ -12,10 +12,51 @@
     <h4 class="card-title">Wines <%= link_to "Add Wine", new_tasting_wine_path(@tasting), class: "btn btn-success" %></h4>
     <div class="list-group">
       <% @tasting.tasting_wines.each do |tw| %>
-        <%= link_to tw.wine.full_name, tasting_tasting_wine_path(@tasting, tw), class: "list-group-item list-group-item-action list-group-item-danger", data: { confirm: "Remove this wine and its ratings from tasting?" }, method: :delete %>
+        <div class="list-group-item justify-content-between">
+          <%= tw.wine.full_name %>
+          <div>
+            <%= link_to "Profile", tasting_wine_path(tw), class: "btn btn-secondary" %>
+            <% if !tasting_has_reviews?(@tasting) %>
+              <%= link_to "Delete", tasting_wine_path(tw),
+                  class: "btn btn-danger",
+                  data: { confirm: "Remove this wine and its ratings from tasting?" },
+                  method: :delete %>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
 
-<%= link_to 'Back to Tasting', @tasting, class:"btn btn-secondary mt-4 mb-4" %>
+<div class="card mt-4">
+  <div class="card-block">
+    <h4 class="card-title">Tasters <%= link_to "Add Taster", tasting_guests_new_path(@tasting), class: "btn btn-success" %></h4>
+    <div class="list-group">
+      <% @tasting.guests.each do |g| %>
+        <div class="list-group-item justify-content-between">
+          <%= g.taster.name %>
+          <div>
+            <%= link_to "Profile", guest_path(g), class: "btn btn-secondary" %>
+            <%= link_to "Delete", guest_path(g),
+                class: "btn btn-danger",
+                data: { confirm: "Remove this taster and their ratings from tasting?" },
+                method: :delete %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 mb-4">
+  <%= link_to 'Back to Tasting', @tasting, class:"btn btn-secondary " %>
+  <%= link_to 'Close Tasting', close_tasting_path(@tasting),
+    class: "btn btn-primary",
+    data: { confirm: "Close tasting and end all reviews?" },
+    method: :put %>
+  <%= link_to 'Delete Tasting', @tasting,
+    class:"btn btn-danger",
+    data: { confirm: "Cancel tasting and all reviews?" },
+    method: :delete %>
+</div>

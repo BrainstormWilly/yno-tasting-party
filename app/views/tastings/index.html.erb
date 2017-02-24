@@ -11,24 +11,50 @@
 <% if current_host && !current_host.tastings.empty? %>
   <div class="card mt-4">
     <div class="card-header">
-      Your Hosted Tastings
+      Hosted Tastings
     </div>
     <div class="list-group list-group-flush">
       <% current_host.tastings.each do |t| %>
-        <%= link_to t.name, t, class:"list-group-item list-group-item-action" %>
+        <%= link_to t, class:"list-group-item list-group-item-action justify-content-between" do %>
+          <%= t.name %>
+          <%= tasting_badge(t) %>
+        <% end %>
       <% end %>
     </div>
   </div>
 <% end %>
 
-<% if !current_taster.tastings.empty? %>
+<% if taster_has_invitations?(current_taster) %>
   <div class="card mt-4">
     <div class="card-header">
-      Your Guest Tastings
+      Upcoming Tasting Invitations
     </div>
     <div class="list-group list-group-flush">
-      <% current_taster.tastings.each do |t| %>
-        <a href class="list-group-item list-group-item-action"><%= t.name %></a>
+      <% current_taster.guests.each do |g| %>
+        <% if g.invitation_open? %>
+          <%= link_to guest_confirm_path(g), class: "list-group-item  list-group-item-action justify-content-between", method: :put do %>
+            <%= g.tasting.name %>
+            <span class="badge badge-default badge-pill">confirm</span>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if taster_has_tastings?(current_taster) %>
+  <div class="card mt-4">
+    <div class="card-header">
+      Upcoming Confirmed Tastings
+    </div>
+    <div class="list-group list-group-flush">
+      <% current_taster.guests.each do |g| %>
+        <% if g.tasting_confirmed? %>
+          <%= link_to g.tasting, class: "list-group-item  list-group-item-action justify-content-between" do %>
+            <%= g.tasting.name %>
+            <%= tasting_badge(g.tasting) %>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -41,7 +67,10 @@
     </div>
     <div class="list-group list-group-flush">
       <% @public_tastings.each do |t| %>
-        <a href class="list-group-item list-group-item-action"><%= t.name %></a>
+        <%= link_to t, class:"list-group-item list-group-item-action justify-content-between" do %>
+          <%= t.name %>
+          <%= tasting_badge(t) %>
+        <% end %>
       <% end %>
     </div>
   </div>

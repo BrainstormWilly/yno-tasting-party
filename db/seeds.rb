@@ -10,7 +10,7 @@
 ######################### USERS #########################
 #########################################################
 
-5.times do
+10.times do
   user = User.create(
     email: Faker::Internet.email,
     password: "123456",
@@ -22,15 +22,12 @@
     handle: user.email
   )
 end
-users = User.all
-tasters = Taster.all
 
 user_me = User.create(
   email: "bill@ynoguy.com",
   password: "123456",
   password_confirmation: "123456"
 )
-
 
 taster_me = Taster.create(
   user_id: user_me.id,
@@ -84,35 +81,122 @@ end
 ####################### TASTINGS ########################
 #########################################################
 
-# host taster_me tasting
-tasting_me = Tasting.create(
+# FUTURE TASTING
+tasters = Taster.all.to_a.shuffle
+wines = Wine.all.to_a.shuffle
+tasting_future = Tasting.create(
   host_id: host_me.id,
   name: "Pinot or PinYes",
   description: "Pinots around the world",
-  open_at: DateTime.now,
-  close_at: 4.hours.from_now
+  open_at: 40.hours.from_now,
+  close_at: 44.hours.from_now,
+  private: true
 )
-tasting_taster_me = TasterTasting.create(
-  tasting_id: tasting_me.id,
-  taster_id: taster_me.id
-)
-
-# Host taster_me tasting wines
-tasting_wines = Wine.all
+# future tasting wines
 6.times do |i|
   TastingWine.create(
-    wine_id: tasting_wines.shuffle.pop.id,
-    tasting_id: tasting_me.id
+    wine_id: wines.pop.id,
+    tasting_id: tasting_future.id
   )
+end
+# future tasting tasters (confirmed)
+3.times do
+  tt = Guest.create(
+    tasting_id: tasting_future.id,
+    taster_id: tasters.pop.id,
+    confirmed: Time.current
+  )
+  WineReview.create_all_for_taster(tasting_future.id, tt.taster.id)
+end
+# future tasting tasters (unconfirmed)
+2.times do
+  tt = Guest.create(
+    tasting_id: tasting_future.id,
+    taster_id: tasters.pop.id,
+    invited: Time.current
+  )
+  WineReview.create_all_for_taster(tasting_future.id, tt.taster.id)
 end
 
-# Public tastings
-2.times do
-  Tasting.create(
-    name: Faker::Lorem.sentence,
-    description: Faker::Lorem.paragraph,
-    open_at: Faker::Date.between(DateTime.now, 2.days.from_now),
-    close_at: Faker::Date.between(2.days.from_now, 3.days.from_now),
-    private: false
+# PRESENT TASTING
+tasters = Taster.all.to_a.shuffle
+wines = Wine.all.to_a.shuffle
+tasting_present = Tasting.create(
+  host_id: host_me.id,
+  name: "Bordeaux or Not",
+  description: "Is it Bordeaux or is it not",
+  open_at: Time.current,
+  private: true
+)
+# future tasting wines
+6.times do |i|
+  TastingWine.create(
+    wine_id: wines.pop.id,
+    tasting_id: tasting_present.id
   )
 end
+# future tasting tasters (confirmed)
+5.times do
+  tt = Guest.create(
+    tasting_id: tasting_present.id,
+    taster_id: tasters.pop.id,
+    confirmed: Time.current
+  )
+  6.times do |i|
+    WineReview.create({
+      tasting_id: tasting_present.id,
+      taster_id: tt.taster.id,
+      rating: (1..5).to_a.sample,
+      wine_number: i
+    })
+  end
+end
+
+# PAST TASTING
+tasters = Taster.all.to_a.shuffle
+wines = Wine.all.to_a.shuffle
+tasting_past = Tasting.create(
+  host_id: host_me.id,
+  name: "White out",
+  description: "Which white wine is it?",
+  open_at: 40.hours.ago,
+  private: true
+)
+# future tasting wines
+6.times do |i|
+  TastingWine.create(
+    wine_id: wines.pop.id,
+    tasting_id: tasting_past.id
+  )
+end
+# future tasting tasters (confirmed)
+5.times do
+  tt = Guest.create(
+    tasting_id: tasting_past.id,
+    taster_id: tasters.pop.id,
+    confirmed: 5.days.ago
+  )
+  6.times do |i|
+    wr = WineReview.create({
+      tasting_id: tasting_past.id,
+      taster_id: tt.taster.id,
+      rating: (1..5).to_a.sample,
+      wine_number: i
+    })
+    wr.created_at = 5.days.ago
+    wr.updated_at = 4.days.ago
+    wr.save
+  end
+end
+
+
+# Public tastings
+# 2.times do
+#   Tasting.create(
+#     name: Faker::Lorem.sentence,
+#     description: Faker::Lorem.paragraph,
+#     open_at: Faker::Date.between(DateTime.now, 2.days.from_now),
+#     close_at: Faker::Date.between(2.days.from_now, 3.days.from_now),
+#     private: false
+#   )
+# end

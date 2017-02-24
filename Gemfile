@@ -13,6 +13,7 @@ group :development, :test do
   gem 'shoulda'
   gem 'faker'
   gem 'factory_girl_rails', "~> 4.0"
+  gem 'date_validator'
 end
 
 group :development do
@@ -61,3 +62,5 @@ gem 'tether-rails'
 
 # Devise 4
 gem 'devise'
+gem 'devise_invitable'
+gem 'figaro'

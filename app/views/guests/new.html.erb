@@ -1,0 +1,37 @@
+<%= render partial: "shared/title", locals: {title: "Invite Taster"} %>
+
+<div class="card mt-4">
+  <div class="card-block">
+    <h4 class="card-title">Available Tasters</h4>
+    <div class="list-group">
+      <% @tasters.each do |t| %>
+        <% if !@tasting.tasters.include? t %>
+          <div class="list-group-item justify-content-between">
+            <%= t.name %>
+            <div>
+              <%= link_to "Confirm", tasting_guests_create_and_confirm_path(@tasting.id, t.id), class:"btn btn-success", method: :put %>
+              <%= link_to "Invite", tasting_guests_existing_invite_path(@tasting.id, t.id), class:"btn btn-primary", method: :put %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-block">
+    <h4 class="card-title">Invite new Taster</h4>
+    <%= form_for @user, url: tasting_guests_new_invite_path(@tasting, @user) do |f| %>
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Send", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to 'Back to Edit Tasting', edit_tasting_path(@tasting), class:"btn btn-secondary mt-4 mb-4" %>

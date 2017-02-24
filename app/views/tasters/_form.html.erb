@@ -1,0 +1,19 @@
+<%= form_for(@taster) do |f| %>
+
+  <h3>Taster Info for <%= current_user.email %></h3>
+
+  <div class="form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, class: "form-control", placeholder: "e.g. Jane Doe" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :handle %><br />
+    <%= f.text_field :handle, class: "form-control", placeholder: "e.g. Wine Diva" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+
+<% end %>

@@ -32,7 +32,6 @@ RSpec.describe WinesController, type: :controller do
         expect(response).to render_template(:new)
       end
     end
-
     describe "POST #create" do
       it "adds @wine" do
         expect{
@@ -61,23 +60,22 @@ RSpec.describe WinesController, type: :controller do
         expect(response).to redirect_to(edit_tasting_path(tasting))
       end
     end
-
-    describe "DELETE #destroy" do
-      it "deletes @wine" do
-        delete :destroy, params: {tasting_id:tasting.id, id:wine.id}
-        cnt = Wine.where(id: wine.id).count
-        expect(cnt).to eq 0
-      end
-      it "deletes @tasting_wine" do
-        delete :destroy, params: {tasting_id:tasting.id, id:wine.id}
-        cnt = TastingWine.where(tasting_id:tasting.id, wine_id: wine.id).count
-        expect(cnt).to eq 0
-      end
-      it "redirects to @tasting #edit" do
-        delete :destroy, params: {tasting_id:tasting.id, id:wine.id}
-        expect(response).to redirect_to(edit_tasting_path(tasting))
-      end
-    end
+    # describe "DELETE #destroy" do
+    #   it "deletes @wine" do
+    #     delete :destroy, params: {tasting_id:tasting.id, id:wine.id}
+    #     cnt = Wine.where(id: wine.id).count
+    #     expect(cnt).to eq 0
+    #   end
+    #   it "deletes @tasting_wine" do
+    #     delete :destroy, params: {tasting_id:tasting.id, id:wine.id}
+    #     cnt = TastingWine.where(tasting_id:tasting.id, wine_id: wine.id).count
+    #     expect(cnt).to eq 0
+    #   end
+    #   it "redirects to @tasting #edit" do
+    #     delete :destroy, params: {tasting_id:tasting.id, id:wine.id}
+    #     expect(response).to redirect_to(edit_tasting_path(tasting))
+    #   end
+    # end
   end
 
 end
