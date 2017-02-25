@@ -1,17 +1,17 @@
 <%= render partial: "shared/title", locals: {title: "Tastings"} %>
 
-<div class="card">
-  <% if current_host %>
-    <%= link_to "Host a New Tasting", new_tasting_path, class: "btn btn-success" %>
-  <% else %>
-    <%= link_to "Host Your Own Tasting Party. It's Free!", new_host_path, class: "btn btn-success" %>
-  <% end %>
+<div class="panel panel-default">
+    <% if current_host %>
+      <%= link_to "Host a New Tasting", new_tasting_path, class: "btn btn-success btn-block" %>
+    <% else %>
+      <%= link_to "Host Your Own Tasting Party. It's Free!", new_host_path, class: "btn btn-success btn-block" %>
+    <% end %>
 </div>
 
 <% if current_host && !current_host.tastings.empty? %>
-  <div class="card mt-4">
-    <div class="card-header">
-      Hosted Tastings
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Hosted Tastings</h4>
     </div>
     <div class="list-group list-group-flush">
       <% current_host.tastings.each do |t| %>
@@ -25,9 +25,9 @@
 <% end %>
 
 <% if taster_has_invitations?(current_taster) %>
-  <div class="card mt-4">
-    <div class="card-header">
-      Upcoming Tasting Invitations
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Upcoming Tasting Invitations</h4>
     </div>
     <div class="list-group list-group-flush">
       <% current_taster.guests.each do |g| %>
@@ -43,9 +43,9 @@
 <% end %>
 
 <% if taster_has_tastings?(current_taster) %>
-  <div class="card mt-4">
-    <div class="card-header">
-      Upcoming Confirmed Tastings
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Upcoming Confirmed Tastings</h4>
     </div>
     <div class="list-group list-group-flush">
       <% current_taster.guests.each do |g| %>
@@ -61,9 +61,9 @@
 <% end %>
 
 <% if !@public_tastings.empty? %>
-  <div class="card mt-4">
-    <div class="card-header">
-      Upcoming Public Tastings
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Upcoming Public Tastings</h4>
     </div>
     <div class="list-group list-group-flush">
       <% @public_tastings.each do |t| %>

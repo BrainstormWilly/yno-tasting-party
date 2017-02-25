@@ -1,56 +1,64 @@
 <%= render partial: "shared/title", locals: {title: @tasting.name} %>
 
-<div class="card">
-  <div class="card-block">
-    <h4 class="card-title">Tasting</h4>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Tasting</h4>
+  </div>
+  <div class="panel-body">
     <%= render 'form', tasting: @tasting %>
   </div>
 </div>
 
-<div class="card mt-4">
-  <div class="card-block">
-    <h4 class="card-title">Wines <%= link_to "Add Wine", new_tasting_wine_path(@tasting), class: "btn btn-success" %></h4>
-    <div class="list-group">
-      <% @tasting.tasting_wines.each do |tw| %>
-        <div class="list-group-item justify-content-between">
-          <%= tw.wine.full_name %>
-          <div>
-            <%= link_to "Profile", tasting_wine_path(tw), class: "btn btn-secondary" %>
-            <% if !tasting_has_reviews?(@tasting) %>
-              <%= link_to "Delete", tasting_wine_path(tw),
-                  class: "btn btn-danger",
-                  data: { confirm: "Remove this wine and its ratings from tasting?" },
-                  method: :delete %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Wines </h4>
   </div>
-</div>
-
-<div class="card mt-4">
-  <div class="card-block">
-    <h4 class="card-title">Tasters <%= link_to "Add Taster", tasting_guests_new_path(@tasting), class: "btn btn-success" %></h4>
-    <div class="list-group">
-      <% @tasting.guests.each do |g| %>
-        <div class="list-group-item justify-content-between">
-          <%= g.taster.name %>
-          <div>
-            <%= link_to "Profile", guest_path(g), class: "btn btn-secondary" %>
-            <%= link_to "Delete", guest_path(g),
+  <div class="list-group">
+    <% @tasting.tasting_wines.each do |tw| %>
+      <div class="list-group-item clearfix">
+        <%= tw.wine.full_name %>
+        <div class="btn-group pull-right">
+          <%= link_to "Profile", tasting_wine_path(tw), class: "btn btn-default" %>
+          <% if !tasting_has_reviews?(@tasting) %>
+            <%= link_to "Delete", tasting_wine_path(tw),
                 class: "btn btn-danger",
-                data: { confirm: "Remove this taster and their ratings from tasting?" },
+                data: { confirm: "Remove this wine and its ratings from tasting?" },
                 method: :delete %>
-          </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="panel-footer">
+    <%= link_to "Add Wine", new_tasting_wine_path(@tasting), class: "btn btn-success" %>
   </div>
 </div>
 
-<div class="mt-4 mb-4">
-  <%= link_to 'Back to Tasting', @tasting, class:"btn btn-secondary " %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Guests </h4>
+  </div>
+  <div class="list-group">
+    <% @tasting.guests.each do |g| %>
+      <div class="list-group-item clearfix">
+        <%= g.taster.name %>
+        <div class="btn-group pull-right">
+          <%= link_to "Profile", guest_path(g), class: "btn btn-default" %>
+          <%= link_to "Delete", guest_path(g),
+              class: "btn btn-danger",
+              data: { confirm: "Remove this taster and their ratings from tasting?" },
+              method: :delete %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="panel-footer">
+    <%= link_to "Add Guest", tasting_guests_new_path(@tasting), class: "btn btn-success" %>
+  </div>
+</div>
+
+<div style="margin-top: 4rem; margin-bottom: 4rem">
+  <%= link_to 'Back to Tasting', @tasting, class:"btn btn-default " %>
   <%= link_to 'Close Tasting', close_tasting_path(@tasting),
     class: "btn btn-primary",
     data: { confirm: "Close tasting and end all reviews?" },
