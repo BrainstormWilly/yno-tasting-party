@@ -15,8 +15,17 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :rating, class: "form-label" %>
-    <%= f.number_field :rating, in: 1..5, step: 1, class: "form-control" %>
+    <p><strong>Rating</strong></p>
+    <%= f.hidden_field :rating %>
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <% (1..5).each do |i| %>
+        <div class="col-sm-2">
+          <button class="rating_btn btn btn-lg btn-block" data-rating="<%= i %>"><%= rating_label(i) %></button>
+        </div>
+      <% end %>
+      <div class="col-sm-1"></div>
+    </div>
   </div>
 
   <div class="form-group">

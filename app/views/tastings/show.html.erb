@@ -33,12 +33,12 @@
         <div class="list-group">
           <% @tasting.wine_reviews.each do |wr| %>
             <% if wr.taster == current_taster %>
-              <%= link_to edit_wine_review_path(wr), class: "list-group-item list-group-item-action justify-content-between" do %>
+              <%= link_to edit_wine_review_path(wr), class: "list-group-item list-group-item-action" do %>
                 Wine <%= wr.wine_number %>
                 <% if wr.unrated? %>
-                  <span class="badge badge-pill">unrated</span>
+                  <span class="badge">unrated</span>
                 <% else %>
-                  <span class="badge badge-<%= review_badge_color(wr.rating) %>"><%= wr.rating %></span>
+                  <span class="badge <%= review_badge_color(wr.rating) %>"><%= wr.rating %></span>
                 <% end %>
               <% end %>
             <% end %>

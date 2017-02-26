@@ -26,20 +26,20 @@ module TastingsHelper
 
   def review_badge_color(rating)
     if rating > 3
-      return "success"
+      return "badge-positive"
     elsif rating < 3
-      return "danger"
+      return "badge-negative"
     end
-    "default"
+    "badge-neutral"
   end
 
   def tasting_badge(tasting)
     if tasting.is_open?
-      span = "<span class=\"badge badge-success badge-pill\">Open</span>"
+      span = "<span class=\"badge badge-positive\">Open</span>"
     elsif Time.current < tasting.open_at
-      span = "<span class=\"badge badge-default badge-pill\">#{tasting.open_at.strftime('%b %-d, %l:%M%P')}</span>"
+      span = "<span class=\"badge\">#{tasting.open_at.strftime('%b %-d, %l:%M%P')}</span>"
     else
-      span = "<span class=\"badge badge-danger badge-pill\">Closed</span>"
+      span = "<span class=\"badge badge-negative\">Closed</span>"
     end
     span.html_safe
   end
