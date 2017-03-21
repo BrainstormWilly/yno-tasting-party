@@ -47,31 +47,6 @@ RSpec.describe GuestsController, type: :controller do
         expect(response).to render_template :new
       end
     end
-    # describe "PUT #update" do
-    #   it "sets 'confirmed' on tasting taster" do
-    #     confirmed_date = DateTime.now
-    #     put :update, params: {
-    #       tasting_id: tasting.id,
-    #       id: guest.id,
-    #       guest: {
-    #         confirmed: confirmed_date
-    #       }
-    #     }
-    #     instance = assigns(:guest)
-    #     expect(instance.confirmed).not_to be_nil
-    #   end
-    #   it "redirects to Tasting#show" do
-    #     confirmed_date = DateTime.now
-    #     put :update, params: {
-    #       tasting_id: tasting.id,
-    #       id: guest.id,
-    #       guest: {
-    #         confirmed: confirmed_date
-    #       }
-    #     }
-    #     expect(response).to redirect_to tasting_path(tasting.id)
-    #   end
-    # end
     describe "POST #create" do
       it "adds new taster to tasting" do
         expect {
@@ -185,12 +160,12 @@ RSpec.describe GuestsController, type: :controller do
       end
     end
     describe "DELETE #destroy" do
-      it "deletes tasting taster" do
+      it "deletes guest" do
         delete :destroy, params: {id: guest.id}
         cnt = Guest.where(id: guest.id).count
         expect(cnt).to eq 0
       end
-      it "deletes taster's wine reviews" do
+      it "deletes guest's wine reviews" do
         delete :destroy, params: {id: guest.id}
         cnt = WineReview.where(tasting:tasting, taster:taster).count
         expect(cnt).to eq 0

@@ -106,7 +106,7 @@ end
     taster_id: tasters.pop.id,
     confirmed: Time.current
   )
-  WineReview.create_all_for_taster(tasting_future.id, tt.taster.id)
+  WineReview.create_all_for_guest(tasting_future, tt.taster)
 end
 # future tasting tasters (unconfirmed)
 2.times do
@@ -115,7 +115,7 @@ end
     taster_id: tasters.pop.id,
     invited: Time.current
   )
-  WineReview.create_all_for_taster(tasting_future.id, tt.taster.id)
+  WineReview.create_all_for_guest(tasting_future, tt.taster)
 end
 
 # PRESENT TASTING
@@ -128,14 +128,14 @@ tasting_present = Tasting.create(
   open_at: Time.current,
   private: true
 )
-# future tasting wines
+# present tasting wines
 6.times do |i|
   TastingWine.create(
     wine_id: wines.pop.id,
     tasting_id: tasting_present.id
   )
 end
-# future tasting tasters (confirmed)
+# present tasting guests (confirmed)
 5.times do
   tt = Guest.create(
     tasting_id: tasting_present.id,
@@ -147,12 +147,28 @@ end
       tasting_id: tasting_present.id,
       taster_id: tt.taster.id,
       rating: (1..5).to_a.sample,
-      wine_number: i
+      wine_number: i+1
+    })
+  end
+end
+# always add me as guest ot present tasting
+if Guest.where(tasting: tasting_present, taster: taster_me).count==0
+  Guest.create(
+    tasting_id: tasting_present.id,
+    taster_id: taster_me,
+    confirmed: Time.current
+  )
+  6.times do |i|
+    WineReview.create({
+      tasting_id: tasting_present.id,
+      taster_id: taster_me.id,
+      rating: (1..5).to_a.sample,
+      wine_number: i+1
     })
   end
 end
 
-# PAST TASTING
+# CLOSED TASTING
 tasters = Taster.all.to_a.shuffle
 wines = Wine.all.to_a.shuffle
 tasting_past = Tasting.create(
@@ -160,16 +176,17 @@ tasting_past = Tasting.create(
   name: "White out",
   description: "Which white wine is it?",
   open_at: 40.hours.ago,
+  close_at: 37.hours.ago,
   private: true
 )
-# future tasting wines
+# past tasting wines
 6.times do |i|
   TastingWine.create(
     wine_id: wines.pop.id,
     tasting_id: tasting_past.id
   )
 end
-# future tasting tasters (confirmed)
+# past tasting guests (confirmed)
 5.times do
   tt = Guest.create(
     tasting_id: tasting_past.id,
@@ -181,11 +198,51 @@ end
       tasting_id: tasting_past.id,
       taster_id: tt.taster.id,
       rating: (1..5).to_a.sample,
-      wine_number: i
+      wine_number: i+1
     })
-    wr.created_at = 5.days.ago
-    wr.updated_at = 4.days.ago
+    wr.created_at = 40.hours.ago
+    wr.updated_at = 38.hours.ago
     wr.save
+  end
+end
+
+# COMPLETED TASTING
+tasters = Taster.all.to_a.shuffle
+wines = Wine.all.to_a.shuffle
+tasting_completed = Tasting.create(
+  host_id: host_me.id,
+  name: "Just Cabs",
+  description: "Cabs from around the world",
+  open_at: 40.hours.ago,
+  close_at: 37.hours.ago,
+  completed_at: 36.hours.ago,
+  private: true
+)
+# completed tasting wines
+6.times do |i|
+  TastingWine.create(
+    wine_id: wines.pop.id,
+    tasting_id: tasting_completed.id,
+    wine_number: i+1
+  )
+end
+# completed tasting guests (confirmed)
+5.times do
+  tt = Guest.create(
+    tasting_id: tasting_completed.id,
+    taster_id: tasters.pop.id,
+    confirmed: 5.days.ago
+  )
+  6.times do |i|
+    wr = WineReview.create({
+      tasting_id: tasting_completed.id,
+      taster_id: tt.taster.id,
+      rating: (1..5).to_a.sample,
+      wine_number: i+1,
+      created_at: 40.hours.ago,
+      updated_at: 38.hours.ago
+    })
+
   end
 end
 

@@ -8,6 +8,11 @@ class TastingsController < ApplicationController
   end
 
   def show
+    if @tasting.is_completed?
+      render :show_completed
+    else
+      render :show
+    end
   end
 
   def new
@@ -15,6 +20,14 @@ class TastingsController < ApplicationController
   end
 
   def edit
+    if @tasting.is_completed?
+      flash[:alert] = "You are not allowed to edit a completed tasting."
+      redirect_to tasting_path(@tasting)
+    elsif @tasting.is_closed?
+      render :edit_closed
+    else
+      render :edit
+    end
   end
 
   def create
@@ -29,34 +42,49 @@ class TastingsController < ApplicationController
   end
 
   def update
-    @tasting.update(valid_params)
-    if @tasting.save
-      flash[:notice] = "Tasting '#{@tasting.name}' updated successfully."
-      redirect_to edit_tasting_path(@tasting)
+    if @tasting.is_completed?
+      flash[:alert] = "You are not allowed to update a completed tasting."
+      redirect_to tasting_path(@tasting)
     else
-      flash[:alert] = "Failed to update tasting. Please try again later"
-      redirect_to edit_tasting_path(@tasting)
+      @tasting.update(valid_params)
+      if @tasting.save
+        flash[:notice] = "Tasting '#{@tasting.name}' updated successfully."
+        redirect_to edit_tasting_path(@tasting)
+      else
+        flash[:alert] = "Failed to update tasting. Please try again later"
+        redirect_to edit_tasting_path(@tasting)
+      end
     end
   end
 
   def close
-    @tasting.closed_at = Time.current
-    if @tasting.save
-      flash[:notice] = "Tasting '#{@tasting.name}' closed successfully. All reviews are final."
+    if @tasting.is_completed?
+      flash[:alert] = "You are not allowed to update a completed tasting."
       redirect_to tasting_path(@tasting)
     else
-      flash[:alert] = "Unable to close tasting. Please try again later"
-      redirect_to edit_tasting_path(@tasting)
+      @tasting.closed_at = Time.current
+      if @tasting.save
+        flash[:notice] = "Tasting '#{@tasting.name}' closed successfully. All reviews are final."
+        redirect_to tasting_path(@tasting)
+      else
+        flash[:alert] = "Unable to close tasting. Please try again later"
+        redirect_to edit_tasting_path(@tasting)
+      end
     end
   end
 
   def destroy
-    if @tasting.destroy
-      flash[:notice] = "Tasting '#{@tasting.name}' deleted successfully."
-      redirect_to authenticated_root_path
+    if @tasting.is_completed?
+      flash[:alert] = "You are not allowed to destroy a completed tasting. Contact us for more info."
+      redirect_to tasting_path(@tasting)
     else
-      flash[:alert] = "Failed to delete tasting. Please try again later"
-      redirect_to edit_tasting_path(@tasting)
+      if @tasting.destroy
+        flash[:notice] = "Tasting '#{@tasting.name}' deleted successfully."
+        redirect_to authenticated_root_path
+      else
+        flash[:alert] = "Failed to delete tasting. Please try again later"
+        redirect_to edit_tasting_path(@tasting)
+      end
     end
   end
 

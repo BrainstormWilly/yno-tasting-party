@@ -5,8 +5,8 @@ RSpec.describe TastingWinesController, type: :controller do
   let(:user){ create(:user) }
   let(:taster){ create(:taster, user: user) }
   let(:host){ create(:host, taster: taster) }
-  let(:tasting){ create(:tasting, host: host) }
-  let!(:tasting_taster){ create(:tasting_taster, tasting: tasting, taster: taster)}
+  let(:tasting){ create(:tasting, host: host, open_at: Time.current) }
+  let!(:guest){ create(:guest, tasting: tasting, taster: taster)}
   let(:wine){ create(:wine) }
   let(:tasting_wine){ create(:tasting_wine, tasting: tasting, wine: wine) }
   let(:create_wine){ create(:wine) }
@@ -17,57 +17,73 @@ RSpec.describe TastingWinesController, type: :controller do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user, scope: :user
     end
-    # describe "GET #index" do
-    #   it "returns http success" do
-    #     get :index, params:{tasting_id: tasting.id}
-    #     expect(response).to have_http_status(:success)
-    #   end
-    #   it "assigns @tasting_wines" do
-    #     get :index, params:{tasting_id: tasting.id}
-    #     expect( assigns(:tasting_wines) ).to eq([tasting_wine])
-    #   end
-    #   it "renders #index template" do
-    #     get :index, params:{tasting_id: tasting.id}
-    #     expect(response).to render_template(:index)
-    #   end
-    # end
-    # describe "GET #show" do
-    #   it "returns http success" do
-    #     get :show, params:{tasting_id: tasting.id, id:tasting_wine.id}
-    #     expect(response).to have_http_status(:success)
-    #   end
-    #   it "assigns @tasting_wine" do
-    #     get :show, params:{tasting_id: tasting.id, id:tasting_wine.id}
-    #     expect( assigns(:tasting_wine) ).to eq(tasting_wine)
-    #   end
-    #   it "renders #show template" do
-    #     get :show, params:{tasting_id: tasting.id, id:tasting_wine.id}
-    #     expect(response).to render_template(:show)
-    #   end
-    # end
-    # describe "GET #new" do
-    #   it "returns http success" do
-    #     get :new, params:{tasting_id:tasting.id}
-    #     expect(response).to have_http_status(:success)
-    #   end
-    #   it "creates new @tasting_wine" do
-    #     get :new, params:{tasting_id:tasting.id}
-    #     expect(assigns(:tasting_wine)).to be_a_new(TastingWine)
-    #   end
-    #   it "renders #new template" do
-    #     get :new, params:{tasting_id:tasting.id}
-    #     expect(response).to render_template(:new)
-    #   end
-    # end
+    describe "PUT #reveal" do
+      before do
+        @wine2 = create(:wine)
+        @tasting_wine2 = create(:tasting_wine, tasting: tasting, wine: @wine2)
+      end
+      context "tasting not closed" do
+        it "assigns @tasting_wine" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          instance = assigns(:tasting_wine)
+          expect(instance).to eq tasting_wine
+        end
+        it "assigns @tasting" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          instance = assigns(:tasting)
+          expect(instance).to eq tasting
+        end
+        it "does not set @tasting_wine wine_number" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          instance = assigns(:tasting_wine)
+          expect(instance.wine_number).to eq 0
+        end
+        it "redirects to Tasting#edit" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          expect(response).to redirect_to edit_tasting_path(tasting)
+        end
+      end
+      context "tasting closed" do
+        before do
+          tasting.closed_at = Time.current
+          tasting.save
+        end
+        it "assigns @tasting_wine" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          instance = assigns(:tasting_wine)
+          expect(instance).to eq tasting_wine
+        end
+        it "assigns @tasting" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          instance = assigns(:tasting)
+          expect(instance).to eq tasting
+        end
+        it "sets @tasting_wine wine_number" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          instance = assigns(:tasting_wine)
+          expect(instance.wine_number).not_to eq 0
+        end
+        it "does not allow 2 TastingWines to share the same wine_number" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          put :reveal, params: {id: @tasting_wine2.id, wine_number: 1}
+          instance = TastingWine.find(tasting_wine.id)
+          expect(instance.wine_number).to eq 0
+        end
+        it "redirects to Tasting#edit" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          expect(response).to redirect_to edit_tasting_path(tasting)
+        end
+      end
+    end
     describe "POST #create" do
       it "creates @tasting_wine" do
         expect {
           post :create, params: {tasting_id: tasting.id, tasting_wine: create_params}
         }.to change(TastingWine, :count).by(1)
       end
-      it "assigns @tasting_tasters" do
+      it "assigns @guest" do
         post :create, params: {tasting_id: tasting.id, tasting_wine: create_params}
-        cnt = TastingTaster.where(tasting: tasting).count
+        cnt = Guest.where(tasting: tasting).count
         expect(cnt).to eq 1
       end
       it "creates wine review" do
@@ -82,10 +98,20 @@ RSpec.describe TastingWinesController, type: :controller do
     end
     describe "DELETE #destroy" do
       before do
-        @wine_review = WineReview.create_next_in_sequence(tasting.id, taster.id)
+        @wine_review = WineReview.create_next_in_sequence_for_guest(tasting.id, taster.id)
         @max_wine_number = @wine_review.wine_number
       end
-      context "before tasting is open" do
+      context "before tasting has reviews" do
+        it "assigns @tasting_wine" do
+          delete :destroy, params: {id:tasting_wine.id}
+          instance = assigns(:tasting_wine)
+          expect(instance).to eq tasting_wine
+        end
+        it "assigns @tasting" do
+          delete :destroy, params: {id:tasting_wine.id}
+          instance = assigns(:tasting)
+          expect(instance).to eq tasting
+        end
         it "deletes @tasting_wine" do
           delete :destroy, params: {id:tasting_wine.id}
           count = TastingWine.where(id:tasting_wine.id).count
@@ -101,9 +127,20 @@ RSpec.describe TastingWinesController, type: :controller do
           expect(response).to redirect_to edit_tasting_path(tasting)
         end
       end
-      context "after tasting is open" do
+      context "after tasting has review" do
         before do
-          tasting.open_at = DateTime.now
+          @wine_review.updated_at = 1.minute.from_now
+          @wine_review.save
+        end
+        it "assigns @tasting_wine" do
+          delete :destroy, params: {id:tasting_wine.id}
+          instance = assigns(:tasting_wine)
+          expect(instance).to eq tasting_wine
+        end
+        it "assigns @tasting" do
+          delete :destroy, params: {id:tasting_wine.id}
+          instance = assigns(:tasting)
+          expect(instance).to eq tasting
         end
         it "does not delete @tasting_wine" do
           delete :destroy, params: {id:tasting_wine.id}

@@ -1,72 +1,94 @@
 <%= render partial: "shared/title", locals: {title: @tasting.name} %>
 
-<% if !@tasting.description.blank? %>
+<div class="well well-sm <%= tasting_status(@tasting) %>">
+  <h4>Status: <%= @tasting.status %></h4>
+</div>
+
+<% if @tasting.tasters.include?(current_taster) && @tasting.is_open? %>
   <div class="panel panel-default">
-    <div class="panel-body">
-      <h4>
-        Description
-        <% if @tasting.host==current_host %>
-          <%= link_to 'Edit Tasting', edit_tasting_path(@tasting), class: "btn btn-default pull-right" %>
-        <% end %>
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        Reviews
       </h4>
-      <p><strong>Start time:</strong> <%= @tasting.open_at.strftime("%A, %B %-d at %l:%M%P") %></p>
-      <p><%= @tasting.description %></p>
-      <h4 class="card-title">Wines</h4>
-      <div class="list-group">
-        <% @tasting.tasting_wines.each do |tw| %>
-          <%= tw.wine.full_name %></br>
-        <% end %>
+    </div>
+    <% if taster_has_reviews?(@tasting, current_taster) %>
+      <% latest_review = taster_last_review(@tasting, current_taster) %>
+      <div class="panel-body">
+        <div class="well">Your Last review was <%= latest_review.to_string %></div>
       </div>
+    <% end %>
+    <div class="list-group">
+      <% @tasting.wine_reviews.each do |wr| %>
+        <% if wr.taster == current_taster %>
+          <%= link_to edit_wine_review_path(wr), class: "list-group-item list-group-item-action" do %>
+            Wine <%= wr.wine_number %>
+            <% if wr.unrated? %>
+              <span class="badge">unrated</span>
+            <% else %>
+              <span class="badge <%= review_badge_color(wr.rating) %>"><%= wr.rating %></span>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% end %>
 
-<% if @tasting.tasters.include?(current_taster) %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Tasting Details</h4>
 
-  <% if @tasting.is_open? %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          Reviews
-        </h4>
-      </div>
-        <div class="list-group">
-          <% @tasting.wine_reviews.each do |wr| %>
-            <% if wr.taster == current_taster %>
-              <%= link_to edit_wine_review_path(wr), class: "list-group-item list-group-item-action" do %>
-                Wine <%= wr.wine_number %>
-                <% if wr.unrated? %>
-                  <span class="badge">unrated</span>
-                <% else %>
-                  <span class="badge <%= review_badge_color(wr.rating) %>"><%= wr.rating %></span>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-    </div>
-  <% elsif Time.current < @tasting.open_at %>
-    <div class="well">
-        <h4>Hold your horses!</h4>
-        <p>This tasting will begin in <%= distance_of_time_in_words(Time.current, @tasting.open_at) %></p>
-    </div>
-  <% end %>
+  </div>
+  <div class="panel-body">
 
-  <% if @tasting.is_closed? %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          This tasting is over...
-        </h4>
-        complete, ended, finished, finito.
-      </div>
-    </div>
-  <% else %>
-    <%= link_to "Remove me from this tasting",
-      guest_path(current_guest(@tasting, current_taster)),
-      class: "btn btn-danger",
-      data: { confirm: "Are you sure you want to leave tasting and lose your ratings?" },
-      method: :delete %>
-  <% end %>
+    <h4>Host</h4>
+    <p><%= @tasting.host.taster.name %></p>
+    <hr/>
+    <h4>When</h4>
+    <p><strong>Start time:</strong> <%= @tasting.open_at.strftime("%A, %B %-d at %l:%M%P") %>
+    <% if !@tasting.close_at.nil? %>
+      <br/><strong>Stop time:</strong> <%= @tasting.close_at.strftime("%A, %B %-d at %l:%M%P") %>
+    <% end %>
+    </p>
+    <hr/>
+    <% if !@tasting.description.nil? %>
+      <h4>Description</h4>
+      <p><%= @tasting.description %></p>
+      <hr/>
+    <% end %>
 
-<% end %>
+    <h4>Wines</h4>
+    <% if @tasting.tasting_wines.empty? %>
+      <p>No wines chosen yet</p>
+    <% else %>
+      <div class="list-group">
+        <% @tasting.tasting_wines.each do |tw| %>
+          <div class="list-group-item">
+            <h5><%= tw.wine.full_name %></h5>
+            <% if @tasting.is_closed? %>
+              <% if tw.wine_number == 0 %>
+                <p>Unrevealed</p>
+              <% else %>
+                <p>Wine Number: <%= tw.wine_number %>; Avg. Rating: <%= avg_tasting_wine_rating(tw) %>; Your Rating: <%= guest_tasting_wine_rating(tw, current_taster) %></p>
+              <% end %> <!-- tw.wine_number == 0 -->
+            <% end %> <!-- if @tasting.is_closed? -->
+          </div> <!-- list-group-item -->
+        <% end %> <!-- @tasting.tasting_wines.each -->
+      </div> <!-- list-group -->
+    <% end %> <!-- if @tasting.tasting_wines.empty? -->
+
+  </div> <!-- panel-body -->
+
+  <div class="panel-footer">
+    <% if @tasting.host==current_host%>
+      <%= link_to 'Edit Tasting', edit_tasting_path(@tasting), class: "btn btn-primary" %>
+    <% end %>
+    <% if @tasting.tasters.include?(current_taster) %>
+      <%= link_to "Remove me from this tasting",
+        guest_path(current_guest(@tasting, current_taster)),
+        class: "btn btn-danger",
+        data: { confirm: "Are you sure you want to leave tasting and lose your ratings?" },
+        method: :delete %>
+    <% end %>
+  </div>
+</div>

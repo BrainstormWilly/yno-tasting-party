@@ -18,7 +18,7 @@ class Guest < ApplicationRecord
   # end
 
   def invitation_open?
-     self.confirmed == nil && self.tasting.close_at > Time.current
+     self.invited != nil && self.confirmed == nil && self.tasting.is_open?
   end
 
   def tasting_confirmed?

@@ -1,0 +1,33 @@
+<%= render partial: "shared/title", locals: {title: @tasting.name} %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Reveal Wines</h4>
+  </div>
+  <div class="list-group">
+    <% wine_cnt = @tasting.tasting_wines.count %>
+    <% @tasting.tasting_wines.each do |tw| %>
+      <div class="list-group-item clearfix">
+        <h5><%= tw.wine.full_name %></h5>
+        <p>
+          Wine Number:
+          <% (1..wine_cnt).each do |i| %>
+            <% if tw.is_last_reveal? %>
+              <%= link_to i, tasting_wine_reveal_path(tw, i),
+                class: "btn #{wine_number_btn_color(tw, i)}",
+                data: {confirm: "Are you sure you want to complete this tasting?"},
+                method: :put %>
+            <% else %>
+              <%= link_to i, tasting_wine_reveal_path(tw, i),
+                class: "btn #{wine_number_btn_color(tw, i)}",
+                method: :put %>
+            <% end %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+  <div class="panel-footer">
+    <%= link_to "Back to Tasting", tasting_path(@tasting), class: "btn btn-primary" %>
+  </div>
+</div>

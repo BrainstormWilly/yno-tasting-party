@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223060545) do
+ActiveRecord::Schema.define(version: 20170305231207) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -62,10 +62,11 @@ ActiveRecord::Schema.define(version: 20170223060545) do
     t.datetime "close_at"
     t.text     "description"
     t.boolean  "private"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "host_id"
     t.datetime "closed_at"
+    t.datetime "completed_at"
     t.index ["host_id"], name: "index_tastings_on_host_id"
   end
 

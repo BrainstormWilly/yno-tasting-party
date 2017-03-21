@@ -1,13 +1,84 @@
 
 
- .badge.badge-positive{
-   background-color: $brand-success
+  .badge.badge-future{
+   background-color: $brand-warning;
   }
 
- .badge.badge-negative{
-    background-color: $brand-danger
+  .badge.badge-negative{
+    background-color: $brand-danger;
   }
 
-  .badge.badge-neutral{
-     background-color: $brand-warning
-   }
+  .badge.badge-positive{
+    background-color: $brand-success;
+  }
+
+  .well.well-open{
+    background-color: $brand-success;
+    color: #fff
+  }
+  .well.well-closed{
+    background-color: $brand-danger;
+    color: #fff
+  }
+  .well.well-future{
+    background-color: $brand-warning;
+    color: #fff
+  }
+
+  .completed-wine-wrapper{
+    margin-bottom: 1rem;
+  }
+  .completed-wine-background{
+    z-index: -1;
+    position: relative;
+    height: 6rem;
+    border-radius: 1rem;
+    background-color: #555;
+  }
+  .completed-wine-graph{
+    position: relative;
+    height: 100%;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    background-color: #555;
+  }
+  .completed-wine-graph.excellent{
+    background-color: $brand-success;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+  .completed-wine-graph.good{
+    background-color: $brand-success;
+  }
+  .completed-wine-graph.ok{
+    background-color: $brand-warning;
+  }
+  .completed-wine-graph.bad{
+    background-color: $brand-danger;
+  }
+  .completed-wine-content{
+    z-index: 1;
+    position: relative;
+    height: 0rem;
+    top: -3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    color: #fff
+  }
+  // .winning-wine.winning-wine-left{
+  //   background-color: #333;
+  //   color: #fff;
+  //   border-top-left-radius: 1rem;
+  //   border-bottom-left-radius: 1rem;
+  //   margin-left: 1rem;
+  // }
+  // .winning-wine.winning-wine-middle{
+  //   background-color: #eee;
+  // }
+  // .winning-wine.winning-wine-right{
+  //   border-top-right-radius: 1rem;
+  //   border-bottom-right-radius: 1rem;
+  //   background-color: $brand-success;
+  // }

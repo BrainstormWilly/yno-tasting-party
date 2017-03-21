@@ -26,7 +26,7 @@ class GuestsController < ApplicationController
   def create
     @guest = Guest.new(valid_params)
     if @guest.save
-      WineReview.create_all_for_taster(@guest.tasting_id, @guest.taster.id)
+      WineReview.create_all_for_guest(@guest.tasting, @guest.taster)
       flash[:notice] = "Taster successfully added to tasting."
       redirect_to edit_tasting_path(@guest.tasting)
     else
@@ -58,7 +58,7 @@ class GuestsController < ApplicationController
       confirmed: Time.current,
       invited: Time.current})
     if @guest.save
-      WineReview.create_all_for_taster(@tasting.id, @taster.id)
+      WineReview.create_all_for_guest(@tasting, @taster)
       flash[:notice] = "Taster #{@taster.name} successfully added to tasting."
       redirect_to edit_tasting_path(@tasting)
     else
@@ -71,14 +71,10 @@ class GuestsController < ApplicationController
   def destroy
     @guest = Guest.find(params[:id])
     if @guest.destroy
-      WineReview.delete_all_for_taster(@guest.tasting_id, @guest.taster.id)
-      if @guest.tasting.host == current_host
-        flash[:notice] = "#{@guest.taster.name} successfully removed from tasting."
-        redirect_to edit_tasting_path(@guest.tasting)
-      else
-        flash[:notice] = "You have been successfully removed from tasting."
-        redirect_to authenticated_root_path
-      end
+      WineReview.delete_all_for_guest(@guest.tasting, @guest.taster)
+      name = @guest.taster == current_host.taster ? "You have" : "#{@guest.taster.name} has"
+      flash[:notice] = "#{name} been successfully removed from tasting."
+      redirect_to edit_tasting_path(@guest.tasting)
     else
       flash[:alert] = "There was an error deleting taster. Please try again later."
       redirect_to edit_tasting_path(@guest.tasting)

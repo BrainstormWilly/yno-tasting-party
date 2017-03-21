@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   put "guests/:id/confirm" => "guests#confirm", as: "guest_confirm"
 
   resources :tasting_wines, only: [:create, :destroy]
+  put "tasting_wines/:id/reveal/:wine_number" => "tasting_wines#reveal", as: "tasting_wine_reveal"
 
   resources :hosts, only: [:new, :update, :create]
 
