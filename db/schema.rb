@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305231207) do
+ActiveRecord::Schema.define(version: 20170321051050) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -29,12 +29,34 @@ ActiveRecord::Schema.define(version: 20170305231207) do
     t.datetime "invited"
   end
 
+  create_table "host_locations", force: :cascade do |t|
+    t.integer  "host_id"
+    t.integer  "location_id"
+    t.boolean  "primary",     default: true
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["host_id"], name: "index_host_locations_on_host_id"
+    t.index ["location_id"], name: "index_host_locations_on_location_id"
+  end
+
   create_table "hosts", force: :cascade do |t|
     t.integer  "taster_id"
     t.string   "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["taster_id"], name: "index_hosts_on_taster_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "phone"
+    t.string   "address"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal"
+    t.string   "country",    default: "US"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "tasters", force: :cascade do |t|
