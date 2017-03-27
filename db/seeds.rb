@@ -42,6 +42,35 @@ host_me = Host.create(
 
 
 #########################################################
+####################### LOCATIONS #######################
+#########################################################
+
+loc1 = Location.create(
+  phone: "707-237-6904",
+  address: "2110 Creekside Road",
+  city: "Santa Rosa",
+  state: "CA",
+  postal: "95405"
+)
+loc2 = Location.create(
+  phone: "408-314-4304",
+  address: "2110 Creekside Road",
+  city: "Santa Rosa",
+  state: "CA",
+  postal: "95405"
+)
+HostLocation.create(
+  host_id: host_me.id,
+  location_id: loc1.id
+)
+HostLocation.create(
+  host_id: host_me.id,
+  location_id: loc2.id
+)
+
+
+
+#########################################################
 ######################### WINES #########################
 #########################################################
 
@@ -88,6 +117,7 @@ tasting_future = Tasting.create(
   host_id: host_me.id,
   name: "Pinot or PinYes",
   description: "Pinots around the world",
+  location_id: host_me.primary_location.id,
   open_at: 40.hours.from_now,
   close_at: 44.hours.from_now,
   private: true
@@ -125,6 +155,7 @@ tasting_present = Tasting.create(
   host_id: host_me.id,
   name: "Bordeaux or Not",
   description: "Is it Bordeaux or is it not",
+  location_id: host_me.primary_location.id,
   open_at: Time.current,
   private: true
 )
@@ -175,6 +206,7 @@ tasting_past = Tasting.create(
   host_id: host_me.id,
   name: "White out",
   description: "Which white wine is it?",
+  location_id: host_me.primary_location.id,
   open_at: 40.hours.ago,
   close_at: 37.hours.ago,
   private: true
@@ -213,6 +245,7 @@ tasting_completed = Tasting.create(
   host_id: host_me.id,
   name: "Just Cabs",
   description: "Cabs from around the world",
+  location_id: host_me.primary_location.id,
   open_at: 40.hours.ago,
   close_at: 37.hours.ago,
   completed_at: 36.hours.ago,

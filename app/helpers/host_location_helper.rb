@@ -1,0 +1,2 @@
+module HostLocationHelper
+end

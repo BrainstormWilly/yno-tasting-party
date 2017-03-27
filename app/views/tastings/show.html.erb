@@ -51,11 +51,16 @@
     <% end %>
     </p>
     <hr/>
+
     <% if !@tasting.description.nil? %>
       <h4>Description</h4>
       <p><%= @tasting.description %></p>
       <hr/>
     <% end %>
+
+    <h4>Location</h4>
+    <p><%= @tasting.location.to_short_string %></p>
+    <hr/>
 
     <h4>Wines</h4>
     <% if @tasting.tasting_wines.empty? %>

@@ -1,31 +1,59 @@
 <%= render partial: "shared/title", locals: {title: current_taster.name} %>
 
-<div class="card" style="margin-top: 1rem">
-  <div class="card-block">
-    <% if current_host %>
-      <%= form_for(current_host) do |f| %>
-
-        <h3>Update Host</h3>
-
-        <div class="form-group">
-          <%= f.label :phone %><br />
-          <%= f.telephone_field :phone, class: "form-control" %>
+<% if current_host %>
+  <button class="btn btn-lg btn-block btn-info" role="button" data-toggle="collapse" href="#hostPanel">Host Profile</button>
+  <div class="collapse.in" id="hostPanel">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="list-group">
+          <h4>Tasting Locations</h4>
+          <% if current_host.host_locations.empty? %>
+            <p>No locations available</p>
+          <% else %>
+            <% current_host.host_locations.each do |hl| %>
+              <% if hl.primary? %>
+                <div class="list-group-item list-group-item-success">
+                  <%= link_to host_location_path(hl), {method: :delete, class: "btn btn-danger"} do %>
+                    <span class="glyphicon glyphicon-remove"></span>
+                  <% end %>
+                  <button class="btn btn-success" disabled="disabled"><span class="glyphicon glyphicon-star"></span></button>
+                  <%= link_to edit_location_path(hl.location), {remote: true, class: "btn btn-success", 'data-toggle' => 'modal', 'data-target' => '#modal-window'} do %>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  <% end %>
+                  &nbsp;&nbsp;<strong><%= hl.location.to_short_string %></strong>
+                </div>
+              <% else %>
+                <div class="list-group-item">
+                  <%= link_to host_location_path(hl), {method: :delete, class: "btn btn-danger"} do %>
+                    <span class="glyphicon glyphicon-remove"></span>
+                  <% end %>
+                  <%= link_to primary_host_location_path(hl), {method: :put, class: "btn btn-success"} do %>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                  <% end %>
+                  <%= link_to edit_location_path(hl.location), {remote: true, class: "btn btn-success", 'data-toggle' => 'modal', 'data-target' => '#modal-window'} do %>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  <% end %>
+                  &nbsp;&nbsp;<%= hl.location.to_short_string %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
         </div>
-
-        <div class="form-group">
-          <%= f.submit "Update Host", class: "btn btn-primary btn-block btn-lg" %>
-        </div>
-
-      <% end %>
-    <% end %>
+      </div>
+      <div class="panel-footer">
+        <%= link_to 'Add Tasting Location', new_location_path, {remote: true, class: "btn btn-primary", 'data-toggle' => 'modal', 'data-target' => '#modal-window'} %>
+      </div>
+    </div>
   </div>
-</div>
+<% end %>
 
-<div class="card" style="margin-top: 1rem">
-  <div class="card-block">
+<button class="btn btn-lg btn-block btn-info" style="margin-top: 1rem" role="button" data-toggle="collapse" href="#tasterPanel">Taster Profile</button>
+
+<div id="tasterPanel" class="collapse">
+  <div class="panel panel-default">
     <%= form_for(current_taster) do |f| %>
-
-      <h3>Update Taster</h3>
+    <div class="panel-body">
+      <h3>Update Taster Profile</h3>
 
       <div class="form-group">
         <%= f.label :name %><br />
@@ -38,19 +66,25 @@
       </div>
 
       <div class="form-group">
-        <%= f.submit "Update Taster", class: "btn btn-primary btn-block btn-lg" %>
-      </div>
 
+      </div>
+    </div>
+    <div class="panel-footer">
+      <%= f.submit "Update Taster", class: "btn btn-primary" %>
+    </div>
     <% end %>
   </div>
 </div>
 
-<div class="card" style="margin-top: 1rem">
-  <div class="card-block">
+<button class="btn btn-lg btn-block btn-info" style="margin-top: 1rem" role="button" data-toggle="collapse" href="#userPanel">User Account</button>
+
+<div class="collapse" id="userPanel">
+  <div class="panel panel-default">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <div class="panel-body">
       <%= devise_error_messages! %>
 
-      <h3>Update/Remove User</h3>
+      <h3>Update/Remove User Account</h3>
 
       <div class="form-group">
         <%= f.label :email %><br />
@@ -79,15 +113,13 @@
         <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
         <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
       </div>
-
-      <div class="form-group row">
-        <div class="col">
-          <%= f.submit "Update User", class: "btn btn-primary btn-block btn-lg" %>
-        </div>
-        <div class="col">
-          <%= button_to "Delete User", registration_path(resource_name), data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-block btn-lg", method: :delete %>
-        </div>
-      </div>
+    </div>
+    <div class="panel-footer">
+      <%= f.submit "Update User", class: "btn btn-primary" %>
+      <%= button_to "Delete User", registration_path(resource_name), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %>
+    </div>
     <% end %>
   </div>
 </div>
+
+<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="newLocationLabel" aria-hidden="true"></div>

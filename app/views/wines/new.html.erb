@@ -8,7 +8,7 @@
       <h4 class="card-title">Wines</h4>
       <div class="list-group">
         <% @wines.each do |w| %>
-          <%= link_to w.full_name, tasting_tasting_wines_path({tasting_wine:{tasting_id:@tasting.id,wine_id:w.id}}), class: "list-group-item list-group-item-action", method: :post %>
+          <%= link_to w.full_name, tasting_wines_path({tasting_wine:{tasting_id:@tasting.id,wine_id:w.id}}), class: "list-group-item list-group-item-action", method: :post %>
         <% end %>
       </div>
     </div>

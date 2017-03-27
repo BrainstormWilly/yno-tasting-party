@@ -31,8 +31,36 @@
     <%= f.label :close_at, class: "form-label" %>
     <%= f.datetime_select :close_at, class: "form-control" %>
   </div>
+
+  <%= f.label :host_location, class: "form-label" %>
+  <%= f.hidden_field :location_id %>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-group">
+
+        <% if current_host.host_locations.empty? %>
+          <p>You currently have now hosting locations.</p>
+        <% else %>
+          <div class="list-group">
+            <% current_host.host_locations.each do |hl| %>
+              <a data-turbolinks="false" href data-tasting-location-id="<%= hl.location_id %>" class="list-group-item tasting-location <%= location_style_for_tasting(tasting, hl.location) %>" >
+                <% if hl.location==tasting.location %>
+                  <span class="glyphicon glyphicon-ok tasting-location-check"></span>
+                <% end %>
+                <%= hl.location.to_short_string %>
+              </a>
+            <% end %>
+          </div>
+        <% end %>
+        <%= link_to 'Add Tasting Location', new_location_path, {remote: true, class: "btn btn-default", 'data-toggle' => 'modal', 'data-target' => '#modal-window'} %>
+      </div>
+    </div>
+  </div>
+
   <div class="form-group">
     <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
   </div>
 
 <% end %>
+
+<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="newLocationLabel" aria-hidden="true"></div>

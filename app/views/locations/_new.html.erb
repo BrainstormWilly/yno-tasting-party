@@ -1,0 +1,15 @@
+<div class="modal-panel">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="newLocationLabel"><%= title %></h3>
+  </div>
+  <%= form_for location, as: :location, url: create_location_for_host_path(location) do |f| %>
+  <div class="modal-body">
+    <%= render partial: "form", locals: {location: location, f: f} %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+  <% end %>
+</div>

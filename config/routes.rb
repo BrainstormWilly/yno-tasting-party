@@ -27,6 +27,13 @@ Rails.application.routes.draw do
 
   resources :hosts, only: [:new, :update, :create]
 
+  resources :host_locations, only: [:create, :destroy]
+  put "host_locations/:id/primary" => "host_locations#set_as_primary", as: "primary_host_location"
+
+  resources :locations
+  post "locations/create_for_host" => "locations#create_for_host", as: "create_location_for_host"
+  put "locations/:id/update_for_host" => "locations#update_for_host", as: "update_location_for_host"
+
   resources :wine_reviews, only: [:edit, :update]
 
   authenticated :user do

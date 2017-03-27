@@ -17,6 +17,7 @@ class TastingsController < ApplicationController
 
   def new
     @tasting = Tasting.new
+    @tasting.location_id = current_host.primary_location.id
   end
 
   def edit
@@ -96,7 +97,7 @@ class TastingsController < ApplicationController
 
 
     def valid_params
-      params.require(:tasting).permit(:name, :open_at, :close_at, :private, :description, :host_id)
+      params.require(:tasting).permit(:name, :open_at, :close_at, :private, :description, :host_id, :location_id)
     end
 
 end

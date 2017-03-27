@@ -3,6 +3,7 @@ require "action_view"
 class Tasting < ApplicationRecord
   include ActionView::Helpers::DateHelper
   belongs_to :host
+  belongs_to :location
   has_many :tasting_wines, dependent: :destroy
   has_many :guests, dependent: :destroy
   has_many :wine_reviews, dependent: :destroy

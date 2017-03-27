@@ -146,5 +146,9 @@ module TastingsHelper
     review.rating
   end
 
+  def location_style_for_tasting(tasting, location)
+    return "list-group-item-success" if tasting.location==location
+    ""
+  end
 
 end
