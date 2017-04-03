@@ -21,15 +21,15 @@ class TastersController < ApplicationController
     end
   end
 
-  def new
-    @taster = Taster.new
-    if params[:tasting_id]
-      @user = User.new
-      @tasting = Tasting.find(params[:tasting_id])
-      render :new_tasting_taster
-      return
-    end
-  end
+  # def new
+  #   @taster = Taster.new
+  #   if params[:tasting_id]
+  #     @user = User.new
+  #     @tasting = Tasting.find(params[:tasting_id])
+  #     render :new_tasting_taster
+  #     return
+  #   end
+  # end
 
   def create
     @taster = Taster.new(valid_params)
@@ -56,16 +56,22 @@ class TastersController < ApplicationController
     end
   end
 
-  # def destroy
-  #   @taster = Taster.find( params[:id] )
-  #   if @taster.destroy
-  #     flash[:notice] = "Taster deleted successfully"
-  #     redirect_to authenticated_root_path
-  #   else
-  #     flash.now[:alert] = "There was an error deleting this taster. Please try again later."
-  #     redirect_to edit_user_registration_path
-  #   end
-  # end
+  def destroy
+    @taster = Taster.find( params[:id] )
+    guests = Guest.where(taster: @taster)
+    if guests.empty?
+      if @taster.destroy
+        flash[:notice] = "Taster deleted successfully"
+        redirect_to authenticated_root_path
+      else
+        flash.now[:alert] = "There was an error deleting this taster. Please try again later."
+        redirect_to edit_user_registration_path
+      end
+    else
+      flash.now[:alert] = "You have already been a guest in a tasting. Please contact us to remove your account manually"
+      redirect_to edit_user_registration_path
+    end
+  end
 
 
   private

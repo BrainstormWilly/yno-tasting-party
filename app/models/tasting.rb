@@ -10,6 +10,7 @@ class Tasting < ApplicationRecord
   has_many :tasters, through: :guests
 
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
+  validates :location, presence: true
   validates :open_at, presence: true
   validates :open_at, date: { after_or_equal_to: Proc.new { Time.current }, message: "Tastings can not be opened in the past."}, :if => lambda{ Rails.env.production? }
 

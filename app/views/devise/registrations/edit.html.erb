@@ -42,6 +42,9 @@
       </div>
       <div class="panel-footer">
         <%= link_to 'Add Tasting Location', new_location_path, {remote: true, class: "btn btn-primary", 'data-toggle' => 'modal', 'data-target' => '#modal-window'} %>
+        <% if !current_host.host_locations.empty? %>
+          <%= link_to_if !current_host.host_locations.empty?, 'Start a New Tasting', new_tasting_path, class: "btn btn-success" %>
+        <% end %>
       </div>
     </div>
   </div>

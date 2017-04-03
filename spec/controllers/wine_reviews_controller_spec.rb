@@ -6,7 +6,8 @@ RSpec.describe WineReviewsController, type: :controller do
   let(:taster){ create(:taster, user: user) }
   let(:host){ create(:host, taster: taster) }
   let(:wine){ create(:wine) }
-  let(:tasting){ create(:tasting, host:host, open_at: Time.current) }
+  let(:location){ create(:location) }
+  let(:tasting){ create(:tasting, host:host, location: location, open_at: Time.current) }
   let(:wine_review){ create(:wine_review, tasting: tasting, taster: taster) }
 
   context "WineReview Taster CRUD" do

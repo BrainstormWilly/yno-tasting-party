@@ -6,7 +6,8 @@ RSpec.describe WineReview, type: :model do
   let(:taster){ create(:taster, user: user) }
   let(:host){ create(:host, taster: taster) }
   let(:wine){ create(:wine) }
-  let(:tasting){ create(:tasting, host:host) }
+  let(:location){ create(:location) }
+  let(:tasting){ create(:tasting, host:host, location: location) }
   let!(:tasting_wine){ create(:tasting_wine, tasting: tasting, wine: wine) }
   let!(:wine_review){ create(:wine_review, tasting: tasting, taster: taster, wine_number: 1, rating: 3) }
 
@@ -84,7 +85,8 @@ RSpec.describe WineReview, type: :model do
         user2 = create(:user)
         taster2 = create(:taster, user: user2)
         host2 = create(:host, taster: taster2)
-        @tasting2 = create(:tasting, host: host2)
+        location2 = create(:location)
+        @tasting2 = create(:tasting, host: host2, location: location2)
       end
       it "should be start at 1" do
         expect(WineReview.next_wine_number_for_tasting(@tasting2)).to eq 1
@@ -103,7 +105,8 @@ RSpec.describe WineReview, type: :model do
         user2 = create(:user)
         @taster2 = create(:taster, user: user2)
         host2 = create(:host, taster: @taster2)
-        @tasting2 = create(:tasting, host: host2)
+        location2 = create(:location)
+        @tasting2 = create(:tasting, host: host2, location: location2)
       end
       it "should be start at 1" do
         WineReview.create_next_in_sequence_for_guest(@tasting2, @taster2)

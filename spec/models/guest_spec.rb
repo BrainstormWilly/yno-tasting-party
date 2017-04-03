@@ -5,7 +5,8 @@ RSpec.describe Guest, type: :model do
   let(:user){ create(:user) }
   let(:taster){ create(:taster, user: user) }
   let(:host){ create(:host, taster: taster) }
-  let(:tasting){ create(:tasting, host: host) }
+  let(:location){ create(:location) }
+  let(:tasting){ create(:tasting, host: host, location: location) }
   let(:guest){ create(:guest, tasting: tasting, taster: taster) }
 
   it { is_expected.to validate_presence_of(:taster_id) }

@@ -9,15 +9,17 @@ RSpec.describe Tasting, type: :model do
   let(:user){ create(:user) }
   let(:taster){ create(:taster, user: user) }
   let(:host){ create(:host, taster: taster) }
-  let(:tasting){ create(:tasting, host: host) }
+  let(:location){ create(:location)}
+  let(:tasting){ create(:tasting, host: host, location: location) }
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_length_of(:name).is_at_least(1) }
   it { is_expected.to validate_presence_of(:open_at) }
+  it { is_expected.to validate_presence_of(:location) }
 
   describe "attributes" do
-    it "should have name, description, open_at, close_at, closed_at, and completed_at attributes" do
-      expect(tasting).to have_attributes(name: tasting.name, description: tasting.description, open_at: tasting.open_at, close_at: tasting.close_at, closed_at: tasting.closed_at, completed_at: tasting.completed_at)
+    it "should have name, description, location, open_at, close_at, closed_at, and completed_at attributes" do
+      expect(tasting).to have_attributes(name: tasting.name, description: tasting.description, location: tasting.location, open_at: tasting.open_at, close_at: tasting.close_at, closed_at: tasting.closed_at, completed_at: tasting.completed_at)
     end
   end
 

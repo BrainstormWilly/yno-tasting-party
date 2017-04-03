@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326232400) do
+ActiveRecord::Schema.define(version: 20170402175433) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 20170326232400) do
 
   create_table "hosts", force: :cascade do |t|
     t.integer  "taster_id"
-    t.string   "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["taster_id"], name: "index_hosts_on_taster_id"

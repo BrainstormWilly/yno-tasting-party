@@ -146,6 +146,7 @@ module TastingsHelper
     review.rating
   end
 
+  # needs rspec test
   def location_style_for_tasting(tasting, location)
     return "list-group-item-success" if tasting.location==location
     ""

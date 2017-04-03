@@ -6,6 +6,7 @@ FactoryGirl.define do
     closed_at nil
     completed_at nil
     description Faker::Lorem.sentences([1..5].sample)
+    location_id nil
     host_id nil
   end
 end

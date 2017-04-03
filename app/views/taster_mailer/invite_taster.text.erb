@@ -4,6 +4,7 @@
 Name: <%= @tasting.name %>
 Host: <%= @tasting.host.taster.name %>
 When: <%= @tasting.open_at.strftime("%A, %B %-d at %l:%M%P") %>
+Where: <%= @tasting.location.to_short_string %>
 Description: <%= @tasting.description %>
 
 You can join this tasting by following this link: <%= @url %>

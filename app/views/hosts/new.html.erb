@@ -5,12 +5,10 @@
   <h3>Enter Your Host Info</h3>
   <p>Signing up as host enables you to create and host your own tasting parties</p>
 
-  <div class="form-group">
-    <%= f.label :phone %><br />
-    <%= f.telephone_field :phone, class: "form-control" %>
-  </div>
+  <p><em>Content to come...</em></p>
 
   <div class="form-group">
+    <%= f.hidden_field :taster_id, value: current_taster.id %>
     <%= f.submit "Create Host", class: "btn btn-primary btn-block btn-lg" %>
   </div>
 

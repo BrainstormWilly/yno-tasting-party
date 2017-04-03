@@ -4,7 +4,7 @@
     <% if current_host %>
       <%= link_to "Host a New Tasting", new_tasting_path, class: "btn btn-success btn-block" %>
     <% else %>
-      <%= link_to "Host Your Own Tasting Party. It's Free!", new_host_path, class: "btn btn-success btn-block" %>
+      <%= link_to "Host Your Own Tasting Party. It's Free!", hosts_create_path(current_taster), method: :put, class: "btn btn-success btn-block" %>
     <% end %>
 </div>
 

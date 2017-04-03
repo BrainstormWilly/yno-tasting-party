@@ -51,8 +51,7 @@ class WineReview < ApplicationRecord
   end
 
   def self.delete_all_last_for_tasting(tasting)
-
-    self.where(tasting_id: tasting.id).where(wine_number: tasting.tasting_wines.count).destroy_all
+    self.where(tasting_id: tasting.id).where(wine_number: self.maximum(:wine_number)).destroy_all
   end
 
   def self.create_all_for_guest(tasting, taster)

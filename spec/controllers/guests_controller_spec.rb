@@ -7,7 +7,8 @@ RSpec.describe GuestsController, type: :controller do
   let(:taster){ create(:taster, user: user) }
   let(:taster2){ create(:taster, user: user2) }
   let(:host){ create(:host, taster: taster) }
-  let(:tasting){ create(:tasting, host: host) }
+  let(:location){ create(:location) }
+  let(:tasting){ create(:tasting, host: host, location: location) }
   let!(:guest){ create(:guest, tasting: tasting, taster: taster, invited: Time.current) }
   let(:wine){ create(:wine) }
   let!(:tasting_wine){ create(:tasting_wine, tasting:tasting, wine:wine) }

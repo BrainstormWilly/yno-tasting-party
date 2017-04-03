@@ -36,8 +36,7 @@ taster_me = Taster.create(
 )
 
 host_me = Host.create(
-  taster_id: taster_me.id,
-  phone: "707-237-6904"
+  taster_id: taster_me.id
 )
 
 

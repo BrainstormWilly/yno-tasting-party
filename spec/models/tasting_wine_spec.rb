@@ -5,7 +5,8 @@ RSpec.describe TastingWine, type: :model do
   let(:user){ create(:user) }
   let(:taster){ create(:taster, user: user) }
   let(:host){ create(:host, taster: taster) }
-  let(:tasting){ create(:tasting, host: host) }
+  let(:location){ create(:location) }
+  let(:tasting){ create(:tasting, host: host, location: location) }
   let(:wine){ create(:wine) }
   let(:tasting_wine){ create(:tasting_wine, wine: wine, tasting: tasting) }
 
