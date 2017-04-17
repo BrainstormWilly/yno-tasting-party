@@ -8,12 +8,6 @@ module TastingsHelper
     ts.each do |t|
       return true if !t.is_closed?
     end
-    # gs = Guest.where(taster: taster)
-    # gs.each do |g|
-    #   if g.invitation_open?
-    #     return true
-    #   end
-    # end
     false
   end
 
@@ -24,12 +18,6 @@ module TastingsHelper
     ts.each do |t|
       return true if t.host.taster != taster
     end
-    # gs = Guest.where(taster: taster).where.not(confirmed: nil)
-    # gs.each do |g|
-    #   if g.tasting_confirmed? && g.tasting.host.taster != taster
-    #     return true
-    #   end
-    # end
     false
   end
 
@@ -59,19 +47,6 @@ module TastingsHelper
   def taster_last_review(tasting, taster)
     tasting.wine_reviews.reorder("updated_at desc").where(taster: taster).first
     # WineReview.reorder("updated_at desc").where(tasting: tasting).where(taster: taster).first
-  end
-
-  def tasting_badge(tasting)
-    if tasting.is_open?
-      span = "<span class=\"badge badge-positive\">Open</span>"
-    elsif tasting.is_completed?
-      span = "<span class=\"badge\">Completed</span>"
-    elsif Time.current < tasting.open_at
-      span = "<span class=\"badge badge-future\">#{tasting.open_at.strftime('%b %-d, %l:%M%P')}</span>"
-    else
-      span = "<span class=\"badge badge-negative\">Closed</span>"
-    end
-    span.html_safe
   end
 
   def tasting_status(tasting)

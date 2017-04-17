@@ -26,9 +26,11 @@
   }
 
   .completed-wine-wrapper{
+    cursor: pointer;
     margin-bottom: 1rem;
   }
   .completed-wine-background{
+
     z-index: -1;
     position: relative;
     height: 6rem;

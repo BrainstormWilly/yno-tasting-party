@@ -17,12 +17,20 @@ RSpec.describe WinesController, type: :controller do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user, scope: :user
     end
-    # describe "GET #new" do
-    #   it "assigns @wine" do
-    #     get :new
-    #     expect(assigns(:wine)).to be_a_new(Wine)
-    #   end
-    # end
+    describe "GET #show" do
+      it "returns http success" do
+        get :show, params: {id: wine.id}
+        expect(response).to have_http_status :success
+      end
+      it "assigns @wine" do
+        get :show, params: {id: wine.id}
+        expect(assigns(:wine)).to eq wine
+      end
+      it "renders #show template" do
+        get :show, params: {id: wine.id}
+        expect(response).to render_template :show
+      end
+    end
     describe "POST #create" do
       it "adds @wine" do
         expect{

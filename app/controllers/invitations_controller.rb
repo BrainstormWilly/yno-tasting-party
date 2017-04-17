@@ -1,8 +1,10 @@
 class InvitationsController < Devise::InvitationsController
 
+  private
+
   def after_accept_path_for(resource)
-    taster = Taster.find_by(user: resource)
-    edit_taster_path(taster)
+    flash[:notice] = "Welcome aboard! Now, tell others more about your wine interests."
+    edit_taster_path(current_taster)
   end
 
 end

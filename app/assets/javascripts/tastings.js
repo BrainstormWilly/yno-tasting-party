@@ -14,5 +14,9 @@ $(document).on('turbolinks:load', function(e){
   $('.tasting-location').on("click", function(e){
     e.preventDefault();
     selectHostLocation($(this).data("tasting-location-id"));
+  });
+  $('.completed-wine-wrapper').on('click', function(e){
+    e.preventDefault();
+    window.location.href = "/wines/" + $(this).data('completed-wine');
   })
 });

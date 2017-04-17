@@ -6,13 +6,18 @@
   </div>
     <div class="list-group">
       <% @tasters.each do |t| %>
-        <% if !@tasting.tasters.include? t %>
+        <% if t.active? && !@tasting.tasters.include?(t) %>
           <div class="list-group-item clearfix">
-            <%= t.name %>
-            <div class="btn-group pull-right">
-              <%= link_to "Confirm", tasting_guests_create_and_confirm_path(@tasting.id, t.id), class:"btn btn-success", method: :put %>
-              <%= link_to "Invite", tasting_guests_existing_invite_path(@tasting.id, t.id), class:"btn btn-primary", method: :put %>
-            </div>
+            <% if t == current_host.taster %>
+              You<%= link_to "Confirm", tasting_guests_create_and_confirm_path(@tasting.id, t.id), class:"btn btn-success pull-right", method: :put %>
+            <% else %>
+              <%= t.name %>
+              <div class="btn-group pull-right">
+                <%= link_to "Profile", taster_path(t), class:"btn btn-default" %>
+                <%= link_to "Confirm", tasting_guests_create_and_confirm_path(@tasting.id, t.id), class:"btn btn-success", method: :put %>
+                <%= link_to "Invite", tasting_guests_existing_invite_path(@tasting.id, t.id), class:"btn btn-primary", method: :put %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       <% end %>

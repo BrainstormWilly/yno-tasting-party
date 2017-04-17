@@ -2,6 +2,10 @@ class WinesController < ApplicationController
 
   before_action :authenticate_user!
 
+  def show
+    @wine = Wine.find( params[:id] )
+  end
+
   def new
     @wine = Wine.new
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170402175433) do
+ActiveRecord::Schema.define(version: 20170409020641) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20170402175433) do
     t.string   "handle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "status"
     t.index ["user_id"], name: "index_tasters_on_user_id"
   end
 

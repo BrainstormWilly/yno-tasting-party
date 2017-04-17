@@ -1,0 +1,31 @@
+<%= render partial: "shared/title", locals: {title: @wine.name} %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Wine Info</h4>
+  </div>
+  <div class="panel-body">
+    <p><strong>Vintage:</strong> <%= @wine.vintage_name %></p>
+    <p><strong>Name:</strong> <%= @wine.name %></p>
+    <p><strong>Price:</strong> $<%= @wine.price %></p>
+    <p><strong>Average Rating:</strong> <%= avg_wine_rating_overall(@wine) %></p>
+  </div>
+</div>
+
+<% if !@wine.tasting_wines.empty? %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Tasting History</h4>
+  </div>
+  <div class="list-group">
+    <% @wine.tasting_wines.each do |tw| %>
+      <div class="list-group-item">
+        <%= tw.tasting.name %>
+        <%= tasting_badge(tw.tasting) %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<%= link_to "Back", :back, class: "btn btn-default" %>

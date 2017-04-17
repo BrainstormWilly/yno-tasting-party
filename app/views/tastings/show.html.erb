@@ -45,9 +45,9 @@
     <p><%= @tasting.host.taster.name %></p>
     <hr/>
     <h4>When</h4>
-    <p><strong>Start time:</strong> <%= @tasting.open_at.strftime("%A, %B %-d at %l:%M%P") %>
+    <p><strong>Start time:</strong> <%= @tasting.open_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %>
     <% if !@tasting.close_at.nil? %>
-      <br/><strong>Stop time:</strong> <%= @tasting.close_at.strftime("%A, %B %-d at %l:%M%P") %>
+      <br/><strong>Stop time:</strong> <%= @tasting.close_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %>
     <% end %>
     </p>
     <hr/>
@@ -68,19 +68,41 @@
     <% else %>
       <div class="list-group">
         <% @tasting.tasting_wines.each do |tw| %>
-          <div class="list-group-item">
-            <h5><%= tw.wine.full_name %></h5>
-            <% if @tasting.is_closed? %>
-              <% if tw.wine_number == 0 %>
-                <p>Unrevealed</p>
+            <%= link_to wine_path(tw.wine), class: "list-group-item" do %>
+              <h5><%= tw.wine.full_name %><span class="glyphicon glyphicon-chevron-right pull-right"></span></h5>
+              <% if @tasting.is_closed? %>
+                <% if tw.wine_number == 0 %>
+                  <p>Unrevealed</p>
+                <% else %>
+                  <p>Wine Number: <%= tw.wine_number %>; Avg. Rating: <%= avg_tasting_wine_rating(tw) %>; Your Rating: <%= guest_tasting_wine_rating(tw, current_taster) %></p>
+                <% end %> <!-- tw.wine_number == 0 -->
               <% else %>
-                <p>Wine Number: <%= tw.wine_number %>; Avg. Rating: <%= avg_tasting_wine_rating(tw) %>; Your Rating: <%= guest_tasting_wine_rating(tw, current_taster) %></p>
-              <% end %> <!-- tw.wine_number == 0 -->
-            <% end %> <!-- if @tasting.is_closed? -->
-          </div> <!-- list-group-item -->
+
+              <% end %> <!-- if @tasting.is_closed? -->
+            <% end %> <!-- link_to tag -->
         <% end %> <!-- @tasting.tasting_wines.each -->
       </div> <!-- list-group -->
     <% end %> <!-- if @tasting.tasting_wines.empty? -->
+
+    <h4>Guests</h4>
+    <% if @tasting.guests.empty? %>
+      <p>No guests invited yet</p>
+    <% else %>
+      <div class="list-group">
+        <% @tasting.guests.each do |g| %>
+          <%= link_to taster_path(g.taster), class: "list-group-item #{"list-group-item-danger" if !g.confirmed? }" do %>
+            <h5>
+              <% if g.taster.pending? %>
+                <%= g.taster.user.email %> <small>(new user confirmation pending)</small>
+              <% else %>
+                <%= g.taster.name %> <small>(<%= g.taster.handle %>)</small>
+              <% end %>
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </h5>
+          <% end %> <!-- list-group-item -->
+        <% end %> <!-- @tasting.guests.each -->
+      </div> <!-- list-group -->
+    <% end %> <!-- if @tasting.guests.empty? -->
 
   </div> <!-- panel-body -->
 

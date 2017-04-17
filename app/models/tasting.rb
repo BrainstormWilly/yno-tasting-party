@@ -14,6 +14,8 @@ class Tasting < ApplicationRecord
   validates :open_at, presence: true
   validates :open_at, date: { after_or_equal_to: Proc.new { Time.current }, message: "Tastings can not be opened in the past."}, :if => lambda{ Rails.env.production? }
 
+  
+
   def is_open?
     return false if self.closed_at? || self.completed_at?
     return false if Time.current < self.open_at

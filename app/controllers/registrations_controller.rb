@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 
+
   def destroy
     taster = Taster.find_by(user: current_user)
     host = Host.find_by(taster: taster)

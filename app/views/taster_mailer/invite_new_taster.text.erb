@@ -1,4 +1,4 @@
-<%= @taster.name %>, you've been invited to a Yno Tasting Party!
+<%= @tasting.host.taster.name %> has invited you to a Yno Tasting Party!
 ================================================================================
 
 Name: <%= @tasting.name %>
@@ -7,5 +7,4 @@ When: <%= @tasting.open_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %>
 Where: <%= @tasting.location.to_short_string %>
 Description: <%= @tasting.description %>
 
-You can join this tasting by following this link: <%= @url %>
-and clicking "confirm" in your tasting invitations.
+You can join this tasting by following this link: <%= @url %> to set up your taster account and confirm your invitation.

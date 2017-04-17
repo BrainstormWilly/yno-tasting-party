@@ -102,7 +102,10 @@ class GuestsController < ApplicationController
   # POST tastings/:tasting_id/guests/new_invite
   def new_invite
     @tasting = Tasting.find(params[:tasting_id])
-    @user = User.invite!({email: params[:user][:email]}, current_user)
+    @user = User.invite!({email: params[:user][:email]}) do |u|
+      u.skip_invitation = true
+      u.invited_by_id = current_user.id
+    end
     @taster = Taster.new
     @guest = Guest.new
     if @user
@@ -112,6 +115,7 @@ class GuestsController < ApplicationController
         @guest.taster = @taster
         @guest.invited = Time.current
         if @guest.save
+          TasterMailer.invite_new_taster(@guest).deliver
           flash[:notice] = "Invite successfully sent to #{@user.email}."
           redirect_to tasting_guests_new_path(@tasting)
         else

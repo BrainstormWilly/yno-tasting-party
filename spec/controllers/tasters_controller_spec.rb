@@ -15,20 +15,20 @@ RSpec.describe TastersController, type: :controller do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user, scope: :user
     end
-    # describe "GET #show" do
-    #   it "returns http success" do
-    #     get :show, params: {id: taster.id}
-    #     expect(response).to have_http_status :success
-    #   end
-    #   it "assigns @taster" do
-    #     get :show, params: {id: taster.id}
-    #     expect(assigns(:taster)).to eq taster
-    #   end
-    #   it "renders #show template" do
-    #     get :show, params: {id: taster.id}
-    #     expect(response).to render_template :show
-    #   end
-    # end
+    describe "GET #show" do
+      it "returns http success" do
+        get :show, params: {id: taster.id}
+        expect(response).to have_http_status :success
+      end
+      it "assigns @taster" do
+        get :show, params: {id: taster.id}
+        expect(assigns(:taster)).to eq taster
+      end
+      it "renders #show template" do
+        get :show, params: {id: taster.id}
+        expect(response).to render_template :show
+      end
+    end
     describe "GET #edit" do
       it "returns http success" do
         get :edit, params: {id: taster.id}

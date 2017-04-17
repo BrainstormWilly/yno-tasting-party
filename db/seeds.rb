@@ -19,7 +19,8 @@
   taster = Taster.create(
     name: Faker::Name.name,
     user_id: user.id,
-    handle: user.email
+    handle: user.email,
+    status: "active"
   )
 end
 
@@ -32,7 +33,8 @@ user_me = User.create(
 taster_me = Taster.create(
   user_id: user_me.id,
   name: "Bill Langley",
-  handle: "WillyTheYno"
+  handle: "WillyTheYno",
+  status: "active"
 )
 
 host_me = Host.create(
@@ -270,6 +272,7 @@ end
       tasting_id: tasting_completed.id,
       taster_id: tt.taster.id,
       rating: (1..5).to_a.sample,
+      wine_id: tasting_completed.tasting_wines[i].wine.id,
       wine_number: i+1,
       created_at: 40.hours.ago,
       updated_at: 38.hours.ago

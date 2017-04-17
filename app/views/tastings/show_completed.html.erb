@@ -11,10 +11,6 @@
       <div class="col-sm-10"><%= @tasting.host.taster.name %></div>
     </div>
     <div class="row">
-      <div class="col-sm-2"><strong>Guests:</strong></div>
-      <div class="col-sm-10"><%= @tasting.guests.count %></div>
-    </div>
-    <div class="row">
       <div class="col-sm-2"><strong>Completed On:</strong></div>
       <div class="col-sm-10"><%= @tasting.completed_at.strftime("%B %d, %Y") %></div>
     </div>
@@ -25,13 +21,13 @@
 
 <h3>Overall Ratings</h3>
 <% rating_sorted_tasting_wines(@tasting).each do |tw| %>
-  <div class="completed-wine-wrapper">
+  <div class="completed-wine-wrapper" data-completed-wine="<%= tw.wine_id %>">
     <div class="completed-wine-background">
       <div class="completed-wine-graph <%= rating_fill_color_for_tasting_wine(tw) %>" style="width: <%= rating_fill_percent_for_tasting_wine(tw) %>"></div>
     </div>
     <div class="completed-wine-content">
-      <h4><span class="glyphicon glyphicon-chevron-right"></span> <%= tw.wine.full_name %></h4>
-      <h4><%= avg_tasting_wine_rating(tw) %></h4>
+        <h4><span class="glyphicon glyphicon-chevron-right"></span> <%= tw.wine.full_name %></h4>
+        <h4><%= avg_tasting_wine_rating(tw) %></h4>
     </div>
   </div>
 <% end %>
@@ -40,7 +36,7 @@
   <hr/>
   <h3>Your Ratings</h3>
   <% guest_rating_sorted_wine_reviews(current_guest(@tasting, current_taster)).each do |wr| %>
-    <div class="completed-wine-wrapper">
+    <div class="completed-wine-wrapper" data-completed-wine="<%= tasting_wine_from_wine_review(wr).wine_id %>">
       <div class="completed-wine-background">
         <div class="completed-wine-graph <%= rating_fill_color_for_rating(wr.rating) %>" style="width: <%= "#{100*wr.rating/5}%" %>"></div>
       </div>
@@ -51,3 +47,15 @@
     </div>
   <% end %>
 <% end %>
+
+<h3>Guests</h3>
+<div class="list-group">
+  <% @tasting.guests.each do |g| %>
+    <%= link_to taster_path(g.taster), class: "list-group-item" do %>
+      <h5>
+        <%= g.taster.name %> <small>(<%= g.taster.handle %>)</small>
+        <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+      </h5>
+    <% end %>
+  <% end %> <!-- @tasting.guests.each -->
+</div> <!-- list-group -->

@@ -29,7 +29,7 @@
 
   <div class="form-group">
     <%= f.label :close_at, class: "form-label" %>
-    <%= f.datetime_select :close_at, class: "form-control" %>
+    <%= f.datetime_select :close_at, class: "form-control"   %>
   </div>
 
   <%= f.label :host_location, class: "form-label" %>
@@ -58,6 +58,7 @@
   </div>
 
   <div class="form-group">
+    <%= f.hidden_field :host_id, value: current_host.id %>
     <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
   </div>
 

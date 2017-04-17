@@ -32,7 +32,15 @@ class TastingsController < ApplicationController
   end
 
   def create
-    @tasting = Tasting.new(valid_params)
+    @tasting = Tasting.new({
+      name: valid_params["name"],
+      description: valid_params["description"],
+      private: valid_params["private"],
+      host_id: valid_params["host_id"],
+      location_id: valid_params["location_id"],
+      open_at: Time.parse(valid_params["open_at"]).utc
+    })
+    @tasting.close_at = Time.parse(valid_params["close_at"]).utc unless valid_params["close_at"].blank?
     if @tasting.save
       flash[:notice] = "Tasting '#{@tasting.name}' created successfully."
       redirect_to edit_tasting_path(@tasting)
@@ -47,7 +55,15 @@ class TastingsController < ApplicationController
       flash[:alert] = "You are not allowed to update a completed tasting."
       redirect_to tasting_path(@tasting)
     else
-      @tasting.update(valid_params)
+      @tasting.update({
+        name: valid_params["name"],
+        description: valid_params["description"],
+        private: valid_params["private"],
+        host_id: valid_params["host_id"],
+        location_id: valid_params["location_id"],
+        open_at: Time.parse(valid_params["open_at"]).utc
+      })
+      @tasting.close_at = Time.parse(valid_params["close_at"]).utc unless valid_params["close_at"].blank?
       if @tasting.save
         flash[:notice] = "Tasting '#{@tasting.name}' updated successfully."
         redirect_to edit_tasting_path(@tasting)

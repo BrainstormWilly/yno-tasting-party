@@ -28,7 +28,7 @@
           <input class="form-control mr-sm-2" type="text" placeholder="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form> -->
-        <% if current_taster %>
+        <% if current_taster && current_taster.active? %>
           <p class="navbar-text navbar-right">
             <%= link_to current_taster.handle, edit_user_registration_path, class: "navbar-link" %> |
             <%= link_to "Sign Out", destroy_user_session_path, class: "navbar-link", method: :delete %>

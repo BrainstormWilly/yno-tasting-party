@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+
+
   private
 
     def current_taster
@@ -15,5 +17,8 @@ class ApplicationController < ActionController::Base
       taster = Taster.find_by(user_id: current_user.invited_by_id)
       Host.find_by(taster: taster)
     end
+
+    
+
 
 end

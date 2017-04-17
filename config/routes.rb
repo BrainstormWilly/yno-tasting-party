@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   resources :locations
   post "locations/create_for_host" => "locations#create_for_host", as: "create_location_for_host"
 
-  resources :wines, only: [:new, :create, :destroy]
+  resources :wines, only: [:show, :new, :create, :destroy]
 
   resources :wine_reviews, only: [:edit, :update]
 

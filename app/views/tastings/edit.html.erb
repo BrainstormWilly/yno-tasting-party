@@ -40,15 +40,22 @@
   </div>
   <div class="list-group">
     <% @tasting.guests.each do |g| %>
-      <div class="list-group-item clearfix">
-        <%= g.taster.name %>
-        <div class="btn-group pull-right">
-          <%= link_to "Profile", guest_path(g), class: "btn btn-default" %>
-          <%= link_to "Delete", guest_path(g),
-              class: "btn btn-danger",
-              data: { confirm: "Remove this taster and their ratings from tasting?" },
-              method: :delete %>
-        </div>
+      <div class="list-group-item clearfix <%= 'list-group-item-danger' if !g.confirmed? %>">
+        <% if g.taster.pending? %>
+          <%= g.taster.user.email %> <small>(new taster account pending)</small>
+        <% else %>
+          <%= g.taster.name %>
+          <div class="btn-group pull-right">
+            <%= link_to "Profile", taster_path(g.taster), class: "btn btn-default" %>
+            <% if g.confirmed? %>
+              <%= link_to "Delete", guest_path(g),
+                  class: "btn btn-danger",
+                  data: { confirm: "Remove this taster and their ratings from tasting?" },
+                  method: :delete %>
+            <% end %>
+          </div>
+        <% end %>
+
       </div>
     <% end %>
   </div>
