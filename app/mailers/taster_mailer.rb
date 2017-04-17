@@ -1,8 +1,10 @@
 class TasterMailer < ApplicationMailer
+  helper :application # gives access to all helpers defined within `application_helper`.
+  include Devise::Controllers::UrlHelpers # Optional. eg. `confirmation_url`
 
   def invite_taster(guest)
     @taster = guest.taster
-    @url = authenticated_root_path
+    @url = ENV['HOST_URL']
     @tasting = guest.tasting
     mail(to: @taster.user.email, subject: "You are invited to a Yno Tasting Party")
   end
@@ -11,7 +13,7 @@ class TasterMailer < ApplicationMailer
     @user = guest.taster.user
     @tasting = guest.tasting
     @url = accept_user_invitation_url(invitation_token: @user.raw_invitation_token)
-    @user.deliver_invitation
+    # @user.deliver_invitation
     mail(to: @user.email, subject: "You are invited to a Yno Tasting Party")
   end
 

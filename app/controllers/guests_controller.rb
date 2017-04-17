@@ -105,6 +105,7 @@ class GuestsController < ApplicationController
     @user = User.invite!({email: params[:user][:email]}) do |u|
       u.skip_invitation = true
       u.invited_by_id = current_user.id
+      u.invitation_sent_at = Time.current
     end
     @taster = Taster.new
     @guest = Guest.new

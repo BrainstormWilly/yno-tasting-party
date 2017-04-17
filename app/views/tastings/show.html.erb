@@ -76,8 +76,6 @@
                 <% else %>
                   <p>Wine Number: <%= tw.wine_number %>; Avg. Rating: <%= avg_tasting_wine_rating(tw) %>; Your Rating: <%= guest_tasting_wine_rating(tw, current_taster) %></p>
                 <% end %> <!-- tw.wine_number == 0 -->
-              <% else %>
-
               <% end %> <!-- if @tasting.is_closed? -->
             <% end %> <!-- link_to tag -->
         <% end %> <!-- @tasting.tasting_wines.each -->

@@ -24,6 +24,11 @@ group :development do
   gem 'rb-readline'
 end
 
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use sqlite3 as the database for Active Record
@@ -67,3 +72,6 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.43'
 gem 'devise'
 gem 'devise_invitable'
 gem 'figaro'
+
+# SendGrid email
+gem 'sendgrid-ruby'
