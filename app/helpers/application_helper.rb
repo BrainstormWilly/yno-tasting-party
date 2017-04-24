@@ -21,6 +21,14 @@ module ApplicationHelper
     Host.find_by(taster: current_taster)
   end
 
+
+  def client_timezone
+    lat = request.location.latitude == 0.0 ? 38.440429 : request.location.latitude
+    lng = request.location.longitude == 0.0 ? -122.714055 : request.location.longitude
+    Timezone.lookup(lat, lng)
+  end
+
+
   # def in_user_time(time)
   #   time.in_time_zone
   # end

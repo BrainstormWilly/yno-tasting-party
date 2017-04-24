@@ -60,6 +60,9 @@ gem 'jbuilder', '~> 2.5'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# Client timezone lookup
+gem 'geocoder'
+gem 'timezone', '~> 1.0'
 
 # Bootstrap 3
 gem 'bootstrap-sass'
