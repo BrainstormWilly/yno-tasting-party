@@ -45,9 +45,9 @@
     <p><%= @tasting.host.taster.name %></p>
     <hr/>
     <h4>When</h4>
-    <p><strong>Start time:</strong> <%= @tasting.open_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %>
+    <p><strong>Start time:</strong> <%= client_timezone_str(@tasting.open_at) %>
     <% if !@tasting.close_at.nil? %>
-      <br/><strong>Stop time:</strong> <%= @tasting.close_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %>
+      <br/><strong>Stop time:</strong> <%= client_timezone_str(@tasting.close_at) %>
     <% end %>
     </p>
     <hr/>

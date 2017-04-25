@@ -3,7 +3,7 @@
 
 Name: <%= @tasting.name %>
 Host: <%= @tasting.host.taster.name %>
-When: <%= @tasting.open_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %>
+When: <%= @open_at%>
 Where: <%= @tasting.location.to_short_string %>
 Description: <%= @tasting.description %>
 

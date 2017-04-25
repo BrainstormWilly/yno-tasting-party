@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
+
+  attr_reader :timezone
+
   protect_from_forgery with: :exception
-
-
 
   private
 
@@ -18,13 +19,13 @@ class ApplicationController < ActionController::Base
       Host.find_by(taster: taster)
     end
 
-    # def client_timezone
-    #   lat = request.location.latitude == "0.0" ? "38.440429" : request.location.latitude
-    #   lng = request.location.longitude == "0.0" ? "-122.714055" : request.location.longitude
-    #   Timezone::Zone.new latlon: [lat, lng]
-    # end
+    def client_timezone
+      lat = request.location.latitude == 0.0 ? 38.440429 : request.location.latitude
+      lng = request.location.longitude == 0.0 ? -122.714055 : request.location.longitude
+      Timezone.lookup(lat,lng)
+    end
 
-
+    
 
 
 end

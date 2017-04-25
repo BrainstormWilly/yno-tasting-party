@@ -10,7 +10,7 @@
     <p>
       <strong>Name:</strong> <%= @tasting.name %><br/>
       <strong>Host:</strong> <%= @tasting.host.taster.name %><br/>
-      <strong>When:</strong> <%= @tasting.open_at.getlocal.strftime("%A, %B %-d at %l:%M%P %Z") %><br/>
+      <strong>When:</strong> <%= @open_at %><br/>
       <strong>Where:</strong> <%= @tasting.location.to_short_string %><br/>
       <strong>Description:</strong> <%= @tasting.description %>
     </p>

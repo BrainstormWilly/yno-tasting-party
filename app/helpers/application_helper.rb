@@ -6,7 +6,7 @@ module ApplicationHelper
     elsif tasting.is_completed?
       span = "<span class=\"badge\">Completed</span>"
     elsif Time.current < tasting.open_at
-      span = "<span class=\"badge badge-future\">#{tasting.open_at.getlocal.strftime('%b %-d, %l:%M%P %Z')}</span>"
+      span = "<span class=\"badge badge-future\">#{self.client_timezone_str(tasting.open_at, true)}</span>"
     else
       span = "<span class=\"badge badge-negative\">Closed</span>"
     end
@@ -26,6 +26,11 @@ module ApplicationHelper
     lat = request.location.latitude == 0.0 ? 38.440429 : request.location.latitude
     lng = request.location.longitude == 0.0 ? -122.714055 : request.location.longitude
     Timezone.lookup(lat, lng)
+  end
+
+  def client_timezone_str(time, abbr=false)
+    return "#{self.client_timezone.time_with_offset(time).strftime("%b %-d, %l:%M%P %Z")} #{self.client_timezone.abbr(time)}" if abbr
+    "#{self.client_timezone.time_with_offset(time).strftime("%A, %B %-d at %l:%M%P")} #{self.client_timezone.abbr(time)}"
   end
 
 

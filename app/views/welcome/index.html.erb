@@ -3,7 +3,7 @@
   <h4 style="text-align: center">Join us</h4>
   <hr/>
   <div class="container-fluid row">
-    <p>Remote IP: <%= client_timezone %></p>
+    <p>Remote IP: <%= client_timezone.abbr(Time.now) %></p>
     <div class="col-sm-6">
       <%= link_to "Sign In", new_user_session_path, class: "btn btn-primary btn-lg btn-block" %>
     </div>

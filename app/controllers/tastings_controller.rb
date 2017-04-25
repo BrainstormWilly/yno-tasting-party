@@ -3,6 +3,7 @@ class TastingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_tasting, only: [:show, :edit, :update, :destroy, :close]
 
+
   def index
     @public_tastings = Tasting.where(private:false)
   end
