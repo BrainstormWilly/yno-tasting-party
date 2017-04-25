@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  attr_reader :timezone
-
   protect_from_forgery with: :exception
 
   private
@@ -25,7 +23,7 @@ class ApplicationController < ActionController::Base
       Timezone.lookup(lat,lng)
     end
 
-    
+
 
 
 end

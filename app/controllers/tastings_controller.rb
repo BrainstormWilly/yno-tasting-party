@@ -39,9 +39,9 @@ class TastingsController < ApplicationController
       private: valid_params["private"],
       host_id: valid_params["host_id"],
       location_id: valid_params["location_id"],
-      open_at: Time.parse(valid_params["open_at"]).utc
+      open_at: client_timezone.time_with_offset(valid_params["open_at"])
     })
-    @tasting.close_at = Time.parse(valid_params["close_at"]).utc unless valid_params["close_at"].blank?
+    @tasting.close_at = client_timezone.time_with_offset(valid_params["close_at"]) unless valid_params["close_at"].blank?
     if @tasting.save
       flash[:notice] = "Tasting '#{@tasting.name}' created successfully."
       redirect_to edit_tasting_path(@tasting)
@@ -62,9 +62,9 @@ class TastingsController < ApplicationController
         private: valid_params["private"],
         host_id: valid_params["host_id"],
         location_id: valid_params["location_id"],
-        open_at: Time.parse(valid_params["open_at"]).utc
+        open_at: client_timezone.time_with_offset(valid_params["open_at"])
       })
-      @tasting.close_at = Time.parse(valid_params["close_at"]).utc unless valid_params["close_at"].blank?
+      @tasting.close_at = client_timezone.time_with_offset(valid_params["close_at"]) unless valid_params["close_at"].blank?
       if @tasting.save
         flash[:notice] = "Tasting '#{@tasting.name}' updated successfully."
         redirect_to edit_tasting_path(@tasting)
