@@ -8,9 +8,21 @@ function selectHostLocation(id){
   $("[data-tasting-location-id=" + id + "]").prepend("<span class='glyphicon glyphicon-ok tasting-location-check'></span>&nbsp;&nbsp;");
 }
 
+function changeDate(e){
+  var date = e.date.utc().format("YYYY-MM-DD HH:mm:ss UTC");
+  if(e.currentTarget.id=="datepicker_open_at"){
+    $('#tasting_open_at').val(date);
+  }else{
+    $('#tasting_close_at').val(date);
+  }
+}
+
 
 $(document).on('turbolinks:load', function(e){
-  $('.datetimepickergroup').datetimepicker();
+  $('.input-group.date').datetimepicker();
+  $('.input-group.date').on('dp.change', changeDate);
+  $('#datepicker_open_at').data('DateTimePicker').defaultDate(moment($('#tasting_open_at').val()));
+  $('#datepicker_close_at').data('DateTimePicker').defaultDate(moment($('#tasting_close_at').val()));
   $('.tasting-location').on("click", function(e){
     e.preventDefault();
     selectHostLocation($(this).data("tasting-location-id"));

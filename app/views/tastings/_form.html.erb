@@ -24,12 +24,24 @@
 
   <div class="form-group">
     <%= f.label :open_at, class: "form-label" %>
-    <%= f.datetime_select :open_at, class: "form-control" %>
+    <%= f.hidden_field :open_at %>
+    <div class='input-group date' id='datepicker_open_at'>
+        <input type='text' class="form-control" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
   </div>
 
   <div class="form-group">
     <%= f.label :close_at, class: "form-label" %>
-    <%= f.datetime_select :close_at, class: "form-control"   %>
+    <%= f.hidden_field :close_at %>
+    <div class='input-group date' id='datepicker_close_at'>
+        <input type='text' class="form-control" />
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
   </div>
 
   <%= f.label :host_location, class: "form-label" %>
