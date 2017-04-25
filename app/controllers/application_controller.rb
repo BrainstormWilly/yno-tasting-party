@@ -23,7 +23,4 @@ class ApplicationController < ActionController::Base
       Timezone.lookup(lat,lng)
     end
 
-
-
-
 end
