@@ -90,7 +90,7 @@ class GuestsController < ApplicationController
     @guest.taster = @taster
     @guest.invited = Time.current
     if @guest.save
-      TasterMailer.invite_taster(@guest).deliver
+      TasterMailer.invite_taster(@guest, client_timezone_str(@tasting.open_at)).deliver
       flash[:notice] = "Invite successfully sent to #{@taster.name}."
       redirect_to tasting_guests_new_path(@tasting)
     else
@@ -105,7 +105,6 @@ class GuestsController < ApplicationController
     @user = User.invite!({email: params[:user][:email]}) do |u|
       u.skip_invitation = true
       u.invited_by_id = current_user.id
-      u.invitation_sent_at = Time.current
     end
     @taster = Taster.new
     @guest = Guest.new
@@ -116,7 +115,7 @@ class GuestsController < ApplicationController
         @guest.taster = @taster
         @guest.invited = Time.current
         if @guest.save
-          TasterMailer.invite_new_taster(@guest).deliver
+          TasterMailer.invite_new_taster(@guest, client_timezone_str(@tasting.open_at)).deliver
           flash[:notice] = "Invite successfully sent to #{@user.email}."
           redirect_to tasting_guests_new_path(@tasting)
         else

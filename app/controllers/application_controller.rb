@@ -23,4 +23,9 @@ class ApplicationController < ActionController::Base
       Timezone.lookup(lat,lng)
     end
 
+    def client_timezone_str(time, abbr=false)
+      return "#{client_timezone.time_with_offset(time).strftime("%b %-d, %l:%M%P %Z")} #{client_timezone.abbr(time)}" if abbr
+      "#{client_timezone.time_with_offset(time).strftime("%A, %B %-d at %l:%M%P")} #{client_timezone.abbr(time)}"
+    end
+
 end
