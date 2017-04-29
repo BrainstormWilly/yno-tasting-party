@@ -273,9 +273,7 @@ RSpec.describe Tasting, type: :model do
     end
     context "for closed tastings" do
       before do
-
         tasting.closed_at = Time.current
-        p "@@@@@@@@@@@ Completed? #{tasting.is_completed?}"
       end
       it "should be 'Closed'" do
         expect(tasting.status).to eq "Closed"

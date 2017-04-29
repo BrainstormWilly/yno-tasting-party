@@ -91,7 +91,7 @@ module TastingsHelper
   end
 
   def rating_fill_percent_for_tasting_wine(tasting_wine)
-    "#{100*(avg_tasting_wine_rating(tasting_wine)/5)}%"
+    "#{(100*(avg_tasting_wine_rating(tasting_wine)/5)).round(2)}%"
   end
 
   def rating_fill_color_for_tasting_wine(tasting_wine)

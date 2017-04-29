@@ -33,14 +33,8 @@ class TastingsController < ApplicationController
   end
 
   def create
-    @tasting = Tasting.new({
-      name: valid_params["name"],
-      description: valid_params["description"],
-      private: valid_params["private"],
-      host_id: valid_params["host_id"],
-      location_id: valid_params["location_id"],
-      open_at: client_timezone.time_with_offset(valid_params["open_at"])
-    })
+    @tasting = Tasting.new(valid_params)
+    @tasting.open_at = client_timezone.time_with_offset(valid_params["open_at"])
     @tasting.close_at = client_timezone.time_with_offset(valid_params["close_at"]) unless valid_params["close_at"].blank?
     if @tasting.save
       flash[:notice] = "Tasting '#{@tasting.name}' created successfully."
@@ -56,14 +50,8 @@ class TastingsController < ApplicationController
       flash[:alert] = "You are not allowed to update a completed tasting."
       redirect_to tasting_path(@tasting)
     else
-      @tasting.update({
-        name: valid_params["name"],
-        description: valid_params["description"],
-        private: valid_params["private"],
-        host_id: valid_params["host_id"],
-        location_id: valid_params["location_id"],
-        open_at: client_timezone.time_with_offset(valid_params["open_at"])
-      })
+      @tasting.update(valid_params)
+      @tasting.open_at = client_timezone.time_with_offset(valid_params["open_at"]) unless valid_params["open_at"].blank?
       @tasting.close_at = client_timezone.time_with_offset(valid_params["close_at"]) unless valid_params["close_at"].blank?
       if @tasting.save
         flash[:notice] = "Tasting '#{@tasting.name}' updated successfully."

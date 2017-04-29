@@ -19,9 +19,7 @@ RSpec.describe GuestsController, type: :controller do
       taster_id: taster2.id
   }}}
   let(:user_params){{
-    user: {
-      email: Faker::Internet.email
-    }
+    email: Faker::Internet.email
   }}
 
 
@@ -108,23 +106,23 @@ RSpec.describe GuestsController, type: :controller do
     end
     describe "POST #new_invite" do
       it "assigns @tasting" do
-        put :new_invite, params: {tasting_id: tasting.id, user: user_params}
+        put :new_invite, params: {user: user_params, tasting_id: tasting.id}
         expect(assigns(:tasting)).to eq tasting
       end
       it "assigns @user" do
-        put :new_invite, params: {tasting_id: tasting.id, user: user_params}
+        put :new_invite, params: {user: user_params, tasting_id: tasting.id}
         expect(assigns(:user)).to be_a User
       end
       it "assigns @taster" do
-        put :new_invite, params: {tasting_id: tasting.id, user: user_params}
+        put :new_invite, params: {user: user_params, tasting_id: tasting.id}
         expect(assigns(:taster)).to be_a Taster
       end
       it "assigns @guest" do
-        put :new_invite, params: {tasting_id: tasting.id, user: user_params}
+        put :new_invite, params: {user: user_params, tasting_id: tasting.id}
         expect(assigns(:guest)).to be_a Guest
       end
       it "redirects to Guest#new" do
-        put :new_invite, params: {tasting_id: tasting.id, user: user_params}
+        put :new_invite, params: {user: user_params, tasting_id: tasting.id}
         expect(response).to redirect_to tasting_guests_new_path(tasting)
       end
     end
