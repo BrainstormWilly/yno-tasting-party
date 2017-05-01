@@ -78,3 +78,6 @@ gem 'figaro'
 
 # SendGrid email
 gem 'sendgrid-ruby'
+
+# API Serialization
+gem 'active_model_serializers', '~> 0.10.0'
