@@ -40,6 +40,7 @@ class GuestsController < ApplicationController
     @guest = Guest.find(params[:id])
     @guest.confirmed = Time.current
     if @guest.save
+      WineReview.create_all_for_guest(@tasting, @taster)
       flash[:notice] = "Yay! You are confirmed for this tasting"
       redirect_to tasting_path(@guest.tasting_id)
     else
