@@ -4,6 +4,8 @@
   <h4>Status: <%= @tasting.status %></h4>
 </div>
 
+<p>Open: <%= @tasting.is_open? %></p>
+<p>Taster in tasting: <%= @tasting.tasters.include?(current_taster) %></p>
 <% if @tasting.tasters.include?(current_taster) && @tasting.is_open? %>
   <div class="panel panel-default">
     <div class="panel-heading">
