@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 
+  force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
 
   private
@@ -26,6 +27,10 @@ class ApplicationController < ActionController::Base
     def client_timezone_str(time, abbr=false)
       return "#{client_timezone.time_with_offset(time).strftime("%b %-d, %l:%M%P %Z")} #{client_timezone.abbr(time)}" if abbr
       "#{client_timezone.time_with_offset(time).strftime("%A, %B %-d at %l:%M%P")} #{client_timezone.abbr(time)}"
+    end
+
+    def ssl_configured?
+      Rails.env.production?
     end
 
 end
