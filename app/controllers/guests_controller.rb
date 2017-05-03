@@ -73,12 +73,24 @@ class GuestsController < ApplicationController
     @guest = Guest.find(params[:id])
     if @guest.destroy
       WineReview.delete_all_for_guest(@guest.tasting, @guest.taster)
-      name = @guest.taster == current_host.taster ? "You have" : "#{@guest.taster.name} has"
-      flash[:notice] = "#{name} been successfully removed from tasting."
-      redirect_to edit_tasting_path(@guest.tasting)
+      if current_host
+        if @guest.taster == current_host.taster
+          flash[:notice] = "You have been successfully removed from tasting."
+        else
+          flash[:notice] = "#{@guest.taster.name} been successfully removed from tasting."
+        end
+        redirect_to edit_tasting_path(@guest.tasting)
+      else
+        flash[:notice] = "You have been successfully removed from tasting."
+        redirect_to tasting_path(@guest.tasting)
+      end
     else
       flash[:alert] = "There was an error deleting taster. Please try again later."
-      redirect_to edit_tasting_path(@guest.tasting)
+      if current_host
+        redirect_to edit_tasting_path(@guest.tasting)
+      else
+        redirect_to tasting_path(@guest.tasting)
+      end
     end
   end
 
