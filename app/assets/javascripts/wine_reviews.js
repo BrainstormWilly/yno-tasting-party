@@ -36,11 +36,13 @@ function set_rating(rating){
 }
 
 $(document).on('turbolinks:load', function(e){
-  reset_ratings();
-  set_rating($("#wine_review_rating").val());
-  $('.rating_btn').click(function(e){
-    e.preventDefault();
+  if( $(e.target.body).hasClass('wine_reviews edit') ){
     reset_ratings();
-    set_rating( $(this).data("rating") );
-  })
+    set_rating($("#wine_review_rating").val());
+    $('.rating_btn').click(function(e){
+      e.preventDefault();
+      reset_ratings();
+      set_rating( $(this).data("rating") );
+    });
+  }
 })

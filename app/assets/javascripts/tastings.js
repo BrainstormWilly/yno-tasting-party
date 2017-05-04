@@ -19,16 +19,24 @@ function changeDate(e){
 
 
 $(document).on('turbolinks:load', function(e){
-  $('.input-group.date').datetimepicker();
-  $('.input-group.date').on('dp.change', changeDate);
-  $('#datepicker_open_at').data('DateTimePicker').defaultDate(moment($('#tasting_open_at').val()));
-  $('#datepicker_close_at').data('DateTimePicker').defaultDate(moment($('#tasting_close_at').val()));
-  $('.tasting-location').on("click", function(e){
-    e.preventDefault();
-    selectHostLocation($(this).data("tasting-location-id"));
-  });
-  $('.completed-wine-wrapper').on('click', function(e){
-    e.preventDefault();
-    window.location.href = "/wines/" + $(this).data('completed-wine');
-  })
+  if( $(e.target.body).hasClass('tastings') ){
+    if( $(e.target.body).hasClass('edit') || $(e.target.body).hasClass('new') ){
+      $('.input-group.date').datetimepicker();
+      $('.input-group.date').on('dp.change', changeDate);
+      $('.tasting-location').on("click", function(e){
+        e.preventDefault();
+        selectHostLocation($(this).data("tasting-location-id"));
+      });
+      if( $('#tasting_open_at').val() ){
+        $('#datepicker_open_at').data('DateTimePicker').defaultDate( moment( $('#tasting_open_at').val() ) );
+      }
+      if( $('#tasting_close_at').val() ){
+        $('#datepicker_close_at').data('DateTimePicker').defaultDate( moment( $('#tasting_close_at').val() ) );
+      }
+    }
+    $('.completed-wine-wrapper').on('click', function(e){
+      e.preventDefault();
+      window.location.href = "/wines/" + $(this).data('completed-wine');
+    });
+  }
 });
