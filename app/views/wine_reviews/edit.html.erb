@@ -14,7 +14,7 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="form-group" data-unrated="<%= @wine_review.unrated? %>" >
     <p><strong>Rating</strong></p>
     <%= f.hidden_field :rating %>
     <div class="row">

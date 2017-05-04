@@ -15,7 +15,7 @@
             <% if tw.is_last_reveal? %>
               <%= link_to i, tasting_wine_reveal_path(tw, i),
                 class: "btn #{wine_number_btn_color(tw, i)}",
-                data: {confirm: "Are you sure you want to complete this tasting?"},
+                data: {confirm: "All wines are revealed. Are you sure you want to complete this tasting?"},
                 method: :put %>
             <% else %>
               <%= link_to i, tasting_wine_reveal_path(tw, i),

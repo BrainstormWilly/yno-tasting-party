@@ -47,12 +47,10 @@
           <%= g.taster.name %>
           <div class="btn-group pull-right">
             <%= link_to "Profile", taster_path(g.taster), class: "btn btn-default" %>
-            <% if g.confirmed? %>
-              <%= link_to "Delete", guest_path(g),
-                  class: "btn btn-danger",
-                  data: { confirm: "Remove this taster and their ratings from tasting?" },
-                  method: :delete %>
-            <% end %>
+            <%= link_to "Delete", guest_path(g),
+                class: "btn btn-danger",
+                data: { confirm: "Remove this taster and their ratings from tasting?" },
+                method: :delete %>
           </div>
         <% end %>
 

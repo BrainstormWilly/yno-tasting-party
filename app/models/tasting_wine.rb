@@ -14,6 +14,7 @@ class TastingWine < ApplicationRecord
     false
   end
 
+
   private
 
     def check_for_duplicate_wine_number

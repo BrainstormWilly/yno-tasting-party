@@ -23,12 +23,18 @@ class TastingWinesController < ApplicationController
       flash[:alert] = "Revealing wines only allowed on closed tastings."
       redirect_to tasting_path(@tasting_wine.tasting)
     elsif @tasting_wine.tasting.is_closed?
+      all_revealed = @tasting_wine.is_last_reveal?
       @tasting_wine.wine_number = params[:wine_number]
       if @tasting_wine.save
         flash[:notice] = "#{@tasting_wine.wine.name} revealed as wine #{@tasting_wine.wine_number}."
-        redirect_to edit_tasting_path(@tasting_wine.tasting)
+        if all_revealed
+          @tasting_wine.tasting.update(completed_at: Time.now)
+          redirect_to tasting_path(@tasting_wine.tasting)
+        else
+          redirect_to edit_tasting_path(@tasting_wine.tasting)
+        end
       else
-        flash[:alert] = 'There was an error setting wine number. Please try again later.'
+        flash[:alert] = 'There was an error revealing wine. Please try again later.'
         redirect_to edit_tasting_path(@tasting_wine.tasting)
       end
     else

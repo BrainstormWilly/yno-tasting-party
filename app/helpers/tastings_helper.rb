@@ -77,7 +77,7 @@ module TastingsHelper
     return "unrevealed" if tasting_wine.wine_number == 0
     reviews = tasting_wine.tasting.wine_reviews.where(wine_number: tasting_wine.wine_number)
     # reviews = WineReview.where(tasting_id: tasting_wine.tasting_id).where(wine_number: tasting_wine.wine_number)
-    reviews.inject(0){ |sum, r| sum + r.rating }.fdiv(reviews.count)
+    reviews.inject(0){ |sum, r| sum + r.rating }.fdiv(reviews.count).round(2)
   end
 
   def rating_sorted_tasting_wines(tasting)

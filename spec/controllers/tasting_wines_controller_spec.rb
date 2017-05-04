@@ -60,6 +60,12 @@ RSpec.describe TastingWinesController, type: :controller do
           instance = TastingWine.find(tasting_wine.id)
           expect(instance.wine_number).to eq 0
         end
+        it "completes tasting when all wines revealed" do
+          put :reveal, params: {id: tasting_wine.id, wine_number: 1}
+          put :reveal, params: {id: @tasting_wine2.id, wine_number: 2}
+          instance = Tasting.find(tasting_wine.tasting_id)
+          expect(instance.is_completed?).to be_truthy
+        end
         it "redirects to Tasting#edit" do
           put :reveal, params: {id: tasting_wine.id, wine_number: 1}
           expect(response).to redirect_to edit_tasting_path(tasting)

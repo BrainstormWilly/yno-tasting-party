@@ -18,7 +18,7 @@ function reset_ratings(){
     // }else{
     //   $(this).addClass("btn-default");
     // }
-  })
+  });
 }
 
 function set_rating(rating){
@@ -38,7 +38,12 @@ function set_rating(rating){
 $(document).on('turbolinks:load', function(e){
   if( $(e.target.body).hasClass('wine_reviews edit') ){
     reset_ratings();
-    set_rating($("#wine_review_rating").val());
+    $unrated = $("[data-unrated='true']");
+    if( $unrated.length==1 ){
+      set_rating(3);
+    }else{
+      set_rating($("#wine_review_rating").val());
+    }
     $('.rating_btn').click(function(e){
       e.preventDefault();
       reset_ratings();
