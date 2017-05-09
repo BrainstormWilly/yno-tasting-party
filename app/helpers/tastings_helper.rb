@@ -77,7 +77,7 @@ module TastingsHelper
     return "unrevealed" if tasting_wine.wine_number == 0
     reviews = tasting_wine.tasting.wine_reviews.where(wine_number: tasting_wine.wine_number)
     # reviews = WineReview.where(tasting_id: tasting_wine.tasting_id).where(wine_number: tasting_wine.wine_number)
-    reviews.inject(0){ |sum, r| sum + r.rating }.fdiv(reviews.count).round(2)
+    reviews.inject(0){ |sum, r| sum + r.rating }.fdiv(reviews.count).round(1)
   end
 
   def rating_sorted_tasting_wines(tasting)
@@ -91,7 +91,7 @@ module TastingsHelper
   end
 
   def rating_fill_percent_for_tasting_wine(tasting_wine)
-    "#{(100*(avg_tasting_wine_rating(tasting_wine)/5)).round(2)}%"
+    "#{(100*(avg_tasting_wine_rating(tasting_wine)/5))}%"
   end
 
   def rating_fill_color_for_tasting_wine(tasting_wine)
