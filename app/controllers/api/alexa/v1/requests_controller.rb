@@ -1,12 +1,12 @@
 class Api::Alexa::V1::RequestsController < ActionController::Base
 
   def default
-    # verification_success = settings.cert_verifier.verify!(
-    #   request.env["HTTP_SIGNATURECERTCHAINURL"],
-    #   request.env['HTTP_SIGNATURE'],
-    #   request.body.read
-    # )
-    # return make_plaintext_response("Congratulations, My verification successful") if verification_success
+    verification_success = settings.cert_verifier.verify!(
+      request.env["HTTP_SIGNATURECERTCHAINURL"],
+      request.env['HTTP_SIGNATURE'],
+      request.body.read
+    )
+    return make_plaintext_response("Congratulations, My verification successful") if verification_success
     make_plaintext_response("Uh oh, My verification was not successful")
   end
 
