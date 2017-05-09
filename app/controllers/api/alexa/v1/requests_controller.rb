@@ -1,4 +1,4 @@
-class Api::Alexa::V1::RequestsController < ApplicationController
+class Api::Alexa::V1::RequestsController < ActionController::Base
 
   def default
     # verification_success = settings.cert_verifier.verify!(
