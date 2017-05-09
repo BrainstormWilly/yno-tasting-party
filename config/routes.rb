@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     :invitations => "invitations"
   }
 
+  # Rails only routes
+
   get 'welcome/index'
 
   resources :tastings do
@@ -46,5 +48,15 @@ Rails.application.routes.draw do
   end
   root "welcome#index"
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # Api routes
+
+  namespace :api do
+    namespace :alexa do
+      namespace :v1 do
+        post "requests", to: "requests#default"
+      end
+    end
+  end
+
 end
