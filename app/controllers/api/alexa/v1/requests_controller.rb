@@ -7,7 +7,7 @@ class Api::Alexa::V1::RequestsController < ApplicationController
       request.body.read
     )
     return make_plaintext_response("Congratulations, My verification successful") if verification_success
-    make_plaintext_response("Uh oh, My verification is not successful")
+    make_plaintext_response("Uh oh, My verification was not successful")
   end
 
 
@@ -20,7 +20,7 @@ class Api::Alexa::V1::RequestsController < ApplicationController
       "response" => {
         "outputSpeech" => {
           "type" => "PlainText",
-          "ssml" => text
+          "text" => text
         },
         "shouldEndSession" => true
       }
