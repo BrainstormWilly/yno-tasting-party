@@ -6,17 +6,13 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       c.verify_timestamps = true
       c.timestamp_tolerance = 60 # seconds
     end
-    verifier.verify!(
+    verification_success = verifier.verify!(
       request.headers['SignatureCertChainUrl'],
       request.headers['Signature'],
       request.body.read
     )
-    # verification_success = settings.cert_verifier.verify!(
-    #   request.env["HTTP_SIGNATURECERTCHAINURL"],
-    #   request.env['HTTP_SIGNATURE'],
-    #   request.body.read
-    # )
-    # return make_plaintext_response("Congratulations, My verification successful") if verification_success
+
+    return make_plaintext_response("Congratulations, My verification successful") if verification_success
     make_plaintext_response("Uh oh, My verification was not successful")
   end
 
