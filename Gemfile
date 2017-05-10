@@ -29,7 +29,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-  gem 'alexa_verifier'
+
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -82,3 +82,6 @@ gem 'sendgrid-ruby'
 
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
+
+# Alexa Verifier
+gem 'alexa_verifier'
