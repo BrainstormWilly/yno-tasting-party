@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
   default_url_options host: "localhost:3000"
 
   devise_for :users, :controllers => {
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
   # Rails only routes
 
   get 'welcome/index'
+  get 'welcome/privacy'
 
   resources :tastings do
     get "guests/new" => "guests#new", as: "guests_new"

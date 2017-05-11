@@ -9,8 +9,8 @@ RSpec.describe Host, type: :model do
   let!(:host_location){ create(:host_location, host: host, location: location) }
 
   describe "attributes" do
-    it "should have taster attribute" do
-      expect(host).to have_attributes(taster: host.taster)
+    it "should have taster, amazon_id attributes" do
+      expect(host).to have_attributes(taster: host.taster, amazon_id: host.amazon_id)
     end
   end
 

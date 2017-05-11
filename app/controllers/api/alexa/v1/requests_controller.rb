@@ -1,5 +1,9 @@
 class Api::Alexa::V1::RequestsController < ActionController::Base
 
+  prepend_before_action :set_access_token_in_params
+  before action :doorkeeper_authorize!
+
+
   def default
     verifier = AlexaVerifier.build do |c|
       c.verify_signatures = true
@@ -16,8 +20,20 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     make_plaintext_response("Uh oh, My verification was not successful")
   end
 
+  def current_doorkeeper_user
+    @current_doorkeeper_user ||= User.find(doorkeeper_token.resource_owner_id)
+  end
+
 
   private
+
+  def set_access_token_in_params
+    request.parameters[:access_token] = token_from_params
+  end
+
+  def token_from_params
+    params["session"]["user"]["accessToken"] rescue nil
+  end
 
   def make_plaintext_response(text)
     render json: {
