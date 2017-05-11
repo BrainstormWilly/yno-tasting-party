@@ -1,7 +1,7 @@
 class Api::Alexa::V1::RequestsController < ActionController::Base
 
   prepend_before_action :set_access_token_in_params
-  before action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize!
 
 
   def default
