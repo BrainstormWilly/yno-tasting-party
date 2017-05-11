@@ -16,8 +16,12 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       request.body.read
     )
 
-    return make_plaintext_response("Congratulations, My verification successful") if verification_success
+    return make_plaintext_response("Congratulations #{current_doorkeeper_taster.handle}, verification is successful") if verification_success
     make_plaintext_response("Uh oh, My verification was not successful")
+  end
+
+  def current_doorkeeper_taster
+    Taster.find_by(user: current_doorkeeper_user )
   end
 
   def current_doorkeeper_user
