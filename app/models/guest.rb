@@ -1,5 +1,7 @@
 class Guest < ApplicationRecord
 
+  before_save :sequence_taster_number
+
   belongs_to :taster
   belongs_to :tasting
   # has_many :wine_reviews, through: :taster
@@ -23,6 +25,26 @@ class Guest < ApplicationRecord
 
   def tasting_confirmed?
     self.confirmed != nil
+  end
+
+  def reviews_left
+    self.taster.wine_reviews.map{ |wr| wr.tasting==self.tasting && self.unrated? }
+  end
+
+
+
+  private
+
+  def sequence_taster_number
+    number_assigned = true
+    current_number = 0
+    while number_assigned
+      current_number += 1
+      guests = self.class.where(taster_number: current_number).where(tasting: self.tasting)
+      number_assigned = guests.count>0
+    end
+    self.taster_number = current_number
+    current_number
   end
 
 end

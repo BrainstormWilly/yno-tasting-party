@@ -5,6 +5,8 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
 
   def default
+
+    # Alexa Verification
     verifier = AlexaVerifier.build do |c|
       c.verify_signatures = true
       c.verify_timestamps = true
@@ -16,8 +18,43 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       request.body.read
     )
 
-    return make_plaintext_response("Congratulations #{current_doorkeeper_taster.handle}, verification is successful") if verification_success
-    make_plaintext_response("Uh oh, My verification was not successful")
+    # Verification invalid
+    return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
+
+    host = current_doorkeeper_host
+
+    # User is not a host
+    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
+
+    open_tasting = Tasting.get_open_for_host(host)
+
+    # No open tastings
+    return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
+
+    # Launch request
+    return Alexa::Launch.new().respond(params) if params["request"]["type"] == "LaunchRequest"
+
+    # Intent request
+    # if params["request"]["type"] == "IntentRequest"
+    #   return
+    #   intent_name = params["request"]["intent"]["name"]
+    #   case intent_name
+    #   when "RateWineIntent"
+    #     return Alexa::RateWine.new().respond(params)
+    #   when "GetAverageRatingIntent"
+    #   when "GetWineStatsIntent"
+    #   else
+    #     make_plaintext_response("Hello #{host.taster.handle}. I have opened tasting #{open_tasting.name}. You can rate a wine, get my rating, get average rating, or get tasting stats. Which would you like to do?")
+    #   end
+    # end
+
+    # Dialog
+
+
+  end
+
+  def current_doorkeeper_host
+    Host.find_by(taster: current_doorkeeper_taster)
   end
 
   def current_doorkeeper_taster
@@ -39,7 +76,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     params["session"]["user"]["accessToken"] rescue nil
   end
 
-  def make_plaintext_response(text)
+  def make_plaintext_response(text, end_session=false)
     render json: {
       "version": "1.0",
       "sessionAttributes": { },
@@ -48,7 +85,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
           "type": "PlainText",
           "text": text
         },
-        "shouldEndSession": true
+        "shouldEndSession": end_session
       }
     }
   end
