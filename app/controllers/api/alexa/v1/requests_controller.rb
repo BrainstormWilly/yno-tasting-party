@@ -6,7 +6,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
   def default
 
-    Alexa Verification
+    # Alexa Verification
     verifier = AlexaVerifier.build do |c|
       c.verify_signatures = true
       c.verify_timestamps = true
