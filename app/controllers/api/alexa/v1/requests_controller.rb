@@ -6,7 +6,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
   def default
 
-    # Alexa Verification
+    Alexa Verification
     verifier = AlexaVerifier.build do |c|
       c.verify_signatures = true
       c.verify_timestamps = true
@@ -18,24 +18,23 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       request.body.read
     )
 
-    return make_plaintext_response("Request Verified") if verification_success
-    make_plaintext_response("Request Denied")
+    # Verification invalid
+    return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
 
-    # # Verification invalid
-    # return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
-    #
-    # host = current_doorkeeper_host
-    #
-    # # User is not a host
-    # return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
-    #
-    # open_tasting = Tasting.get_open_for_host(host)
-    #
-    # # No open tastings
-    # return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
-    #
-    # # Launch request
-    # return Alexa::Launch.new().respond(params) if params["request"]["type"] == "LaunchRequest"
+    host = current_doorkeeper_host
+
+    # User is not a host
+    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
+
+    open_tasting = Tasting.get_open_for_host(host)
+
+    # No open tastings
+    return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
+
+    # Launch request
+    return make_plaintext_response("Welcome to Yno Wine Tasting. While tasting you can ask me to rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if params["request"]["type"] == "LaunchRequest"
+
+
 
     # Intent request
     # if params["request"]["type"] == "IntentRequest"
