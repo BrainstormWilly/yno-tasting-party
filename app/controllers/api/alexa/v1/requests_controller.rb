@@ -22,13 +22,13 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
 
     host = current_doorkeeper_host
-    make_plaintext_response("Authorized for host #{host.taster.name}")
-    #
-    # # User is not a host
-    # return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
-    #
-    # open_tasting = Tasting.get_open_for_host(host)
-    #
+
+    # User is not a host
+    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
+
+    open_tasting = Tasting.get_open_for_host(host)
+    return make_plaintext_response("Found open tasting #{open_tasting.name}")
+
     # # No open tastings
     # return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
     #
