@@ -1,7 +1,7 @@
 class Api::Alexa::V1::RequestsController < ActionController::Base
 
   prepend_before_action :set_access_token_in_params
-  # before_action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize!
 
 
   def default
@@ -20,7 +20,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     # Verification invalid
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
-    return make_plaintext_response("Verified for token: #{request.parameters[:access_token]}" );
+    return make_plaintext_response("Authorized for token: #{request.parameters[:access_token]}" );
 
     # host = current_doorkeeper_host
     #
