@@ -20,9 +20,9 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     # Verification invalid
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
-    return make_plaintext_response("Authorized for token: #{request.parameters[:access_token]}" );
 
-    # host = current_doorkeeper_host
+    host = current_doorkeeper_host
+    make_plaintext_response("Authorized for host #{host.taster.name}")
     #
     # # User is not a host
     # return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
