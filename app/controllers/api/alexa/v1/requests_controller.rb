@@ -37,9 +37,8 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     # Intent request
     if params["request"]["type"] == "IntentRequest"
       intent_name = params["request"]["intent"]["name"]
-      if intent_name == "RateWineIntent"
-        make_plaintext_response("You made it to rate wine intent", true)
-      end
+      rw = RateWine.new(open_tasting, params)
+      return render json: rw.response
       # case intent_name
       #   when "RateWineIntent"
       #

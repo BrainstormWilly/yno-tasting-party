@@ -43,7 +43,13 @@ class Alexa::RateWineIntent
   end
 
   def response
-    return {"type": "Dialog.Delegate"} if !has_all_slots?
+    return {
+      "type": "Dialog.Delegate",
+      "updatedIntent": {
+        "name": "RateWineIntent",
+        "confirmationStatus": "NONE"
+      }
+    } if !has_all_slots?
     {
       "type": "Dialog.ConfirmIntent",
       "updatedIntent":{
