@@ -22,8 +22,8 @@ module ApplicationHelper
   end
 
   def client_timezone
-    lat = request.location.latitude == 0.0 ? 38.440429 : request.location.latitude
-    lng = request.location.longitude == 0.0 ? -122.714055 : request.location.longitude
+    lat = (!request.location || request.location.latitude == 0.0) ? 38.440429 : request.location.latitude
+    lng = (!request.location || request.location.longitude == 0.0) ? -122.714055 : request.location.longitude
     Timezone.lookup(lat, lng)
   end
 

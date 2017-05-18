@@ -30,27 +30,31 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     # No open tastings
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
-    
+
     # Launch request
-    return make_plaintext_response("Welcome to Yno Wine Tasting. While tasting you can ask me to rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if params["request"]["type"] == "LaunchRequest"
+    return make_plaintext_response("Welcome to Yno Wine Tasting. During a tasting you can ask me to: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?", true) if params["request"]["type"] == "LaunchRequest"
+
+    # # Intent request
+    if params["request"]["type"] == "IntentRequest"
+      intent_name = params["request"]["intent"]["name"]
+      case intent_name
+      when "RateWineIntent"
+        rw = RateWine.new(open_tasting, params)
+        if params["request"]["intent"]["confirmationStatus"] == "COMPLETED"
+          return make_plaintext_response("Got it! I've given wine #{rw.wine} a rating of #{rw.rating} for taster #{rw.taster_name}. You have #{rw.reviews_left} reviews left.", true) if rw.process_request
+          return make_plaintext_response("I'm sorry. There was a problem with your request. Please try again.", true)
+        end
+        if params["request"]["dialogState"]
+          return render json: rw.response
+        end
+        # return confirmation if all slots filled
+        # return Delegate if not
+      when "GetAverageRatingIntent"
+      when "GetWineStatsIntent"
+    end
 
 
-
-    # Intent request
-    # if params["request"]["type"] == "IntentRequest"
-    #   return
-    #   intent_name = params["request"]["intent"]["name"]
-    #   case intent_name
-    #   when "RateWineIntent"
-    #     return Alexa::RateWine.new().respond(params)
-    #   when "GetAverageRatingIntent"
-    #   when "GetWineStatsIntent"
-    #   else
-    #     make_plaintext_response("Hello #{host.taster.handle}. I have opened tasting #{open_tasting.name}. You can rate a wine, get my rating, get average rating, or get tasting stats. Which would you like to do?")
-    #   end
-    # end
-
-    # Dialog
+    make_plaintext_response("Authorized request.", true)
 
 
   end
