@@ -32,7 +32,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
 
     # Launch request
-    return make_plaintext_response("Welcome to Yno Wine Tasting. During a tasting you can ask me to: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if params["request"]["type"] == "LaunchRequest"
+    return make_plaintext_response("Welcome to Yno Wine Tasting. During a tasting you can ask me to do the following: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if params["request"]["type"] == "LaunchRequest"
 
     # Intent request
     if params["request"]["type"] == "IntentRequest"
@@ -46,6 +46,8 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
           end
           if params["request"]["dialogState"]
             return render json: rw.response
+          else
+            return make_plaintext_response("There is no dialogState.", true)
           end
           # return confirmation if all slots filled
           # return Delegate if not
