@@ -38,19 +38,20 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     if params["request"]["type"] == "IntentRequest"
       intent_name = params["request"]["intent"]["name"]
       case intent_name
-      when "RateWineIntent"
-        rw = RateWine.new(open_tasting, params)
-        if params["request"]["intent"]["confirmationStatus"] == "COMPLETED"
-          return make_plaintext_response("Got it! I've given wine #{rw.wine} a rating of #{rw.rating} for taster #{rw.taster_name}. You have #{rw.reviews_left} reviews left.", true) if rw.process_request
-          return make_plaintext_response("I'm sorry. There was a problem with your request. Please try again.", true)
-        end
-        if params["request"]["dialogState"]
-          return render json: rw.response
-        end
-        # return confirmation if all slots filled
-        # return Delegate if not
-      when "GetAverageRatingIntent"
-      when "GetWineStatsIntent"
+        when "RateWineIntent"
+          rw = RateWine.new(open_tasting, params)
+          if params["request"]["intent"]["confirmationStatus"] == "COMPLETED"
+            return make_plaintext_response("Got it! I've given wine #{rw.wine} a rating of #{rw.rating} for taster #{rw.taster_name}. You have #{rw.reviews_left} reviews left.", true) if rw.process_request
+            return make_plaintext_response("I'm sorry. There was a problem with your request. Please try again.", true)
+          end
+          if params["request"]["dialogState"]
+            return render json: rw.response
+          end
+          # return confirmation if all slots filled
+          # return Delegate if not
+        when "GetAverageRatingIntent"
+        when "GetWineStatsIntent"
+      end
     end
 
 
