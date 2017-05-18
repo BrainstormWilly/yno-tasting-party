@@ -11,6 +11,10 @@ class Alexa::RateWineIntent
     end
   end
 
+  def dialogState
+    return @params["request"]["dialogState"]
+  end
+
   def wine
     @params["request"]["intent"]["slots"]["wine"]["value"].to_i rescue nil
   end
@@ -35,6 +39,10 @@ class Alexa::RateWineIntent
     wine && rating && taster
   end
 
+  def has_a_slot?
+    wine || rating || taster
+  end
+
   def process_request
     wr = WineReview.find_by(wine_number: wine, tasting: @tasting)
     g = Guest.where(tasting: @tasting, taster_number: taster).first
@@ -43,13 +51,33 @@ class Alexa::RateWineIntent
   end
 
   def response
-    return {
-      "type": "Dialog.Delegate",
-      "updatedIntent": {
-        "name": "RateWineIntent",
-        "confirmationStatus": "NONE"
+    if dialogState == "STARTED"
+      res = {
+        "type" => "Dialog.Delegate",
+        "updatedIntent" => {
+          "name" => "RateWineIntent",
+          "confirmationStatus" => "NONE"
+        }
       }
-    } if !has_all_slots?
+      if has_a_slot?
+        res["updatedIntent"]["slots"] = {}
+      end
+      res["updatedIntent"]["slots"]["wine"] = {
+        "name" => "wine",
+        "value" => wine
+      } if wine
+      res["updatedIntent"]["slots"]["rating"] = {
+        "name" => "rating",
+        "value" => rating
+      } if rating
+      res["updatedIntent"]["slots"]["taster"] = {
+        "name" => "taster",
+        "value" => taster
+      } if taster
+      return res
+    elsif dialogState == "IN_PROGRESS"
+      return {"type": "Dialog.Delegate"}
+    end
     {
       "type": "Dialog.ConfirmIntent",
       "updatedIntent":{
