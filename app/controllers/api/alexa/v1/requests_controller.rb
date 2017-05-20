@@ -36,7 +36,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     # Intent request
     if params["request"]["type"] == "IntentRequest"
-      render json: {
+      return render json: {
         "version" => "1.0",
         "sessionAttributes" => {},
         "response" => {
