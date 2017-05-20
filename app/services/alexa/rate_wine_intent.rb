@@ -12,7 +12,7 @@ class Alexa::RateWineIntent
   end
 
   def dialogState
-    return @params["request"]["dialogState"]
+    return @params["request"]["dialogState"] rescue "STARTED"
   end
 
   def wine
@@ -52,30 +52,6 @@ class Alexa::RateWineIntent
 
   def response
     if dialogState == "STARTED"
-      res = {
-        "type" => "Dialog.Delegate",
-        "updatedIntent" => {
-          "name" => "RateWineIntent",
-          "confirmationStatus" => "NONE"
-        }
-      }
-      if has_a_slot?
-        res["updatedIntent"]["slots"] = {}
-      end
-      res["updatedIntent"]["slots"]["wine"] = {
-        "name" => "wine",
-        "value" => wine
-      } if wine
-      res["updatedIntent"]["slots"]["rating"] = {
-        "name" => "rating",
-        "value" => rating
-      } if rating
-      res["updatedIntent"]["slots"]["taster"] = {
-        "name" => "taster",
-        "value" => taster
-      } if taster
-      return res
-    elsif dialogState == "IN_PROGRESS"
       return {"type": "Dialog.Delegate"}
     end
     {
