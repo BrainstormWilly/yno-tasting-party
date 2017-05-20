@@ -36,11 +36,18 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     # Intent request
     if params["request"]["type"] == "IntentRequest"
-      intent_name = params["request"]["intent"]["name"]
-      if intent_name == "RateWineIntent"
-        # svc = Alexa::RateWineIntent.new(open_tasting, params)
-        return render json: {"type": "Dialog.Delegate"}
-      end
+      render json: {
+        "version" => "1.0",
+        "sessionAttributes" => {},
+        "response" => {
+          "directives" => [
+            {
+              "type" => "Dialog.Delegate"
+            }
+          ],
+          "shouldEndSession" => false
+        }
+      }
 
       # case intent_name
       #   when "RateWineIntent"

@@ -51,31 +51,48 @@ class Alexa::RateWineIntent
   end
 
   def response
-    if dialogState == "STARTED"
-      return {"type": "Dialog.Delegate"}
-    end
+    response_body
+    # if dialogState == "STARTED"
+    #   return {"type": "Dialog.Delegate"}
+    # end
+    # {
+    #   "type": "Dialog.ConfirmIntent",
+    #   "updatedIntent":{
+    #     "name": "RateWineIntent",
+    #     "confirmationStatus": "COMPLETED",
+    #     "slots":{
+    #       "wine":{
+    #         "name": "wine",
+    #         "value": wine
+    #       },
+    #       "rating":{
+    #         "name": "rating",
+    #         "value": rating
+    #       },
+    #       "taster":{
+    #         "name": "taster",
+    #         "value": taster
+    #       }
+    #     }
+    #   }
+    # }
+  end
+
+  private
+
+  def response_body
     {
-      "type": "Dialog.ConfirmIntent",
-      "updatedIntent":{
-        "name": "RateWineIntent",
-        "confirmationStatus": "COMPLETED",
-        "slots":{
-          "wine":{
-            "name": "wine",
-            "value": wine
-          },
-          "rating":{
-            "name": "rating",
-            "value": rating
-          },
-          "taster":{
-            "name": "taster",
-            "value": taster
+      "version" => "1.0",
+      "response" => {
+        "directives" => [
+          {
+            "type" => "Dialog.Delegate"
           }
-        }
+        ],
+        "shouldEndSession" => false
       }
     }
-  end
+end
 
 
 
