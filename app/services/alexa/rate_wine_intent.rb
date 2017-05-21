@@ -51,31 +51,11 @@ class Alexa::RateWineIntent
   end
 
   def response
-    response_body
-    # if dialogState == "STARTED"
-    #   return {"type": "Dialog.Delegate"}
-    # end
-    # {
-    #   "type": "Dialog.ConfirmIntent",
-    #   "updatedIntent":{
-    #     "name": "RateWineIntent",
-    #     "confirmationStatus": "COMPLETED",
-    #     "slots":{
-    #       "wine":{
-    #         "name": "wine",
-    #         "value": wine
-    #       },
-    #       "rating":{
-    #         "name": "rating",
-    #         "value": rating
-    #       },
-    #       "taster":{
-    #         "name": "taster",
-    #         "value": taster
-    #       }
-    #     }
-    #   }
-    # }
+    body = response_body
+    if dialogState == "COMPLETED"
+      body["response"]["directives"][0]["type"] = "Dialog.ConfirmIntent"
+    end
+    body
   end
 
   private

@@ -22,6 +22,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
   let(:alexa_params_wine_slot){
     {
       "request" => {
+        "dialogState" => "IN_PROGRESS",
         "intent" => {
           "name" => "RateWineIntent",
           "slots" => {
@@ -37,6 +38,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
   let(:alexa_params_wine_and_rating_slot){
     {
       "request" => {
+        "dialogState" => "IN_PROGRESS",
         "intent" => {
           "name" => "RateWineIntent",
           "slots" => {
@@ -56,6 +58,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
   let(:alexa_params_all_slots){
       {
         "request" => {
+          "dialogState" => "COMPLETED",
           "intent" => {
             "name" => "RateWineIntent",
             "slots" => {
@@ -86,7 +89,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
       expect(@svc.has_all_slots?).to be_falsey
     end
     it "sets response.type to Dialog.Delegate" do
-      expect(@svc.response[:type]).to eq "Dialog.Delegate"
+      expect(@svc.response["response"]["directives"][0]["type"]).to eq "Dialog.Delegate"
     end
     it "sets wine to falsey" do
       expect(@svc.wine).to be_falsey
@@ -104,7 +107,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
       expect(@svc.has_all_slots?).to be_falsey
     end
     it "sets response.type to Dialog.Delegate" do
-      expect(@svc.response[:type]).to eq "Dialog.Delegate"
+      expect(@svc.response["response"]["directives"][0]["type"]).to eq "Dialog.Delegate"
     end
     it "sets wine to 1" do
       expect(@svc.wine).to eq 1
@@ -125,7 +128,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
       expect(@svc.has_all_slots?).to be_falsey
     end
     it "sets response.type to Dialog.Delegate" do
-      expect(@svc.response[:type]).to eq "Dialog.Delegate"
+      expect(@svc.response["response"]["directives"][0]["type"]).to eq "Dialog.Delegate"
     end
     it "sets wine to 1" do
       expect(@svc.wine).to eq 1
@@ -146,7 +149,7 @@ RSpec.describe Alexa::RateWineIntent, type: :model do
       expect(@svc.has_all_slots?).to be_truthy
     end
     it "sets response.type to Dialog.ConfirmIntent" do
-      expect(@svc.response[:type]).to eq "Dialog.ConfirmIntent"
+      expect(@svc.response["response"]["directives"][0]["type"]).to eq "Dialog.ConfirmIntent"
     end
     it "sets wine to 1" do
       expect(@svc.wine).to eq 1

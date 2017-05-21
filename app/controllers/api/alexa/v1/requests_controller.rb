@@ -37,7 +37,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     # Intent request
     if params["request"]["type"] == "IntentRequest"
       svc = Alexa::RateWineIntent.new(open_tasting, params)
-      return svc.response
+      return render json: svc.response
 
       # case intent_name
       #   when "RateWineIntent"
