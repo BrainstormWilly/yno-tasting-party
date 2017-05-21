@@ -51,16 +51,13 @@ class Alexa::RateWineIntent
   end
 
   def response
-    body = response_body
-    if dialogState == "COMPLETED"
-      body["response"]["directives"][0]["type"] = "Dialog.ConfirmIntent"
-    end
-    body
+    return confirm_body if dialogState == "COMPLETED"
+    delegate_body
   end
 
   private
 
-  def response_body
+  def delegate_body
     {
       "version" => "1.0",
       "response" => {
@@ -72,7 +69,47 @@ class Alexa::RateWineIntent
         "shouldEndSession" => false
       }
     }
-end
+  end
+
+  def confirm_body
+    {
+      "version" => "1.0",
+      "response" => {
+        "outputSpeech" => {
+          "type" => "PlainText",
+          "text" => "Let's see. I have a rating of #{rating} for wine #{wine} for taster #{taster_name}. Is that correct?"
+        },
+        "shouldEndSession" => false,
+        "directives" => [
+          {
+            "type" => "Dialog.ConfirmIntent",
+            "updatedIntent" => {
+              "name" => "RateWineIntent",
+              "confirmationStatus" => "COMPLETED",
+              "slots" => {
+                "wine" => {
+                  "name" => "wine",
+                  "value" => wine,
+                  "confirmationStatus" => "NONE"
+                },
+                "rating" => {
+                  "name" => "rating",
+                  "confirmationStatus" => "NONE",
+                  "value" => rating
+                },
+                "taster" => {
+                  "name" => "taster",
+                  "value" => taster,
+                  "confirmationStatus" => "NONE"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  end
+
 
 
 
