@@ -34,6 +34,10 @@ class Alexa::RateWineIntent
   def reviews_left
     @guest.reviews_left rescue 0
   end
+  def reviews_left_to_str
+    return "All your reviews are in." if reviews_left == 0
+    "You have #{reviews_left} wine #{"review".pluralize(reviews_left)} remaining"
+  end
 
   def has_all_slots?
     wine && rating && taster
@@ -51,7 +55,6 @@ class Alexa::RateWineIntent
   end
 
   def response
-
     return confirm_body if dialogState == "COMPLETED"
     delegate_body
   end
@@ -77,8 +80,11 @@ class Alexa::RateWineIntent
       "version" => "1.0",
       "response" => {
         "outputSpeech" => {
-          "type" => "PlainText",
-          "text" => "Let's see. I have a rating of #{rating}. On wine #{wine}. For taster #{taster_name}. Is that correct?"
+          "type" => "SSML",
+          "ssml" => "
+            <speak>
+              Let's see. <break time='1s'/> I have a rating of #{rating}. <break time='1s'/> On wine #{wine}. <break time='1s'/> For taster #{taster_name}. <break time='1s'/> Is that correct?
+            </speak>"
         },
         "shouldEndSession" => false,
         "directives" => [

@@ -36,10 +36,16 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     # Intent request
     if params["request"]["type"] == "IntentRequest"
+      if params["request"]["intent"]["name"] = "RateWineIntent"
+        svc = Alexa::RateWineIntent.new(open_tasting, params)
+        if params["request"]["intent"]["confirmationStatus"] == "CONFIRMED"
+          return make_plaintext_response("Thank you. You're rating is recorded. #{svc.reviews_left_to_str}", true) if svc.process_request
+          return make_plaintext_response("I'm sorry, I wasn't able to save your request. Please try again.", true)
+        end
+      elsif params["request"]["intent"]["name"] = "GetTastingStatsIntent"
+        svc = Alexa::GetTastingStatsIntent.new(open_tasting, params)
+      end
 
-      return make_plaintext_response("We're all done here.", true) if params["request"]["intent"]["confirmationStatus"] == "CONFIRMED"
-
-      svc = Alexa::RateWineIntent.new(open_tasting, params)
       render json: svc.response
 
       # case intent_name

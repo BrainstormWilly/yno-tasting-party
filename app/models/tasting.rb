@@ -42,7 +42,7 @@ class Tasting < ApplicationRecord
     return true if self.completed_at?
     return false if self.is_open?
     return false if Time.current < self.open_at
-    if self.closed_at? && self.tasting_wines.where(wine_number: 0).count==0
+    if self.is_closed? && self.tasting_wines.where(wine_number: 0).count==0
       self.completed_at = Time.current
       self.save
       return true
@@ -66,6 +66,28 @@ class Tasting < ApplicationRecord
       end
     end
     false
+  end
+
+  def top_rated_wine
+    wines = []
+    self.wine_reviews.each do |wr|
+      index = wr.wine_number - 1
+      if wines[index]
+        wines[index]["rating_sum"] += wr.rating
+        wines[index]["reviews"] += 1
+      else
+        wines[index] = {
+          "wine_number" => wr.wine_number,
+          "rating_sum" => wr.rating,
+          "reviews" => 1
+        }
+      end
+    end
+    wines.max_by{ |w| w["rating_sum"] }
+  end
+
+  def top_rating
+    number_with_precision(top_rated_wine["rating_sum"] / top_rated_wine["reviews"], precision: 2)
   end
 
   # def has_unrevealed_wines?

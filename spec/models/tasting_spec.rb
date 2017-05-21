@@ -108,6 +108,7 @@ RSpec.describe Tasting, type: :model do
       before do
         tasting.open_at = 2.hours.ago
         tasting.close_at = 1.hour.ago
+        tasting.save
         guest = create(:guest, tasting: tasting, taster: taster)
         wine = create(:wine)
         tasting_wine = create(:tasting_wine, wine: wine, tasting: tasting)
@@ -156,6 +157,7 @@ RSpec.describe Tasting, type: :model do
       before do
         tasting.open_at = Time.current
         tasting.close_at = 2.hours.from_now
+        tasting.save
       end
       it "should be false" do
         expect(tasting.is_completed?).to be_falsey
@@ -165,6 +167,7 @@ RSpec.describe Tasting, type: :model do
       before do
         tasting.open_at = 2.hours.ago
         tasting.close_at = 1.hour.ago
+        tasting.save
         guest = create(:guest, tasting: tasting, taster: taster)
         wine = create(:wine)
         tasting_wine = create(:tasting_wine, wine: wine, tasting: tasting)
@@ -190,6 +193,7 @@ RSpec.describe Tasting, type: :model do
         tasting.open_at = 1.hour.ago
         tasting.close_at = 1.hour.from_now
         tasting.closed_at = Time.current
+        tasting.save
         guest = create(:guest, tasting: tasting, taster: taster)
         wine = create(:wine)
         tasting_wine = create(:tasting_wine, wine: wine, tasting: tasting)
@@ -201,6 +205,7 @@ RSpec.describe Tasting, type: :model do
     context "for completed tastings" do
       before do
         tasting.completed_at = Time.current
+        tasting.save
       end
       it "should be true" do
         expect(tasting.is_completed?).to be_truthy
@@ -321,6 +326,31 @@ RSpec.describe Tasting, type: :model do
     #     end
     #   end
     # end
+  end
+
+  describe "top_rated_wine" do
+    before do
+      wine1 = create(:wine)
+      tasting_wine1 = create(:tasting_wine, wine: wine1, tasting: tasting)
+      review1_1 = create(:wine_review, wine: wine1, tasting: tasting, taster: taster, rating: 3)
+      review1_2 = create(:wine_review, wine: wine1, tasting: tasting, taster: taster, rating: 4)
+      review1_3 = create(:wine_review, wine: wine1, tasting: tasting, taster: taster, rating: 4)
+      wine2 = create(:wine)
+      tasting_wine2 = create(:tasting_wine, wine: wine2, tasting: tasting)
+      review2_1 = create(:wine_review, wine: wine2, tasting: tasting, taster: taster, rating: 4, wine_number: 2)
+      review2_2 = create(:wine_review, wine: wine2, tasting: tasting, taster: taster, rating: 4, wine_number: 2)
+      review2_3 = create(:wine_review, wine: wine2, tasting: tasting, taster: taster, rating: 4, wine_number: 2)
+
+    end
+    it "should be hash with value :wine_number = 2" do
+      expect(tasting.top_rated_wine["wine_number"]).to eq 2
+    end
+    it "should be hash with value :rating_sum = 12" do
+      expect(tasting.top_rated_wine["rating_sum"]).to eq 12
+    end
+    it "should be hash with value :reviews = 3" do
+      expect(tasting.top_rated_wine["reviews"]).to eq 3
+    end
   end
 
 
