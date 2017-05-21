@@ -37,7 +37,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     # Intent request
     if params["request"]["type"] == "IntentRequest"
 
-      return make_plaintext_response("We're all done here.", true) if params["request"]["intent"]["confirmationStatus"] == "COMPLETED"
+      return make_plaintext_response("We're all done here.", true) if params["request"]["intent"]["confirmationStatus"] == "CONFIRMED"
 
       svc = Alexa::RateWineIntent.new(open_tasting, params)
       render json: svc.response
