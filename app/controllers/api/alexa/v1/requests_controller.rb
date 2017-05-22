@@ -33,7 +33,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
 
     # Launch request
-    return make_plaintext_response("Welcome to Yno Wine Tasting. During a tasting you can ask me to do the following: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if request == "LaunchRequest"
+    return make_plaintext_response("Welcome to Wino Wine Tasting. I've opened tasting #{open_tasting.name}. While tasting you can ask me to do the following: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if request == "LaunchRequest"
 
     # Intent request
     if request == "IntentRequest"
