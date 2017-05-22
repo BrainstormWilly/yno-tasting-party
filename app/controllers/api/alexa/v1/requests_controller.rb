@@ -48,7 +48,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       elsif intent == "GetTastingStatsIntent"
         svc = Alexa::GetTastingStatsIntent.new(open_tasting, params)
       else
-        svc = Alexa::GetAverageRatingIntent.new(open_tasting, params)
+        svc = Alexa::GetAverageWineRatingIntent.new(open_tasting, params)
       end
 
       render json: svc.response
