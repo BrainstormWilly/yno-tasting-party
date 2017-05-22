@@ -29,7 +29,7 @@ class Alexa::GetTastingStatsIntent
           "type" => "SSML",
           "ssml" => "
             <speak>
-              With #{reviews_rated} wine #{"review".pluralize(reviews_rated)} in. This tasting is #{percent_complete} percent complete.<break time='1s'/>
+              With #{reviews_rated} wine #{"review".pluralize(reviews_rated)} completed. This tasting is #{percent_complete} percent complete.<break time='0.5s'/>
               The top wine is currently wine number #{@tasting.top_rated_wine["wine_number"]}. With an average rating of #{@tasting.top_rating}
             </speak>"
         }

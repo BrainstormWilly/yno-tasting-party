@@ -69,6 +69,27 @@ class Tasting < ApplicationRecord
     false
   end
 
+  def selected_wine(wine_number)
+    wine = {
+      "rating_sum" => 0,
+      "total_reviews" => 0,
+      "recorded_reviews" => 0
+    }
+    self.wine_reviews.each do |wr|
+      if wr.wine_number == wine_number
+        wine["rating_sum"] += wr.rating
+        wine["total_reviews"] += 1
+        wine["recorded_reviews"] += 1 if !wr.unrated?
+      end
+    end
+    wine
+  end
+
+  def average_rating_for_wine(wine_number)
+    wine = selected_wine(wine_number)
+    number_with_precision(wine["rating_sum"] / wine["total_reviews"], precision: 2)
+  end
+
   def top_rated_wine
     wines = []
     self.wine_reviews.each do |wr|
