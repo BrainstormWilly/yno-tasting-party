@@ -13,16 +13,12 @@ class Alexa::GetTastingStatsIntent
     unrated
   end
 
-  def top_wine
-
-  end
-
   def reviews_rated
     @tasting.wine_reviews.count - reviews_unrated
   end
 
   def percent_complete
-    (100 * reviews_unrated/@tasting.wine_reviews.count).to_i
+    (100 * reviews_rated/@tasting.wine_reviews.count).to_i
   end
 
   def response
@@ -36,8 +32,9 @@ class Alexa::GetTastingStatsIntent
               With #{reviews_rated} wine #{"review".pluralize(reviews_rated)} in. This tasting is #{percent_complete} percent complete.<break time='1s'/>
               The top wine is currently wine number #{@tasting.top_rated_wine["wine_number"]}. With an average rating of #{@tasting.top_rating}
             </speak>"
-        },
-        "shouldEndSession" => true
+        }
+      },
+      "shouldEndSession" => true
     }
   end
 
