@@ -5,7 +5,6 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
 
   def default
-
     # Alexa Verification
     verifier = AlexaVerifier.build do |c|
       c.verify_signatures = true
@@ -17,6 +16,8 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       request.headers['Signature'],
       request.body.read
     )
+
+    request = params["request"]["type"]
 
     # Verification invalid
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
@@ -32,44 +33,26 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
 
     # Launch request
-    return make_plaintext_response("Welcome to Yno Wine Tasting. During a tasting you can ask me to do the following: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if params["request"]["type"] == "LaunchRequest"
+    return make_plaintext_response("Welcome to Yno Wine Tasting. During a tasting you can ask me to do the following: rate a wine, get an average rating for a wine, or get tasting statistics. Which would you like to do?") if request == "LaunchRequest"
 
     # Intent request
-    if params["request"]["type"] == "IntentRequest"
-      if params["request"]["intent"]["name"] == "RateWineIntent"
+    if request == "IntentRequest"
+      intent = params["request"]["intent"]["name"]
+      if intent == "RateWineIntent"
+        # need to move this logic into service
         svc = Alexa::RateWineIntent.new(open_tasting, params)
         if params["request"]["intent"]["confirmationStatus"] == "CONFIRMED"
           return make_plaintext_response("Thank you. You're rating is recorded. #{svc.reviews_left_to_str}", true) if svc.process_request
           return make_plaintext_response("I'm sorry, I wasn't able to save your request. Please try again.", true)
         end
-      elsif params["request"]["intent"]["name"] == "GetTastingStatsIntent"
+      elsif intent == "GetTastingStatsIntent"
         svc = Alexa::GetTastingStatsIntent.new(open_tasting, params)
+      else
+        svc = Alexa::GetAverageRatingIntent.new(open_tasting, params)
       end
 
       render json: svc.response
-
-      # case intent_name
-      #   when "RateWineIntent"
-      #
-      #     rw = RateWine.new(open_tasting, params)
-      #     if params["request"]["intent"]["confirmationStatus"] == "COMPLETED"
-      #       return make_plaintext_response("Got it! I've given wine #{rw.wine} a rating of #{rw.rating} for taster #{rw.taster_name}. You have #{rw.reviews_left} reviews left.", true) if rw.process_request
-      #       return make_plaintext_response("I'm sorry. There was a problem with your request. Please try again.", true)
-      #     end
-      #     if params["request"]["dialogState"]
-      #       return render json: rw.response
-      #     else
-      #       return make_plaintext_response("There is no dialogState.", true)
-      #     end
-      #     # return confirmation if all slots filled
-      #     # return Delegate if not
-      #   when "GetAverageRatingIntent"
-      #   when "GetWineStatsIntent"
-      # end
     end
-
-
-
   end
 
   def current_doorkeeper_host
