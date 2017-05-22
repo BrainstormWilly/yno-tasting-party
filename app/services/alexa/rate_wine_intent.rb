@@ -83,7 +83,7 @@ class Alexa::RateWineIntent
           "type" => "SSML",
           "ssml" => "
             <speak>
-              Let's see. <break time='1s'/> I have a rating of #{rating}. <break time='1s'/> On wine #{wine}. <break time='1s'/> For taster #{taster_name}. <break time='1s'/> Is that correct?
+              Let's see. <break time='.5s'/> I have a rating of #{rating}. On wine number #{wine}. For taster #{taster_name}. <break time='.5s'/> Is that correct?
             </speak>"
         },
         "shouldEndSession" => false,
