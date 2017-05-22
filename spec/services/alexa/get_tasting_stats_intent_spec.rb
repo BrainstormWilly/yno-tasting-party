@@ -59,9 +59,11 @@ RSpec.describe Alexa::GetTastingStatsIntent, type: :model do
 
   describe "get tasting status details with all rated wines" do
     before do
+      wine_review1.rating = 4
       wine_review1.updated_at = 1.hour.from_now
-      wine_review2.updated_at = 1.hour.from_now
       wine_review1.save
+      wine_review2.rating = 3
+      wine_review2.updated_at = 1.hour.from_now
       wine_review2.save
       @svc = Alexa::GetTastingStatsIntent.new(tasting, alexa_params)
     end
