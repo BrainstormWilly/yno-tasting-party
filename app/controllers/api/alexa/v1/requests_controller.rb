@@ -3,7 +3,6 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
   prepend_before_action :set_access_token_in_params
   before_action :doorkeeper_authorize!
 
-
   def default
     # Alexa Verification
     verifier = AlexaVerifier.build do |c|
@@ -39,16 +38,13 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     if request == "IntentRequest"
       intent = params["request"]["intent"]["name"]
       if intent == "RateWineIntent"
-        # need to move this logic into service
         svc = Alexa::RateWineIntent.new(open_tasting, params)
-        if params["request"]["intent"]["confirmationStatus"] == "CONFIRMED"
-          return make_plaintext_response("Thank you. You're rating is recorded. #{svc.reviews_left_to_str}", true) if svc.process_request
-          return make_plaintext_response("I'm sorry, I wasn't able to save your request. Please try again.", true)
-        end
       elsif intent == "GetTastingStatsIntent"
         svc = Alexa::GetTastingStatsIntent.new(open_tasting, params)
-      else
+      elsif intent == "GetAverageWineRatingIntent"
         svc = Alexa::GetAverageWineRatingIntent.new(open_tasting, params)
+      else
+        svc = Alexa::AmazonIntents.new(params)
       end
 
       render json: svc.response

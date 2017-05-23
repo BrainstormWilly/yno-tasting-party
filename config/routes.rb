@@ -32,7 +32,6 @@ Rails.application.routes.draw do
   resources :tasting_wines, only: [:destroy]
   put "tasting_wines/:id/reveal/:wine_number" => "tasting_wines#reveal", as: "tasting_wine_reveal"
 
-  # resources :hosts, only: [:update]
   put "hosts/create/:taster_id" => "hosts#create", as: "hosts_create"
 
   resources :host_locations, only: [:create, :destroy]

@@ -11,8 +11,12 @@ class Alexa::RateWineIntent
     end
   end
 
+  def confirmationStatus
+    @params["request"]["intent"]["confirmationStatus"] rescue "NONE"
+  end
+
   def dialogState
-    return @params["request"]["dialogState"] rescue "STARTED"
+    @params["request"]["dialogState"] rescue "STARTED"
   end
 
   def wine
@@ -55,9 +59,16 @@ class Alexa::RateWineIntent
   end
 
   def response
+    if confirmationStatus == "CONFIRMED"
+      return completed_body if process_request
+      return failed_body
+    elsif confirmationStatus == "DENIED"
+      return denied_body
+    end
     return confirm_body if dialogState == "COMPLETED"
     delegate_body
   end
+
 
   private
 
@@ -96,7 +107,44 @@ class Alexa::RateWineIntent
     }
   end
 
+  def completed_body
+    {
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "PlainText",
+          "text": "Thank you. You're rating is recorded. #{reviews_left_to_str}"
+        },
+        "shouldEndSession": true
+      }
+    }
+  end
 
+  def failed_body
+    {
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "PlainText",
+          "text": "I'm sorry, I wasn't able to save your request. Please try again."
+        },
+        "shouldEndSession": true
+      }
+    }
+  end
+
+  def denied_body
+    {
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "PlainText",
+          "text": "OK. Try and start again and I'll see if I can get it right."
+        },
+        "shouldEndSession": true
+      }
+    }
+  end
 
 
 end
