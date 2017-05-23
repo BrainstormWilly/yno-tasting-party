@@ -102,12 +102,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
               <s>Which would you like to do?</s>
             </speak>"
         },
-        "shouldEndSession" => false,
-        "directives" => [
-          {
-            "type" => "Dialog.ConfirmIntent"
-          }
-        ]
+        "shouldEndSession" => false
       }
     }
   end
