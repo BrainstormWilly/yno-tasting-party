@@ -32,7 +32,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
 
     # Launch request
-    return play_preamble if request == "LaunchRequest"
+    return play_preamble(open_tasting) if request == "LaunchRequest"
 
     # Intent request
     if request == "IntentRequest"
@@ -88,7 +88,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     }
   end
 
-  def play_preamble
+  def play_preamble(tasting)
     render json: {
       "version" => "1.0",
       "sessionAttributes": { },
@@ -97,7 +97,9 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
           "type" => "SSML",
           "ssml" => "<speak>
                       <s>Welcome to<break time='.1s'/> why no Wine Tasting</s>
-                      <s>Your tasting<break time='.1s'/> <prosody pitch='low'>#{open_tasting.name}</prosody><break time='.1s'/> is currently open</s>
+                      <s>Your tasting<break time='.1s'/> <prosody pitch='low'>#{tasting}</prosody><break time='.1s'/> is currently open</s>
+                      <s>While tasting you can ask me to do the following<break time='.5s'/> rate a wine<break time='.5s'/> get an average rating for a wine<break time='.5s'/> or<break time='.5s'/> get tasting statistics</s>
+                      <s>Which would you like to do?</s>
                     </speak>"
         },
         "shouldEndSession" => false
