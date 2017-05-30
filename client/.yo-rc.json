@@ -4,7 +4,7 @@
     "props": {
       "skipInstall": true,
       "framework": "angular1",
-      "modules": "webpack",
+      "modules": "inject",
       "js": "typescript",
       "ci": "",
       "css": "scss",

@@ -1,4 +1,6 @@
-export default routesConfig;
+angular
+  .module('app')
+  .config(routesConfig);
 
 /** @ngInject */
 function routesConfig($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider, $locationProvider: angular.ILocationProvider) {

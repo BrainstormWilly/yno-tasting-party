@@ -5,6 +5,9 @@ const spa = require('browser-sync-spa');
 const browserSyncConf = require('../conf/browsersync.conf');
 const browserSyncDistConf = require('../conf/browsersync-dist.conf');
 
+const proxyMiddleware = require('http-proxy-middleware');
+
+
 browserSync.use(spa());
 
 gulp.task('browsersync', browserSyncServe);
