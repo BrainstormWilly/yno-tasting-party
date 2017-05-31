@@ -1,7 +1,10 @@
 {
   "name": "ynoTasting",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "cross-spawn": "^5.1.0",
+    "uuid": "^3.0.1"
+  },
   "scripts": {
     "test": "gulp test"
   },
