@@ -49,9 +49,9 @@
         "extension": "scss"
       },
       "jsPreprocessor": {
-        "key": "typescript",
-        "extension": "ts",
-        "srcExtension": "ts"
+        "key": "noJsPrepro",
+        "extension": "js",
+        "srcExtension": "js"
       },
       "htmlPreprocessor": {
         "key": "noHtmlPrepro",
