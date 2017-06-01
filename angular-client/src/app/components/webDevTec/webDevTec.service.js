@@ -1,13 +1,8 @@
-(function() {
-  'use strict';
+export class WebDevTecService {
+  constructor () {
+    'ngInject';
 
-  angular
-      .module('ynoTasting')
-      .service('webDevTec', webDevTec);
-
-  /** @ngInject */
-  function webDevTec() {
-    var data = [
+    this.data = [
       {
         'title': 'AngularJS',
         'url': 'https://angularjs.org/',
@@ -49,14 +44,17 @@
         'url': 'http://sass-lang.com/',
         'description': 'Original Syntactically Awesome StyleSheets implemented in Ruby',
         'logo': 'ruby-sass.png'
+      },
+      {
+        'title': 'ES6 (Babel formerly 6to5)',
+        'url': 'https://babeljs.io/',
+        'description': 'Turns ES6+ code into vanilla ES5, so you can use next generation features today.',
+        'logo': 'babel.png'
       }
     ];
-
-    this.getTec = getTec;
-
-    function getTec() {
-      return data;
-    }
   }
 
-})();
+  getTec() {
+    return this.data;
+  }
+}
