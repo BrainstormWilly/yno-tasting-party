@@ -1,10 +1,11 @@
 <!doctype html>
-<html ng-app="ynoTasting" ng-strict-di>
+<html>
   <head>
     <meta charset="utf-8">
     <title>ynoTasting</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
@@ -19,12 +20,11 @@
     <!-- endinject -->
     <!-- endbuild -->
   </head>
-  <body>
+  <body ng-app="ynoTasting" ng-strict-di>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <div ui-view></div>
+    <app></app>
 
     <!-- build:js(src) scripts/vendor.js -->
     <!-- bower:js -->
@@ -41,6 +41,5 @@
     <!-- angular templates will be automatically converted in js and inserted here -->
     <!-- endinject -->
     <!-- endbuild -->
-
   </body>
 </html>
