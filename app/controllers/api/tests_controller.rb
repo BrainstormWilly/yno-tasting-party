@@ -1,8 +1,8 @@
-class TestsController < ActionController::Base
+class Api::TestsController < ActionController::Base
 
   def show
     render json: {
-      'title' => 'hello world'
+      'title' => "You've got Rails!"
     }
   end
 

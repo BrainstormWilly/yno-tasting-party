@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
+  include DeviseTokenAuth::Concerns::SetUserByToken
 
   force_ssl if: :ssl_configured?
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
 
   private
 

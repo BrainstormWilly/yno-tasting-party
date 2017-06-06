@@ -76,6 +76,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.43'
 gem 'devise'
 gem 'devise_invitable'
 gem 'figaro'
+gem 'omniauth', '>= 1.0.0'
+gem 'devise_token_auth'
 
 # SendGrid email
 gem 'sendgrid-ruby'

@@ -1,4 +1,4 @@
-import {WelcomeComponent} from './welcome.component';
+import {WelcomeComponent} from './welcome-header.component';
 import {WelcomeService} from './welcome.service';
 import {WelcomeConfig} from './welcome.config';
 

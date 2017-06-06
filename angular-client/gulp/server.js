@@ -32,7 +32,7 @@ function browserSyncInit(baseDir, browser) {
     baseDir: baseDir,
     routes: routes,
     middleware: [
-      proxyMiddleware('/api', { target: 'http://localhost:3000' })
+      proxyMiddleware('/api', { target: 'http://localhost:8000' })
     ]
   };
 
@@ -61,7 +61,7 @@ gulp.task('serve', ['watch'], function () {
 });
 
 gulp.task('rails', function() {
-  exec('rails server');
+  exec('rails server -p 8000');
 });
 
 gulp.task('serve:full-stack', ['rails', 'serve']);

@@ -1,6 +1,7 @@
 
 import {ComponentsModule} from './components/components.module';
 import {IndexComponent} from './index.component';
+import {IndexConfig} from './index.config';
 
 angular
   .module('ynoTasting', [
@@ -11,7 +12,9 @@ angular
     'ngMessages',
     'ngAria',
     'ngResource',
+    'ng-token-auth',
     'ui.router',
     ComponentsModule
   ])
   .component('app', IndexComponent)
+  .config(IndexConfig)

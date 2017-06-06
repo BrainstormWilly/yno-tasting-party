@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
 
-  use_doorkeeper
-  default_url_options host: "localhost:3000"
-
-  devise_for :users, :controllers => {
-    :registrations => "registrations",
-    :invitations => "invitations"
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+      registrations: "registrations",
+      invitations: "invitations"
   }
+
+  use_doorkeeper
+
+  default_url_options host: "localhost:8000"
+
+  # devise_for :users, :controllers => {
+  #   :registrations => "registrations",
+  #   :invitations => "invitations"
+  # }
 
   # Rails only routes
 

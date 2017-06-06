@@ -1,11 +1,13 @@
 export const IndexComponent = {
   template:`
     <header>
-      <h1>Hello World</h1>
+      <div ui-view='header'/>
     </header>
-    <div ui-view></div>
+    <main>
+      <div ui-view='main'/>
+    </main>
     <footer>
-      By the YnoGuy
+      <div ui-view='footer'/>
     </footer>
   `
 }
