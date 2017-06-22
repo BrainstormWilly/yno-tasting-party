@@ -24,6 +24,8 @@ group :development do
   gem 'listen', '~> 3.0.5'
   # homebrew libreadline fix
   gem 'rb-readline'
+  # allow CORS authorization between localhost ports
+  gem 'rack-cors'
 end
 
 group :production do

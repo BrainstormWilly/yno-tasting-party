@@ -3,11 +3,17 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
   'ngInject';
   $stateProvider
     .state('welcome',{
-      url: '/welcome',
-      component: 'welcome',
-      resolve: {
-        msg: WelcomeService => WelcomeService.runRailsTest()
+      url: '/',
+      views: {
+        main: 'welcome'
+      }
+    })
+    .state('welcome-signin',{
+      url: '/signin',
+      views: {
+        main: 'welcomeSignin'
       }
     });
+
   $urlRouterProvider.otherwise('/');
 }

@@ -1,13 +1,13 @@
-export function IndexConfig($authProvider, $stateProvider) {
+export function IndexConfig($authProvider, $logProvider, constants) {
   'ngInject';
+
+  $logProvider.debugEnabled(constants.enableDebug);
+
   $authProvider
     .configure({
-      apiUrl: '/api/v1'
+      apiUrl: constants.authUrl,
+      validateOnPageLoad: false,
+      storage: 'localStorage'
     });
-  $stateProvider
-    .state('welcome', {
-      url: '/welcome',
-      templateUrl:
-    })
 
 }

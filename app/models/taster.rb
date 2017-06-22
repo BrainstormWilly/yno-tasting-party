@@ -7,6 +7,10 @@ class Taster < ApplicationRecord
 
   before_save :default_status
 
+  def invites
+    self.guests.select{ |g| g.invitation_open? }
+  end
+
   private
 
     def default_status

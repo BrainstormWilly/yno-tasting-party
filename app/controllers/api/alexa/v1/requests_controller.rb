@@ -1,4 +1,4 @@
-class Api::Alexa::V1::RequestsController < ActionController::Base
+class Api::Alexa::V1::RequestsController < Api::BaseController
 
   prepend_before_action :set_access_token_in_params
   before_action :doorkeeper_authorize!

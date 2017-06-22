@@ -13,6 +13,7 @@
     "browser-sync-spa": "~1.0.3",
     "chalk": "~1.1.1",
     "del": "~2.0.2",
+    "es6-template-string-loader": "^1.0.1",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-angular": "~0.12.0",
     "estraverse": "~4.1.0",

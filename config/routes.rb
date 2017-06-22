@@ -64,6 +64,12 @@ Rails.application.routes.draw do
         post "requests", to: "requests#default"
       end
     end
+    namespace :v1 do
+      resources :tasters, only: [:show]
+      get "tasters/:id/invites" => "tasters#invites"
+      get "tasters/:id/tastings" => "tasters#tastings"
+      get "tasters/:id/reviews" => "tasters#reviews"
+    end
     get "tests", to: "tests#show"
   end
 

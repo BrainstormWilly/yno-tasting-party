@@ -28,7 +28,7 @@ class Guest < ApplicationRecord
   end
 
   def reviews_left
-    self.taster.wine_reviews.map{ |wr| wr.tasting==self.tasting && self.unrated? }
+    self.taster.wine_reviews.select{ |wr| wr.tasting==self.tasting && wr.unrated? }
   end
 
 
