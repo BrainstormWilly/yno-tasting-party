@@ -4,16 +4,13 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('welcome',{
       url: '/',
-      views: {
-        main: 'welcome'
-      }
+      component: 'welcome'
     })
     .state('welcome-signin',{
       url: '/signin',
-      views: {
-        main: 'welcomeSignin'
-      }
+      component: 'welcomeSignin'
     });
+
 
   $urlRouterProvider.otherwise('/');
 }

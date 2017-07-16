@@ -1,8 +1,14 @@
-export const template = `<img id="header-logo" src='assets/images/yno_tasting_logo_white.svg'>
+export const template = `
 
-<h2>Welcome to Yno!</h2>
+<div class="main-wrapper">
+  <img id="header-logo" src='assets/images/yno_tasting_logo_white.svg'>
 
-<div>
-  <a class="main-btn main-primary-btn" ui-sref="welcome-signin">Sign In</a>
-  <a class="main-btn main-secondary-btn" href ng-click="$ctrl.changeWelcomeState('welcome.signup')">Sign Up</a>
-</div>`
+  <a class="info-btn" ui-sref="welcome-signin"><i class="fa fa-glass"></i></a>
+  <a class="welcome-signin-btn welcome-primary-btn" ui-sref="welcome-signin">Sign In</a>
+  <a class="welcome-signup-btn" href  ng-click="$ctrl.toggleReviewMode()">Sign Up</a>
+  <a class="info-btn" href><i class="fa fa-unlock-alt"></i></a>
+</div>
+
+
+
+`

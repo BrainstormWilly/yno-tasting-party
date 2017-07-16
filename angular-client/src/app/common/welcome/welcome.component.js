@@ -1,41 +1,28 @@
 import {template} from './welcome.es6';
 
 export const WelcomeComponent = {
-  bindings: {
-    $transition$: '<'
-  },
   template,
   controller: class WelcomeController{
-    constructor($rootScope, $log, $state, UserService){
+    constructor($scope, $log, $state, UserService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
+      this.review_mode = false;
       this.UserService = UserService;
 
-      let validationSuccess = $rootScope.$on('auth:validation-success', () => {
+      let validationSuccess = $scope.$on('auth:validation-success', () => {
+        $log.log('WelcomeComponent: validationSuccess');
         this.$state.go('dashboard');
       });
 
-      // $rootScope.$on('auth:validation-error', () => {
-      //   this.$log.log('validation-error');
-      // });
-      //
-      // $rootScope.$on('auth:session-expired', () => {
-      //   this.$log.log('session-expired');
-      // });
-      //
-      // $rootScope.$on('auth:invalid', () => {
-      //   this.$log.log('session-expired');
-      // });
-
-      $rootScope.$on('$destroy', validationSuccess);
+      $scope.$on('$destroy', validationSuccess);
 
     }
 
     $onInit() {
       this.$log.log("WelcomeComponent $onInit");
-      // this.UserService.validateUser();
     }
 
+    
   }
 }

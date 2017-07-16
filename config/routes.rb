@@ -55,7 +55,6 @@ Rails.application.routes.draw do
   # end
   # root "welcome#index"
 
-
   # Api routes
 
   namespace :api do
@@ -65,10 +64,13 @@ Rails.application.routes.draw do
       end
     end
     namespace :v1 do
-      resources :tasters, only: [:show]
+      get "tasters/:id" => "tasters#show"
       get "tasters/:id/invites" => "tasters#invites"
       get "tasters/:id/tastings" => "tasters#tastings"
       get "tasters/:id/reviews" => "tasters#reviews"
+      get "tasters/user/:id" => "tasters#showByUser"
+      resources :tastings, only: [:show]
+      resources :wine_reviews, only: [:update]
     end
     get "tests", to: "tests#show"
   end

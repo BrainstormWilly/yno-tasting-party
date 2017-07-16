@@ -87,6 +87,7 @@ class Tasting < ApplicationRecord
 
   def average_rating_for_wine(wine_number)
     wine = selected_wine(wine_number)
+    return 0 if wine["total_reviews"]==0
     number_with_precision(wine["rating_sum"] / wine["total_reviews"], precision: 2)
   end
 

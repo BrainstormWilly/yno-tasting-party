@@ -1,0 +1,151 @@
+ui-view{
+   position: absolute;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 4rem;
+
+
+  // .tasting-wrapper{
+  //   position: absolute;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   justify-content: flex-start;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   color: $theme-neutral-color;
+  //
+  // }
+  .tasting-header{
+    text-align: center;
+    height: 4rem;
+  }
+
+  .tasting-progress-wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 6rem;
+    // border: 4px solid red;
+    .column{
+      width: 100%;
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+      .label{
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba($theme-neutral-color, .5);
+      }
+      .bar{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        height: 2rem;
+        .progress{
+          align-self: flex-start;
+          height: 100%;
+          background-color: rgba($theme-neutral-color, .5);
+        }
+        .progress-label{
+          position: absolute;
+          align-self: center;
+          color: $theme-neutral-color;
+        }
+      }
+      &:first-child{
+        .bar{
+          .progress{
+            align-self: flex-end;
+          }
+        }
+      }
+    }
+  }
+
+  .tasting-wines-wrapper{
+    height: calc(100vh - 16rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+    // border: 1px solid red;
+    .wine{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 8rem;
+      // border: 1px solid red;
+      cursor: pointer;
+      .reviews-wrapper{
+        display: flex;
+        width: 100%;
+        height: 5rem;
+        z-index: -1;
+        .review{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          // border: 1px solid red;
+          font-size: 3rem;
+          width: 100%;
+          height: 100%;
+          padding-left: 2rem;
+          background: linear-gradient(to left, rgba($theme-neutral-color, .5), rgba($theme-neutral-color, 0));
+          &.good{
+            color: $theme-good-color;
+            background: linear-gradient(to left, rgba($theme-good-color, .5), rgba($theme-good-color, 0));
+          }
+          &.ok{
+            color: $theme-ok-color;
+            background: linear-gradient(to left, rgba($theme-ok-color, .5), rgba($theme-ok-color, 0));
+          }
+          &.bad{
+            color: $theme-bad-color;
+            background: linear-gradient(to left, rgba($theme-bad-color, .5), rgba($theme-bad-color, 0));
+          }
+          // &.unrated{
+          //   color: $theme-neutral-color;
+          //   background: linear-gradient(to left, rgba($theme-neutral-color, .5), rgba($theme-neutral-color, 0));
+          // }
+          &:last-child{
+            padding-right: 1rem;
+            align-items: flex-end;
+            background: linear-gradient(to right, rgba($theme-neutral-color, .5), rgba($theme-neutral-color, 0));
+            &.good{
+              background: linear-gradient(to right, rgba($theme-good-color, .5), rgba($theme-good-color, 0));
+            }
+            &.ok{
+              background: linear-gradient(to right, rgba($theme-ok-color, .5), rgba($theme-ok-color, 0));
+            }
+            &.bad{
+              background: linear-gradient(to right, rgba($theme-bad-color, .5), rgba($theme-bad-color, 0));
+            }
+          }
+        }
+      }
+      .badge{
+        position: absolute;
+        @extend .circle-btn;
+        height: 7rem;
+        width: 7rem;
+        font-size: 0.75rem;
+        .wine-number{
+          font-size: 2.5rem;
+        }
+      }
+
+    }
+  }
+
+}

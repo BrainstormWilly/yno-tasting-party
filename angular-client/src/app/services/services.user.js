@@ -1,11 +1,11 @@
 export class UserService {
-  constructor ($rootScope, $log, $http, $auth) {
+  constructor ($rootScope, $log, $http, $auth, $state) {
     'ngInject';
-
     this.$log = $log;
     this.$http = $http;
     this.$auth = $auth;
     this.$rootScope = $rootScope;
+    this.$state = $state;
     this.user = false;
   }
 
@@ -14,9 +14,9 @@ export class UserService {
       .then(user => {
         this.setUser(user);
       })
-      .catch(reason => {
-        this.setUser(false);
-        this.$log.warn("No User", reason);
+      .catch(() => {
+        this.user = null;
+        this.$state.go('welcome');
       })
   }
 
@@ -27,6 +27,17 @@ export class UserService {
       })
       .catch(() => {
         this.setUser(false);
+      })
+  }
+
+  signoutUser(){
+    this.$auth.signOut()
+      .then(() => {
+        this.user = null;
+        this.$state.go('welcome');
+      })
+      .catch(error => {
+        this.$log.log("signout failed", error);
       })
   }
 

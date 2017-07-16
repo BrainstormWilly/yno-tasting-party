@@ -1,6 +1,6 @@
 class Guest < ApplicationRecord
 
-  before_save :sequence_taster_number
+  before_create :sequence_taster_number
 
   belongs_to :taster
   belongs_to :tasting

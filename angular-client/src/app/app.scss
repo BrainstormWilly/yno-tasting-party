@@ -1,0 +1,145 @@
+$theme-bkg-color: #000;
+// $theme-primary-btn-color: rgb(255, 245, 157);
+// $theme-primary-focus-color: rgba(255, 245, 157, .2);
+$theme-good-color: rgb(0, 230, 118);
+$theme-ok-color: rgb(255, 255, 141);
+$theme-bad-color: rgb(255, 82, 82);
+$theme-neutral-color: rgb(224, 224, 224);
+$theme-info-color: rgb(159, 168, 218);
+
+
+body {
+  background-color: $theme-bkg-color;
+  color: $theme-neutral-color;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+app{
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  .circle-btn{
+    background-color: $theme-bkg-color;
+    border-radius: 50%;
+    border: 2px solid $theme-neutral-color;
+    color: $theme-neutral-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .circle-primary-btn{
+    background-color: $theme-neutral-color;
+    color: $theme-bkg-color;
+  }
+
+  .info-btn{
+    @extend .circle-btn;
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+  }
+
+  .main-wrapper{
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // .main-btn {
+  //   @extend .circle-btn;
+  //   height: 8rem;
+  //   width: 8rem;
+  // }
+  //
+  // .main-primary-btn:active{
+  //   background: none;
+  //   color: $theme-primary-btn-color;
+  // }
+  //
+  // .main-secondary-btn {
+  //
+  // }
+
+  .main-form-wrapper{
+    position: relative;
+    min-height: 1rem;
+    width: 60%;
+    padding: 2rem
+  }
+
+  // .main-form-bkg{
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   border-radius: .8rem;
+  //   background-color: $theme-primary_bkg_color;
+  //   opacity: $theme-primary_bkg_alpha;
+  // }
+
+  .main-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  input[type=email].main-form-control,
+  input[type=password].main-form-control,
+  input[type=text].main-form-control{
+    font-size: 1.2rem;
+    width: 100%;
+    background: rgba(255,255,255,0);
+    color: $theme-neutral-color;
+    padding: .5rem;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: $theme-neutral-color;
+    margin-bottom: 1rem;
+
+  }
+
+  input[type=email].main-form-control:focus,
+  input[type=password].main-form-control:focus,
+  input[type=text].main-form-control:focus{
+    outline: none;
+    background: rgba($theme-neutral-color, .2);
+  }
+
+  button[type=submit].main-form-control{
+    @extend .circle-btn, .circle-primary-btn;
+    cursor: pointer;
+    width: 5rem;
+    height: 5rem;
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  button[type=submit].main-form-control:focus{
+    outline: none;
+
+  }
+}
+
+// injector
+// endinjector

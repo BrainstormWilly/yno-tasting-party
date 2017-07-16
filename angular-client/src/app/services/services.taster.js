@@ -12,8 +12,18 @@ export class TasterService {
     this.reviews = [];
   }
 
-  loadTaster(user){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + user)
+  loadTaster(taster){
+    this.$http.get(this.constants.apiUrl + "/tasters/" + taster)
+      .then(taster => {
+        this.setTaster(taster.data);
+      })
+      .catch(error => {
+        this.$log.error(error);
+      });
+  }
+
+  loadTasterFromUser(user){
+    this.$http.get(this.constants.apiUrl + "/tasters/user/" + user)
       .then(taster => {
         this.setTaster(taster.data);
       })

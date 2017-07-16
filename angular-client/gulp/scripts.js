@@ -19,7 +19,7 @@ function webpackWrapper(watch, test, callback) {
         { test: /\.js$/, exclude: /node_modules/, loaders: ['ng-annotate', 'babel-loader?presets[]=es2015']}
       ]
     },
-    output: { filename: 'index.module.js' }
+    output: { filename: 'app.module.js' }
   };
 
   if(watch) {
@@ -43,7 +43,7 @@ function webpackWrapper(watch, test, callback) {
     }
   };
 
-  var sources = [ path.join(conf.paths.src, '/app/index.module.js') ];
+  var sources = [ path.join(conf.paths.src, '/app/app.module.js') ];
   if (test) {
     sources.push(path.join(conf.paths.src, '/app/**/*.spec.js'));
   }

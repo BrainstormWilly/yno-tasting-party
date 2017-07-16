@@ -1,0 +1,24 @@
+.dashboard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-btn{
+  @extend .circle-btn;
+  height: 8rem;
+  width: 8rem;
+  margin-top: 1rem;
+}
+
+.dashboard-highlight-btn{
+  background-color: $theme-good-color;
+  border-color: $theme-good-color;
+  color: $theme-bkg-color;
+}
+
+.dashboard-btn-number{
+  font-size: 3rem;
+  font-weight: bold;
+}
