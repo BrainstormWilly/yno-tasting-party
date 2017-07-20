@@ -9,6 +9,10 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
     .state('welcome-signin',{
       url: '/signin',
       component: 'welcomeSignin'
+    })
+    .state('welcome-signup',{
+      url: '/signup',
+      component: 'welcomeSignup'
     });
 
 

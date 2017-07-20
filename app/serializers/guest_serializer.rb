@@ -1,5 +1,5 @@
 class GuestSerializer < ActiveModel::Serializer
-  attributes :id, :taster_id, :tasting_id, :tasting_progress, :wine_reviews
+  attributes :id, :taster_id, :taster, :tasting_id, :tasting, :tasting_progress, :wine_reviews
 
   # belongs_to :taster
 
@@ -7,6 +7,13 @@ class GuestSerializer < ActiveModel::Serializer
   # def taster
   #   TasterSerializer.new(object.taster).attributes
   # end
+  def tasting
+    object.tasting
+  end
+
+  def taster
+    object.taster
+  end
 
   def tasting_progress
     total = object.tasting.tasting_wines.count

@@ -69,6 +69,7 @@ Rails.application.routes.draw do
       get "tasters/:id/tastings" => "tasters#tastings"
       get "tasters/:id/reviews" => "tasters#reviews"
       get "tasters/user/:id" => "tasters#showByUser"
+      post "tasters" => "tasters#create"
       resources :tastings, only: [:show]
       resources :wine_reviews, only: [:update]
     end

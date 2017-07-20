@@ -35,9 +35,7 @@ angular
     'nginject';
     $log.log("AppModule run");
     $transitions.onStart({}, function(trans){
-      if( trans.to().name!="welcome" && trans.to().name!="welcome-signin" ){
-        UserService.validateUser();
-      }
+      UserService.validateUser();
     });
 
   })

@@ -1,19 +1,21 @@
-import {template} from './welcome-signin.es6';
+import {template} from './welcome-signup.es6';
 
 
-export const WelcomeSigninComponent = {
+export const WelcomeSignupComponent = {
   template,
-  controller: class WelcomeSigninComponent{
-    constructor($scope, $log, $state, UserService, TasterService){
+  controller: class WelcomeSignupComponent{
+    constructor($scope, $state, $log, UserService, TasterService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
       this.UserService = UserService;
       this.TasterService = TasterService;
+      this.state = "user";
 
       let userChangeEvent = $scope.$on('user-change-event', (e,d) => {
         if( d ) {
-          TasterService.loadTasterFromUser(d.id);
+          this.user = d;
+          this.state = "taster";
         }
       });
 
@@ -28,14 +30,22 @@ export const WelcomeSigninComponent = {
     }
 
     $onInit() {
-      // this.$log.log("WelcomeSigninComponent $onInit");
       if( this.UserService.validationState()=="user_set" ){
         this.TasterService.loadTasterFromUser(this.UserService.getUser().id);
       }
     }
 
-    signinUser(){
-      this.UserService.signinUser(this.user);
+    signupInvalid(form){
+      return form.$invalid || this.user.password != this.user.password_confirmation;
+    }
+
+    signupUser(){
+      this.UserService.signupUser(this.user);
+    }
+
+    signupTaster(){
+      this.taster.user_id = this.user.id;
+      this.TasterService.signupTaster(this.taster);
     }
 
   }

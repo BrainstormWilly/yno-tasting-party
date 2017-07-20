@@ -2,27 +2,39 @@ import {template} from './welcome.es6';
 
 export const WelcomeComponent = {
   template,
-  controller: class WelcomeController{
-    constructor($scope, $log, $state, UserService){
+  controller: class WelcomeComponent{
+    constructor($scope, $log, $state, UserService, TasterService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
-      this.review_mode = false;
-      this.UserService = UserService;
 
-      let validationSuccess = $scope.$on('auth:validation-success', () => {
-        $log.log('WelcomeComponent: validationSuccess');
-        this.$state.go('dashboard');
+      // let validationSuccess = $scope.$on('auth:validation-success', (e,d) => {
+      //   $log.log('WelcomeComponent: validationSuccess');
+      //   TasterService.loadTasterFromUser(d.id)
+      // });
+
+      let tasterChangeEvent = $scope.$on('taster-change-event', (e,d) => {
+        if( d ){
+          this.$state.go('taster-dashboard', {id: d.id});
+        }
       });
 
-      $scope.$on('$destroy', validationSuccess);
+      let userChangeEvent = $scope.$on('user-change-event', (e,d) => {
+        if( d ){
+          TasterService.loadTasterFromUser(d.id)
+        }
+      });
+
+      $scope.$on('$destroy', userChangeEvent);
+      $scope.$on('$destroy', tasterChangeEvent);
 
     }
 
     $onInit() {
-      this.$log.log("WelcomeComponent $onInit");
+      // this.$log.log("WelcomeComponent $onInit");
+
     }
 
-    
+
   }
 }

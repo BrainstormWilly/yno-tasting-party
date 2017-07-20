@@ -62,6 +62,17 @@ export class TasterService {
       });
   }
 
+  signupTaster(taster){
+    this.$log.log(taster);
+    this.$http.post(this.constants.apiUrl + "/tasters", taster)
+      .then(response => {
+        this.setTaster(response.data);
+      })
+      .catch(error => {
+        this.$log.error(error);
+      })
+  }
+
   setInvites(invites){
     this.invites = invites;
     this.$rootScope.$broadcast('taster-invites-change-event', invites);

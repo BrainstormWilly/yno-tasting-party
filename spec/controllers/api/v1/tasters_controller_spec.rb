@@ -32,21 +32,21 @@ RSpec.describe Api::V1::TastersController, type: :controller do
     end
     describe "GET #show" do
       it "returns http success" do
-        get :show, params: {id: user.id}
+        get :show, params: {id: taster.id}
         expect(response).to have_http_status(:success)
       end
       it "returns a guest_count" do
-        get :show, params: {id: user.id}
+        get :show, params: {id: taster.id}
         taster = ActiveSupport::JSON.decode(response.body)
         expect(taster["guest_count"]).to eq 1
       end
       it "returns a invite_count" do
-        get :show, params: {id: user.id}
+        get :show, params: {id: taster.id}
         taster = ActiveSupport::JSON.decode(response.body)
         expect(taster["invite_count"]).to eq 1
       end
       it "returns a review_count (including unrated)" do
-        get :show, params: {id: user.id}
+        get :show, params: {id: taster.id}
         taster = ActiveSupport::JSON.decode(response.body)
         expect(taster["review_count"]).to eq 2
       end
@@ -82,6 +82,18 @@ RSpec.describe Api::V1::TastersController, type: :controller do
         get :reviews, params: {id: taster.id}
         reviews = ActiveSupport::JSON.decode(response.body)
         expect(reviews.count).to eq 2
+      end
+    end
+    describe "POST #create" do
+      before do
+        @user3 = create(:user)
+      end
+      it "creates taster" do
+        post :create, params: {taster: {name: "Jane Doe", handle: "Wine Diva", user_id: @user3.id}}
+        taster = ActiveSupport::JSON.decode(response.body)
+        expect(taster["name"]).to eq "Jane Doe"
+        expect(taster["id"]).to be
+        expect(taster["user_id"]).to eq @user3.id
       end
     end
   end

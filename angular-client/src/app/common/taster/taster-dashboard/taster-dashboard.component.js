@@ -5,34 +5,38 @@ export const TasterDashboardComponent = {
     taster: "<"
   },
   template,
-  controller: class TasterDashboardController{
-    constructor($scope, $log, $state, TasterService){
+  controller: class TasterDashboardComponent{
+    constructor($scope, $log, $state, TasterService, UserService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
+      this.UserService = UserService;
 
       let tasterChangeEvent = $scope.$on('taster-change-event', (e,d) => {
-        this.$log.log("tasterChangeEvent");
+        // this.$log.log("TasterDashboardComponent: tasterChangeEvent", d);
         this.taster = d;
       });
 
       let userChangeEvent = $scope.$on('user-change-event', (e,d) => {
-        this.$log.log("userChangeEvent");
-        if( TasterService.getTaster() ){
-          this.taster = TasterService.getTaster();
-        }else{
+        // this.$log.log("TasterDashboardComponent: userChangeEvent", d);
+        if( d ){
           TasterService.loadTasterFromUser(d.id);
+        }else{
+          // this.$log.log("TasterDashboardComponent: changing state");
+          $state.go('welcome');
         }
       });
 
       $scope.$on('$destroy', userChangeEvent);
       $scope.$on('$destroy', tasterChangeEvent);
-      //
-      // this.taster = TasterService.getTaster();
+      
     }
 
     $onInit() {
-      this.$log.log("TasterDashboardComponent $onInit");
+      this.$log.log("TasterDashboardComponent: onInit", this.UserService.validationState());
+      if( this.UserService.validationState()=="unvalidated" ){
+        this.$state.go('welcome');
+      }
     }
 
   }

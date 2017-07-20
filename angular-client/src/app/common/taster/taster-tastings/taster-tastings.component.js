@@ -1,6 +1,9 @@
 import {template} from './taster-tastings.es6';
 
 export const TasterTastingsComponent = {
+  bindings: {
+    taster: "<"
+  },
   template,
   controller: class TasterTastingsController{
     constructor($scope, $log, $state, TasterService){
@@ -31,7 +34,6 @@ export const TasterTastingsComponent = {
     }
 
     $onInit() {
-      this.taster = this.TasterService.getTaster();
       if( this.taster ){
         this.TasterService.loadTastings(this.taster.id);
       }
