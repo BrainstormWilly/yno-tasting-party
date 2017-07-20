@@ -1,18 +1,19 @@
 import {template} from './tasting.es6';
 
 export const TastingComponent = {
-  bindings: {
-    $transition$: "<"
+  bindings:{
+    $transition$: "<",
+    taster: "<"
   },
   template,
   controller: class TastingComponent{
-    constructor($scope, $log, $state, TastingService, TasterService){
+    constructor($scope, $log, $state, TastingService, TasterService, UserService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
       this.TasterService = TasterService;
       this.TastingService = TastingService;
-
+      this.UserService = UserService;
 
       let tastingChangeEvent = $scope.$on('tasting-change-event', (e,d) => {
         let wr, i = 0;
@@ -59,20 +60,21 @@ export const TastingComponent = {
     }
 
     $onInit() {
-      this.tasting = null;
-      this.tasting_progress = 0;
-      this.tasting_progress_percent = "0%";
-      this.taster_progress = 0;
-      this.taster_progress_percent = "0%";
-      this.tasting_wines = [];
-      this.wine_reviews = [];
-      this.average_ratings = [];
-      this.taster_ratings = [];
-      this.average_ratings = [];
-      this.taster_ratings = [];
-      this.taster = this.TasterService.getTaster();
-      this.review_mode = false;
-      if( this.taster ){
+      if( this.UserService.validationState()=="unvalidated" ){
+        this.$state.go('welcome');
+      }else if( this.taster ){
+        this.tasting = null;
+        this.tasting_progress = 0;
+        this.tasting_progress_percent = "0%";
+        this.taster_progress = 0;
+        this.taster_progress_percent = "0%";
+        this.tasting_wines = [];
+        this.wine_reviews = [];
+        this.average_ratings = [];
+        this.taster_ratings = [];
+        this.average_ratings = [];
+        this.taster_ratings = [];
+        this.review_mode = false;
         this.TastingService.loadTasting(this.$transition$.params("to").id);
       }
     }

@@ -6,11 +6,12 @@ export const TasterTastingsComponent = {
   },
   template,
   controller: class TasterTastingsController{
-    constructor($scope, $log, $state, TasterService){
+    constructor($scope, $log, $state, TasterService, UserService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
       this.TasterService = TasterService;
+      this.UserService = UserService;
       this.taster = null;
       this.tastings = [];
       this.moment = moment;
@@ -34,7 +35,9 @@ export const TasterTastingsComponent = {
     }
 
     $onInit() {
-      if( this.taster ){
+      if( this.UserService.validationState()=="unvalidated" ){
+        this.$state.go('welcome');
+      }else if( this.taster ){
         this.TasterService.loadTastings(this.taster.id);
       }
     }
