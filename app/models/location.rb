@@ -6,4 +6,5 @@ class Location < ApplicationRecord
     "#{self.phone} | #{self.address}, #{self.city} #{self.state} #{self.postal}"
   end
 
+
 end

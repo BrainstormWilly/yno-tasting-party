@@ -55,6 +55,7 @@ RSpec.describe TastersController, type: :controller do
         expect(response).to redirect_to(authenticated_root_path)
       end
     end
+    
     # describe "GET #new" do
     #   it "returns http success" do
     #     get :new

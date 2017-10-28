@@ -1,5 +1,12 @@
 class GuestSerializer < ActiveModel::Serializer
-  attributes :id, :taster_id, :taster, :tasting_id, :tasting, :tasting_progress, :wine_reviews
+  attributes :id,
+    :taster_id,
+    :taster,
+    :taster_number,
+    :tasting_id,
+    :tasting,
+    :tasting_progress,
+    :wine_reviews
 
   # belongs_to :taster
 

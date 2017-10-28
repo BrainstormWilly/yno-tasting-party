@@ -1,0 +1,48 @@
+tasting-list-item{
+  .wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    justify-content: flex-start;
+    height: 4rem;
+    border-radius: 2rem;
+    border: 2px solid lighten($theme-dark-gray, 20%);
+    background-color: $theme-dark-gray;
+    color: $theme-neutral-color;
+    margin-top: 1rem;
+    text-decoration: none;
+    .date{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 6rem;
+      height: 4rem;
+      color: #fff;
+      border-radius: 1.5rem 0 0 1.5rem;;
+      border: 1px solid $theme-color;
+      background-color: $theme-color;
+      span:first-child{
+        font-size: 1.2rem;
+      }
+      span:last-child{
+        font-size: .8rem;
+      }
+    }
+    .title{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 1rem 0 1rem;
+      span:first-child{
+        font-size: 1.2rem;
+      }
+      span:last-child{
+        font-style: italic;
+        font-size: .9rem;
+      }
+    }
+  }
+
+}

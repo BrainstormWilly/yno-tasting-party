@@ -34,7 +34,7 @@ angular
   .run(function($log, $state, $transitions, UserService){
     'nginject';
     $log.log("AppModule run");
-    $transitions.onStart({}, function(trans){
+    $transitions.onStart({}, function(){
       UserService.validateUser();
     });
 

@@ -9,7 +9,18 @@ export class TasterService {
     this.taster = null;
     this.tastings = [];
     this.invites = [];
+    this.invite_tasting = null;
     this.reviews = [];
+  }
+
+  approveInvite(taster, tasting){
+    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/approve_invite/" + tasting)
+      .then(() => {
+        // go to dashboard
+      })
+      .catch(error => {
+        this.$log.error(error);
+      });
   }
 
   loadTaster(taster){
@@ -53,9 +64,19 @@ export class TasterService {
   }
 
   loadInvites(taster){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/invites")
+    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/invite_tastings")
       .then(invites => {
         this.setInvites(invites.data);
+      })
+      .catch(error => {
+        this.$log.error(error);
+      });
+  }
+
+  loadInviteTasting(taster, tasting){
+    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/invite_tasting/" + tasting)
+      .then(tasting => {
+        this.setInviteTasting(tasting.data);
       })
       .catch(error => {
         this.$log.error(error);
@@ -73,9 +94,20 @@ export class TasterService {
       })
   }
 
+
+  // GETTER-SETTERS
+
   setInvites(invites){
     this.invites = invites;
     this.$rootScope.$broadcast('taster-invites-change-event', invites);
+  }
+  getInvites(){
+    return this.invites;
+  }
+
+  setInviteTasting(tasting){
+    this.invite_tasting = tasting;
+    this.$rootScope.$broadcast('taster-invite-tasting-change-event', tasting);
   }
   getInvites(){
     return this.invites;

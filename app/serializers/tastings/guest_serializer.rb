@@ -1,5 +1,5 @@
 class Tastings::GuestSerializer < ActiveModel::Serializer
-  attributes :id, :taster_id, :tasting_id, :tasting_progress, :wine_reviews
+  attributes :id, :taster_id, :tasting_id, :tasting_progress, :wine_reviews, :taster_number
 
 
   def tasting_progress

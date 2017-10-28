@@ -14,7 +14,6 @@ export const TasterTastingsComponent = {
       this.UserService = UserService;
       this.taster = null;
       this.tastings = [];
-      this.moment = moment;
 
       let tastingsChangeEvent = $scope.$on('taster-tastings-change-event', (e,d) => {
         this.tastings = d;
@@ -44,17 +43,17 @@ export const TasterTastingsComponent = {
 
     openDate(tasting){
       if( tasting.is_open ) return "Open Now!"
-      return this.moment(tasting.open_at).format("M-D-GG");
+      return moment(tasting.open_at).format("M-D-GG");
     }
 
     openTime(tasting){
       if( tasting.is_open ) return ""
-      return this.moment(tasting.open_at).format("h:mm a");
+      return moment(tasting.open_at).format("h:mm a");
     }
 
     openDay(tasting){
       if( tasting.is_open ) return ""
-      return this.moment(tasting.open_at).format("dddd");
+      return moment(tasting.open_at).format("dddd");
     }
 
   }

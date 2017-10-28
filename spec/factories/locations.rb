@@ -5,6 +5,7 @@ FactoryGirl.define do
     address Faker::Address.street_address
     address2 coin.sample ? Faker::Address.secondary_address : nil
     city Faker::Address.city
+    state Faker::Address.state
     postal Faker::Address.postcode
     country "US"
   end

@@ -1,7 +1,7 @@
 export const template = `
   <div class="dashboard">
     <h2>Dashboard for {{$ctrl.taster.name}}</h2>
-    <a ui-sref="invites"
+    <a ui-sref="taster-invites({id: $ctrl.taster.id})"
       class="dashboard-btn"
       ng-class="{'dashboard-highlight-btn animated bounceIn': $ctrl.taster.invite_count>0, disabled: $ctrl.taster.invite_count==0}">
         <span class="dashboard-btn-number">{{$ctrl.taster.invite_count}}</span>

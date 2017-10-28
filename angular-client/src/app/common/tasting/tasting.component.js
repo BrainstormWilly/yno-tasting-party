@@ -26,6 +26,7 @@ export const TastingComponent = {
         this.taster_reviews = [];
         angular.forEach(this.tasting.guests, function(v){
           if( v.taster_id == this.taster.id ){
+            this.taster_number = v.taster_number;
             this.taster_progress = v.tasting_progress;
             this.taster_progress_percent = Math.round(this.taster_progress * 100) + "%";
             return;
@@ -46,6 +47,7 @@ export const TastingComponent = {
       });
 
       let tasterChangeEvent = $scope.$on('taster-change-event', (e,d) => {
+        // this.$log.log(d);
         this.taster = d;
         TastingService.loadTasting(this.$transition$.params("to").id);
       });
@@ -66,6 +68,7 @@ export const TastingComponent = {
         this.tasting = null;
         this.tasting_progress = 0;
         this.tasting_progress_percent = "0%";
+        this.taster_number = 1;
         this.taster_progress = 0;
         this.taster_progress_percent = "0%";
         this.tasting_wines = [];

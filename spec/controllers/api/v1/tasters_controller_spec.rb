@@ -73,6 +73,33 @@ RSpec.describe Api::V1::TastersController, type: :controller do
         expect(tastings.count).to eq 1
       end
     end
+    describe "GET #invite_tastings" do
+      it "returns http success" do
+        get :inviteTastings, params: {id: taster.id}
+        expect(response).to have_http_status(:success)
+      end
+      it "returns 1 tasting" do
+        get :inviteTastings, params: {id: taster.id}
+        tastings = ActiveSupport::JSON.decode(response.body)
+        expect(tastings.count).to eq 1
+      end
+      it "returns tasting host" do
+        get :inviteTastings, params: {id: taster.id}
+        tastings = ActiveSupport::JSON.decode(response.body)
+        expect(tastings[0]["host"]["id"]).to eq host.id
+      end
+    end
+    describe "GET #invite_tasting_detail" do
+      it "returns http success" do
+        get :inviteTastingDetail, params: {id: taster.id, tasting_id: tasting2.id}
+        expect(response).to have_http_status(:success)
+      end
+      it "returns tasting2" do
+        get :inviteTastingDetail, params: {id: taster.id, tasting_id: tasting2.id}
+        tasting = ActiveSupport::JSON.decode(response.body)
+        expect(tasting["id"]).to eq tasting2.id
+      end
+    end
     describe "GET #reviews" do
       it "returns http success" do
         get :reviews, params: {id: taster.id}

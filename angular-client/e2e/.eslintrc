@@ -4,6 +4,7 @@
     "element": false,
     "by": false,
     "$": false,
-    "$$": false
+    "$$": false,
+    "moment": false
   }
 }

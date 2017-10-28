@@ -30,7 +30,7 @@ export class UserService {
       .then(user => {
         this.setUser(user);
       })
-      .catch(error => {
+      .catch(() => {
         this.state = "unvalidated";
         this.user = null;
       })

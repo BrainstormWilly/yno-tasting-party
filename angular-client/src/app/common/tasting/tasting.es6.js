@@ -7,7 +7,7 @@ export const template = `
 
   <div class="tasting-progress-wrapper">
     <div class="column">
-      <div class="label">You</div>
+      <div class="label">{{$ctrl.taster.handle}} ({{$ctrl.taster_number}})</div>
       <div class="bar">
         <div class="progress" ng-style="{width: $ctrl.taster_progress_percent}"></div>
         <div class="progress-label">{{$ctrl.taster_progress_percent}} Complete</div>

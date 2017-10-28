@@ -66,6 +66,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "tasters/:id" => "tasters#show"
       get "tasters/:id/invites" => "tasters#invites"
+      get "tasters/:id/invite_tastings" => "tasters#inviteTastings"
+      get "tasters/:id/invite_tasting/:tasting_id" => "tasters#inviteTastingDetail"
       get "tasters/:id/tastings" => "tasters#tastings"
       get "tasters/:id/reviews" => "tasters#reviews"
       get "tasters/user/:id" => "tasters#showByUser"

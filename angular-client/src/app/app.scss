@@ -1,11 +1,13 @@
-$theme-bkg-color: #000;
+$theme-bkg-color: rgb(0, 0, 0);
 // $theme-primary-btn-color: rgb(255, 245, 157);
 // $theme-primary-focus-color: rgba(255, 245, 157, .2);
 $theme-good-color: rgb(0, 230, 118);
 $theme-ok-color: rgb(255, 255, 141);
 $theme-bad-color: rgb(255, 82, 82);
-$theme-neutral-color: rgb(224, 224, 224);
+$theme-neutral-color: rgb(189, 163, 152);
 $theme-info-color: rgb(159, 168, 218);
+$theme-color: rgb(198, 0, 53);
+$theme-dark-gray: #222;
 
 
 body {
@@ -58,16 +60,54 @@ a.disabled{
 }
 
 .main-wrapper{
+  position: fixed;
+  left: 0;
+  top: 4rem;
+  right: 0;
+  bottom: 4rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.main-header{
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;
-  bottom: 0;
+  height: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  background-color: $theme-color;
+  color: $theme-bkg-color;
+  button{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    border: 2px solid $theme-color;
+    background-color: $theme-bkg-color;
+    color: #fff;
+    font-size: 1.2rem;
+  }
 }
 
+.main-content{
+  position: fixed;
+  left: 0;
+  top: 4rem;
+  right: 0;
+  bottom: 4rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  // align-items: center;
+  overflow-y: auto;
+}
 // .main-btn {
 //   @extend .circle-btn;
 //   height: 8rem;
@@ -151,6 +191,7 @@ button[type=submit].main-form-control{
     opacity: .5;
   }
 }
+
 
 
 // injector
