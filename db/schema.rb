@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606042104) do
+ActiveRecord::Schema.define(version: 20171109042749) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -111,9 +111,10 @@ ActiveRecord::Schema.define(version: 20170606042104) do
   create_table "tasting_wines", force: :cascade do |t|
     t.integer  "tasting_id"
     t.integer  "wine_id"
-    t.integer  "wine_number", default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "wine_number",                          default: 0
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.decimal  "price",       precision: 10, scale: 2
     t.index ["tasting_id"], name: "index_tasting_wines_on_tasting_id"
     t.index ["wine_id"], name: "index_tasting_wines_on_wine_id"
   end
@@ -185,11 +186,10 @@ ActiveRecord::Schema.define(version: 20170606042104) do
   end
 
   create_table "wines", force: :cascade do |t|
-    t.integer  "vintage",                             default: 0
+    t.integer  "vintage",    default: 0
     t.string   "name"
-    t.decimal  "price",      precision: 10, scale: 2
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end

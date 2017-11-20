@@ -1,4 +1,4 @@
-export function AppConfig($authProvider, $logProvider, constants) {
+export function AppConfig($authProvider, $logProvider, momentPickerProvider, constants) {
   'ngInject';
 
   $logProvider.debugEnabled(constants.enableDebug);
@@ -9,5 +9,12 @@ export function AppConfig($authProvider, $logProvider, constants) {
       validateOnPageLoad: false,
       storage: 'localStorage'
     });
+
+  momentPickerProvider.options({
+    startView: "month",
+    today: true,
+    format: "LL LT",
+    minutesStep: 15
+  })
 
 }

@@ -1,39 +1,52 @@
 wine-list-item{
-  .wine-list-item-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  .wine-list-item-wrapper{
+    border: 1px solid blue;
+    margin-bottom: .5rem;
     border: 2px solid lighten($theme-dark-gray, 20%);
     border-radius: 1.5rem;
     background-color: $theme-dark-gray;
-    min-height: 3rem;
-    margin-bottom: .5rem;
 
-    .wine-list-item-link{
+    .wine-list-item-container{
       display: flex;
       flex-direction: row;
-      align-items: center;
-      width: 100%;
-      text-decoration: none;
-      .wine-list-vintage{
+      min-height: 3rem;
+      .wine-list-item-link{
         display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 6rem;
-        height: 3rem;
-        color: #fff;
-        border-radius: 1.5rem 0 0 1.5rem;;
-        border: 1px solid $theme-color;
-        background-color: $theme-color;
-      }
-      .wine-list-title{
-        padding: 0 1rem 0 1rem;
-        color: $theme-neutral-color;
-        text-align: left;
+        // align-items: center;
+        // align-items: stretch;
         width: 100%;
-        // border: 1px solid green;
+        text-decoration: none;
+        .wine-list-vintage{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 6rem;
+          color: $theme-header-color;
+          border-radius: 1.5rem 0 0 1.5rem;;
+          // border: 1px solid $theme-color;
+          background-color: $theme-color-dark;
+        }
+        .wine-list-title{
+          display: flex;
+          align-items: center;
+          padding: 0.5rem 1rem 0.5rem 1rem;
+          color: $theme-neutral-color;
+          text-align: left;
+          width: 100%;
+          // border: 1px solid green;
+        }
+      }
+      .wine-list-item-buttons{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        button:last-child{
+          margin-right: 0.5rem;
+        }
       }
     }
+
   }
 }

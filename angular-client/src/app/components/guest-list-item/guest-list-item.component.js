@@ -1,8 +1,10 @@
 import {template} from './guest-list-item.es6';
 
 export const GuestListItemComponent = {
-  bindings: {
-    guest: "<"
+  bindings:{
+    guest: "<",
+    removeGuest: "&",
+    editable: "<"
   },
   template,
   controller: class GuestListItemController{

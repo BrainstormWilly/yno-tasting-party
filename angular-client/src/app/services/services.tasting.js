@@ -20,6 +20,10 @@ export class TastingService {
       });
   }
 
+  createTasting(tasting){
+    return this.$http.post(this.constants.apiUrl + "/tastings", tasting)
+  }
+
   setTasting(tasting){
     this.tasting = tasting;
     this.$rootScope.$broadcast('tasting-change-event', tasting);

@@ -21,5 +21,5 @@ export const template = `
     </a>
   </div>
 
-  <nav></nav>
+  <footer-menu></footer-menu>
 `

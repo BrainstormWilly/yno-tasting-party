@@ -1,7 +1,10 @@
 {
   "name": "ynoTasting",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "angular-moment-picker": "^0.10.1",
+    "gsap": "^1.20.3"
+  },
   "scripts": {
     "test": "gulp test"
   },

@@ -21,6 +21,16 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
   let!(:wine_review_guest2_1){ create(:wine_review, tasting:tasting, taster: taster2, wine_number: 1) }
   let!(:wine_review_guest2_2){ create(:wine_review, tasting:tasting, taster: taster2, wine_number: 2) }
 
+  let(:create_tasting_params){
+    {
+      name: "Test",
+      description: "Test test",
+      open_at: 1.hour.from_now,
+      close_at: 3.hours.from_now,
+      location_id: location.id
+    }
+  }
+
   context "Guest request" do
     describe "GET #show" do
       it "returns http unauthorized" do
@@ -28,13 +38,51 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
         expect(response).to have_http_status(:unauthorized)
       end
     end
+    describe "GET #new" do
+      it "returns http unauthorized" do
+        get :new
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "POST #create" do
+      it "returns http unauthorized" do
+        post :create, params: {tasting: create_tasting_params}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 
   context "Taster request" do
     before do
+      auth_headers = user2.create_new_auth_token
+      @request.headers.merge(auth_headers)
+      sign_in user2, scope: :user
+    end
+    describe "GET #new" do
+      it "returns http forbidden" do
+        get :new
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+    describe "POST #create" do
+      it "returns http forbidden" do
+        post :create, params: {tasting: create_tasting_params}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  context "Host request" do
+    before do
       auth_headers = user.create_new_auth_token
       @request.headers.merge(auth_headers)
       sign_in user, scope: :user
+    end
+    describe "GET #new" do
+      it "returns http success" do
+        get :new
+        expect(response).to have_http_status(:success)
+      end
     end
     describe "GET #show" do
       context "init tasting" do
@@ -176,6 +224,22 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
           data = ActiveSupport::JSON.decode(response.body)
           expect(data["is_open"]).to be_falsey
         end
+      end
+    end
+    describe "POST #create" do
+      it "returns http success" do
+        post :create, params: {tasting: create_tasting_params}
+        expect(response).to have_http_status(:success)
+      end
+      it "adds tasting" do
+        expect {
+          post :create, params: {tasting: create_tasting_params}
+        }.to change(Tasting, :count).by(1)
+      end
+      it "returns tasting" do
+        post :create, params: {tasting: create_tasting_params}
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data["name"]).to eq "Test"
       end
     end
   end

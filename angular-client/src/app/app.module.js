@@ -24,6 +24,7 @@ angular
     'ngResource',
     'ng-token-auth',
     'ui.router',
+    'moment-picker',
     ServicesModule,
     CommonModule,
     ComponentsModule

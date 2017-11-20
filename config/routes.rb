@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       end
     end
     namespace :v1 do
+      get "hosts/user/:id" => "hosts#hostFromUser"
       get "tasters/:id" => "tasters#show"
       get "tasters/:id/invites" => "tasters#invites"
       get "tasters/:id/invite_tastings" => "tasters#inviteTastings"
@@ -71,9 +72,16 @@ Rails.application.routes.draw do
       get "tasters/:id/tastings" => "tasters#tastings"
       get "tasters/:id/reviews" => "tasters#reviews"
       get "tasters/user/:id" => "tasters#showByUser"
+      post "users/email" => "users#showByEmail"
+      post "users/invite" => "users#invite"
       post "tasters" => "tasters#create"
-      resources :tastings, only: [:show]
+      post "tasting_wines/create_for_tasting" => "tasting_wines#createForTasting"
+      post "guests/invite_new_user" => "guests#inviteNewUser"
+      resources :tastings, only: [:show, :new, :create]
       resources :wine_reviews, only: [:update]
+      resources :host_locations, only: [:create]
+      resources :wines, only: [:create]
+
     end
     get "tests", to: "tests#show"
   end

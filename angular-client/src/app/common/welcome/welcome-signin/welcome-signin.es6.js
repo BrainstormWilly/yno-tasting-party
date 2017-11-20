@@ -5,15 +5,23 @@ export const template = `
   </a>
 
   <h3>Come on in. The wine is fine.</h3>
-  <div class="main-form-wrapper">
-    <form class="main-form" ng-submit="$ctrl.signinUser()">
-      <input class="main-form-control" ng-model="$ctrl.user.email" type="email" placeholder="Email">
-      <input class="main-form-control" ng-model="$ctrl.user.password" type="password" placeholder="Password">
-      <button href type="submit" class="main-form-control">
-        <i class="fa fa-sign-in"></i>
-      </button>
 
-    </form>
-  </div>
+  <form name="signinForm">
+    <div class="main-form-control">
+      <label>Email</label>
+      <input ng-model="$ctrl.user.email" type="email" required>
+    </div>
+    <div class="main-form-control">
+      <label>Password</label>
+      <input ng-model="$ctrl.user.password" type="password" required>
+    </div>
+  </form>
+
+  <button
+    ng-disabled="signinForm.$invalid"
+    ng-click="$ctrl.signinUser()">
+    <i class="fa fa-sign-in"></i>
+  </button>
+
 
 `;

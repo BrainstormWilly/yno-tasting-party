@@ -23,6 +23,14 @@ export class TasterService {
       });
   }
 
+  createTaster(taster){
+    return this.$http.post(this.constants.apiUrl + "/tasters", taster);
+  }
+
+  getTasterFromUser(user){
+    return this.$http.get(this.constants.apiUrl + "/tasters/user/" + user)
+  }
+
   loadTaster(taster){
     this.$http.get(this.constants.apiUrl + "/tasters/" + taster)
       .then(taster => {
@@ -33,6 +41,7 @@ export class TasterService {
       });
   }
 
+  // deprecate in favor of getTasterFromUser()
   loadTasterFromUser(user){
     this.$http.get(this.constants.apiUrl + "/tasters/user/" + user)
       .then(taster => {

@@ -94,13 +94,11 @@ varietals = [
   "Riesling"
 ]
 vintages = (2000..2014).to_a
-prices = (9..60).to_a
 wine_sufs = ["Family Vineyards", "Cellars", "Estates", "Winery"]
 
 
 20.times do
   Wine.create(
-    price: prices.sample,
     vintage: vintages.sample,
     name: "#{Faker::Name.last_name} #{wine_sufs.sample} #{regions.sample} #{varietals.sample}"
   )
@@ -114,6 +112,7 @@ end
 # FUTURE TASTING
 tasters = Taster.all.to_a.shuffle
 wines = Wine.all.to_a.shuffle
+prices = (9..60).to_a
 tasting_future = Tasting.create(
   host_id: host_me.id,
   name: "Pinot or PinYes",
@@ -127,7 +126,8 @@ tasting_future = Tasting.create(
 6.times do |i|
   TastingWine.create(
     wine_id: wines.pop.id,
-    tasting_id: tasting_future.id
+    tasting_id: tasting_future.id,
+    price: prices.sample
   )
 end
 # future tasting tasters (confirmed)
@@ -164,7 +164,8 @@ tasting_present = Tasting.create(
 6.times do |i|
   TastingWine.create(
     wine_id: wines.pop.id,
-    tasting_id: tasting_present.id
+    tasting_id: tasting_present.id,
+    price: prices.sample
   )
 end
 # present tasting guests (confirmed)
@@ -216,7 +217,8 @@ tasting_past = Tasting.create(
 6.times do |i|
   TastingWine.create(
     wine_id: wines.pop.id,
-    tasting_id: tasting_past.id
+    tasting_id: tasting_past.id,
+    price: prices.sample
   )
 end
 # past tasting guests (confirmed)
@@ -257,7 +259,8 @@ tasting_completed = Tasting.create(
   TastingWine.create(
     wine_id: wines.pop.id,
     tasting_id: tasting_completed.id,
-    wine_number: i+1
+    wine_number: i+1,
+    price: prices.sample
   )
 end
 # completed tasting guests (confirmed)

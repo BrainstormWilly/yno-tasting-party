@@ -12,7 +12,7 @@ export const TastingDetailComponent = {
     }
 
     $onInit() {
-      this.$log.log("TastingDetailController $onInit");
+      // this.$log.log("TastingDetailController $onInit");
     }
 
     // openDate(){

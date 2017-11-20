@@ -5,14 +5,13 @@
   </head>
   <body>
     <h2>
-      <%= @tasting.host.taster.name %> has invited you to a Yno Tasting Party!
+      <%= @guest.tasting.host.taster.name %> has invited you to a Yno Tasting Party!
     </h2>
     <p>
-      <strong>Name:</strong> <%= @tasting.name %><br/>
-      <strong>Host:</strong> <%= @tasting.host.taster.name %><br/>
-      <strong>When:</strong> <%= @open_at %><br/>
-      <strong>Where:</strong> <%= @tasting.location.to_short_string %><br/>
-      <strong>Description:</strong> <%= @tasting.description %>
+      <strong>Name:</strong> <%= @guest.tasting.name %><br/>
+      <strong>When:</strong> <%= @guest.tasting.open_at %><br/>
+      <strong>Where:</strong> <%= @guest.tasting.location.to_short_string %><br/>
+      <strong>Description:</strong> <%= @guest.tasting.description %>
     </p>
     <p>
       You can join this tasting by clicking <a href="<%= @url %>">accept invitation</a> to set up your taster account and confirm your invitation.

@@ -1,0 +1,46 @@
+toggle-switch{
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    button, button:focus, button:hover{
+      height: 2rem;
+      width: 1.5rem;
+      background-color: $theme-dark-gray;
+      color: $theme-color;
+      font-size: 1rem;
+      margin: auto;
+      border: none;
+      text-align: center;
+
+      &.toggle-switch-btn-off{
+        border-radius: 1.5rem 0 0 1.5rem;
+        border-top: 2px solid lighten($theme-dark-gray, 20%);
+        border-bottom: 2px solid lighten($theme-dark-gray, 20%);
+        border-left: 2px solid lighten($theme-dark-gray, 20%);
+
+      }
+      &.toggle-switch-btn-on{
+        border-radius: 0 1.5rem 1.5rem 0;
+        border-top: 2px solid lighten($theme-dark-gray, 20%);
+        border-bottom: 2px solid lighten($theme-dark-gray, 20%);
+        border-right: 2px solid lighten($theme-dark-gray, 20%);
+        padding-right: .1rem;
+      }
+      span{
+        opacity: 0;
+        &.toggle-switch-on{
+          opacity: 1;
+        }
+      }
+    }
+
+    .toggle-switch-title{
+      width: 100%;
+      margin-left: .5rem;
+    }
+
+
+}

@@ -8,7 +8,10 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
     })
     .state('welcome-signin',{
       url: '/signin',
-      component: 'welcomeSignin'
+      component: 'welcomeSignin',
+      resolve: {
+        user: WelcomeInitialData => WelcomeInitialData.getSignin()
+      }
     })
     .state('welcome-signup',{
       url: '/signup',

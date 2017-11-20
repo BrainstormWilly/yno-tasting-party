@@ -3,7 +3,7 @@ class LocationSerializer < ActiveModel::Serializer
 
 
   def to_short_string
-    object.to_short_string()
+    object.to_short_string
   end
-  
+
 end

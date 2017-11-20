@@ -2,7 +2,10 @@ import {template} from './wine-list-item.es6';
 
 export const WineListItemComponent = {
   bindings: {
-    wine: "<"
+    wine: "<",
+    removeWine: "&",
+    editWine: "&",
+    editingWine: "<"
   },
   template,
   controller: class WineListItemController{

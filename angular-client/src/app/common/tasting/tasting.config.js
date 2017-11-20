@@ -3,9 +3,13 @@ export function TastingConfig($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('tasting',{
       url: '/tastings/:id',
-      component: 'tasting',
+      component: 'tasting'
+    })
+    .state('tasting-new',{
+      url: '/tastings/new',
+      component: 'tastingNew',
       resolve: {
-        taster: ['TasterService', function(TasterService){ return TasterService.getTaster() }]
+        host: HostService => HostService.getHostByUser()
       }
     });
 

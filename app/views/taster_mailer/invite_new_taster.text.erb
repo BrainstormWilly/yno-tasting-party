@@ -1,11 +1,10 @@
-<%= @tasting.host.taster.name %> has invited you to a Yno Tasting Party!
+<%= @guest.tasting.host.taster.name %> has invited you to a Yno Tasting Party!
 ================================================================================
 
-Name: <%= @tasting.name %>
-Host: <%= @tasting.host.taster.name %>
-When: <%= @open_at %>
-Where: <%= @tasting.location.to_short_string %>
-Description: <%= @tasting.description %>
+Name: <%= @guest.tasting.name %>
+When: <%= @guest.tasting.open_at %>
+Where: <%= @guest.tasting.location.to_short_string %>
+Description: <%= @guest.tasting.description %>
 
 You can join this tasting by following this link: <%= @url %> to set up your taster account and confirm your invitation.
 Learn More about Yno Tasting Parties at <%= ENV['HOST_URL'] %>

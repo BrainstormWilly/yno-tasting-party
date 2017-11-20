@@ -1,29 +1,36 @@
 export class UserService {
-  constructor ($rootScope, $log, $http, $auth) {
+  constructor ($rootScope, $log, $http, $q, $auth, constants) {
     'ngInject';
     this.$log = $log;
     this.$http = $http;
     this.$auth = $auth;
     this.$rootScope = $rootScope;
+    this.$q = $q;
+    this.constants = constants;
     this.user = null;
     this.state = "user_unset";
+    // this.$log.log(this.$auth);
 
-    // let success = $rootScope.$on("auth.registration-email-success", function(e){
-    //   this.$log.log("email success");
-    // });
-    //
-    // let failure = $rootScope.$on("auth.registration-email-error", function(e){
-    //   this.$log.log("email failure");
-    // });
-    //
-    // $rootScope.$on('$destroy', success);
-    // $rootScope.$on('$destroy', failure);
+  }
+
+
+  inviteUser(user){
+    return this.$http.post(this.constants.apiUrl + "/users/invite/", {user:user});
+  }
+
+  getUserByEmail(email){
+    return this.$http.post(this.constants.apiUrl + "/users/email/", {email:email});
+  }
+
+  getValidateUser(){
+    return this.$auth.validateUser();
   }
 
   validationState(){
     return this.state;
   }
 
+  // deprecate this in favor of getValidateUser
   validateUser(){
     this.state = "validating";
     this.$auth.validateUser()
@@ -37,13 +44,7 @@ export class UserService {
   }
 
   signinUser(user){
-    this.$auth.submitLogin(user)
-      .then(user => {
-        this.setUser(user);
-      })
-      .catch(() => {
-        this.setUser(null);
-      })
+    return this.$auth.submitLogin(user);
   }
 
   signoutUser(){
