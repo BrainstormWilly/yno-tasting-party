@@ -1,5 +1,5 @@
 wine-list-item{
-
+  position: relative;
   display: flex;
   flex-direction: row;
   // border: 2px solid lighten($theme-dark-gray, 20%);
@@ -66,10 +66,14 @@ wine-list-item{
         text-align: right;
       }
     }
+
   }
 
   button{
     align-self: center;
   }
+
+  
+
 
 }

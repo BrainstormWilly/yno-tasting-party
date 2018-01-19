@@ -70,7 +70,7 @@ export const TastingNewComponent = {
         this.tasting.guests.push(d);
       });
 
-      let removeHostAsGuestEvent = $scope.$on("remove-host-as-guest-event", (e,d)=>{
+      let removeHostAsGuestEvent = $scope.$on("remove-host-as-guest-event", ()=>{
         for( let i=0; i<this.tasting.guests.length; i++ ){
           if(this.tasting.guests[i].taster_id && this.tasting.guests[i].taster_id==this.tasting.host.taster_id){
             this.tasting.guests.splice(i,1);

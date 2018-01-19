@@ -28,6 +28,8 @@ export const template = `
           <span class="fa fa-comment-o" ng-hide="$ctrl.wineItem.comments || $ctrl.wineView=='averageRating'"></span>
       </div>
     </div>
+
+
   </a>
 
   <button class="small-btn"
@@ -35,4 +37,7 @@ export const template = `
     ng-if="$ctrl.editable">
     <span class="fa fa-minus"></span>
   </button>
+
+  <wait-state wait-on="$ctrl.wineItem.wait"></wait-state>
+
 `

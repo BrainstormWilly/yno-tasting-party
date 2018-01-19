@@ -18,7 +18,7 @@ export const NotificationComponent = {
 
       });
 
-      let endNotificationsEvent = $scope.$on("end-notifications-event", (e,d)=>{
+      let endNotificationsEvent = $scope.$on("end-notifications-event", ()=>{
         TweenMax.to($element, .3, {autoAlpha:0});
       });
 

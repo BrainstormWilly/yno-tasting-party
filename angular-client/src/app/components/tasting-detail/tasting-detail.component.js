@@ -79,8 +79,10 @@ export const TastingDetailComponent = {
         if( d.code=="destroyGuest" && d.action=="confirm" ){
           this.destroyGuest(d.data);
         }
-        if( d.code=="destroyTastingWine" && d.action=="confirm" ){
-          this.destroyTastingWine(d.data);
+        if( d.code=="destroyTastingWine" ){
+          d.data.wait = false;
+          if( d.action=='confirm' )
+            this.destroyTastingWine(d.data);
         }
         if( d.code=="closeTasting" && d.action=="confirm" ){
           this.tasting.closed_at = moment().utc();
@@ -192,6 +194,7 @@ export const TastingDetailComponent = {
     }
 
     attemptDestroyTastingWine(tasting_wine){
+      tasting_wine.wait = true;
       this.AlertsService.setWarningAlert(
         "Are you sure you want to delete wine " + tasting_wine.wine.full_name + " and all its reviews from this tasting?",
         "destroyTastingWine",

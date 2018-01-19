@@ -18,6 +18,7 @@ import {TastingDetailModalComponent} from './tasting-detail-modal/tasting-detail
 // import {TastingWineListItemComponent} from './tasting-wine-list-item/tasting-wine-list-item.component';
 import {TastingWineModalComponent} from './tasting-wine-modal/tasting-wine-modal.component';
 import {ToggleSwitchComponent} from './toggle-switch/toggle-switch.component';
+import {WaitStateComponent} from './wait-state/wait-state.component';
 import {WineAddModalComponent} from './wine-add-modal/wine-add-modal.component';
 import {WineInfoModalComponent} from './wine-info-modal/wine-info-modal.component';
 import {WineListItemComponent} from './wine-list-item/wine-list-item.component';
@@ -48,6 +49,7 @@ export const ComponentsModule = angular
   // .component('tastingWineListItem', TastingWineListItemComponent)
   .component('tastingWineModal', TastingWineModalComponent)
   .component('toggleSwitch', ToggleSwitchComponent)
+  .component('waitState', WaitStateComponent)
   .component('wineAddModal', WineAddModalComponent)
   .component('wineInfoModal', WineInfoModalComponent)
   .component('wineListItem', WineListItemComponent)

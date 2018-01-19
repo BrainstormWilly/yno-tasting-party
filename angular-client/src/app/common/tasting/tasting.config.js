@@ -6,7 +6,7 @@ export function TastingConfig($stateProvider, $urlRouterProvider) {
       component: 'tastingShow',
       resolve: {
         taster : TasterService => TasterService.getTasterFromValidation(),
-        tasting: ($stateParams, TastingService, $log) => {
+        tasting: ($stateParams, TastingService) => {
           return TastingService.getTasting($stateParams.id)
         },
         tasterIsHost: function(taster, tasting){ return taster.id==tasting.host.taster.id }

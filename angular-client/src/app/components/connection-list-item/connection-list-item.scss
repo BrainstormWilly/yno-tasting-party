@@ -1,4 +1,5 @@
 connection-list-item{
+  position: relative;
   display: flex;
   flex-direction: row;
   border: 2px solid lighten($theme-dark-gray, 20%);
@@ -8,6 +9,7 @@ connection-list-item{
   margin-bottom: .5rem;
   padding-right: .25rem;
   min-height: 3rem;
+  overflow: hidden;
   // width: 100%;
   .connection-list-item-link{
     display: flex;
@@ -50,5 +52,7 @@ connection-list-item{
       }
     }
   }
+
+
 
 }

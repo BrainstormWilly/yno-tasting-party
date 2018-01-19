@@ -33,7 +33,7 @@ export const AlertsModalComponent = {
       });
 
       let setAlertsEvent = $scope.$on('set-alerts-event', (e,d)=>{
-        $log.log("AlertsModalComponent.constructor");
+        // $log.log("AlertsModalComponent.constructor");
         this.currentAlert = d;
         this.ModalService.setModalState("open", this.name);
       });

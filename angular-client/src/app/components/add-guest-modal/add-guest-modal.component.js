@@ -66,7 +66,7 @@ export const AddGuestModalComponent = {
         }
       });
 
-      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", (e,d)=>{
+      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
         this.hostTastingStatus.state = true;
         this.hostTastingStatus.label = "Host Included";
       });
@@ -153,6 +153,7 @@ export const AddGuestModalComponent = {
     }
 
     inviteConnection(connection){
+      connection.wait = true;
       this.GuestService.inviteTaster(this.tasting.id, connection.taster_id);
     }
 
