@@ -1,0 +1,24 @@
+wine-review-status-modal{
+  visibility: hidden;
+  .main-modal-wrapper{
+    .main-modal-container{
+      .main-modal-content{
+        table{
+          th{
+            color: darken($theme-neutral-color, 20%);
+          }
+          th, td:first-child{
+            width: 80%;
+          }
+          th:last-child, td:last-child{
+            text-align: center;
+          }
+          tr:nth-child(even){
+            background-color: lighten($theme-dark-gray, 5%);
+          }
+        }
+      }
+    }
+  }
+
+}

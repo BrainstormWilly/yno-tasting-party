@@ -4,7 +4,9 @@ $theme-bkg-color: rgb(0, 0, 0);
 $theme-good-color: rgb(0, 230, 118);
 $theme-ok-color: rgb(255, 255, 141);
 $theme-bad-color: rgb(255, 82, 82);
-$theme-neutral-color: rgb(189, 163, 152);
+$theme-pending-color: rgb(135, 125,0);
+$theme-open-color: rgb(0, 108, 0);
+$theme-neutral-color: rgb(167, 159, 148);
 $theme-info-color: rgb(159, 168, 218);
 $theme-color: rgb(198, 0, 53);
 $theme-color-dark: darken($theme-color, 20%);
@@ -55,20 +57,34 @@ button{
     color: #fff;
     font-size: 1rem;
     margin: 0 0.1rem 0 0.1rem;
-
-  }
-  &.small-btn:hover, &.small-btn:focus{
-    background-color: #fff;
-    color: $theme-color;
+    &.secondary{
+      background-color: #fff;
+      color: $theme-color;
+    }
+    &:disabled{
+      background-color: $theme-dark-gray;
+      color: lighten($theme-dark-gray, 20%);
+    }
   }
   &.text-btn{
     min-height: 3rem;
+    height: auto;
+    width: auto;
     border-radius: 1.5rem;
     border: 2px solid $theme-color;
     background-color: $theme-bkg-color;
-    color: #fff;
+    color: $theme-header-color;
     font-size: 1.2rem;
-    margin: .5rem .25rem .5rem .25rem;
+    margin: .5rem 1rem .5rem 1rem;
+    &.good{
+      border: none;
+      background-color: $theme-open-color;
+    }
+    &:disabled{
+      border: 2px solid $theme-dark-gray;
+      background-color: $theme-dark-gray;
+      color: lighten($theme-dark-gray, 20%);
+    }
   }
 }
 
@@ -119,6 +135,11 @@ button{
   margin-top: 1rem;
 }
 
+.notes{
+  font-size: .9rem;
+  color: darken($theme-neutral-color, 20%);
+}
+
 .main-wrapper{
   position: fixed;
   left: 0;
@@ -157,44 +178,46 @@ header, .main-header{
   }
 }
 
-section, .main-content{
+section{
   position: fixed;
-  left: 0;
+  left: 0rem;
   top: 4rem;
-  right: 0;
+  right: 0rem;
   bottom: 4rem;
   display: flex;
   flex-direction: column;
   // align-items: center;
   overflow-y: auto;
-  h3, p{
-    text-align: center;
-  }
-  .main-content-nav{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $theme-dark-gray;
-    border: 2px solid $theme-dark-gray;
-    min-height: 4rem;
-    padding: 0 1rem;
-  }
+  text-align: center;
+  padding: 1rem;
 }
-// .main-btn {
-//   @extend .circle-btn;
-//   height: 8rem;
-//   width: 8rem;
-// }
+
+// .main-content{
+//   position: fixed;
+//   left: 0rem;
+//   top: 4rem;
+//   right: 1rem;
+//   bottom: 0rem;
+//   display: flex;
+//   flex-direction: column;
+//   // align-items: center;
+//   overflow-y: auto;
+//   h3, p{
+//     text-align: center;
+//   }
 //
-// .main-primary-btn:active{
-//   background: none;
-//   color: $theme-primary-btn-color;
+//   .main-content-nav{
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     align-items: center;
+//     background-color: $theme-dark-gray;
+//     border: 2px solid $theme-dark-gray;
+//     min-height: 4rem;
+//     padding: 0 1rem;
+//   }
 // }
-//
-// .main-secondary-btn {
-//
-// }
+
 
 
 /* FORM CONTROLS */
@@ -221,17 +244,40 @@ section, .main-content{
   margin-top: 1rem;
   padding-right: 1rem;
 
-  div{
-    width: 100%;
-    min-height: 3rem;
-    border-left: 2px solid lighten($theme-dark-gray, 20%);
+  &.checkbox{
+    label{
+      span:first-child{
+        font-size: 1.5rem;
+      }
+    }
+    div{
+      display: flex;
+      align-items: center;
+      min-height: 3rem;
+      border-left: 2px solid lighten($theme-dark-gray, 20%);
+      padding-left: .5rem;
+    }
   }
+
+  &.error{
+    border-color: $theme-bad-color;
+    color: $theme-bad-color;
+  }
+
+  &:focus{
+    outline: none;
+  }
+
+  &.disabled{
+    opacity: .5;
+  }
+
   label{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 4rem;
+    // min-width: 4rem;
     min-height: 3rem;
     color: $theme-neutral-color;
     border-radius: 1.5rem 0 0 1.5rem;
@@ -255,7 +301,7 @@ section, .main-content{
     border: none;
     border-left: 2px solid lighten($theme-dark-gray, 20%);
     padding-left: .5rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: $theme-neutral-color;
   }
   input{
@@ -271,20 +317,19 @@ section, .main-content{
 
 }
 
-.main-form-control.error{
-  border-color: $theme-bad-color;
-  color: $theme-bad-color;
-}
-
 .main-form-btns{
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   background-color: $theme-dark-gray;
   border-radius: 1.5rem;
   border: 2px solid $theme-dark-gray;
   min-height: 3rem;
-
+  margin-top: 1rem;
+  .descriptor{
+    padding-left: 1rem;
+  }
 }
 
 
@@ -308,6 +353,7 @@ section, .main-content{
     background-color: $theme-dark-gray;
     border-radius: 1.5rem;
     border: 2px solid lighten($theme-dark-gray, 20%);
+    max-height: 34rem;
     .main-modal-header{
       display: flex;
       flex-direction: row;
@@ -318,13 +364,21 @@ section, .main-content{
       background-color: darken($theme-color, 20%);
       padding-left: 1rem;
     }
+    .main-modal-subheader{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: $theme-bkg-color;
+      padding: .5rem .5rem 1rem .5rem
+    }
     .main-modal-content{
       display: flex;
       flex-direction: column;
       min-height: 10rem;
-      max-height: 30rem;
+      max-height: 22rem;
       overflow-y: auto;
-      overflow-x: hidden;
+      padding: 0 .5rem 0 .5rem;
+      // overflow-x: hidden;
       // border: 1px solid blue;
       ul{
         margin: 0;
@@ -334,6 +388,7 @@ section, .main-content{
         // border: 1px dashed blue;
         li{
           border-bottom: 1px solid lighten($theme-dark-gray, 20%);
+          text-align: left;
           // border: 1px dashed blue;
           a{
             display: flex;
@@ -345,7 +400,6 @@ section, .main-content{
             // border: 1px dashed blue;
             padding: 0 1rem 0 1rem;
             min-height: 3rem;
-            width: 100%;
           }
           a:hover{
             background-color: lighten($theme-dark-gray, 5%);
@@ -356,7 +410,20 @@ section, .main-content{
           }
         }
       }
-
+      table{
+        width: 100%;
+        // border: 1px dashed blue;
+        th{
+          border-bottom: 1px solid lighten($theme-dark-gray, 20%);
+        }
+        th, td{
+          padding: .5rem;
+          text-align: left;
+        }
+      }
+      p{
+        padding: 1rem;
+      }
     }
     .main-modal-footer{
       display: flex;
@@ -375,34 +442,38 @@ section, .main-content{
 
 
 .main-list-container{
-  display: flex;
-  flex-direction: column;
-  background-color: $theme-dark-gray;
-  border-radius: 1.5rem;
-  border: 2px solid lighten($theme-dark-gray, 20%);
+  // display: flex;
+  // flex-direction: column;
+  // background-color: $theme-dark-gray;
+  // border-radius: 1.5rem;
+  // border: 2px solid lighten($theme-dark-gray, 20%);
+  max-height: 19rem;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
   ul{
     margin: 0;
     padding: 0;
-    width: 100%;
     list-style-type: none;
+    width: 100%;
     // border: 1px dashed blue;
     li{
       border-bottom: 1px solid lighten($theme-dark-gray, 20%);
       display: flex;
-      flex-direction: row;
       align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      color: inherit;
+      text-align: left;
       // border: 1px dashed blue;
       padding: 0 1rem 0 1rem;
       min-height: 3rem;
-      width: 100%;
-      }
     }
     li:last-child{
       border-bottom: none;
     }
+    li:hover{
+
+    }
+  }
+
   }
 
 

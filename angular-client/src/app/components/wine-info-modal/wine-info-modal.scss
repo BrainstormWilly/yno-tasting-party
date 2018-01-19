@@ -1,0 +1,10 @@
+wine-info-modal{
+  visibility: hidden;
+  .main-modal-content{
+    text-align: left;
+    padding: 0 1rem 0 1rem;
+    span{
+      color: darken($theme-neutral-color, 20%);
+    }
+  }
+}

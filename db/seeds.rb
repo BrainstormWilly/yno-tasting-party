@@ -10,20 +10,6 @@
 ######################### USERS #########################
 #########################################################
 
-10.times do
-  user = User.create(
-    email: Faker::Internet.email,
-    password: "123456",
-    password_confirmation: "123456"
-  )
-  taster = Taster.create(
-    name: Faker::Name.name,
-    user_id: user.id,
-    handle: user.email,
-    status: "active"
-  )
-end
-
 user_me = User.create(
   email: "bill@ynoguy.com",
   password: "123456",
@@ -42,6 +28,31 @@ host_me = Host.create(
 )
 
 
+10.times do
+  user = User.create(
+    email: Faker::Internet.email,
+    password: "123456",
+    password_confirmation: "123456",
+    invited_by_id: user_me.id
+  )
+  taster = Taster.create(
+    name: Faker::Name.name,
+    user_id: user.id,
+    handle: Faker::Name.first_name,
+    status: "active"
+  )
+  Connection.create(
+    taster_id: taster.id,
+    host_id: host_me.id,
+    connected_at: Time.current
+  )
+end
+
+
+
+
+
+
 #########################################################
 ####################### LOCATIONS #######################
 #########################################################
@@ -51,14 +62,16 @@ loc1 = Location.create(
   address: "2110 Creekside Road",
   city: "Santa Rosa",
   state: "CA",
-  postal: "95405"
+  postal: "95405",
+  time_zone: "-8"
 )
 loc2 = Location.create(
   phone: "408-314-4304",
   address: "2110 Creekside Road",
   city: "Santa Rosa",
   state: "CA",
-  postal: "95405"
+  postal: "95405",
+  time_zone: "-8"
 )
 HostLocation.create(
   host_id: host_me.id,
@@ -149,10 +162,10 @@ end
   WineReview.create_all_for_guest(tasting_future, tt.taster)
 end
 
-# PRESENT TASTING
-tasters = Taster.all.to_a.shuffle
+# PRESENT TASTING 1 (Host is Guest)
+tasters = Taster.where.not(id:taster_me.id).to_a.shuffle
 wines = Wine.all.to_a.shuffle
-tasting_present = Tasting.create(
+tasting_present_1 = Tasting.create(
   host_id: host_me.id,
   name: "Bordeaux or Not",
   description: "Is it Bordeaux or is it not",
@@ -160,44 +173,86 @@ tasting_present = Tasting.create(
   open_at: Time.current,
   private: true
 )
-# present tasting wines
+# present tasting 1 wines
 6.times do |i|
   TastingWine.create(
     wine_id: wines.pop.id,
-    tasting_id: tasting_present.id,
+    tasting_id: tasting_present_1.id,
     price: prices.sample
   )
 end
-# present tasting guests (confirmed)
+# present tasting 1 guests (confirmed)
 5.times do
   tt = Guest.create(
-    tasting_id: tasting_present.id,
+    tasting_id: tasting_present_1.id,
     taster_id: tasters.pop.id,
     confirmed: Time.current
   )
   6.times do |i|
-    WineReview.create({
-      tasting_id: tasting_present.id,
+    wr = WineReview.create({
+      tasting_id: tasting_present_1.id,
       taster_id: tt.taster.id,
       rating: (1..5).to_a.sample,
       wine_number: i+1
     })
+    wr.updated_at = 1.second.from_now if wr.rating!=3
+    wr.save
   end
 end
-# always add me as guest ot present tasting
-if Guest.where(tasting: tasting_present, taster: taster_me).count==0
+# present tasting 1 add host as guest
+Guest.create(
+  tasting_id: tasting_present_1.id,
+  taster_id: taster_me.id,
+  confirmed: Time.current
+)
+6.times do |i|
+  wr = WineReview.create({
+    tasting_id: tasting_present_1.id,
+    taster_id: taster_me.id,
+    rating: (1..5).to_a.sample,
+    wine_number: i+1
+  })
+  wr.updated_at = 1.second.from_now if wr.rating!=3
+  wr.save
+end
+
+
+# PRESENT TASTING 2 (Host not Guest)
+tasters = Taster.where.not(id:taster_me.id).to_a.shuffle
+wines = Wine.all.to_a.shuffle
+tasting_present_2 = Tasting.create(
+  host_id: host_me.id,
+  name: "Santa Cruz Chardonnays",
+  description: "Great chardonnays from the Santa Cruz Mountain AVA",
+  location_id: host_me.primary_location.id,
+  open_at: Time.current,
+  private: true
+)
+# present tasting 2 wines
+6.times do |i|
+  TastingWine.create(
+    wine_id: wines.pop.id,
+    tasting_id: tasting_present_2.id,
+    price: prices.sample
+  )
+end
+# present tasting 2 guests (confirmed)
+6.times do
+  tt = tasters.pop
   Guest.create(
-    tasting_id: tasting_present.id,
-    taster_id: taster_me,
+    tasting_id: tasting_present_2.id,
+    taster_id: tt.id,
     confirmed: Time.current
   )
   6.times do |i|
-    WineReview.create({
-      tasting_id: tasting_present.id,
-      taster_id: taster_me.id,
+    wr = WineReview.create({
+      tasting_id: tasting_present_2.id,
+      taster_id: tt.id,
       rating: (1..5).to_a.sample,
       wine_number: i+1
     })
+    wr.updated_at = 1.second.from_now if wr.rating!=3
+    wr.save
   end
 end
 
@@ -210,7 +265,7 @@ tasting_past = Tasting.create(
   description: "Which white wine is it?",
   location_id: host_me.primary_location.id,
   open_at: 40.hours.ago,
-  close_at: 37.hours.ago,
+  closed_at: 37.hours.ago,
   private: true
 )
 # past tasting wines
@@ -254,15 +309,6 @@ tasting_completed = Tasting.create(
   completed_at: 36.hours.ago,
   private: true
 )
-# completed tasting wines
-6.times do |i|
-  TastingWine.create(
-    wine_id: wines.pop.id,
-    tasting_id: tasting_completed.id,
-    wine_number: i+1,
-    price: prices.sample
-  )
-end
 # completed tasting guests (confirmed)
 5.times do
   tt = Guest.create(
@@ -271,27 +317,46 @@ end
     confirmed: 5.days.ago
   )
   6.times do |i|
-    wr = WineReview.create({
+    WineReview.create({
       tasting_id: tasting_completed.id,
       taster_id: tt.taster.id,
       rating: (1..5).to_a.sample,
-      wine_id: tasting_completed.tasting_wines[i].wine.id,
+      wine_id: wines[i].id,
       wine_number: i+1,
       created_at: 40.hours.ago,
       updated_at: 38.hours.ago
     })
-
   end
+end
+# completed tasting wines
+6.times do |i|
+  TastingWine.create(
+    wine_id: wines[i].id,
+    tasting_id: tasting_completed.id,
+    wine_number: i+1,
+    average_rating: WineReview.where(tasting_id:tasting_completed.id, wine_number:i+1).first.average_rating,
+    price: prices.sample
+  )
 end
 
 
-# Public tastings
-# 2.times do
-#   Tasting.create(
-#     name: Faker::Lorem.sentence,
-#     description: Faker::Lorem.paragraph,
-#     open_at: Faker::Date.between(DateTime.now, 2.days.from_now),
-#     close_at: Faker::Date.between(2.days.from_now, 3.days.from_now),
-#     private: false
-#   )
-# end
+#########################################################
+################## UNCONNECTED USER #####################
+#########################################################
+
+gmail_user_me = User.create(
+  email: "brainstormwilly@gmail.com",
+  password: "123456",
+  password_confirmation: "123456"
+)
+
+gmail_taster_me = Taster.create(
+  user_id: gmail_user_me.id,
+  name: "William Langley",
+  handle: "Brainstorm Willy",
+  status: "active"
+)
+
+gmail_host_me = Host.create(
+  taster_id: gmail_taster_me.id,
+)

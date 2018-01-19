@@ -9,7 +9,9 @@ export const TastingNewComponent = {
     constructor($scope, $log, $state,
       ModalService,
       GuestService,
-      TastingService)
+      TastingService,
+      TastingWineService,
+      WineService)
     {
       'ngInject';
 
@@ -18,33 +20,74 @@ export const TastingNewComponent = {
       this.GuestService = GuestService;
       this.ModalService = ModalService;              // runs host location, wine, and guest modals
       this.TastingService = TastingService;
+      this.TastingWineService = TastingWineService;
+      this.WineService = WineService;
       this.currentFormState = 1;                     // states: general info, wines, guests
-      this.tasting = null;                           // new tasting data
-      this.tasting_wines = [];
-      this.guests = [];
+      this.tasting = {
+        tasting_wines: [],
+        guests: []
+      };
+      this.minOpenDate = moment();
+      this.minCloseDate = moment().add(1,'h');
+      // this.tasting.tasting_wines = [];
+      // this.tasting.guests = [];
       this.hostTastingStatus = {state:false, label:"Host is not tasting"};
 
-      /*
-        modalStateChangeEvent()
-        Track/react to modal states
-      */
-      let modalStateChangeEvent = $scope.$on('modal-state-change-event', (e,d) => {
-        if( d.state=="confirmed" && d.name=="host-location-modal" ){
-          let hlids = this.host.locations.map((v)=>{return v.id});
-          if( !hlids.includes(d.data.id) ){
-            this.host.locations.push(d.data);
+
+      let createHostLocationEvent = $scope.$on("create-host-location-event", (e,d)=>{
+        this.host.locations.push(d);
+        this.setSelectedHostLocation(d);
+      });
+
+      let createTastingEvent = $scope.$on("create-tasting-event", (e,d)=>{
+        this.currentFormState = 2;
+        this.tasting = d;
+      });
+
+      let createTastingWineEvent = $scope.$on("tasting-wine-create-event", (e,d)=>{
+        this.tasting.tasting_wines.push(d);
+      });
+
+      let destroyTastingWineEvent = $scope.$on("tasting-wine-destroy-event", (e,d)=>{
+        // $log.log("TastingNewComponent.constructor", d);
+        for(let i=0; i<this.tasting.tasting_wines.length; i++){
+          if( this.tasting.tasting_wines[i].id==d.id ) {
+            this.tasting.tasting_wines.splice(i,1);
+            break;
           }
-          this.setSelectedHostLocation(d.data);
-        }
-        if( d.state=="confirmed" && d.name=="tasting-wine-modal" ){
-          this.tasting_wines.push(d.data);
-        }
-        if( d.state=="confirmed" && d.name=="add-guest-modal" ){
-          this.inviteGuest(d.data);
         }
       });
 
-      $scope.$on("destroy", modalStateChangeEvent);
+      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", (e,d)=>{
+        this.tasting.guests.push(d);
+      });
+
+      let inviteNewUserEvent = $scope.$on("invite-new-user-event", (e,d)=>{
+        this.tasting.guests.push(d);
+      });
+
+      let inviteTasterEvent = $scope.$on("invite-taster-event", (e,d)=>{
+        this.tasting.guests.push(d);
+      });
+
+      let removeHostAsGuestEvent = $scope.$on("remove-host-as-guest-event", (e,d)=>{
+        for( let i=0; i<this.tasting.guests.length; i++ ){
+          if(this.tasting.guests[i].taster_id && this.tasting.guests[i].taster_id==this.tasting.host.taster_id){
+            this.tasting.guests.splice(i,1);
+            break;
+          }
+        }
+      });
+
+
+      $scope.$on("$destroy", createHostLocationEvent);
+      $scope.$on("$destroy", createTastingEvent);
+      $scope.$on("$destroy", createTastingWineEvent);
+      $scope.$on("$destroy", destroyTastingWineEvent);
+      $scope.$on("$destroy", includeHostAsGuestEvent);
+      $scope.$on("$destroy", inviteNewUserEvent);
+      $scope.$on("$destroy", inviteTasterEvent);
+      $scope.$on("$destroy", removeHostAsGuestEvent);
     }
 
     /*
@@ -52,40 +95,77 @@ export const TastingNewComponent = {
       Initialize tasting data
     */
     $onInit() {
-
-      this.tasting = {
-        id: 9,
-        name: "Taste Test 1",
-        open_at: moment()
+      // this.tasting.open_at = moment();
+      this.tasting.host_id = this.host.id;
+      this.tasting.host = this.host;
+      for( let i=0; i<this.host.locations.length; i++ ){
+        if( this.host.locations[i].primary ){
+          this.tasting.host.locations[i].selected = true;
+          this.tasting.location = this.host.locations[i].location;
+          this.tasting.location_id = this.tasting.location.id;
+          break;
+        }
       }
-      this.setSelectedHostLocation();
     }
 
     createTasting(){
-      this.TastingService.createTasting(this.tasting)
-        .then(result=>{
-          this.tasting = result.data;
-          this.currentFormState += 1;
-        })
-        .catch(err=>{
-          this.$log.error(err);
-        })
+      let tasting = angular.copy(this.tasting)
+      tasting.open_at = this.tasting.open_at.utc();
+      if( tasting.close_at ) tasting.close_at = this.tasting.close_at.utc();
+      this.TastingService.createTasting(tasting);
     }
 
-    inviteGuest(user){
-      this.GuestService.inviteGuest(this.tasting, user)
-        .then(result=>{
-          this.$log.log(result);
-        })
-        .catch(err=>{
-          this.$log.error(err);
-        })
+    destroyTastingWine(tasting_wine){
+      // this.$log.log("TastingNewComponent.destroyTastingWine", tasting_wine);
+      this.TastingWineService.destroy(tasting_wine);
+    }
+
+    editTasting(){
+      // this.$log.log("TastingNewComponent.editTasting", this.$state);
+      this.$state.go("tasting-show", {"id":this.tasting.id});
+    }
+
+    openConnectionModal(){
+      this.ModalService.setModalState("open", "add-connection-modal");
     }
 
     /*
-      setSelectedHostLocation(host_location=null)
-      Sets tasting location when selected or defaults to host's primary location
+      openHostLocationModal()
+      Opens host location modal
     */
+    openHostLocationModal(){
+      this.ModalService.setModalState("open", "host-location-modal");
+    }
+
+    /*
+      openTastingWineModal()
+      Opens tasting wine modal
+    */
+    openTastingWineModal(){
+      this.ModalService.setModalState("open", "tasting-wine-modal", this.tasting);
+    }
+
+    /*
+      openGuestModal()
+      Opens add guest modal
+    */
+    openGuestModal(){
+      this.ModalService.setModalState("open", "add-guest-modal");
+    }
+
+    removeGuest(guest){
+      if(guest.taster.id && guest.taster.id==this.host.taster.id){
+        this.hostTastingStatus.state = false;
+        this.hostTastingStatus.label = "Host is not tasting";
+      }
+      for( let i=0; i<this.tasting.guests.length; i++ ){
+        if(this.tasting.guests[i].temp_id==guest.temp_id){
+          this.tasting.guests.splice(i,1);
+          break;
+        }
+      }
+    }
+
     setSelectedHostLocation(host_location=null){
       // this.$log.log(this.host.locations.length);
       for( let i=0; i<this.host.locations.length; i++ ){
@@ -102,104 +182,35 @@ export const TastingNewComponent = {
       this.tasting.location_id = this.tasting.location.id;
     }
 
-    openModal(modal){
-      this.ModalService.setModalState("open", modal);
-    }
-
-    /*
-      openHostLocationModal()
-      Opens host location modal
-    */
-    openHostLocationModal(){
-      this.ModalService.setModalState("open", "host-location-modal");
-    }
-
-    /*
-      openTastingWineModal()
-      Opens tasting wine modal
-    */
-    openTastingWineModal(){
-      this.ModalService.setModalState("open", "tasting-wine-modal");
-    }
-
-    /*
-      openGuestModal()
-      Opens add guest modal
-    */
-    openGuestModal(){
-      this.ModalService.setModalState("open", "add-guest-modal");
-    }
-
-    /*
-      removeGuest(guest)
-      removes guest from tasting
-    */
-    removeGuest(guest){
-      if(guest.taster.id && guest.taster.id==this.host.taster.id){
-        this.hostTastingStatus.state = false;
-        this.hostTastingStatus.label = "Host is not tasting";
-      }
-      for( let i=0; i<this.tasting.guests.length; i++ ){
-        if(this.tasting.guests[i].temp_id==guest.temp_id){
-          this.tasting.guests.splice(i,1);
-          break;
-        }
-      }
-    }
-
-    /*
-      removeWine(tasting_wine)
-      removes tasting wine from tasting
-    */
-    removeTastingWine(tasting_wine){
-      for(let i=0; i<this.tasting.wines.length; i++){
-        if( this.tasting.wines[i].id==tasting_wine.id ) this.tasting.wines.splice(i,1);
-      }
-    }
-
-    /*
-      setFormState(state)
-      sets/validates new tasting form state
-      *** DEPRECATE
-    */
-    setFormState(state){
-      // let errors = false;
-      if(state==1){
-        if( this.currentFormState==1 ){
-          if( this.tasting.name &&
-            this.tasting.open_at &&
-            this.tasting.location) {
-            this.currentFormState = 2;
-          }else{
-            // set alert
-          }
-        }else{
-          this.currentFormState += state;
-        }
-      }else if (state==-1) {
-        this.currentFormState += state;
-      }
-    }
-
-    toggleHostTastingStatus(state){
-      for( let i=0; i<this.tasting.guests.length; i++ ){
-        if(this.tasting.guests[i].taster.id && this.tasting.guests[i].taster.id==this.host.taster.id){
-          this.tasting.guests.splice(i,1);
-          break;
-        }
-      }
-      if( state ){
-        this.tasting.guests.push({
-          temp_id: this.tasting.guests.length,
-          taster: this.host.taster
-        });
-        this.hostTastingStatus.state = true;
-        this.hostTastingStatus.label = "Host is tasting";
-      }else{
-        this.hostTastingStatus.state = false;
-        this.hostTastingStatus.label = "Host is not tasting";
-      }
-    }
+    // toggleHostTastingStatus(){
+    //   if( this.hostTastingStatus.state ){
+    //     this.GuestService.removeHost(this.tasting.id)
+    //       .then(()=>{
+    //         for( let i=0; i<this.tasting.guests.length; i++ ){
+    //           if(this.tasting.guests[i].taster_id && this.tasting.guests[i].taster_id==this.tasting.host.taster_id){
+    //             this.tasting.guests.splice(i,1);
+    //             break;
+    //           }
+    //         }
+    //         this.hostTastingStatus.state = false;
+    //         this.hostTastingStatus.label = "Host is not tasting";
+    //       })
+    //       .catch(err=>{
+    //         this.$log.error("TastingNewComponent.toggleHostTastingStatus", err);
+    //       })
+    //
+    //   }else{
+    //     this.GuestService.includeHost(this.tasting.id)
+    //       .then(result=>{
+    //         this.tasting.guests.push(result.data);
+    //         this.hostTastingStatus.state = true;
+    //         this.hostTastingStatus.label = "Host is tasting";
+    //       })
+    //       .catch(err=>{
+    //         this.$log.error("TastingNewComponent.toggleHostTastingStatus", err);
+    //       })
+    //   }
+    // }
 
   } // close controller
 } // close component

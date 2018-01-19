@@ -1,0 +1,12 @@
+alerts-modal{
+  visibility: hidden;
+  .main-modal-wrapper{
+    .main-modal-container{
+      .main-modal-header{
+        &.warning{
+          background-color: $theme-pending-color;
+        }
+      }
+    }
+  }
+}

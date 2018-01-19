@@ -15,15 +15,15 @@ RSpec.describe GuestMailer, type: :mailer do
 
   describe "GET #invite_new_user" do
     before do
-      user = User.invite!({email: "brainstormwilly@gmail.com"}) do |u|
+      @user = User.invite!({email: "brainstormwilly@gmail.com"}) do |u|
         u.skip_invitation = true
         u.invited_by_id = host.taster.user.id
       end
-      taster = create(:taster, user:user)
+      taster = create(:taster, user:@user)
       @guest = create(:guest, taster:taster, tasting:tasting)
     end
 
-    let(:invite_mail){ described_class.invite_new_user(@guest) }
+    let(:invite_mail){ described_class.invite_new_user(@guest, @user.raw_invitation_token) }
 
     it "sets subject" do
       expect(invite_mail.subject).to eq "You are invited to a Yno Tasting Party"

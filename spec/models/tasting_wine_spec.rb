@@ -49,5 +49,29 @@ RSpec.describe TastingWine, type: :model do
     end
   end
 
+  describe "average_rating" do
+    it "should init as nil" do
+      expect(tasting_wine.average_rating).to be_nil
+    end
+    context "set as whole number" do
+      before do
+        tasting_wine.average_rating = 3.0
+        tasting_wine.save
+      end
+      it "should be 3.0" do
+        expect(tasting_wine.average_rating).to eq 3.0
+      end
+    end
+    context "round decimal" do
+      before do
+        tasting_wine.average_rating = 3.12345
+        tasting_wine.save
+      end
+      it "should be 3.1" do
+        expect(tasting_wine.average_rating).to eq 3.1
+      end
+    end
+  end
+
 
 end

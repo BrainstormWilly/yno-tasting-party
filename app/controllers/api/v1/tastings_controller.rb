@@ -5,7 +5,12 @@ class Api::V1::TastingsController < Api::BaseController
   # end
 
   def show
-    render json: Tasting.find(params[:id])
+    tasting = Tasting.find(params[:id])
+    if tasting
+      render json: tasting, serializer: tasting_serializer(tasting)
+    else
+      render json: { error: "Tasting not found.", status: 400 }, status: 400
+    end
   end
 
   def new
@@ -33,6 +38,38 @@ class Api::V1::TastingsController < Api::BaseController
     end
   end
 
+  def update
+    if current_host
+      tasting = Tasting.find(params[:id])
+      if tasting.is_completed?
+        render json: { error: "Can not update completed tasting.", status: 403 }, status: 403
+      else
+        tasting.update(valid_params)
+        if tasting.save
+          render json: tasting, serializer: tasting_serializer(tasting)
+        else
+          render json: { error: "Unknown error.", status: 400 }, status: 400
+        end
+      end
+    else
+      render json: { error: "Host Unconfirmed.", status: 403 }, status: 403
+    end
+  end
+
+  def index
+    if current_taster
+      tastings = Guest.where(taster:current_taster).map{ |g| g.tasting }
+      if current_host
+        host_tastings = Tasting.where(host:current_host)
+        host_tastings.each do |ht|
+          tastings << ht if !tastings.include?(ht)
+        end
+      end
+      render json: tastings, each_serializer: Tastings::List::TastingSerializer
+    else
+      render json: { error: "User Unauthorized", status: 401 }, status: 401
+    end
+  end
   # def tastingGuestStats
   #   stats = []
   #   stats["tasting"] = Tasting.find(params[:id])
@@ -41,7 +78,14 @@ class Api::V1::TastingsController < Api::BaseController
   private
 
     def valid_params
-      params.require(:tasting).permit(:name, :open_at, :close_at, :private, :description, :host_id, :location_id)
+      params.require(:tasting).permit(:name, :open_at, :close_at, :closed_at, :completed_at, :private, :description, :host_id, :location_id)
+    end
+
+    def tasting_serializer(tasting)
+      return Tastings::Show::Completed::TastingSerializer if tasting.is_completed?
+      return Tastings::Show::Closed::TastingSerializer if tasting.is_closed?
+      return Tastings::Show::Open::TastingSerializer if tasting.is_open?
+      Tastings::Show::Pending::TastingSerializer
     end
 
 

@@ -1,14 +1,38 @@
 export const template = `
-<div class="wine-list-item-wrapper">
-  <div class="wine-list-item-container">
-    <a class="wine-list-item-link" href ng-click="$ctrl.editWine($ctrl.wine)">
-      <div class="wine-list-vintage">{{$ctrl.wine.vintage}}</div>
-      <div class="wine-list-title">{{$ctrl.wine.name}}</div>
-    </a>
-    <div class="wine-list-item-buttons" ng-show="$ctrl.editingWine==$ctrl.wine">
-      <button class="small-btn" ng-click="$ctrl.editWine($ctrl.wine)"><span class="fa fa-times"></span></button>
-      <button class="small-btn" ng-click="$ctrl.removeWine($ctrl.wine)"><span class="fa fa-minus"></span></button>
+  <a class="wine-list-item-link" href ng-click="$ctrl.selectAction()">
+    <div class="wine-list-item-tab" ng-show="$ctrl.wineView=='tastingPending'">
+      <span>Price</span>
+      <span>{{$ctrl.wineItem.price}}</span>
     </div>
-  </div>
-</div>
+    <div class="wine-list-item-tab" ng-show="$ctrl.wineView=='completed'">
+      <span>Wine {{$ctrl.wineItem.wine_number}}</span>
+      <span>{{$ctrl.wineItem.average_rating}}</span>
+    </div>
+    <div class="wine-list-item-tab" ng-show="$ctrl.wineView=='wines'">
+      <span>Rating</span>
+      <span>{{$ctrl.wineItem.rating}}</span>
+    </div>
+    <div class="wine-list-item-tab"
+      ng-class="{'unrated':$ctrl.wineItem.unrated}"
+      ng-show="$ctrl.wineView=='tasterRating' || $ctrl.wineView=='averageRating'">
+        <span>Wine</span>
+        <span>{{$ctrl.wineItem.wine_number}}</span>
+    </div>
+    <div class="wine-list-item-title" ng-show="$ctrl.wineView=='tastingPending'">{{$ctrl.wineItem.wine.full_name}}</div>
+    <div class="wine-list-item-title" ng-show="$ctrl.wineView=='wines' || $ctrl.wineView=='completed'">{{$ctrl.wineItem.wine.full_name}}</div>
+    <div class="wine-list-item-rating" ng-hide="$ctrl.wineView=='tastingPending' || $ctrl.wineView=='completed' || $ctrl.wineView=='wines' || $ctrl.wineItem.unrated">
+      <div id="wine_{{$ctrl.wineItem.wine_number}}" class="wine-list-item-progress"></div>
+      <div class="wine-list-item-rating-number">
+          <span class="wine-list-item-rating-integer"></span>
+          <span class="fa fa-comment" ng-show="$ctrl.wineItem.comments && $ctrl.wineView=='tasterRating'"></span>
+          <span class="fa fa-comment-o" ng-hide="$ctrl.wineItem.comments || $ctrl.wineView=='averageRating'"></span>
+      </div>
+    </div>
+  </a>
+
+  <button class="small-btn"
+    ng-click="$ctrl.deleteAction()"
+    ng-if="$ctrl.editable">
+    <span class="fa fa-minus"></span>
+  </button>
 `

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>
+      <%= @guest.tasting.host.taster.name %> has removed you from Yno Tasting <%= @guest.tasting.name %>
+    </h2>
+    <p>
+      Contact them at <a mailto="<%= @guest.tasting.host.taster.user.email %>"><%= @guest.tasting.host.taster.user.email %></a>
+    </p>
+  </body>
+</html>

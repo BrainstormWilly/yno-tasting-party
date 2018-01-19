@@ -20,11 +20,11 @@ class Api::V1::TastersController < Api::BaseController
   end
 
   # deprecate this to just showing count
-  def invites
-    taster = Taster.find(params[:id])
-    tastings = taster.guests.select{ |g| g.invitation_open? }.map{ |g| g.tasting }
-    render json: tastings, each_serializer: TastingSerializer
-  end
+  # def invites
+  #   taster = Taster.find(params[:id])
+  #   tastings = taster.guests.select{ |g| g.invitation_open? }.map{ |g| g.tasting }
+  #   render json: tastings, each_serializer: TastingSerializer
+  # end
 
   def inviteTastings
     taster = Taster.find(params[:id])
@@ -39,7 +39,8 @@ class Api::V1::TastersController < Api::BaseController
   end
 
   def showByUser
-    render json: Taster.find_by(user_id: params[:id])
+    taster = Taster.find_by(user_id: params[:id])
+    render json: taster, serializer: TasterSerializer
   end
 
   def create
@@ -51,11 +52,25 @@ class Api::V1::TastersController < Api::BaseController
     end
   end
 
+  def update
+    taster = Taster.find(params[:id])
+    taster.update(update_params)
+    if taster.save
+      render json: taster, serializer: TasterSerializer
+    else
+      render json: { error: "Unknown Error", status: 400 }, status: 400
+    end
+  end
+
 
   private
 
   def create_attributes
     params.require(:taster).permit(:name, :handle, :user_id)
+  end
+
+  def update_params
+    params.require(:taster).permit(:name, :handle, :status)
   end
 
 

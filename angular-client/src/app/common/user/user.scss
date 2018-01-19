@@ -1,0 +1,37 @@
+ui-view{
+  // display: flex;
+  // flex-direction: column;
+  .user-profile-header{
+    margin-left: 1rem;
+  }
+
+  .user-host-locations{
+    display: flex;
+    flex-direction: row;
+    min-height: 3rem;
+    border-radius: 1.5rem;
+    border: 2px solid lighten($theme-dark-gray, 20%);
+    margin-bottom: .5rem;
+    .primary{
+      display: flex;
+      align-items: center;
+      min-height: 3rem;
+      width: 2rem;
+      padding: 0 .25rem 0 .5rem;
+    }
+    .location{
+      display: flex;
+      align-items: center;
+      width: 100%;
+      // border: 1px solid blue;
+      text-align: left;
+      padding: .5rem;
+    }
+    .buttons{
+      display: flex;
+      flex-direction: row;
+      width: 6rem;
+      padding: .5rem;
+    }
+  }
+}

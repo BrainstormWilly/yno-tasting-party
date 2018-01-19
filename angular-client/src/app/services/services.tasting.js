@@ -1,35 +1,77 @@
 export class TastingService {
 
-  constructor ($rootScope, $log, $http, constants) {
+  constructor ($log, $http, $q, $rootScope, constants) {
     'ngInject';
 
     this.constants = constants;
     this.$log = $log;
     this.$http = $http;
+    this.$q = $q;
     this.$rootScope = $rootScope;
-    this.tasting = null;
   }
 
-  loadTasting(tasting){
-    this.$http.get(this.constants.apiUrl + "/tastings/" + tasting)
-      .then(tasting => {
-        this.setTasting(tasting.data);
+  /* deprecate in favor of getTasting() */
+  // loadTasting(tasting){
+  //   this.$http.get(this.constants.apiUrl + "/tastings/" + tasting)
+  //     .then(tasting => {
+  //       this.setTasting(tasting.data);
+  //     })
+  //     .catch(error => {
+  //       this.$log.error(error);
+  //     });
+  // }
+
+  createTasting(tasting){
+    this.$http.post(this.constants.apiUrl + "/tastings", tasting)
+      .then(result=>{
+        this.$rootScope.$broadcast("create-tasting-event", result.data);
       })
-      .catch(error => {
-        this.$log.error(error);
+      .catch(err=>{
+        this.$log.error("TastingService.createTasting", err);
       });
   }
 
-  createTasting(tasting){
-    return this.$http.post(this.constants.apiUrl + "/tastings", tasting)
+  updateTasting(tasting){
+    this.$http.put(this.constants.apiUrl + "/tastings/" + tasting.id, tasting)
+      .then(result=>{
+        this.$rootScope.$broadcast("update-tasting-event", result.data);
+      })
+      .catch(err=>{
+        this.$log.error("TastingService.updateTasting", err);
+      });
   }
 
-  setTasting(tasting){
-    this.tasting = tasting;
-    this.$rootScope.$broadcast('tasting-change-event', tasting);
+  getTasting(tasting_id){
+    let defer = this.$q.defer();
+    this.$http.get(this.constants.apiUrl + "/tastings/" + tasting_id)
+      .then(result=>{
+        defer.resolve(result.data);
+      })
+      .catch(err=>{
+        this.$log.error("TastingService.getTasting", err);
+      });
+    return defer.promise;
+    // return this.$http.get(this.constants.apiUrl + "/tastings/" + tasting_id);
   }
-  getTasting(){
-    return this.tasting;
+
+  getTastingList(){
+    let defer = this.$q.defer();
+    this.$http.get(this.constants.apiUrl + "/tastings/")
+      .then(result=>{
+        defer.resolve(result.data);
+      })
+      .catch(err=>{
+        this.$log.error("TastingService.getTastingList", err);
+      });
+    return defer.promise;
   }
+
+  // setTasting(tasting){
+  //   this.tasting = tasting;
+  //   this.$rootScope.$broadcast('tasting-change-event', tasting);
+  // }
+  // getTasting(){
+  //   return this.tasting;
+  // }
 
 }

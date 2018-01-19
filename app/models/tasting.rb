@@ -23,6 +23,10 @@ class Tasting < ApplicationRecord
     nil
   end
 
+  def is_pending?
+    return Time.current < self.open_at
+  end
+
   def is_open?
     return false if self.closed_at? || self.completed_at?
     return false if Time.current < self.open_at
@@ -40,15 +44,7 @@ class Tasting < ApplicationRecord
   end
 
   def is_completed?
-    return true if self.completed_at?
-    return false if self.is_open?
-    return false if Time.current < self.open_at
-    if self.is_closed? && self.tasting_wines.where(wine_number: 0).count==0
-      self.completed_at = Time.current
-      self.save
-      return true
-    end
-    false
+    self.completed_at?
   end
 
   def has_unrated_reviews?

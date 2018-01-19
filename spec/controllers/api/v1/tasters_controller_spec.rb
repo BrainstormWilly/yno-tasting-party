@@ -22,6 +22,51 @@ RSpec.describe Api::V1::TastersController, type: :controller do
         expect(response).to have_http_status(:unauthorized)
       end
     end
+    # describe "GET #tastings" do
+    #   it "returns http unauthorized" do
+    #     get :tastings, params: {id: taster.id}
+    #     expect(response).to have_http_status(:unauthorized)
+    #   end
+    # end
+    describe "GET #invite_tastings" do
+      it "returns http unauthorized" do
+        get :inviteTastings, params: {id: taster.id}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "GET #invite_tasting_detail" do
+      it "returns http unauthorized" do
+        get :inviteTastingDetail, params: {id: taster.id, tasting_id: tasting2.id}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "GET #reviews" do
+      it "returns http unauthorized" do
+        get :reviews, params: {id: taster.id}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "POST #create" do
+      before do
+        @user3 = create(:user)
+      end
+      it "returns http unauthorized" do
+        post :create, params: {taster: {name: "Jane Doe", handle: "Wine Diva", user_id: @user3.id}}
+        expect(response).to have_http_status(:unauthorized)
+      end
+      it "does not create taster" do
+        post :create, params: {taster: {name: "Jane Doe", handle: "Wine Diva", user_id: @user3.id}}
+        taster = Taster.where(user_id:@user3.id)
+        expect(taster.count).to eq 0
+      end
+    end
+    describe "PUT #update" do
+      it "does not update taster" do
+        put :update, params: {id: taster.id, taster:{name:"Crazy Mary"}}
+        taster = Taster.find_by_user_id(user.id)
+        expect(taster.name).not_to eq "Crazy Mary"
+      end
+    end
   end
 
   context "Taster request" do
@@ -35,44 +80,33 @@ RSpec.describe Api::V1::TastersController, type: :controller do
         get :show, params: {id: taster.id}
         expect(response).to have_http_status(:success)
       end
-      it "returns a guest_count" do
-        get :show, params: {id: taster.id}
-        taster = ActiveSupport::JSON.decode(response.body)
-        expect(taster["guest_count"]).to eq 1
-      end
+      # it "returns a guest_count" do
+      #   get :show, params: {id: taster.id}
+      #   taster = ActiveSupport::JSON.decode(response.body)
+      #   expect(taster["guest_count"]).to eq 1
+      # end
       it "returns a invite_count" do
         get :show, params: {id: taster.id}
         taster = ActiveSupport::JSON.decode(response.body)
         expect(taster["invite_count"]).to eq 1
       end
-      it "returns a review_count (including unrated)" do
-        get :show, params: {id: taster.id}
-        taster = ActiveSupport::JSON.decode(response.body)
-        expect(taster["review_count"]).to eq 2
-      end
+      # it "returns a review_count (including unrated)" do
+      #   get :show, params: {id: taster.id}
+      #   taster = ActiveSupport::JSON.decode(response.body)
+      #   expect(taster["review_count"]).to eq 2
+      # end
     end
-    describe "GET #tastings" do
-      it "returns http success" do
-        get :tastings, params: {id: taster.id}
-        expect(response).to have_http_status(:success)
-      end
-      it "returns taster tastings" do
-        get :tastings, params: {id: taster.id}
-        tastings = ActiveSupport::JSON.decode(response.body)
-        expect(tastings.count).to eq 1
-      end
-    end
-    describe "GET #invites" do
-      it "returns http success" do
-        get :invites, params: {id: taster.id}
-        expect(response).to have_http_status(:success)
-      end
-      it "returns taster tastings" do
-        get :invites, params: {id: taster.id}
-        tastings = ActiveSupport::JSON.decode(response.body)
-        expect(tastings.count).to eq 1
-      end
-    end
+    # describe "GET #tastings" do
+    #   it "returns http success" do
+    #     get :tastings, params: {id: taster.id}
+    #     expect(response).to have_http_status(:success)
+    #   end
+    #   it "returns taster tastings" do
+    #     get :tastings, params: {id: taster.id}
+    #     tastings = ActiveSupport::JSON.decode(response.body)
+    #     expect(tastings.count).to eq 1
+    #   end
+    # end
     describe "GET #invite_tastings" do
       it "returns http success" do
         get :inviteTastings, params: {id: taster.id}
@@ -121,6 +155,13 @@ RSpec.describe Api::V1::TastersController, type: :controller do
         expect(taster["name"]).to eq "Jane Doe"
         expect(taster["id"]).to be
         expect(taster["user_id"]).to eq @user3.id
+      end
+    end
+    describe "PUT #update" do
+      it "updates taster" do
+        put :update, params: {id: taster.id, taster:{name:"Crazy Mary"}}
+        taster = ActiveSupport::JSON.decode(response.body)
+        expect(taster["name"]).to eq "Crazy Mary"
       end
     end
   end

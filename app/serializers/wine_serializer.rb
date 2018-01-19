@@ -5,4 +5,8 @@ class WineSerializer < ActiveModel::Serializer
     "#{object.vintage} #{object.name}"
   end
 
+  def vintage
+    object.vintage_name
+  end
+
 end

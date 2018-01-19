@@ -1,31 +1,47 @@
 export class HostService {
-  constructor ($log, $q, $http, $state, constants, UserService) {
+  constructor ($auth, $log, $q, $http, $state, $rootScope, constants, UserService) {
     'ngInject';
 
+    this.$auth = $auth;
     this.$log = $log;
     this.$http = $http;
     this.$q = $q;
     this.$state = $state;
+    this.$rootScope = $rootScope;
     this.constants = constants;
     this.UserService = UserService;
   }
 
-  getHostByUser(){
+  getHostFromValidation(){
     let defer = this.$q.defer();
-    this.UserService.getValidateUser()
-      .then(user=>{
+    this.$auth.validateUser()
+      .then(user => {
         this.$http.get(this.constants.apiUrl + "/hosts/user/" + user.id)
           .then(result=>{
-            defer.resolve (result.data);
+            defer.resolve(result.data);
           })
-          .catch(()=>{
-            this.$state.go('taster-dashboard');
-          });
-      }).catch(()=>{
-        this.$state.go('welcome');
+          .catch(err=>{
+            this.$log.error("HostService.getHostFromValidation", err);
+            this.$state.go("dashboard");
+          })
+      })
+      .catch(err => {
+        this.$log.error("HostService.getHostFromValidation", err);
+        this.$state.go("welcome");
       });
-    // this.$log.log(result.promise);
     return defer.promise;
   }
+
+  create(host){
+    this.$http.post(this.constants.apiUrl + "/hosts", host)
+      .then(result=>{
+        this.$rootScope.$broadcast("host-create-event", result.data);
+      })
+      .catch(err=>{
+        this.$log.error("HostService.create", err);
+      })
+  }
+
+
 
 }

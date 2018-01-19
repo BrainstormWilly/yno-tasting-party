@@ -2,27 +2,26 @@ import {template} from './tasting-list-item.es6';
 
 export const TastingListItemComponent = {
   bindings: {
-    tasting: "<"
+    tasting: "<",
+    editable: "<",
+    selectAction: "&"
   },
   template,
   controller: class TastingListItemController{
-    constructor($log){
+    constructor($log, $state){
       'ngInject';
       this.$log = $log;
+      this.$state = $state;
     }
 
     $onInit() {
-      // this.$log.log("TastingListItemComponent $onInit");
+      // this.$log.log(this.selectAction);
     }
 
-    openDate(){
-      // if( this.tasting.is_open ) return "Open Now!"
-      return moment(this.tasting.open_at).format("MMM-D").toUpperCase();
-    }
+    // showTasting(){
+    //   this.$state.go("tasting-show",{id: this.tasting.id})
+    // }
 
-    openTime(){
-      return moment(this.tasting.open_at).format("LT");
-    }
 
   }
 }

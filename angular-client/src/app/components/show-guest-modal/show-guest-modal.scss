@@ -1,0 +1,16 @@
+show-guest-modal{
+  visibility: hidden;
+  .main-modal-wrapper{
+    .main-modal-container{
+      .main-modal-content{
+        table{
+          td:first-child{
+            width: 20%;
+            text-align: right;
+            color: darken($theme-neutral-color, 20%);
+          }
+        }
+      }
+    }
+  }
+}

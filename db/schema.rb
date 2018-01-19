@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109042749) do
+ActiveRecord::Schema.define(version: 20171227171912) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 20171109042749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_admins_on_user_id"
+  end
+
+  create_table "connections", force: :cascade do |t|
+    t.integer  "host_id"
+    t.integer  "taster_id"
+    t.datetime "connected_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["host_id"], name: "index_connections_on_host_id"
+    t.index ["taster_id"], name: "index_connections_on_taster_id"
   end
 
   create_table "guests", force: :cascade do |t|
@@ -33,7 +43,7 @@ ActiveRecord::Schema.define(version: 20171109042749) do
   create_table "host_locations", force: :cascade do |t|
     t.integer  "host_id"
     t.integer  "location_id"
-    t.boolean  "primary",     default: true
+    t.boolean  "primary"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["host_id"], name: "index_host_locations_on_host_id"
@@ -56,8 +66,9 @@ ActiveRecord::Schema.define(version: 20171109042749) do
     t.string   "state"
     t.string   "postal"
     t.string   "country",    default: "US"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "time_zone",  default: "America/Los Angeles", null: false
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -111,10 +122,11 @@ ActiveRecord::Schema.define(version: 20171109042749) do
   create_table "tasting_wines", force: :cascade do |t|
     t.integer  "tasting_id"
     t.integer  "wine_id"
-    t.integer  "wine_number",                          default: 0
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.decimal  "price",       precision: 10, scale: 2
+    t.integer  "wine_number",                             default: 0
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.decimal  "price",          precision: 10, scale: 2
+    t.decimal  "average_rating", precision: 4,  scale: 1
     t.index ["tasting_id"], name: "index_tasting_wines_on_tasting_id"
     t.index ["wine_id"], name: "index_tasting_wines_on_wine_id"
   end

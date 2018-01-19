@@ -1,32 +1,78 @@
-class Api::V1::UsersController < Api::BaseController
+class Api::V1::UsersController < ApplicationController
+  include DeviseTokenAuth::Concerns::SetUserByToken
 
   def showByEmail
-    if current_host || current_user.email==params[:email]
+    if current_host
       user = User.find_by(email: params[:email])
       if user
-        render json: user, serializer: UserSerializer
+        render json: true
       else
         render json: nil
       end
+    elsif current_user
+      render json: { error: "User searches only allowed by registered hosts.", status: 403 }, status: 403
     else
-      render json: { error: "Host Unconfirmed.", status: 403 }, status: 403
+      render json: { error: "Unauthorized user.", status: 401 }, status: 401
     end
   end
 
-  def invite
-    if current_host
-      user = User.invite!({email: params[:user][:email]}) do |u|
-        u.skip_invitation = true
-        u.invited_by_id = current_user.id
-      end
-      if user
-        render json: user, serializer: UserSerializer
-      else
-        render json: { error: "Unknown Error.", status: 400 }, status: 400
-      end
+  def acceptInvitation
+    if current_user
+      render json: { error: "User already logged into system.", status: 400 }, status: 400
     else
-      render json: { error: "Host Unconfirmed.", status: 403 }, status: 403
+      user = User.accept_invitation!(invitation_token:params[:invitation_token], password:valid_user_params[:password])
+      if user.invitation_accepted_at
+        render json: user, serializer: Tasters::Invites::UserSerializer
+      else
+        render json: { error: "Unable to accept invitation.", status: 400 }, status: 400
+      end
     end
   end
+
+  def show
+    user = User.find(params[:id])
+    if current_user
+      if current_user==user
+        render json: current_user, serializer: Users::UserSerializer
+      else
+        render json: { error: "Forbidden user access.", status: 403 }, status: 403
+      end
+    else
+      render json: { error: "No user unauthorized.", status: 401 }, status: 401
+    end
+  end
+
+  # def update
+  #   if current_user
+  #     user = User.find(params[:id])
+  #     if current_user==user
+  #       if user.update(valid_user_params)
+  #         bypass_sign_
+  #     end
+  #   else
+  #     render json: { error: "No user unauthorized.", status: 401 }, status: 401
+  #   end
+  # end
+
+
+  # def showByToken
+  #   if current_user
+  #     render json: { error: "Already logged in as another user", status: 400 }, status: 400
+  #   else
+  #     user = User.find_by_invitation_token(params[:invitation_token])
+  #     if user
+  #       render json: user, serializer: UserSerializer
+  #     else
+  #       render json: { error: "Unable to find user's token", status: 400 }, status: 400
+  #     end
+  #   end
+  # end
+
+
+  private
+
+    def valid_user_params
+      params.require(:user).permit(:password, :password_confirmation, :email)
+    end
 
 end

@@ -7,11 +7,29 @@ class Tastings::New::TastingSerializer < ActiveModel::Serializer
     :private,
     :location_id,
     :location,
-    :host_id
+    :host_id,
+    :host,
+    :guests,
+    :tasting_wines
 
-  def location
-    LocationSerializer.new(object.location)
+  def host
+    ::Tastings::New::HostSerializer.new(object.host)
   end
 
+  def location
+    ::LocationSerializer.new(object.location)
+  end
+
+  def tasting_wines
+    object.tasting_wines do |tw|
+    ::TastingWineSerializer.new(tw)
+    end
+  end
+
+  def guests
+    object.guests do |g|
+      Tastings::New::GuestSerializer.new(g)
+    end
+  end
 
 end

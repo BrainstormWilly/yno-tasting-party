@@ -2,6 +2,9 @@ import {template} from './welcome-signup.es6';
 
 
 export const WelcomeSignupComponent = {
+  bindings:{
+    user: "<"
+  },
   template,
   controller: class WelcomeSignupComponent{
     constructor($scope, $state, $log, UserService, TasterService){
@@ -10,28 +13,13 @@ export const WelcomeSignupComponent = {
       this.$state = $state;
       this.UserService = UserService;
       this.TasterService = TasterService;
-      this.state = "user";
-
-      let userChangeEvent = $scope.$on('user-change-event', (e,d) => {
-        if( d ) {
-          this.user = d;
-          this.state = "taster";
-        }
-      });
-
-      let tasterChangeEvent = $scope.$on('taster-change-event', (e,d) => {
-        if( d ) {
-          this.$state.go('taster-dashboard', {id: d.id});
-        }
-      });
-
-      $scope.$on('$destroy', userChangeEvent);
-      $scope.$on('$destroy', tasterChangeEvent);
+      this.viewState = 1;
+      this.taster = null;
     }
 
     $onInit() {
-      if( this.UserService.validationState()=="user_set" ){
-        this.TasterService.loadTasterFromUser(this.UserService.getUser().id);
+      if( this.user ){
+        this.$state.go('dashboard');
       }
     }
 
@@ -40,11 +28,24 @@ export const WelcomeSignupComponent = {
     }
 
     signupUser(){
-      this.UserService.signupUser(this.user);
+      this.UserService.signupUser(this.user)
+        .then(response => {
+          if( response.data.status=="success" ){
+            this.taster = {
+              user_id: response.data.data.id,
+              user: response.data.data
+            }
+            this.viewState = 2;
+          }else{
+            this.$log.error("UserService.signupUser.signupUser", response.data.data);
+          }
+        })
+        .catch(error => {
+          this.$log.error("UserService.signupUser", error);
+        })
     }
 
     signupTaster(){
-      this.taster.user_id = this.user.id;
       this.TasterService.signupTaster(this.taster);
     }
 

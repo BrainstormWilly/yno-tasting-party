@@ -3,7 +3,8 @@ import {template} from './guest-list-item.es6';
 export const GuestListItemComponent = {
   bindings:{
     guest: "<",
-    removeGuest: "&",
+    deleteAction: "&",
+    selectAction: "&",
     editable: "<"
   },
   template,
@@ -15,6 +16,26 @@ export const GuestListItemComponent = {
 
     $onInit() {
       // this.$log.log("TastingListItemComponent $onInit");
+      this.inviteStatus = this.parseInviteStatus();
+      this.handle = this.parseHandle();
+    }
+
+    parseHandle(){
+      let h = "";
+      if( this.guest.taster.name ){
+        h = this.guest.taster.name;
+        if( this.guest.taster.handle ){
+          h += " (" + this.guest.taster.handle + ")";
+        }
+      }else{
+        h = this.guest.taster.user.email;
+      }
+      return h;
+    }
+
+    parseInviteStatus(){
+      if( this.guest.confirmed ) return "Confirmed " + this.guest.confirmed;
+      return "Invited " + this.guest.invited;
     }
 
   }

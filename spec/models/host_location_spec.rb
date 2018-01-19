@@ -23,7 +23,7 @@ RSpec.describe HostLocation, type: :model do
     context "for multi host_locations" do
       before do
         new_location = create(:location)
-        @new_host_location = create(:host_location, host: host, location: new_location)
+        @new_host_location = create(:host_location, host: host, location: new_location, primary: true)
         host_location.reload
       end
       it "sets other host_location primaries to false when new host_location is created " do

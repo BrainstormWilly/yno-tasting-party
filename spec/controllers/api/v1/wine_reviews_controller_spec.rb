@@ -23,25 +23,110 @@ RSpec.describe Api::V1::WineReviewsController, type: :controller do
   let!(:wine_review_guest2_2){ create(:wine_review, tasting:tasting, taster: taster2, wine_number: 2, created_at: init_time, updated_at: init_time) }
 
   context "Guest request" do
+    describe "GET #index" do
+      it "returns http unauthorized" do
+        get :index
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
     describe "PUT #update" do
       it "returns http unauthorized" do
         put :update, params: {id: wine_review_guest1_1.id, wine_review:{rating: 5}}
         expect(response).to have_http_status(:unauthorized)
       end
     end
+    describe "GET #status" do
+      it "returns http unauthorized" do
+        get :status, params: {id: wine_review_guest1_1}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 
-  context "Taster request" do
+  context "Random Taster request" do
+    before do
+      random_user = create(:user)
+      random_taster = create(:taster, user:random_user)
+      auth_headers = random_user.create_new_auth_token
+      @request.headers.merge(auth_headers)
+      sign_in random_user, scope: :user
+    end
+    describe "GET #index" do
+      it "returns http success" do
+        get :index
+        expect(response).to have_http_status(:success)
+      end
+      it "returns 0 reviews" do
+        get :index
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data.count).to eq 0
+      end
+    end
+    describe "PUT #update" do
+      it "returns http forbidden" do
+        put :update, params: {id: wine_review_guest1_1.id, wine_review:{rating: 5}}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+    describe "GET #status" do
+      it "returns http forbidden" do
+        get :status, params: {id: wine_review_guest1_1}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  context "Tasting Taster request" do
     before do
       auth_headers = user.create_new_auth_token
       @request.headers.merge(auth_headers)
       sign_in user, scope: :user
     end
+    describe "GET #index" do
+      before do
+        wine_review_guest1_1.wine = wine1
+        wine_review_guest1_2.wine = wine2
+        # wine_review_guest2_1.wine = wine1
+        # wine_review_guest2_2.wine = wine2
+        wine_review_guest1_1.save
+        wine_review_guest1_2.save
+        # wine_review_guest2_1.save
+        # wine_review_guest2_2.save
+      end
+      it "returns http success" do
+        get :index
+        expect(response).to have_http_status(:success)
+      end
+      it "returns 2 reviews" do
+        get :index
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data.count).to eq 2
+      end
+    end
     describe "PUT #update" do
-      it "updates wine_review" do
+      it "returns http success for own review" do
+        put :update, params: {id: wine_review_guest1_1.id, wine_review:{rating: 5}}
+        expect(response).to have_http_status(:success)
+      end
+      it "updates own wine_review" do
         put :update, params: {id: wine_review_guest1_1.id, wine_review:{rating: 5}}
         data = ActiveSupport::JSON.decode(response.body)
         expect(data["rating"]).to eq 5
+      end
+      it "returns http forbidden for other review" do
+        put :update, params: {id: wine_review_guest2_1.id, wine_review:{rating: 5}}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+    describe "GET #status" do
+      it "returns http success" do
+        get :status, params: {id: wine_review_guest1_1}
+        expect(response).to have_http_status(:success)
+      end
+      it "returns all reviews for wine number" do
+        get :status, params: {id: wine_review_guest1_1}
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data["all_reviews"].count).to eq 2
       end
     end
   end

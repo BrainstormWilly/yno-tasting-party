@@ -1,12 +1,14 @@
 class WineReview < ApplicationRecord
   belongs_to :tasting
   belongs_to :taster
-  belongs_to :wine, optional: true
+  belongs_to :wine
 
   validates :wine_number, presence: true, numericality: {greater_than_or_equal_to: 1}
   validates :tasting_id, presence: true
   validates :taster_id, presence: true
   validates :rating, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
+
+  after_save :check_for_duplicate_wine_id
 
   default_scope { order(wine_number: :asc) }
 
@@ -19,12 +21,28 @@ class WineReview < ApplicationRecord
     self.created_at == self.updated_at
   end
 
+  def average_rating
+    wrs = self.class.where(tasting_id:self.tasting_id, wine_number:self.wine_number)
+    (wrs.inject(0){ |sum, wr| sum + wr.rating }.to_f/wrs.count).round(1)
+  end
+
+
   def to_string
     str = "Wine #{self.wine_number}; Rating: #{self.rating}"
     if !self.comments.empty?
       str << "; Comments: #{self.comments}"
     end
     str
+  end
+
+  def check_for_duplicate_wine_id
+    if self.wine_id
+      self.class
+        .where(tasting_id:self.tasting_id)
+        .where(wine_id:self.wine_id)
+        .where.not(id:self.id)
+        .update_all({wine_id:nil})
+    end
   end
 
   def self.tasting_has_reviews?(tasting)
@@ -40,6 +58,7 @@ class WineReview < ApplicationRecord
     self.where(tasting_id: tasting.id).order("wine_number DESC").first.wine_number + 1
   end
 
+  # DEPRECATE
   def self.create_next_in_sequence_for_guest(tasting, taster)
     next_number = self.where(tasting_id: tasting.id, taster_id: taster.id).count + 1
     self.create({
@@ -66,7 +85,7 @@ class WineReview < ApplicationRecord
   end
 
   def self.delete_all_for_guest(tasting, taster)
-    WineReview.where(tasting_id: tasting.id).where(taster_id: taster.id).destroy_all
+    self.where(tasting_id: tasting.id).where(taster_id: taster.id).destroy_all
   end
 
 end

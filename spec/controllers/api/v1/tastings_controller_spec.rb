@@ -31,6 +31,12 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
     }
   }
 
+  let(:update_tasting_params){
+    {
+      name: "Hello World"
+    }
+  }
+
   context "Guest request" do
     describe "GET #show" do
       it "returns http unauthorized" do
@@ -47,6 +53,18 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
     describe "POST #create" do
       it "returns http unauthorized" do
         post :create, params: {tasting: create_tasting_params}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "GET #index" do
+      it "returns http unauthorized" do
+        get :index
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "PUT #update" do
+      it "returns http unauthorized" do
+        put :update, params: {id: tasting.id, tasting: update_tasting_params}
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -70,6 +88,23 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
         expect(response).to have_http_status(:forbidden)
       end
     end
+    describe "GET #index" do
+      it "returns http success" do
+        get :index
+        expect(response).to have_http_status(:success)
+      end
+      it "returns 1 tasting" do
+        get :index
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data.count).to eq 1
+      end
+    end
+    describe "PUT #update" do
+      it "returns http forbidden" do
+        put :update, params: {id: tasting.id, tasting: update_tasting_params}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   context "Host request" do
@@ -85,7 +120,7 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
       end
     end
     describe "GET #show" do
-      context "init tasting" do
+      context "pending tasting" do
         it "returns http success" do
           get :show, params: {id: tasting.id}
           expect(response).to have_http_status(:success)
@@ -120,11 +155,6 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
           data = ActiveSupport::JSON.decode(response.body)
           expect(data["is_completed"]).to be_falsey
         end
-        it "returns tasting #tasting_progress as 0" do
-          get :show, params: {id: tasting.id}
-          data = ActiveSupport::JSON.decode(response.body)
-          expect(data["tasting_progress"]).to eq 0
-        end
         it "returns 2 tasting_wines" do
           get :show, params: {id: tasting.id}
           data = ActiveSupport::JSON.decode(response.body)
@@ -135,30 +165,20 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
           data = ActiveSupport::JSON.decode(response.body)
           expect(data["guests"].count).to eq 2
         end
+        it "returns a taster for guest 1" do
+          get :show, params: {id: tasting.id}
+          data = ActiveSupport::JSON.decode(response.body)
+          expect(data["guests"][0]["taster"]["id"]).to eq taster.id
+        end
       end
       context "open tasting" do
         before do
           tasting.update(open_at: Time.current)
         end
-        it "returns tasting #is_pending as false" do
+        it "returns tasting #status as 'Open'" do
           get :show, params: {id: tasting.id}
           data = ActiveSupport::JSON.decode(response.body)
-          expect(data["is_pending"]).to be_falsey
-        end
-        it "returns tasting #is_closed as false" do
-          get :show, params: {id: tasting.id}
-          data = ActiveSupport::JSON.decode(response.body)
-          expect(data["is_closed"]).to be_falsey
-        end
-        it "returns tasting #is_completed as false" do
-          get :show, params: {id: tasting.id}
-          data = ActiveSupport::JSON.decode(response.body)
-          expect(data["is_completed"]).to be_falsey
-        end
-        it "returns tasting #is_open as true" do
-          get :show, params: {id: tasting.id}
-          data = ActiveSupport::JSON.decode(response.body)
-          expect(data["is_open"]).to be_truthy
+          expect(data["status"]).to eq "Open"
         end
       end
       context "tasting in progress" do
@@ -240,6 +260,61 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
         post :create, params: {tasting: create_tasting_params}
         data = ActiveSupport::JSON.decode(response.body)
         expect(data["name"]).to eq "Test"
+      end
+    end
+    describe "GET #index" do
+      before do
+        host2 = create(:host, taster:taster2)
+        location2 = create(:location)
+        host_location2 = create(:host_location, host: host2, location: location2)
+        tasting2 = create(:tasting, host: host2, location: location2, open_at: 1.hour.from_now)
+        guest3 = create(:guest, tasting: tasting2, taster: taster, invited: 1.hour.ago, confirmed: Time.current)
+      end
+      it "returns http success" do
+        get :index
+        expect(response).to have_http_status(:success)
+      end
+      it "returns 2 tastings" do
+        get :index
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data.count).to eq 2
+      end
+    end
+    describe "PUT #update" do
+      context "pending tasting" do
+        it "returns http success" do
+          put :update, params: {id: tasting.id, tasting: update_tasting_params}
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context "open tasting" do
+        before do
+          tasting.update(open_at: Time.current)
+        end
+        it "returns http success" do
+          put :update, params: {id: tasting.id, tasting: update_tasting_params}
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context "closed tasting" do
+        before do
+          tasting.update(open_at: 1.hour.ago)
+          tasting.update(closed_at: Time.current)
+        end
+        it "returns http success" do
+          put :update, params: {id: tasting.id, tasting: update_tasting_params}
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context "completed tasting" do
+        before do
+          tasting.update(open_at: 1.hour.ago)
+          tasting.update(completed_at: Time.current)
+        end
+        it "returns http forbidden" do
+          put :update, params: {id: tasting.id, tasting: update_tasting_params}
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
   end

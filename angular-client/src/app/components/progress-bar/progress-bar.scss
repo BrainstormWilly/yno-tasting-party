@@ -1,61 +1,19 @@
-
-// .progress-column-bkg{
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-end;
-//   width: 100%;
-//   height: 5rem;
-//   background-color: $theme-bkg-color;
-// }
-//
-// .progress-column-bar{
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: flex-end;
-//   padding-bottom: 1rem;
-//   width: 100%;
-//   background: linear-gradient(to bottom, rgba($theme-info-color, .5), rgba($theme-info-color, 0));
-// }
-//
-//
-// .progress-column-txt{
-//   color: $theme-info-color;
-//   font-size: 1.5rem;
-//
-//
-
-  .tasting-progress{
-    height: 100%;
-    &.left{
-      float: right;
-    }
-
+progress-bar{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2rem;
+  border-radius: 1rem;
+  background-color: $theme-dark-gray;
+  .track{
+    width: 0%;
+    height: 2rem;
+    border-radius: 1rem;
+    background: linear-gradient(to right, rgba($theme-neutral-color,0), rgba($theme-neutral-color,.3))
   }
-  .tasting-progress-label{
-    position: absolute;
-    &.left{}
-
-    color: $theme-neutral-color;
+  .label{
     position: relative;
-    margin-left: 1rem;
-  }
-
-
-.tasting-column:last-child{
-  margin-right: 1rem;
-  margin-left: 0.25rem;
-  .tasting-progress{
-    height: 100%;
-    width: 0;
-    background-color: rgba($theme-neutral-color, .5);
-  }
-  .tasting-progress-label{
-    position: absolute;
-    color: $theme-neutral-color;
-    text-align: right;
-    position: relative;
-    right: 2rem;
-    top: -3rem;
+    margin-left: -2.5rem;
+    color: $theme-header-color;
   }
 }

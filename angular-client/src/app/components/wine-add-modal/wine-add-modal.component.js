@@ -3,7 +3,7 @@ import {template} from './wine-add-modal.es6';
 export const WineAddModalComponent = {
   template,
   controller: class WineAddModalController{
-    constructor($scope, $log, $element, $rootScope, ModalService, WineService){
+    constructor($scope, $log, $element, ModalService, WineService){
       'ngInject';
       this.$log = $log;
       this.name = "wine-add-modal";
@@ -14,7 +14,7 @@ export const WineAddModalComponent = {
 
       let $panel = $element.find(".main-modal-container");
 
-      let modalStateChangeEvent = $rootScope.$on("modal-state-change-event", (e,d)=>{
+      let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
         if(d.name==this.name ){
           if( d.state=="open" ){
             TweenMax.to($element, 0.5, {autoAlpha:1});

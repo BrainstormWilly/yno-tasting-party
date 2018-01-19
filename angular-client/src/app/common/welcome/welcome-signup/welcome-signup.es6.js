@@ -4,11 +4,11 @@ export const template = `
     <img src='assets/images/yno_tasting_logo_white.svg'>
   </a>
 
-  <h3 ng-if="$ctrl.state=='user'">Join us. It's wine tasting while blind...what could go wrong?</h3>
-  <h3 ng-if="$ctrl.state=='taster'">Welcome. Now tell other tasters a bit about yourself.</h3>
+  <h3 ng-if="$ctrl.viewState==1">Join us. It's wine tasting while blind...what could go wrong?</h3>
+  <h3 ng-if="$ctrl.viewState==2">Welcome. Now tell other tasters a bit about yourself.</h3>
 
   <div class="main-form-wrapper user"
-    ng-if="$ctrl.state=='user'">
+    ng-if="$ctrl.viewState==1">
       <form role="form" class="main-form" ng-submit="$ctrl.signupUser()" name="user_signup">
         <input class="main-form-control"
           ng-model="$ctrl.user.email"
@@ -36,7 +36,7 @@ export const template = `
       </form>
   </div>
 
-  <div class="main-form-wrapper taster" ng-if="$ctrl.state=='taster'">
+  <div class="main-form-wrapper taster" ng-if="$ctrl.viewState==2">
     <form class="main-form" name="taster_signup" ng-submit="$ctrl.signupTaster()">
       <input class="main-form-control"
         ng-model="$ctrl.taster.name"

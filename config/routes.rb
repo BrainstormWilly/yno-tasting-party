@@ -64,26 +64,39 @@ Rails.application.routes.draw do
       end
     end
     namespace :v1 do
+      get "guests/include_host/:tasting_id" => "guests#includeHost"
+      # get "guests/remove_host/:tasting_id" => "guests#removeHost"
+      get "guests/invitations" => "guests#invitations"
+      get "guests/confirm/:tasting_id" => "guests#confirm"
+      get "guests/deny/:tasting_id" => "guests#deny"
+      # get "guests/invite_taster/:taster_id" => "guests#inviteTaster"
       get "hosts/user/:id" => "hosts#hostFromUser"
-      get "tasters/:id" => "tasters#show"
+      # get "tasters/:id" => "tasters#show"
       get "tasters/:id/invites" => "tasters#invites"
       get "tasters/:id/invite_tastings" => "tasters#inviteTastings"
       get "tasters/:id/invite_tasting/:tasting_id" => "tasters#inviteTastingDetail"
-      get "tasters/:id/tastings" => "tasters#tastings"
+      # get "tasters/:id/tastings" => "tasters#tastings"
       get "tasters/:id/reviews" => "tasters#reviews"
       get "tasters/user/:id" => "tasters#showByUser"
+      get "wine_reviews/:id/status" => "wine_reviews#status"
       post "users/email" => "users#showByEmail"
       post "users/invite" => "users#invite"
-      post "tasters" => "tasters#create"
-      post "tasting_wines/create_for_tasting" => "tasting_wines#createForTasting"
+      # post "tasters" => "tasters#create"
       post "guests/invite_new_user" => "guests#inviteNewUser"
-      resources :tastings, only: [:show, :new, :create]
-      resources :wine_reviews, only: [:update]
-      resources :host_locations, only: [:create]
-      resources :wines, only: [:create]
-
+      post "guests/invite_taster" => "guests#inviteTaster"
+      put "users/invitation/accept/:invitation_token" => "users#acceptInvitation"
+      # resources :connections, only: [:index]
+      resources :guests, only: [:create, :destroy, :show]
+      resources :hosts, only: [:create]
+      resources :tasters, only: [:show, :update, :create]
+      resources :tastings, except: [:edit]
+      resources :wine_reviews, only: [:index, :update]
+      resources :host_locations, only: [:create, :update, :destroy]
+      resources :wines, only: [:create, :show]
+      resources :tasting_wines, only: [:create, :destroy, :update]
+      resources :users, only: [:show, :update]
+      resources :locations, only: [:create]
     end
-    get "tests", to: "tests#show"
   end
 
 end

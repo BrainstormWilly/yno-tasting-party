@@ -1,15 +1,13 @@
 export const template = `
 
   <header>
-    <h2>New Tasting</h2>
+    <h2 ng-if="!$ctrl.tasting.name">New Tasting</h2>
+    <h2 ng-if="$ctrl.tasting.name">{{$ctrl.tasting.name}}</h2>
   </header>
 
-  <section class="main-content" ng-show="$ctrl.currentFormState==10">
-    <div class="main-content-nav">
-      <div>Let's Get Started</div>
-      <button ng-click="$ctrl.createTasting()" ng-disabled="tastingForm.$invalid"><span class="fa fa-arrow-right"></span></button>
-    </div>
-
+  <section class="main-content" ng-if="$ctrl.currentFormState==1">
+    <h3>Let's Get Started</h3>
+    <form name="tastingForm" ng-submit="$ctrl.createTasting()">
     <div class="main-form-container">
       <div class="main-form-control" ng-class="{'error' : newTastingForm.tastingName.$touched && newTastingForm.tastingName.$invalid}">
         <label><span>Name</span></label>
@@ -20,13 +18,15 @@ export const template = `
         <input name="tastingOpenAt"
           moment-picker="$ctrl.tasting.open_at"
           ng-model="$ctrl.tasting.open_at"
+          min-date="$ctrl.minOpenDate"
           required>
       </div>
       <div class="main-form-control">
         <label><span>End</span><span>(Optional)</span></label>
         <input name="tastingCloseAt"
           moment-picker="$ctrl.tasting.close_at"
-          ng-model="$ctrl.tasting.close_at">
+          ng-model="$ctrl.tasting.close_at"
+          min-date="$ctrl.minCloseDate">
       </div>
       <div class="main-form-control">
         <label><span>Details</span><span>(Optional)</span></label>
@@ -37,68 +37,66 @@ export const template = `
         <input type="hidden" ng-model="$ctrl.tasting.location.id"></input>
         <textarea name="tastingLocation" type="text" ng-focus="$ctrl.openHostLocationModal()" ng-readonly="true" ng-model="$ctrl.tasting.location.to_short_string" required></textarea>
       </div>
-    </div>
-  </section>
-
-  <section class="main-content" ng-show="$ctrl.currentFormState==2">
-    <div class="main-content-nav">
-      <div>Add Wines</div>
-      <div>
-        <button ng-click="$ctrl.openTastingWineModal()"><span class="fa fa-plus"></span></button>
-        <button ng-click="$ctrl.setFormState(1)"><span class="fa fa-arrow-right"></span></button>
-      </div>
-    </div>
-    <p ng-show="$ctrl.tasting_wines.length==0">A tasting with no wines is just sad.</p>
-    <tasting-wine-list-item
-      ng-repeat="wine in $ctrl.tasting_wines"
-      tasting-wine="wine"
-      remove-wine="$ctrl.removeTastingWine(tasting_wine)"
-      editable="true">
-    </tasting-wine-list-item>
-  </section>
-
-  <section class="main-content" ng-show="$ctrl.currentFormState==1">
-    <div class="main-content-nav">
-      <div>Add Guests</div>
-      <div>
-        <button ng-click="$ctrl.openGuestModal()"><span class="fa fa-plus"></span></button>
-        <button ng-click="$ctrl.setFormState(1)"><span class="fa fa-arrow-right"></span></button>
-      </div>
-    </div>
-    <p ng-show="$ctrl.guests.length==0">You have friends, right?</p>
-    <div class="main-form-container" ng-show="$ctrl.currentFormState==3">
-    <guest-list-item
-      ng-repeat="guest in $ctrl.guests"
-      guest="guest"
-      remove-guest="$ctrl.removeGuest(guest)"
-      editable="true">
-    </guest-list-item>
-    <toggle-switch
-      toggle-trigger="$ctrl.toggleHostTastingStatus(state)"
-      toggle-state="$ctrl.hostTastingStatus.state"
-      toggle-label="$ctrl.hostTastingStatus.label">
-    </toggle-switch>
-  </section>
-
-    <div class="main-form-container" ng-show="$ctrl.currentFormState==4">
-      <tasting-detail tasting="$ctrl.tasting"></tasting-detail>
       <div class="main-form-btns">
         <span>&nbsp;</span>
         <div>
-          <button ng-click="$ctrl.setFormState(-1)"><span class="fa fa-arrow-left"></span></button>
-          <button ng-click="$ctrl.createTasting()"><span class="fa fa-check"></span></button>
+          <button type="reset">
+            <span class="fa fa-refresh"></span>
+          </button>
+          <button type="submit" ng-disabled="tastingForm.$invalid">
+            <span class="fa fa-arrow-right"></span>
+          </button>
         </div>
       </div>
     </div>
-    <div class="main-form-container" ng-show="$ctrl.currentFormState==5">
-      <h2>Congratulations!</h2>
-      <h3>Tasting {{$ctrl.tasting.name}} has been saved.</h3>
-      <p>Go to your dashboard to make changes</p>
+    </form>
+  </section>
+
+  <section class="main-content" ng-if="$ctrl.currentFormState==2">
+    <div class="main-form-container">
+      <p ng-if="$ctrl.tasting.tasting_wines.length==0">A tasting with no wines is just...sad.<br>However, you can add them later if you wish.</p>
+      <p ng-if="$ctrl.tasting.tasting_wines.length>0 && $ctrl.tasting.tasting_wines.length<6">Keep going...</p>
+      <p ng-if="$ctrl.tasting.tasting_wines.length==6">Just right!</p>
+      <p ng-if="$ctrl.tasting.tasting_wines.length>6">Now you're just being foolish.</p>
+      <wine-list-item
+        ng-repeat="wine in $ctrl.tasting.tasting_wines"
+        wine-item="wine"
+        wine-view="tastingPending"
+        delete-action="$ctrl.destroyTastingWine(wine)"
+        editable="true">
+      </wine-list-item>
+      <div class="main-form-btns">
+        <span class="descriptor">{{$ctrl.tasting.tasting_wines.length}} wines</span>
+        <div>
+          <button ng-click="$ctrl.openTastingWineModal()"><span class="fa fa-plus"></span></button>
+          <button ng-click="$ctrl.currentFormState = 3"><span class="fa fa-arrow-right"></span></button>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="main-content" ng-if="$ctrl.currentFormState==3">
+    <p ng-if="$ctrl.tasting.guests.length==0">You have friends, right?<br>
+      Well, then invite them to your tasting and be somebody!
+    </p>
+    <div class="main-form-container">
+      <guest-list-item
+        ng-repeat="guest in $ctrl.tasting.guests"
+        guest="guest"
+        editable="false">
+      </guest-list-item>
+      <div class="main-form-btns">
+        <span class="descriptor">{{$ctrl.tasting.guests.length}} guests</span>
+        <div>
+          <button ng-click="$ctrl.openGuestModal()"><span class="fa fa-plus"></span></button>
+          <button ui-sref="tasting-show({id:$ctrl.tasting.id})"><span class="fa fa-arrow-right"></span></button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer-menu></footer-menu>
-  <host-location-modal host-locations="$ctrl.host.locations"></host-location-modal>
-  <tasting-wine-modal></tasting-wine-modal>
-  <add-guest-modal></add-guest-modal>
+  <host-location-modal host-locations="$ctrl.tasting.host.locations"></host-location-modal>
+  <tasting-wine-modal tasting="$ctrl.tasting"></tasting-wine-modal>
+  <add-guest-modal tasting="$ctrl.tasting"></add-guest-modal>
   `;

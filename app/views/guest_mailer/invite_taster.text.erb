@@ -1,0 +1,10 @@
+<%= @guest.tasting.host.taster.name %> has invited you to a Yno Tasting Party!
+================================================================================
+
+Name: <%= @guest.tasting.name %>
+Host: <%= @guest.tasting.host.taster.name %>
+When: <%= @local_open_at %>
+Where: <%= @guest.tasting.location.to_short_string %>
+Description: <%= @guest.tasting.description %>
+
+You can view this invitation by following this link: <%= @url %>.

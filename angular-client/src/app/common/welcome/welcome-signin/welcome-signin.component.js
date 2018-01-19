@@ -15,13 +15,15 @@ export const WelcomeSigninComponent = {
     }
 
     $onInit() {
-
+      if( this.user ){
+        this.$state.go("dashboard");
+      }
     }
 
     signinUser(){
       this.UserService.signinUser(this.user)
         .then(() => {
-          this.$state.go('taster-dashboard');
+          this.$state.go('dashboard');
         })
         .catch(err => {
           this.$log.error(err);

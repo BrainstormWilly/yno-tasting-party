@@ -1,34 +1,73 @@
 export class TasterService {
-  constructor ($rootScope, $log, $http, constants) {
+  constructor ($rootScope, $log, $http, $auth, $q, $state, constants) {
     'ngInject';
 
     this.constants = constants;
     this.$log = $log;
     this.$http = $http;
     this.$rootScope = $rootScope;
-    this.taster = null;
-    this.tastings = [];
-    this.invites = [];
-    this.invite_tasting = null;
-    this.reviews = [];
+    this.$auth = $auth;
+    this.$q = $q;
+    this.$state = $state;
   }
 
-  approveInvite(taster, tasting){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/approve_invite/" + tasting)
-      .then(() => {
-        // go to dashboard
+  // approveInvite(taster, tasting){
+  //   this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/approve_invite/" + tasting)
+  //     .then(() => {
+  //       // go to dashboard
+  //     })
+  //     .catch(error => {
+  //       this.$log.error(error);
+  //     });
+  // }
+  getTasterFromValidation(){
+    let defer = this.$q.defer();
+    this.$auth.validateUser()
+      .then(user => {
+        this.$http.get(this.constants.apiUrl + "/tasters/user/" + user.id)
+          .then(result=>{
+            if( result.data.status=="inactive" ){
+              this.$state.go("user");
+            }else{
+              defer.resolve(result.data);
+            }
+          })
+          .catch(err=>{
+            this.$log.error("TasterService: getTaster", err);
+            this.$state.go("dashboard");
+          })
       })
-      .catch(error => {
-        this.$log.error(error);
+      .catch(err => {
+        this.$log.error("TasterService: validateUser", err);
+        this.$state.go("welcome");
       });
+    return defer.promise;
   }
 
-  createTaster(taster){
-    return this.$http.post(this.constants.apiUrl + "/tasters", taster);
+  // createTaster(taster){
+  //   return this.$http.post(this.constants.apiUrl + "/tasters", taster);
+  // }
+
+  getTasterFromUser(user_id){
+    let defer = this.$q.defer();
+    this.$http.get(this.constants.apiUrl + "/tasters/user/" + user_id)
+      .then(result=>{
+        defer.resolve(result.data);
+      })
+      .catch(err=>{
+        this.$log.error("TasterService.getTasterFromUser", err);
+      });
+    return defer.promise;
   }
 
-  getTasterFromUser(user){
-    return this.$http.get(this.constants.apiUrl + "/tasters/user/" + user)
+  update(taster){
+    this.$http.put(this.constants.apiUrl + "/tasters/" + taster.id, taster)
+      .then(result=>{
+        this.$rootScope.$broadcast("taster-update-event", result.data);
+      })
+      .catch(err=>{
+        this.$log.error("TasterService.update", err);
+      })
   }
 
   loadTaster(taster){
@@ -41,109 +80,16 @@ export class TasterService {
       });
   }
 
-  // deprecate in favor of getTasterFromUser()
-  loadTasterFromUser(user){
-    this.$http.get(this.constants.apiUrl + "/tasters/user/" + user)
-      .then(taster => {
-        this.setTaster(taster.data);
-      })
-      .catch(error => {
-        this.$log.error(error);
-      });
-  }
-
-  loadTastings(taster){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/tastings")
-      .then(tastings => {
-        this.setTastings(tastings.data);
-      })
-      .catch(error => {
-        this.$log.error(error);
-      });
-  }
-
-  loadReviews(taster){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/reviews")
-      .then(reviews => {
-        this.setReviews(reviews.data);
-      })
-      .catch(error => {
-        this.$log.error(error);
-      });
-  }
-
-  loadInvites(taster){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/invite_tastings")
-      .then(invites => {
-        this.setInvites(invites.data);
-      })
-      .catch(error => {
-        this.$log.error(error);
-      });
-  }
-
-  loadInviteTasting(taster, tasting){
-    this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/invite_tasting/" + tasting)
-      .then(tasting => {
-        this.setInviteTasting(tasting.data);
-      })
-      .catch(error => {
-        this.$log.error(error);
-      });
-  }
-
   signupTaster(taster){
-    this.$log.log(taster);
-    this.$http.post(this.constants.apiUrl + "/tasters", taster)
-      .then(response => {
-        this.setTaster(response.data);
+    // this.$log.log(taster);
+    this.$http.post(this.constants.apiUrl + "/tasters", {taster: taster})
+      .then(() => {
+        this.$state.go("dashboard");
       })
       .catch(error => {
-        this.$log.error(error);
+        this.$log.error("TasterService.signupTaster", error);
       })
   }
 
-
-  // GETTER-SETTERS
-
-  setInvites(invites){
-    this.invites = invites;
-    this.$rootScope.$broadcast('taster-invites-change-event', invites);
-  }
-  getInvites(){
-    return this.invites;
-  }
-
-  setInviteTasting(tasting){
-    this.invite_tasting = tasting;
-    this.$rootScope.$broadcast('taster-invite-tasting-change-event', tasting);
-  }
-  getInvites(){
-    return this.invites;
-  }
-
-  setReviews(reviews){
-    this.reviews = reviews;
-    this.$rootScope.$broadcast('taster-reviews-change-event', reviews);
-  }
-  getReviews(){
-    return this.reviews;
-  }
-
-  setTaster(taster){
-    this.taster = taster;
-    this.$rootScope.$broadcast('taster-change-event', taster);
-  }
-  getTaster(){
-    return this.taster;
-  }
-
-  setTastings(tastings){
-    this.tastings = tastings;
-    this.$rootScope.$broadcast('taster-tastings-change-event', tastings);
-  }
-  getTastings(){
-    return this.tastings;
-  }
 
 }

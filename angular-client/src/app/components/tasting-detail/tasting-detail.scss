@@ -3,30 +3,69 @@ tasting-detail{
   .tasting-detail-container{
     display: flex;
     flex-direction: column;
-    min-height: 10rem;
     .tasting-detail-info{
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-content: stretch;
       background-color: $theme-dark-gray;
-      border: 2px solid lighten($theme-dark-gray, 20%);
+      // border: 2px solid lighten($theme-dark-gray, 20%);
       border-radius: 1.5rem;
-      text-align: center;
+      .status{
+        border-radius: 1.5rem 1.5rem 0 0;
+        background-color: $theme-open-color;
+        color: $theme-header-color;
+        font-size: 1.2rem;
+        padding: 1rem;
+        &.pending{
+          background-color: $theme-pending-color;
+          color: $theme-dark-gray;
+        }
+        &.closed{
+          background-color: $theme-color;
+          color: $theme-dark-gray;
+        }
+        &.completed{
+          background-color: $theme-dark-gray;
+          border-bottom: 1px solid lighten($theme-dark-gray, 20%);
+          color: $theme-neutral-color;
+          font-size: 1rem;
+        }
+      }
+      .details{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        text-align: center;
+        p{
+          .subtitle{
+            color: darken($theme-neutral-color, 20%);
+          }
+          padding-right: 1rem;
+          // border: 1px dashed blue;
+          flex-grow: 1;
+        }
+
+      }
+      @media (min-width: 500px){
+        .details{
+          flex-direction: row;
+          text-align: left;
+          p:last-child{
+            flex-grow: 2;
+          }
+        }
+      }
+      button{
+        &.small-btn{
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+        }
+      }
     }
-    // .tasting-detail-wines{
-    //   display: flex;
-    //   flex-direction: column;
-    // }
-    // .tasting-detail-guests{
-    //   display: flex;
-    //   flex-direction: column;
-    // }
     h3{
       text-align: center;
     }
-    // a{
-    //   width: 10rem;
-    // }
   }
 
 }

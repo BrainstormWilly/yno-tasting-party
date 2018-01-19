@@ -1,10 +1,25 @@
 class WineReviewSerializer < ActiveModel::Serializer
-  attributes :id, :taster_id, :rating, :comments, :wine_number, :created_at, :updated_at, :unrated
+  attributes :id,
+    :taster,
+    :taster_id,
+    :tasting_id,
+    :rating,
+    :average_rating,
+    :comments,
+    :wine_number,
+    :wine_id,
+    :unrated
 
-  belongs_to :wine
+  def taster
+    TasterSerializer.new(object.taster)
+  end
 
   def unrated
     object.unrated?
+  end
+
+  def average_rating
+    object.average_rating
   end
 
 end

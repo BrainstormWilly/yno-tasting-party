@@ -1,12 +1,19 @@
 export const template = `
-<div class="wrapper" href="#">
-  <div class="date">
-    <span>{{$ctrl.openDate()}}</span>
-    <span>{{$ctrl.openTime()}}</span>
+<a class="tasting-list-item-link" href
+  ng-click="$ctrl.selectAction()">
+  <div class="tasting-list-item-date"
+    ng-class="{'pending':$ctrl.tasting.status=='Pending', 'open':$ctrl.tasting.status=='Open', 'closed':$ctrl.tasting.status=='Closed'}">
+    <span>{{ $ctrl.tasting.open_at | utcToLocalDate:"MMM-D" }}</span>
+    <span>{{ $ctrl.tasting.open_at | utcToLocalDate:"h:mm a" }}</span>
   </div>
-  <div class="title">
+  <div class="tasting-list-item-title">
     <span>{{$ctrl.tasting.name}}</span>
-    <span>- hosted by {{$ctrl.tasting.host.name}}</span>
+    <span><em>- hosted by {{$ctrl.tasting.host.taster.name}}</em></span>
   </div>
-</div>
+</a>
+<button class="small-btn"
+  ng-click="$ctrl.editTasting()"
+  ng-show="$ctrl.editable">
+  <span class="fa fa-pencil"></span>
+</button>
 `

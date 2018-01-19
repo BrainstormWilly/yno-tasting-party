@@ -3,7 +3,7 @@ class CreateHostLocations < ActiveRecord::Migration[5.0]
     create_table :host_locations do |t|
       t.references :host, foreign_key: true
       t.references :location, foreign_key: true
-      t.boolean :primary, default: true
+      t.boolean :primary
 
       t.timestamps
     end

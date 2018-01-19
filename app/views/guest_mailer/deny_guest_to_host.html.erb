@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>
+      <%= @guest.taster.name %> will not be attending <%= @guest.tasting.name %>
+    </h2>
+    <p>
+      Contact them at <a mailto="<%= @guest.taster.user.email %>"><%= @guest.taster.user.email %></a>
+    </p>
+  </body>
+</html>

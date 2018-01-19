@@ -7,6 +7,7 @@ RSpec.describe Api::V1::WinesController, type: :controller do
   let!(:taster){ create(:taster, user: user) }
   let!(:taster2){ create(:taster, user: user2) }
   let!(:host){ create(:host, taster: taster) }
+  let(:wine){ create(:wine) }
 
   let(:create_params){
     {
@@ -23,6 +24,12 @@ RSpec.describe Api::V1::WinesController, type: :controller do
         expect(response).to have_http_status(:unauthorized)
       end
     end
+    describe "GET show" do
+      it "returns http unauthorized" do
+        get :show, params: {id:wine.id}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 
   context "Taster request" do
@@ -35,6 +42,17 @@ RSpec.describe Api::V1::WinesController, type: :controller do
       it "returns http forbidden" do
         post :create, params: {wine: create_params}
         expect(response).to have_http_status(:forbidden)
+      end
+    end
+    describe "GET show" do
+      it "returns http success" do
+        get :show, params: {id:wine.id}
+        expect(response).to have_http_status(:success)
+      end
+      it "returns wine" do
+        get :show, params: {id:wine.id}
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data["name"]).to eq wine.name
       end
     end
   end
@@ -54,6 +72,17 @@ RSpec.describe Api::V1::WinesController, type: :controller do
       it "sets wine" do
         post :create, params: {wine: create_params}
         expect(Wine.last.name).to eq "Yno Cabernet Sauvignon"
+      end
+    end
+    describe "GET show" do
+      it "returns http success" do
+        get :show, params: {id:wine.id}
+        expect(response).to have_http_status(:success)
+      end
+      it "returns wine" do
+        get :show, params: {id:wine.id}
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data["name"]).to eq wine.name
       end
     end
   end

@@ -1,22 +1,56 @@
 guest-list-item{
+  display: flex;
+  flex-direction: row;
+  // border: 2px solid lighten($theme-dark-gray, 20%);
+  border-radius: 1.5rem;
+  background-color: $theme-dark-gray;
+  margin-bottom: .5rem;
+  padding-right: .25rem;
+  .guest-list-item-link{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    border: 2px solid lighten($theme-dark-gray, 20%);
-    border-radius: 1.5rem;
-    background-color: $theme-dark-gray;
-    height: 3rem;
-    margin-bottom: .5rem;
-    padding: 0 .25rem 0 1rem;
-    .guest-list-item-link{
+    min-height: 3rem;
+    width: 100%;
+    text-decoration: none;
+    // border: 1px solid green;
+    .guest-list-item-state{
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-width: 6rem;
       height: 100%;
-      width: 100%;
-      text-decoration: none;
-      color: $theme-neutral-color;
-      // border: 1px solid green;
+      color: $theme-header-color;
+      border-radius: 1.5rem 0 0 1.5rem;;
+      // border: 1px solid $theme-color;
+      background-color: $theme-color-dark;
+      &.invited{
+        background-color: $theme-dark-gray;
+      }
+      span:first-child{
+        font-size: .8rem;
+        color: darken($theme-header-color, 20%);
+      }
     }
+    .guest-list-item-title{
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+      padding: 0.5rem 1rem 0.5rem 1rem;
+      color: $theme-neutral-color;
+      text-align: left;
+      width: 100%;
+      // border: 1px solid green;
+      span:last-child{
+        font-size: .8rem;
+      }
+    }
+  }
+
+  button{
+    align-self: center;
+  }
+
+
 }

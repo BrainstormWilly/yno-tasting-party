@@ -6,7 +6,7 @@ export const HostLocationModalComponent = {
   },
   template,
   controller: class HostLocationModalController{
-    constructor($scope, $log, $element, $rootScope, ModalService, HostLocationService){
+    constructor($scope, $log, $element, ModalService, HostLocationService){
       'ngInject';
 
       this.$log = $log;
@@ -16,12 +16,12 @@ export const HostLocationModalComponent = {
       this.HostLocationService = HostLocationService;
       this.modalState = "closed";
       this.selected_host_location = null;
-      this.new_location = {};
+      // this.new_location = {};
       this.state = 1;
 
       let $panel = $element.find(".main-modal-container");
 
-      let modalStateChangeEvent = $rootScope.$on("modal-state-change-event", (e,d)=>{
+      let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
         if( d.name==this.name ){
           this.modalState = d.state;
           if( d.state=="open" ){
@@ -30,29 +30,36 @@ export const HostLocationModalComponent = {
           }else{
             TweenMax.to($element, 0.5, {autoAlpha:0});
           }
-        }else if (d.name=="state-selector-modal") {
-          if( d.state=="confirmed"){
-            this.new_location.state = d.data.code;
-          }
         }
       });
 
-      $scope.$on("destroy", modalStateChangeEvent);
+      let createHostLocationEvent = $scope.$on("create-host-location-event", (e,d)=>{
+        // this.new_location = {};
+        this.selected_host_location = d;
+        this.state = 1;
+        this.confirmModal();
+      });
+
+      $scope.$on("$destroy", createHostLocationEvent);
+      $scope.$on("$destroy", modalStateChangeEvent);
     }
 
     $onInit() {
       this.ModalService.registerModal(this);
-      for( let i=0; i<this.hostLocations.length; i++ ){
-        if( this.hostLocations[i].selected ){
-          this.selected_host_location = this.hostLocations[i];
-          break;
+      // this.$log.log(this.hostLocations);
+      if( this.hostLocations ){
+        for( let i=0; i<this.hostLocations.length; i++ ){
+          if( this.hostLocations[i].selected ){
+            this.selected_host_location = this.hostLocations[i];
+            break;
+          }
         }
       }
     }
 
-    openStateSelector(){
-      this.ModalService.setModalState("open", "state-selector-modal");
-    }
+    // openStateSelector(){
+    //   this.ModalService.setModalState("open", "state-selector-modal");
+    // }
 
     closeModal(){
       this.ModalService.setModalState("closed", this.name);
@@ -62,18 +69,9 @@ export const HostLocationModalComponent = {
       this.ModalService.setModalState("confirmed", this.name, this.selected_host_location);
     }
 
-    addLocation(){
-      this.HostLocationService.createLocation({location:this.new_location})
-        .then(result=>{
-          this.new_location = {};
-          this.selected_host_location = result.data;
-          this.state = 1;
-          this.confirmModal(result.data);
-        })
-        .catch(err=>{
-          this.$log.error(err);
-        })
-    }
+    // addLocation(){
+    //   this.HostLocationService.create(this.new_location);
+    // }
 
   }
 }
