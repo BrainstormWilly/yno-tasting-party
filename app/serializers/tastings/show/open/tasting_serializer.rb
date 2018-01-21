@@ -45,8 +45,14 @@ class Tastings::Show::Open::TastingSerializer < ActiveModel::Serializer
   end
 
   def taster_wine_reviews
+    # if host is not tasting we need a guest user to get average ratings for each wine
+    if object.host.taster.user==current_user && host_is_not_tasting
+      this_user = object.guests.first.taster.user
+    else
+      this_user = current_user
+    end
     object.wine_reviews
-      .select{ |wr| wr.taster.user_id==current_user.id }
+      .select{ |wr| wr.taster.user_id==this_user.id }
       .map{ |wr| ::WineReviewSerializer.new(wr) }
   end
 
@@ -56,6 +62,8 @@ class Tastings::Show::Open::TastingSerializer < ActiveModel::Serializer
     unrated = object.wine_reviews.select{ |wr| wr.unrated? }.count
     (total-unrated)/total.to_f
   end
+
+
 
   # def wine_reviews
   #   object.wine_reviews.map{ |wr| ::WineReviewSerializer.new(wr) }

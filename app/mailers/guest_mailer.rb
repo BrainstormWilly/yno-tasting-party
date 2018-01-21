@@ -1,5 +1,8 @@
 class GuestMailer < ApplicationMailer
 
+
+
+
   include Devise::Controllers::UrlHelpers # Optional. eg. `confirmation_url`
 
   # Host invites user not in system
@@ -42,6 +45,11 @@ class GuestMailer < ApplicationMailer
   def remove_guest_to_host(guest)
     @guest = guest
     mail(to: @guest.tasting.host.taster.user.email, subject: "A guest has left your Yno Tasting")
+  end
+
+  def cancel_tasting_to_guest(guest)
+    @guest = guest
+    mail(to: @guest.taster.user.email, subject: "Yno Tasting has been cancelled")
   end
 
 end

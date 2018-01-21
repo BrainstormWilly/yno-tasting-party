@@ -23,5 +23,7 @@ export const template = `
         </div>
       </div>
     </div>
+    <wait-state wait-on="$ctrl.modalState=='open' && !$ctrl.wineReview"></wait-state>
   </div>
+
 `

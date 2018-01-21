@@ -12,7 +12,7 @@ class Api::V1::WineReviewsController < Api::BaseController
   def status
     review = WineReview.find(params[:id])
     tasting_user_ids = review.tasting.guests.map{ |g| g.taster.user_id }
-    if tasting_user_ids.include?(current_user.id)
+    if tasting_user_ids.include?(current_user.id) || review.tasting.host.taster.user==current_user
       render json: review, serializer: Tastings::Show::Open::Status::WineReviewSerializer
     else
       render json: { error: "Taster not associated with tasting", status: 403 }, status: 403

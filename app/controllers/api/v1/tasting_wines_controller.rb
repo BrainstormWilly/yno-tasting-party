@@ -21,10 +21,14 @@ class Api::V1::TastingWinesController < Api::BaseController
   def destroy
     if current_host
       tw = TastingWine.find(params[:id])
-      if tw.destroy
-        render json: tw, serializer: TastingWineSerializer
+      if tw.tasting.is_pending?
+        if tw.destroy
+          render json: tw, serializer: TastingWineSerializer
+        else
+          render json: { error: "Unknown error", status: 400 }, status: 400
+        end
       else
-        render json: { error: "Unknown error", status: 400 }, status: 400
+        render json: { error: "Can not remove wines while tasting in progress", status: 403 }, status: 403
       end
     else
       render json: { error: "Can not locate host", status: 403 }, status: 403

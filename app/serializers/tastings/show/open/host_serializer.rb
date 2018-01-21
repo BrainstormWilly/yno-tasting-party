@@ -1,5 +1,5 @@
 class Tastings::Show::Open::HostSerializer < ActiveModel::Serializer
-  attributes :id, :taster, :locations, :connections
+  attributes :id, :taster_id, :taster, :locations, :connections
 
   def taster
     Tastings::Show::Open::TasterSerializer.new(object.taster)

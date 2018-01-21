@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>
+      <%= @guest.tasting.host.taster.name %> has cancelled a Yno Tasting Party!
+    </h2>
+    <p>
+      <strong>Name:</strong> <%= @guest.tasting.name %><br/>
+      <strong>Host:</strong> <%= @guest.tasting.host.taster.name %><br/>
+      <strong>Where:</strong> <%= @guest.tasting.location.to_short_string %><br/>
+      <strong>Description:</strong> <%= @guest.tasting.description %>
+    </p>
+    <p>
+      <a href="mailto:<%= @guest.tasting.host.taster.user.email %>">Contact Host</a>
+    </p>
+  </body>
+</html>

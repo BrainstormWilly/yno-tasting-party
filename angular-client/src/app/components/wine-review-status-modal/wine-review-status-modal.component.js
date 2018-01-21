@@ -18,6 +18,7 @@ export const WineReviewStatusModalComponent = {
 
       let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
         if(d.name==this.name ){
+          this.modalState = d.state;
           if( d.state=="open" ){
             WineReviewService.getStatus(d.data)
               .then(review=>{

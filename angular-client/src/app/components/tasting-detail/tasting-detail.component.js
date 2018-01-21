@@ -31,6 +31,7 @@ export const TastingDetailComponent = {
       this.openViewLabel = "Taster View";
       this.displayTime = null;
       this.completeNotice = false;
+      this.wait = false;
 
       let setDisplayTime = ()=>{
         if( this.tasting.is_pending ){
@@ -64,13 +65,15 @@ export const TastingDetailComponent = {
       let displayTimer = $interval(setDisplayTime, 1000);
 
       let destroyGuestEvent = $scope.$on("destroy-guest-event", (e,d)=>{
-        if( d.taster_id!=this.tasting.host.taster_id ){
+        if( d.taster_id==this.tasting.host.taster_id ){
+          $state.reload();
+        }else{
           this.NotificationsService.setNotification("Cancellation emailed to " + d.taster.name);
-        }
-        for( let i=0; i<this.tasting.guests.length; i++ ){
-          if( this.tasting.guests[i].id==d.id ){
-            this.tasting.guests.splice(i,1);
-            break;
+          for( let i=0; i<this.tasting.guests.length; i++ ){
+            if( this.tasting.guests[i].id==d.id ){
+              this.tasting.guests.splice(i,1);
+              break;
+            }
           }
         }
       });
@@ -84,8 +87,17 @@ export const TastingDetailComponent = {
           if( d.action=='confirm' )
             this.destroyTastingWine(d.data);
         }
+        if( d.code=="cancelTasting" && d.action=="confirm" ){
+          this.wait = true;
+          this.TastingService.destroyTasting(this.tasting.id);
+        }
         if( d.code=="closeTasting" && d.action=="confirm" ){
           this.tasting.closed_at = moment().utc();
+          this.TastingService.updateTasting(this.tasting);
+        }
+        if( d.code=="openTasting" && d.action=="confirm" ){
+          this.wait = true;
+          this.tasting.open_at = moment().utc();
           this.TastingService.updateTasting(this.tasting);
         }
       });
@@ -98,15 +110,6 @@ export const TastingDetailComponent = {
         this.NotificationsService.setNotification("Invitation emailed to " + d.taster.name);
         this.tasting.guests.unshift(d);
       });
-
-      // let removeHostAsGuestEvent = $scope.$on("remove-host-as-guest-event", (e,d)=>{
-      //   for( let i=0; i<this.tasting.guests.length; i++ ){
-      //     if(this.tasting.guests[i].taster_id && this.tasting.guests[i].taster_id==this.tasting.host.taster_id){
-      //       this.tasting.guests.splice(i,1);
-      //       break;
-      //     }
-      //   }
-      // });
 
       let tastingWineCreateEvent = $scope.$on("tasting-wine-create-event", (e,d)=>{
         this.tasting.tasting_wines.push(d);
@@ -121,6 +124,7 @@ export const TastingDetailComponent = {
 
       let updateTastingEvent = $scope.$on("update-tasting-event", (e,d)=>{
         // $log.log("TastingDetailComponent.constructor", d);
+        this.wait = false;
         this.tasting = d;
         setDisplayTime();
       });
@@ -177,6 +181,13 @@ export const TastingDetailComponent = {
       return true;
     }
 
+    attemptCancelTasting(){
+      this.AlertsService.setWarningAlert(
+        "Are you sure you want to cancel tasting? Confirming will remove tasting from system and email all guests that is cancelled",
+        "cancelTasting"
+      )
+    }
+
     attemptCloseTasting(){
       let msg = "Are you sure you want to close this tasting? Progress is currently at " + Math.ceil(100*this.tasting.tasting_progress)+"% and reviews will no longer be accepted.";
       this.AlertsService.setWarningAlert(
@@ -199,6 +210,13 @@ export const TastingDetailComponent = {
         "Are you sure you want to delete wine " + tasting_wine.wine.full_name + " and all its reviews from this tasting?",
         "destroyTastingWine",
         tasting_wine
+      )
+    }
+
+    attemptOpenTasting(){
+      this.AlertsService.setWarningAlert(
+        "Are you sure you want to open tasting? Confirming means all your tasters are present and ready to begin",
+        "openTasting"
       )
     }
 

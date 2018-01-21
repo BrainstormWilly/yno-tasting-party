@@ -22,7 +22,18 @@ export const template = `
           {{$ctrl.tasting.description}}
         </p>
       </div>
-
+      <div class="pending-btns">
+        <button class="text-btn"
+          ng-click="$ctrl.attemptOpenTasting()"
+          ng-if="$ctrl.tasterIsHost">
+            Open Tasting
+        </button>
+        <button class="text-btn"
+          ng-click="$ctrl.attemptCancelTasting()"
+          ng-if="$ctrl.tasterIsHost">
+            Cancel Tasting
+        </button>
+      </div>
     </div>
     <div>
       <h3>Wines <button class="small-btn" ng-show="$ctrl.tasterIsHost" ng-click="$ctrl.openTastingWineModal()"><span class="fa fa-plus"></span></button></h3>
@@ -85,7 +96,7 @@ export const template = `
         toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
       </toggle-switch>
     </div>
-    <div ng-if="$ctrl.tasting.tasting_progress>0">
+    <div ng-if="$ctrl.tasting.tasting_progress>1">
       <h3>Progress</h3>
       <progress-bar value="$ctrl.tasting.taster_progress" ng-hide="$ctrl.openViewState"></progress-bar>
       <progress-bar value="$ctrl.tasting.tasting_progress" ng-show="$ctrl.openViewState"></progress-bar>
@@ -260,9 +271,10 @@ export const template = `
   <add-guest-modal tasting="$ctrl.tasting"></add-guest-modal>
   <show-guest-modal></show-guest-modal>
   <wine-info-modal wine-type="tastingWine"></wine-info-modal>
-  <wine-review-modal tasting-status="$ctrl.tasting.status"></wine-review-modal>
+  <wine-review-modal tasting="$ctrl.tasting"></wine-review-modal>
   <wine-review-status-modal></wine-review-status-modal>
   <wine-reveal-modal tasting-wines="$ctrl.tasting.tasting_wines"></wine-reveal-modal>
   <alerts-modal></alerts-modal>
   <notifications></notifications>
+  <wait-state wait-on="$ctrl.wait"></wait-state>
 `

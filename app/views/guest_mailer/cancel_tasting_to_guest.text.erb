@@ -1,0 +1,9 @@
+<%= @guest.tasting.host.taster.name %> has cancelled a Yno Tasting
+================================================================================
+
+Name: <%= @guest.tasting.name %>
+Host: <%= @guest.tasting.host.taster.name %>
+Where: <%= @guest.tasting.location.to_short_string %>
+Description: <%= @guest.tasting.description %>
+
+Contact Host: <%= @guest.tasting.host.taster.user.email %>.

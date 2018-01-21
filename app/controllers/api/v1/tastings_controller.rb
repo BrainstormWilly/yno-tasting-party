@@ -57,24 +57,37 @@ class Api::V1::TastingsController < Api::BaseController
   end
 
   def index
-    if current_taster
-      tastings = Guest.where(taster:current_taster).map{ |g| g.tasting }
-      if current_host
-        host_tastings = Tasting.where(host:current_host)
-        host_tastings.each do |ht|
-          tastings << ht if !tastings.include?(ht)
-        end
+    tastings = Guest.where(taster:current_taster).map{ |g| g.tasting }
+    if current_host
+      host_tastings = Tasting.where(host:current_host)
+      host_tastings.each do |ht|
+        tastings << ht if !tastings.include?(ht)
       end
-      render json: tastings, each_serializer: Tastings::List::TastingSerializer
+    end
+    render json: tastings, each_serializer: Tastings::List::TastingSerializer
+  end
+
+  def destroy
+    if current_host
+      tasting = Tasting.find(params[:id])
+      if tasting.is_pending?
+        tasting.guests.each do |g|
+          GuestMailer.remove_guest_from_host(g).deliver
+        end
+        if tasting.destroy
+          render json: tasting, serializer: Tastings::New::TastingSerializer
+        else
+          render json: { error: "Unknown error.", status: 400 }, status: 400
+        end
+      else
+        render json: { error: "Tasting not pending.", status: 403 }, status: 403
+      end
     else
-      render json: { error: "User Unauthorized", status: 401 }, status: 401
+      render json: { error: "Host Unconfirmed.", status: 403 }, status: 403
     end
   end
-  # def tastingGuestStats
-  #   stats = []
-  #   stats["tasting"] = Tasting.find(params[:id])
-  #   stats["guest"] = tasting.guests.find(params[:guest_id])
-  # end
+
+
   private
 
     def valid_params

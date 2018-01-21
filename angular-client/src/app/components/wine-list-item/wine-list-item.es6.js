@@ -14,13 +14,18 @@ export const template = `
     </div>
     <div class="wine-list-item-tab"
       ng-class="{'unrated':$ctrl.wineItem.unrated}"
-      ng-show="$ctrl.wineView=='tasterRating' || $ctrl.wineView=='averageRating'">
+      ng-show="$ctrl.wineView=='tasterRating'">
+        <span>Wine</span>
+        <span>{{$ctrl.wineItem.wine_number}}</span>
+    </div>
+    <div class="wine-list-item-tab"
+      ng-show="$ctrl.wineView=='averageRating'">
         <span>Wine</span>
         <span>{{$ctrl.wineItem.wine_number}}</span>
     </div>
     <div class="wine-list-item-title" ng-show="$ctrl.wineView=='tastingPending'">{{$ctrl.wineItem.wine.full_name}}</div>
     <div class="wine-list-item-title" ng-show="$ctrl.wineView=='wines' || $ctrl.wineView=='completed'">{{$ctrl.wineItem.wine.full_name}}</div>
-    <div class="wine-list-item-rating" ng-hide="$ctrl.wineView=='tastingPending' || $ctrl.wineView=='completed' || $ctrl.wineView=='wines' || $ctrl.wineItem.unrated">
+    <div class="wine-list-item-rating" ng-show="$ctrl.wineView=='averageRating' || ($ctrl.wineView=='tasterRating' && !$ctrl.wineItem.unrated)">
       <div id="wine_{{$ctrl.wineItem.wine_number}}" class="wine-list-item-progress"></div>
       <div class="wine-list-item-rating-number">
           <span class="wine-list-item-rating-integer"></span>

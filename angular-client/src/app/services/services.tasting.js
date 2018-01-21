@@ -1,6 +1,6 @@
 export class TastingService {
 
-  constructor ($log, $http, $q, $rootScope, constants) {
+  constructor ($log, $http, $q, $rootScope, $state, constants) {
     'ngInject';
 
     this.constants = constants;
@@ -8,6 +8,7 @@ export class TastingService {
     this.$http = $http;
     this.$q = $q;
     this.$rootScope = $rootScope;
+    this.$state = $state;
   }
 
   /* deprecate in favor of getTasting() */
@@ -29,6 +30,17 @@ export class TastingService {
       .catch(err=>{
         this.$log.error("TastingService.createTasting", err);
       });
+  }
+
+  destroyTasting(tasting_id){
+    this.$http.delete(this.constants.apiUrl + "/tastings/" + tasting_id)
+      .then(result=>{
+        // this.$rootScope.$broadcast("destroy-tasting-event", result.data);
+        this.$state.go("dashboard");
+      })
+      .catch(err=>{
+        this.$log.error("TastingService.destroyTasting", err);
+      })
   }
 
   updateTasting(tasting){

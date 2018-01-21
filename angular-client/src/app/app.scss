@@ -75,7 +75,8 @@ button{
     background-color: $theme-bkg-color;
     color: $theme-header-color;
     font-size: 1.2rem;
-    margin: .5rem 1rem .5rem 1rem;
+    margin: .5rem;
+    padding: 0 1rem 0 1rem;
     &.good{
       border: none;
       background-color: $theme-open-color;

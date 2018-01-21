@@ -68,6 +68,12 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
         expect(response).to have_http_status(:unauthorized)
       end
     end
+    describe "DELETE #destroy" do
+      it "returns http unauthorized" do
+        delete :destroy, params: {id: tasting.id}
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 
   context "Taster request" do
@@ -102,6 +108,12 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
     describe "PUT #update" do
       it "returns http forbidden" do
         put :update, params: {id: tasting.id, tasting: update_tasting_params}
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+    describe "DELETE #destroy" do
+      it "returns http forbidden" do
+        delete :destroy, params: {id: tasting.id}
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -140,11 +152,6 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
           data = ActiveSupport::JSON.decode(response.body)
           expect(data["is_open"]).to be_falsey
         end
-        it "returns tasting #is_open as false" do
-          get :show, params: {id: tasting.id}
-          data = ActiveSupport::JSON.decode(response.body)
-          expect(data["is_open"]).to be_falsey
-        end
         it "returns tasting #is_closed as false" do
           get :show, params: {id: tasting.id}
           data = ActiveSupport::JSON.decode(response.body)
@@ -175,10 +182,25 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
         before do
           tasting.update(open_at: Time.current)
         end
-        it "returns tasting #status as 'Open'" do
+        it "returns tasting #is_pending as false" do
           get :show, params: {id: tasting.id}
           data = ActiveSupport::JSON.decode(response.body)
-          expect(data["status"]).to eq "Open"
+          expect(data["is_pending"]).to be_falsey
+        end
+        it "returns tasting #is_open as true" do
+          get :show, params: {id: tasting.id}
+          data = ActiveSupport::JSON.decode(response.body)
+          expect(data["is_open"]).to be_truthy
+        end
+        it "returns tasting #is_closed as false" do
+          get :show, params: {id: tasting.id}
+          data = ActiveSupport::JSON.decode(response.body)
+          expect(data["is_closed"]).to be_falsey
+        end
+        it "returns tasting #is_completed as false" do
+          get :show, params: {id: tasting.id}
+          data = ActiveSupport::JSON.decode(response.body)
+          expect(data["is_completed"]).to be_falsey
         end
       end
       context "tasting in progress" do
@@ -229,10 +251,10 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
           data = ActiveSupport::JSON.decode(response.body)
           expect(data["is_pending"]).to be_falsey
         end
-        it "returns tasting #is_closed as true" do
+        it "returns tasting #is_closed as false" do
           get :show, params: {id: tasting.id}
           data = ActiveSupport::JSON.decode(response.body)
-          expect(data["is_closed"]).to be_truthy
+          expect(data["is_closed"]).to be_falsey
         end
         it "returns tasting #is_completed as true" do
           get :show, params: {id: tasting.id}
@@ -313,6 +335,43 @@ RSpec.describe Api::V1::TastingsController, type: :controller do
         end
         it "returns http forbidden" do
           put :update, params: {id: tasting.id, tasting: update_tasting_params}
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+    describe "DELETE #destroy" do
+      context "pending tasting" do
+        it "returns http succcess" do
+          delete :destroy, params: {id: tasting.id}
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context "open tasting" do
+        before do
+          tasting.update(open_at: Time.current)
+        end
+        it "returns http forbidden" do
+          delete :destroy, params: {id: tasting.id}
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+      context "closed tasting" do
+        before do
+          tasting.update(open_at: 1.hour.ago)
+          tasting.update(closed_at: Time.current)
+        end
+        it "returns http forbidden" do
+          delete :destroy, params: {id: tasting.id}
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+      context "completed tasting" do
+        before do
+          tasting.update(open_at: 1.hour.ago)
+          tasting.update(completed_at: Time.current)
+        end
+        it "returns http forbidden" do
+          delete :destroy, params: {id: tasting.id}
           expect(response).to have_http_status(:forbidden)
         end
       end
