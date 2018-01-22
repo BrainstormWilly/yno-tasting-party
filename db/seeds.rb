@@ -32,8 +32,7 @@ host_me = Host.create(
   user = User.create(
     email: Faker::Internet.email,
     password: "123456",
-    password_confirmation: "123456",
-    invited_by_id: user_me.id
+    password_confirmation: "123456"
   )
   taster = Taster.create(
     name: Faker::Name.name,

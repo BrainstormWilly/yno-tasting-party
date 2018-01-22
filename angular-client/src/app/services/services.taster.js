@@ -34,7 +34,7 @@ export class TasterService {
           })
           .catch(err=>{
             this.$log.error("TasterService: getTaster", err);
-            this.$state.go("dashboard");
+            this.$state.go("welcome");
           })
       })
       .catch(err => {

@@ -34,7 +34,7 @@ export class TastingService {
 
   destroyTasting(tasting_id){
     this.$http.delete(this.constants.apiUrl + "/tastings/" + tasting_id)
-      .then(result=>{
+      .then(()=>{
         // this.$rootScope.$broadcast("destroy-tasting-event", result.data);
         this.$state.go("dashboard");
       })

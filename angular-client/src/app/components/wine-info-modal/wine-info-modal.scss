@@ -3,8 +3,13 @@ wine-info-modal{
   .main-modal-content{
     text-align: left;
     padding: 0 1rem 0 1rem;
-    span{
-      color: darken($theme-neutral-color, 20%);
+    p{
+      margin-bottom: 0rem;
+      margin-top: 0rem;
+      span{
+        color: darken($theme-neutral-color, 20%);
+      }
     }
+
   }
 }

@@ -1,0 +1,33 @@
+sort-bar{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 4rem;
+  right: 0;
+  left: 0;
+  height: 2rem;
+  // border: 1px solid blue;
+  background-color: $theme-dark-gray;
+  .sort-field{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    // background-color: $theme-neutral-color;
+    text-align: center;
+    padding: 0 1rem 0 1rem;
+    height: 100%;
+    flex-grow: 1;
+    border-right: 2px solid black;
+    color: $theme-neutral-color;
+    text-decoration: none;
+    &.disabled{
+      background-color: lighten($theme-dark-gray, 40%);
+      color: $theme-dark-gray;
+      opacity: 1;
+    }
+  }
+  .sort-field:last-child{
+    border-right: none;
+  }
+
+}

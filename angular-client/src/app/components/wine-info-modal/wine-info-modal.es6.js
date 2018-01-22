@@ -5,7 +5,16 @@ export const template = `
         <h3>Wine Info</h3>
       </div>
       <div class="main-modal-content">
-        <p ng-hide="$ctrl.wineType=='tastingWine'"><span>Reviewed:</span> {{$ctrl.wine.review_count}} times</p>
+        <p ng-hide="$ctrl.wineType=='tastingWine'">
+        <span>Reviews:</span>
+          <ng-pluralize count="$ctrl.wine.review_count"
+            when="{
+              '0': 'None',
+              'one': '1',
+              'other': '{}'
+            }">
+          </ng-pluralize>
+        </p>
         <p><span>Average Rating:</span> {{$ctrl.averageRating}}</p>
         <p><span>Vintage:</span> {{$ctrl.wine.vintage}}</p>
         <p><span>Name:</span> {{$ctrl.wine.name}}</p>

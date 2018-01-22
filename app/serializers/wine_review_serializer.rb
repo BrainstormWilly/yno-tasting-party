@@ -8,7 +8,8 @@ class WineReviewSerializer < ActiveModel::Serializer
     :comments,
     :wine_number,
     :wine_id,
-    :unrated
+    :unrated,
+    :updated_at
 
   def taster
     TasterSerializer.new(object.taster)

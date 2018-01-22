@@ -8,7 +8,8 @@ class Wines::WineReviewSerializer < ActiveModel::Serializer
     :comments,
     :wine_number,
     :wine_id,
-    :wine
+    :wine,
+    :updated_at
 
   def average_rating
     object.average_rating

@@ -17,7 +17,7 @@ export const DashboardComponent = {
     }
 
     $onInit() {
-
+      this.$log.log("DashboardComponent", this.taster)
     }
 
   }
