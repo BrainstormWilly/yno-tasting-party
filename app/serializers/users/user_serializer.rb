@@ -1,5 +1,5 @@
 class Users::UserSerializer < ActiveModel::Serializer
-  attributes :id, :invited_by_id, :email, :taster, :host
+  attributes :id, :invited_by_id, :reset_password_token, :email, :taster, :host
 
   def taster
     ::TasterSerializer.new(object.taster)

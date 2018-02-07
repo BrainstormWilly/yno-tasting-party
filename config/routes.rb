@@ -81,6 +81,7 @@ Rails.application.routes.draw do
       get "wine_reviews/:id/status" => "wine_reviews#status"
       post "users/email" => "users#showByEmail"
       post "users/invite" => "users#invite"
+      post "users/password/reset" => "users#resetUserPassword"
       # post "tasters" => "tasters#create"
       post "guests/invite_new_user" => "guests#inviteNewUser"
       post "guests/invite_taster" => "guests#inviteTaster"

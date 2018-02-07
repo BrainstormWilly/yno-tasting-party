@@ -29,6 +29,11 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def resetUserPassword
+    user = User.reset_password_by_token(valid_reset_password_params)
+    render json: user, serializer: Users::UserSerializer
+  end
+
   def show
     user = User.find(params[:id])
     if current_user
@@ -73,6 +78,10 @@ class Api::V1::UsersController < ApplicationController
 
     def valid_user_params
       params.require(:user).permit(:password, :password_confirmation, :email)
+    end
+
+    def valid_reset_password_params
+      params.require(:user).permit(:password, :password_confirmation, :reset_password_token)
     end
 
 end

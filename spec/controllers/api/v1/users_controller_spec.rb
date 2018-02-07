@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::V1::UsersController, type: :controller do
 
-  let!(:user){ create(:user) }
+  let!(:user){ create(:user, reset_password_token:"asdf2345adsf") }
   let!(:user2){ create(:user) }
   let!(:user3){ create(:user) }
   let!(:taster){ create(:taster, user: user) }
@@ -15,6 +15,16 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       email: "update@user.com",
       password: "654321",
       password_confirmation: "654321"
+    }
+  }
+
+  let(:reset_user_params){
+    {
+      user:{
+        reset_password_token: "asdf2345adsf",
+        password: "654321",
+        password_confirmation: "654321"
+      }
     }
   }
 
@@ -62,6 +72,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it "returns http unauthorized" do
         get :show, params: {id: user.id}
         expect(response).to have_http_status(:unauthorized)
+      end
+    end
+    describe "POST #resetUserPassword" do
+      it "returns http success" do
+        post :resetUserPassword, params: reset_user_params
+        expect(response).to have_http_status(:success)
       end
     end
     # describe "PUT #update" do
@@ -126,6 +142,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         get :show, params: {id: user2.id}
         data = ActiveSupport::JSON.decode(response.body)
         expect(data["host"]).to be_nil
+      end
+    end
+    describe "POST #resetUserPassword" do
+      it "returns http forbidden for other user" do
+        post :resetUserPassword, params: reset_user_params
+        expect(response).to have_http_status(:forbidden)
       end
     end
     # describe "PUT #update" do
@@ -216,6 +238,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         get :show, params: {id: user.id}
         data = ActiveSupport::JSON.decode(response.body)
         expect(data["host"]["id"]).to eq host.id
+      end
+    end
+    describe "POST #resetUserPassword" do
+      it "returns http success" do
+        post :resetUserPassword, params: reset_user_params
+        expect(response).to have_http_status(:success)
       end
     end
     # describe "PUT #update" do
