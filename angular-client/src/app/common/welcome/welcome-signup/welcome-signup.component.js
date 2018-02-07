@@ -29,20 +29,10 @@ export const WelcomeSignupComponent = {
 
     signupUser(){
       this.UserService.signupUser(this.user)
-        .then(response => {
-          if( response.data.status=="success" ){
-            this.taster = {
-              user_id: response.data.data.id,
-              user: response.data.data
-            }
-            this.viewState = 2;
-          }else{
-            this.$log.error("UserService.signupUser.signupUser", response.data.data);
-          }
-        })
-        .catch(error => {
-          this.$log.error("UserService.signupUser", error);
-        })
+        .then(taster=>{
+          this.taster = taster;
+          this.viewState = 2;
+        });
     }
 
     signupTaster(){

@@ -12,12 +12,13 @@ export const DashboardComponent = {
       this.$state = $state;
       this.UserService = UserService;
       this.TasterService = TasterService;
+      // this._ = _;
       // this.taster = null;
 
     }
 
     $onInit() {
-      this.$log.log("DashboardComponent", this.taster)
+      // this.$log.log("DashboardComponent.$onInit");
     }
 
   }

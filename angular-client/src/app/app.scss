@@ -89,6 +89,10 @@ button{
   }
 }
 
+h3{
+  text-align: center;
+}
+
 
 .badge{
   display: flex;
@@ -102,12 +106,6 @@ button{
   margin-right: .5rem;
 }
 
-.logo-header{
-  img{
-    width: 8rem;
-    margin: 2rem;
-  }
-}
 
 .circle-btn{
   background-color: $theme-bkg-color;

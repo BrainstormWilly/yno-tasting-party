@@ -32,6 +32,15 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
         }
       }
     });
+    // .state('welcome-reset-password',{
+    //   url: '/user/password/reset',
+    //   component: 'welcomeResetPassword',
+    //   resolve: {
+    //     token: ($stateParams) =>{
+    //       return $stateParams.reset_password_token
+    //     }
+    //   }
+    // });
 
 
   $urlRouterProvider.otherwise('/');

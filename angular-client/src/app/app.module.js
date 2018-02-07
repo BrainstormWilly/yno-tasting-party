@@ -26,6 +26,7 @@ angular
     'ng-token-auth',
     'ui.router',
     'moment-picker',
+    'ngLodash',
     ServicesModule,
     CommonModule,
     ComponentsModule,
@@ -36,6 +37,8 @@ angular
   .config(AppConfig)
   .run(function($log){
     'nginject';
-    $log.log("AppModule run");
+    // let ary = [1,2,3,3,3,3,4,5,6];
+
+    $log.log("AppModule.run");
 
   })

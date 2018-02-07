@@ -1,5 +1,5 @@
 export class UserService {
-  constructor ($log, $http, $q, $auth, $state, $rootScope, constants) {
+  constructor ($log, $http, $q, $auth, $state, $rootScope, constants, AlertsService) {
     'ngInject';
     this.$log = $log;
     this.$http = $http;
@@ -8,6 +8,7 @@ export class UserService {
     this.$q = $q;
     this.$state = $state;
     this.constants = constants;
+    this.AlertsService = AlertsService;
     // this.user = null;
     // this.state = "user_unset";
     // this.$log.log(this.$auth);
@@ -83,6 +84,10 @@ export class UserService {
   //     })
   // }
 
+  requestPasswordReset(params){
+    return this.$auth.requestPasswordReset(params);
+  }
+
   signinUser(user){
     return this.$auth.submitLogin(user);
   }
@@ -99,7 +104,24 @@ export class UserService {
   }
 
   signupUser(user){
-    return this.$auth.submitRegistration(user)
+    let defer = this.$q.defer();
+    this.$auth.submitRegistration(user)
+      .then(response => {
+        if( response.data.status=="success" ){
+          defer.resolve({
+            user_id: response.data.data.id,
+            user: response.data.data
+          });
+        }else{
+          // this.AlertsService.setFailureAlert(response.data.errors.full_messages[0]);
+          this.$log.error("WelcomeSignupComponent.signupUser", response.data.data);
+        }
+      })
+      .catch(error => {
+        // this.$log.error("WelcomeSignupComponent.signupUser", error);
+        this.AlertsService.setFailureAlert(error.data.errors.full_messages[0]);
+      });
+    return defer.promise;
   }
 
   show(user_id){
@@ -117,12 +139,16 @@ export class UserService {
   update(user){
     this.$auth.updateAccount(user)
       .then(result=>{
-        this.$log.log("UserService.update", result);
+        // this.$log.log("UserService.update", result);
         this.$rootScope.$broadcast("user-update-event", result.data.data);
       })
       .catch(err=>{
         this.$log.error("UserService.update", err);
       })
+  }
+
+  resetUserPassword(user){
+    return this.$http.post(this.constants.apiUrl + "/users/password/reset", {user:user});
   }
 
 }

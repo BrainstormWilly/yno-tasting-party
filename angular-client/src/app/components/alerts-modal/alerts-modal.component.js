@@ -15,6 +15,7 @@ export const AlertsModalComponent = {
       let $panel = $element.find(".main-modal-container");
 
       let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
+        // this.$log.log("AlertsModalComponent.constructor", d);
         if(d.name==this.name ){
 
           if( d.state=="open" && this.modalState!="open"){
@@ -33,7 +34,7 @@ export const AlertsModalComponent = {
       });
 
       let setAlertsEvent = $scope.$on('set-alerts-event', (e,d)=>{
-        // $log.log("AlertsModalComponent.constructor");
+        // $log.log("AlertsModalComponent.constructor", d);
         this.currentAlert = d;
         this.ModalService.setModalState("open", this.name);
       });
@@ -48,6 +49,7 @@ export const AlertsModalComponent = {
     }
 
     $onInit() {
+
       this.ModalService.registerModal(this);
 
     }
