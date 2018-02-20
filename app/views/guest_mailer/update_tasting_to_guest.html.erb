@@ -1,0 +1,14 @@
+
+<h2>
+  <%= @guest.tasting.host.taster.name %> has updated Yno Tasting Party "<%= @guest.tasting.name %>"
+</h2>
+<p>
+  <strong>Name:</strong> <%= @guest.tasting.name %><br/>
+  <strong>Host:</strong> <%= @guest.tasting.host.taster.name %><br/>
+  <strong>When:</strong> <%= @local_open_at %><br/>
+  <strong>Where:</strong> <%= @guest.tasting.location.to_short_string %><br/>
+  <strong>Description:</strong> <%= @guest.tasting.description %>
+</p>
+<p>
+  <a href="<%= @url %>">Click Here</a> to see more info.
+</p>

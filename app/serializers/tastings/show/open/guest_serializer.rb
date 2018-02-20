@@ -9,7 +9,7 @@ class Tastings::Show::Open::GuestSerializer < ActiveModel::Serializer
   :taster_number
 
   def taster
-    Tastings::Show::Open::TasterSerializer.new(object.taster)
+    ::TasterSerializer.new(object.taster)
   end
 
   def tasting_progress

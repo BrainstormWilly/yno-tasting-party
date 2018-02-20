@@ -14,32 +14,38 @@ export const template = `
     <form name="signinForm" ng-submit="$ctrl.signinUser()" ng-if="$ctrl.viewState==1">
       <div class="main-form-control">
         <label>Email</label>
-        <input ng-model="$ctrl.user.email" type="email" required>
+        <input ng-model="$ctrl.user.email" type="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
       </div>
       <div class="main-form-control">
         <label>Password</label>
         <input ng-model="$ctrl.user.password" ng-minlength="6" type="password" required>
       </div>
       <div class="main-form-btns">
-        <button ng-click="$ctrl.viewState=2"><i class="fa fa-key"></i></button>
-        <button type="submit"
-          ng-disabled="signinForm.$invalid">
-          <i class="fa fa-check"></i>
-        </button>
+        <span>&nbsp;</span>
+        <div>
+          <button type="button" ng-click="$ctrl.setViewState(2)"><i class="fa fa-key"></i></button>
+          <button type="submit"
+            ng-disabled="signinForm.$invalid">
+            <i class="fa fa-check"></i>
+          </button>
+        </div>
       </div>
     </form>
 
     <form name="pwdResetForm" ng-submit="$ctrl.requestPasswordReset()" ng-if="$ctrl.viewState==2">
       <div class="main-form-control">
         <label>Email</label>
-        <input name="email" ng-model="$ctrl.user.email" type="email" required>
+        <input name="email" ng-model="$ctrl.user.email" type="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
       </div>
       <div class="main-form-btns">
-        <button ng-click="$ctrl.viewState=1"><i class="fa fa-sign-in"></i></button>
-        <button type="submit"
-          ng-disabled="pwdResetForm.$invalid">
-          <i class="fa fa-check"></i>
-        </button>
+        <span>&nbsp;</span>
+        <div>
+          <button type="button" ng-click="$ctrl.setViewState()"><i class="fa fa-sign-in"></i></button>
+          <button type="submit"
+            ng-disabled="pwdResetForm.$invalid">
+            <i class="fa fa-check"></i>
+          </button>
+        </div>
       </div>
     </form>
 
@@ -57,11 +63,14 @@ export const template = `
         <input ng-model="$ctrl.user.password_confirmation" type="password" ng-minlength="6" required>
       </div>
       <div class="main-form-btns">
-        <button ng-click="$ctrl.viewState=1"><i class="fa fa-sign-in"></i></button>
-        <button type="submit"
-          ng-disabled="updatePasswordForm.$invalid || $ctrl.user.password!=$ctrl.user.password_confirmation">
-          <i class="fa fa-check"></i>
-        </button>
+        <span>&nbsp;</span>
+        <div>
+          <button type="button" ng-click="$ctrl.setViewState()"><i class="fa fa-sign-in"></i></button>
+          <button type="submit"
+            ng-disabled="updatePasswordForm.$invalid || $ctrl.user.password!=$ctrl.user.password_confirmation">
+            <i class="fa fa-check"></i>
+          </button>
+        </div>
       </div>
     </form>
   </div>

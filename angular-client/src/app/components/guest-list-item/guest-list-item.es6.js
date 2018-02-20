@@ -9,7 +9,7 @@ export const template = `
       <span>Invited</span>
       <span>{{ $ctrl.guest.invited | utcToLocalDate:"MMM-DD" }}</span>
     </div>
-    <div class="guest-list-item-title"><span>{{ $ctrl.handle }}</span></div>
+    <div class="guest-list-item-title"><span>{{ $ctrl.guest.taster.full_handle }}</span></div>
   </a>
 
   <button class="small-btn"

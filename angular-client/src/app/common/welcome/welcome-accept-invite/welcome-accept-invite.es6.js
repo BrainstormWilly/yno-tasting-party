@@ -6,7 +6,7 @@ export const template = `
 
   <div class="welcome-container">
     <p>Setup up your account and we'll get you on to your tastings!</p>
-    <form name="acceptInviteForm">
+    <form name="acceptInviteForm" ng-submit="$ctrl.acceptInvite()">
       <div class="main-form-control">
         <label>Name</label>
         <input ng-model="$ctrl.taster.name" type="text" placeholder="Jane Doe" required>
@@ -23,11 +23,13 @@ export const template = `
         <label><span>Password</span><span>Confirmation</span></label>
         <input ng-model="$ctrl.taster.user.password_confirmation" type="password" required>
       </div>
-      <button type="submit"
-        ng-disabled="acceptInviteForm.$invalid"
-        ng-click="$ctrl.acceptInvite()">
-        <i class="fa fa-check"></i>
-      </button>
+      <div class="main-form-btns">
+        <span>&nbsp;</span>
+        <button type="submit"
+          ng-disabled="acceptInviteForm.$invalid || $ctrl.taster.user.password!=$ctrl.taster.user.password_confirmation">
+          <i class="fa fa-check"></i>
+        </button>
+      </div>
     </form>
   </div>
 

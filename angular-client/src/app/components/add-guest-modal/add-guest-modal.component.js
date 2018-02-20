@@ -32,6 +32,7 @@ export const AddGuestModalComponent = {
         state:false,
         label:"Include Host"
       };
+      this.wait = false;
 
       let $panel = $element.find(".main-modal-container");
 
@@ -76,6 +77,8 @@ export const AddGuestModalComponent = {
       });
 
       let inviteTasterEvent = $scope.$on("invite-taster-event", (e,d)=>{
+        this.wait = false;
+        this.viewState = 1;
         for( let i=0; i<this.connections.length; i++ ){
           // $log.log("AddGuestModalComponent.constructor", this.connections[i], d);
           if( d.taster_id==this.connections[i].taster_id ){
@@ -134,19 +137,22 @@ export const AddGuestModalComponent = {
     }
 
     closeModal(){
+      this.viewState = 1;
       this.ModalService.setModalState("closed", this.name);
     }
 
     confirmModal(){
+      this.wait = false;
       this.ModalService.setModalState("confirmed", this.name);
     }
 
     inviteNewUser(){
+      this.wait = true;
       if( this.user.id ){
         this.TasterService.getTasterFromUser(this.user.id)
           .then(taster=>{
             this.GuestService.inviteTaster(this.tasting.id, taster.id);
-          });
+          })
       }else{
         this.GuestService.inviteNewUser(this.tasting.id, this.user.email);
       }
@@ -158,10 +164,12 @@ export const AddGuestModalComponent = {
     }
 
     searchUserByEmail(email){
+      this.wait = true;
       this.UserService.getUserByEmail(email)
         .then(user=>{
           this.viewState = 2;
           if(user){
+            this.$log.log("AddGuestModalComponent.searchUserByEmail", user);
             this.user = user;
             this.result.title = email + " is already a registered taster!"
             this.result.body = "Send them a tasting invite?";
@@ -170,7 +178,10 @@ export const AddGuestModalComponent = {
             this.result.title = email + " is not a registered taster."
             this.result.body = "Send them an invitation to join Yno Tasting?";
           }
-        });
+        })
+        .finally(()=>{
+          this.wait = false;
+        })
     }
 
     toggleAddGuestMethod(){

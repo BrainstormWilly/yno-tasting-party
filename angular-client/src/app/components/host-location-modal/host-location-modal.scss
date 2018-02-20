@@ -1,12 +1,3 @@
 host-location-modal{
   visibility: hidden;
-  .new-host-form{
-    display: flex;
-    flex-direction: column;
-    min-height: 10rem;
-    max-height: 30rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-
-  }
 }

@@ -7,7 +7,12 @@ class Api::V1::TastingsController < Api::BaseController
   def show
     tasting = Tasting.find(params[:id])
     if tasting
-      render json: tasting, serializer: tasting_serializer(tasting)
+      # p "@@@@@@@@@@@@@@@@@@@ #{tasting.guests.map{ |g| g.taster==current_taster }.count}"
+      if (current_host && tasting.host==current_host) || tasting.guests.select{ |g| g.taster==current_taster }.count==1
+        render json: tasting, serializer: tasting_serializer(tasting)
+      else
+        render json: { error: "Taster does not have access to tasting.", status: 403 }, status: 403
+      end
     else
       render json: { error: "Tasting not found.", status: 400 }, status: 400
     end
@@ -23,7 +28,7 @@ class Api::V1::TastingsController < Api::BaseController
 
   def create
     if current_host
-      tasting = Tasting.new(valid_params)
+      tasting = Tasting.new(valid_create_params)
       tasting.host = current_host
 
       # tasting.open_at = client_timezone.time_with_offset(valid_params["open_at"])
@@ -44,8 +49,18 @@ class Api::V1::TastingsController < Api::BaseController
       if tasting.is_completed?
         render json: { error: "Can not update completed tasting.", status: 403 }, status: 403
       else
-        tasting.update(valid_params)
-        if tasting.save
+        if tasting.update(valid_update_params)
+          if !tasting.is_completed?
+            tasting.guests.each do |g|
+              GuestMailer.update_tasting_to_guest(g, client_timezone_str(tasting.open_at)).deliver
+            end
+          else
+            tasting.guests.each do |g|
+              if !g.tasting_confirmed?
+                g.destroy
+              end
+            end
+          end
           render json: tasting, serializer: tasting_serializer(tasting)
         else
           render json: { error: "Unknown error.", status: 400 }, status: 400
@@ -90,8 +105,12 @@ class Api::V1::TastingsController < Api::BaseController
 
   private
 
-    def valid_params
-      params.require(:tasting).permit(:name, :open_at, :close_at, :closed_at, :completed_at, :private, :description, :host_id, :location_id)
+    def valid_update_params
+      params.require(:tasting).permit(:id, :name, :open_at, :close_at, :closed_at, :completed_at, :private, :description, :host_id, :location_id)
+    end
+
+    def valid_create_params
+      params.require(:tasting).permit(:name, :open_at, :private, :description, :host_id, :location_id)
     end
 
     def tasting_serializer(tasting)

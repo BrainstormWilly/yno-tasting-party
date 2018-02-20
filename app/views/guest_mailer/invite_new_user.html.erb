@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
+
     <h2>
       <%= @guest.tasting.host.taster.name %> has invited you to a Yno Tasting Party!
     </h2>
@@ -18,5 +13,3 @@
       You can join this tasting by clicking <a href="<%= @url %>">accept invitation</a> to set up your taster account and confirm your invitation.
     </p>
     <p><a href="<%= ENV['HOST_URL'] %>">Learn More</a> about Yno Tasting Parties.</p>
-  </body>
-</html>

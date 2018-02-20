@@ -15,7 +15,7 @@ export const TastingListItemComponent = {
     }
 
     $onInit() {
-      // this.$log.log(this.selectAction);
+      // this.$log.log(this.tasting);
     }
 
     // showTasting(){

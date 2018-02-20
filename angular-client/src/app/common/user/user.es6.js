@@ -23,10 +23,9 @@ export const template = `
         Host Your Own Tastings!
     </button>
     <form name="userForm">
-    <div class="main-form-container">
       <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
         <label for="email">Email</label>
-        <input type="email" ng-model="$ctrl.user.email" name="email" required>
+        <input type="email" ng-model="$ctrl.user.email" name="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
       </div>
       <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
         <label for="password">Password</label>
@@ -61,7 +60,6 @@ export const template = `
           </button>
         </div>
       </div>
-    </div>
     </form>
   </div>
   <div ng-show="$ctrl.hostState">
@@ -83,11 +81,28 @@ export const template = `
       </div>
     </div>
     <h3>Add New Location</h3>
-    <host-location-form></host-location-form>
+    <host-location-form
+      check-action="$ctrl.onNewHostLocationChange(host_location)"
+      refresh-flag="$ctrl.newHostLocation">
+    </host-location-form>
+    <div class="main-form-btns">
+      <span>&nbsp;</span>
+      <div>
+        <button
+          ng-click="$ctrl.refreshLocation()">
+            <span class="fa fa-refresh"></span>
+        </button>
+        <button
+          ng-click="$ctrl.addLocation()"
+          ng-disabled="$ctrl.newHostLocationInvalid">
+            <span class="fa fa-check"></span>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer-menu></footer-menu>
-
+<notification></notification>
 <alerts-modal></alerts-modal>
 `

@@ -158,7 +158,7 @@ end
     taster_id: tasters.pop.id,
     invited: Time.current
   )
-  WineReview.create_all_for_guest(tasting_future, tt.taster)
+  # WineReview.create_all_for_guest(tasting_future, tt.taster)
 end
 
 # PRESENT TASTING 1 (Host is Guest)

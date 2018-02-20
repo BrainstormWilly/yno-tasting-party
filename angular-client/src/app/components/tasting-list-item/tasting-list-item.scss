@@ -5,14 +5,7 @@ tasting-list-item{
   // border: 2px solid lighten($theme-dark-gray, 20%);
   border-radius: 1.5rem;
   background-color: $theme-dark-gray;
-  margin-bottom: .5rem;
-  padding-right: .25rem;
-  &.pending{
-    // border: 2px solid $theme-pending-color;
-  }
-  &.open{
-    // border: 2px solid $theme-open-color;
-  }
+  margin: .5rem .5rem 0 .5rem;
   .tasting-list-item-link{
     display: flex;
     flex-direction: row;
@@ -44,7 +37,10 @@ tasting-list-item{
         background-color: $theme-color;
       }
       span:first-child{
-        font-size: 1.2rem;
+        font-size: 1rem;
+      }
+      span:last-child{
+        font-size: .9rem;
       }
     }
     .tasting-list-item-title{
@@ -54,10 +50,13 @@ tasting-list-item{
       padding: 0.5rem 1rem 0.5rem 1rem;
       color: $theme-neutral-color;
       text-align: left;
-      width: 100%;
+      // width: 100%;
       // border: 1px solid green;
       span:first-child{
-        font-size: 1.2rem;
+        font-size: 1rem;
+      }
+      span:last-child{
+        font-size: .8rem;
       }
     }
   }

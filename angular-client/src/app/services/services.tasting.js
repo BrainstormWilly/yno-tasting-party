@@ -44,6 +44,10 @@ export class TastingService {
   }
 
   updateTasting(tasting){
+    tasting.open_at = moment(tasting.open_at).utc();
+    if( tasting.close_at ) tasting.close_at = moment(tasting.close_at).utc();
+    if( tasting.closed_at ) tasting.closed_at = moment(tasting.closed_at).utc();
+    if( tasting.completed_at ) tasting.completed_at = moment(tasting.completed_at).utc();
     this.$http.put(this.constants.apiUrl + "/tastings/" + tasting.id, tasting)
       .then(result=>{
         this.$rootScope.$broadcast("update-tasting-event", result.data);
@@ -60,7 +64,8 @@ export class TastingService {
         defer.resolve(result.data);
       })
       .catch(err=>{
-        this.$log.error("TastingService.getTasting", err);
+        // this.$log.error("TastingService.getTasting", err);
+        this.$state.go("dashboard");
       });
     return defer.promise;
     // return this.$http.get(this.constants.apiUrl + "/tastings/" + tasting_id);

@@ -23,6 +23,7 @@ class Api::V1::TastingWinesController < Api::BaseController
       tw = TastingWine.find(params[:id])
       if tw.tasting.is_pending?
         if tw.destroy
+          WineReview.delete_all_last_for_tasting(tw.tasting)
           render json: tw, serializer: TastingWineSerializer
         else
           render json: { error: "Unknown error", status: 400 }, status: 400

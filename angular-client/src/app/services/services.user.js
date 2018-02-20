@@ -55,7 +55,11 @@ export class UserService {
     let defer = this.$q.defer();
     this.$auth.validateUser()
       .then(user=>{
-        defer.resolve(user)
+        if( user.errors ){
+          defer.resolve(null);
+        }else{
+          defer.resolve(user);
+        }
       })
       .catch(()=>{
         defer.resolve(null)

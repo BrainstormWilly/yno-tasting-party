@@ -26,6 +26,13 @@ class WineReview < ApplicationRecord
     (wrs.inject(0){ |sum, wr| sum + wr.rating }.to_f/wrs.count).round(1)
   end
 
+  def taster_average_rating
+    return 3 if self.wine_id==nil
+    wrs = self.class.where(taster_id:self.taster_id, wine_id:self.wine_id)
+    return self.rating if wrs.count==1
+    (wrs.inject(0){ |sum, wr| sum + wr.rating }.to_f/wrs.count).round(1)
+  end
+
 
   def to_string
     str = "Wine #{self.wine_number}; Rating: #{self.rating}"

@@ -1,5 +1,5 @@
 tasting-detail{
-
+  margin: .5rem;
   .tasting-detail-container{
     display: flex;
     flex-direction: column;
@@ -25,9 +25,10 @@ tasting-detail{
           color: $theme-dark-gray;
         }
         &.completed{
-          background-color: $theme-dark-gray;
-          border-bottom: 1px solid lighten($theme-dark-gray, 20%);
-          color: $theme-neutral-color;
+          background-color: lighten($theme-dark-gray, 20%);
+          // color: $theme-dark-gray;
+          // border-bottom: 1px solid lighten($theme-dark-gray, 20%);
+          color: $theme-header-color;
           font-size: 1rem;
         }
       }
@@ -62,8 +63,8 @@ tasting-detail{
       button{
         &.small-btn{
           position: absolute;
-          top: 1.5rem;
-          right: 1.5rem;
+          top: 1rem;
+          right: 1rem;
         }
       }
     }

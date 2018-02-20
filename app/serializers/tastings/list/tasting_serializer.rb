@@ -9,6 +9,10 @@ class Tastings::List::TastingSerializer < ActiveModel::Serializer
     :location,
     :host_id,
     :host,
+    :is_open,
+    :is_pending,
+    :is_closed,
+    :is_completed,
     :status,
     :tasting_wine_count,
     :guest_count
@@ -29,11 +33,20 @@ class Tastings::List::TastingSerializer < ActiveModel::Serializer
     object.guests.count
   end
 
-  def status
-    return "Completed" if object.is_completed?
-    return "Closed" if object.is_closed?
-    return "Open" if object.is_open?
-    "Pending"
+  def is_open
+    object.is_open?
+  end
+
+  def is_pending
+    object.is_pending?
+  end
+
+  def is_closed
+    object.is_closed? && !object.is_completed?
+  end
+
+  def is_completed
+    object.is_completed?
   end
 
 end

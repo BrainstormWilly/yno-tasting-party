@@ -11,6 +11,7 @@ class Api::V1::HostsController < Api::BaseController
   def create
     if current_host
       render json: { error: "Host already created", status: 403 }, status: 403
+      # render json: current_host, serializer: HostSerializer
     else
       host = Host.new(host_create_params)
       if host.save

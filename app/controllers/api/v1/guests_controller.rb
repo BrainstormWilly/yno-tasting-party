@@ -25,7 +25,7 @@ class Api::V1::GuestsController < Api::BaseController
           guest.tasting.wine_reviews.create({taster_id: current_taster.id, wine_number:i+1, rating:3})
         end
         if current_taster.connections.where(host_id:guest.tasting.host_id).count==0
-          current_taster.connections.create({host_id:guest.tasting.host_id})
+          current_taster.connections.create({host_id:guest.tasting.host_id, connected_at:Time.current})
         end
         GuestMailer.confirm_guest_to_host(guest).deliver
         render json: guest, serializer: guest_serializer(guest)
@@ -38,16 +38,12 @@ class Api::V1::GuestsController < Api::BaseController
   end
 
   def deny
-    if current_taster
-      guest = Guest.where(tasting_id:params[:tasting_id], taster:current_taster).first
-      if guest && guest.destroy
-        GuestMailer.deny_guest_to_host(guest).deliver
-        render json: guest, serializer: guest_serializer(guest)
-      else
-        render json: { error: "Unknown Error saving guest", status: 400 }, status: 400
-      end
+    guest = Guest.where(tasting_id:params[:tasting_id], taster:current_taster).first
+    if guest && guest.destroy
+      GuestMailer.deny_guest_to_host(guest).deliver
+      render json: guest, serializer: guest_serializer(guest)
     else
-      render json: { error: "Taster Unconfirmed", status: 403 }, status: 403
+      render json: { error: "Unknown Error denying invite", status: 400 }, status: 400
     end
   end
 
@@ -69,10 +65,8 @@ class Api::V1::GuestsController < Api::BaseController
   end
 
   def invitations
-    if current_taster
-      guests = Guest.where(taster_id:current_taster.id).where(confirmed:nil)
-      render json: guests, each_serializer: Tastings::New::GuestSerializer
-    end
+    guests = Guest.where(taster_id:current_taster.id).where(confirmed:nil)
+    render json: guests, each_serializer: Tastings::New::GuestSerializer
   end
 
   # in order to access the invitation token in the GuestMailer
@@ -166,15 +160,13 @@ class Api::V1::GuestsController < Api::BaseController
 
   def destroy
     guest = Guest.find(params[:id])
-    if !guest.confirmed
-      render json: { error: "Deleting unconfirmed guests is not allowed", status: 403 }, status: 403
-    elsif current_taster==guest.taster || (current_host && guest.tasting.host==current_host)
+    if current_taster==guest.taster || (current_host && guest.tasting.host==current_host)
       guest.taster.wine_reviews.where(tasting: guest.tasting).destroy_all
       if guest.destroy
-        if current_taster==guest.taster && !current_host
-          GuestMailer.remove_guest_to_host(guest).deliver
-        elsif current_taster!=guest.taster
+        if current_host && guest.tasting.host==current_host && current_taster!=guest.taster
           GuestMailer.remove_guest_from_host(guest).deliver
+        else
+          GuestMailer.remove_guest_to_host(guest).deliver
         end
         render json: guest, serializer: Tastings::New::GuestSerializer
       else

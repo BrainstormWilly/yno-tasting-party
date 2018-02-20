@@ -2,7 +2,7 @@ export const template = `
 <a class="tasting-list-item-link" href
   ng-click="$ctrl.selectAction()">
   <div class="tasting-list-item-date"
-    ng-class="{'pending':$ctrl.tasting.status=='Pending', 'open':$ctrl.tasting.status=='Open', 'closed':$ctrl.tasting.status=='Closed'}">
+    ng-class="{'pending':$ctrl.tasting.is_pending, 'open':$ctrl.tasting.is_open, 'closed':$ctrl.tasting.is_closed}">
     <span>{{ $ctrl.tasting.open_at | utcToLocalDate:"MMM-D" }}</span>
     <span>{{ $ctrl.tasting.open_at | utcToLocalDate:"h:mm a" }}</span>
   </div>

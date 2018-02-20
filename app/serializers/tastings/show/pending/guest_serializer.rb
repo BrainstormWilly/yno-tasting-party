@@ -8,7 +8,7 @@ class Tastings::Show::Pending::GuestSerializer < ActiveModel::Serializer
   :taster_number
 
   def taster
-    Tastings::Show::Pending::TasterSerializer.new(object.taster)
+    ::TasterSerializer.new(object.taster)
   end
 
   # def wine_reviews

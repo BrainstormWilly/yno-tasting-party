@@ -25,7 +25,19 @@ export const WelcomeSigninComponent = {
       }else{
         this.user = {};
       }
-      // this.$log.log("WelcomeSigninComponent.$onInit", this.$scope);
+      // this.$log.log("WelcomeSigninComponent.$onInit", this.user);
+    }
+
+    setViewState(state){
+      switch(state){
+        case 3:
+        case 2:
+          this.viewState = state;
+          break;
+        default:
+          this.user = {};
+          this.viewState = 1;
+      }
     }
 
     signinUser(){
@@ -33,8 +45,11 @@ export const WelcomeSigninComponent = {
         .then(() => {
           this.$state.go('dashboard');
         })
-        .catch(err => {
+        .catch(() => {
           this.AlertsService.setFailureAlert("Unable to sign in. Please try later.");
+        })
+        .finally(()=>{
+          this.wait = false; // for resetUserPassword completion
         })
     }
 
@@ -42,9 +57,9 @@ export const WelcomeSigninComponent = {
       this.wait = true;
       this.UserService.requestPasswordReset({email: this.user.email, redirect_url: this.redirect_url})
         .then(()=>{
-          this.viewState = 3;
+          this.setViewState(3);
         })
-        .catch(err=>{
+        .catch(()=>{
           this.AlertsService.setFailureAlert("Um, we had a problem finding that email. Try again?");
         })
         .finally(()=>{
@@ -55,15 +70,16 @@ export const WelcomeSigninComponent = {
     resetUserPassword(){
       this.wait = true;
       this.UserService.resetUserPassword(this.user)
-        .then(()=>{
-          this.user = null;
-          this.viewState = 1;
+        .then(result=>{
+          // this.$log.log(result);
+          this.user.email = result.data.email;
+          this.signinUser();
+          this.setViewState();
         })
-        .catch(err=>{
-          this.AlertsService.setFailureAlert("Unable to update password. Please try later.");
-        })
-        .finally(()=>{
+        .catch(()=>{
           this.wait = false;
+          // this.$log.error("WelcomeSigninComponent.resetUserPassword", err);
+          this.AlertsService.setFailureAlert("Unable to update password. Please try later.");
         })
     }
 

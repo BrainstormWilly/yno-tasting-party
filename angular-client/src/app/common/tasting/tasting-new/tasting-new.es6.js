@@ -5,7 +5,7 @@ export const template = `
     <h2 ng-if="$ctrl.tasting.name">{{$ctrl.tasting.name}}</h2>
   </header>
 
-  <section class="main-content" ng-if="$ctrl.currentFormState==1">
+  <section ng-if="$ctrl.currentFormState==1">
     <h3>Let's Get Started</h3>
     <form name="tastingForm" ng-submit="$ctrl.createTasting()">
     <div class="main-form-container">
@@ -19,6 +19,7 @@ export const template = `
           moment-picker="$ctrl.tasting.open_at"
           ng-model="$ctrl.tasting.open_at"
           min-date="$ctrl.minOpenDate"
+          change="$ctrl.onOpenAtChange(newValue, oldValue)"
           required>
       </div>
       <div class="main-form-control">
@@ -52,7 +53,7 @@ export const template = `
     </form>
   </section>
 
-  <section class="main-content" ng-if="$ctrl.currentFormState==2">
+  <section ng-if="$ctrl.currentFormState==2">
     <div class="main-form-container">
       <p ng-if="$ctrl.tasting.tasting_wines.length==0">A tasting with no wines is just...sad.<br>However, you can add them later if you wish.</p>
       <p ng-if="$ctrl.tasting.tasting_wines.length>0 && $ctrl.tasting.tasting_wines.length<6">Keep going...</p>
@@ -66,7 +67,14 @@ export const template = `
         editable="true">
       </wine-list-item>
       <div class="main-form-btns">
-        <span class="descriptor">{{$ctrl.tasting.tasting_wines.length}} wines</span>
+        <span class="descriptor">
+          <ng-pluralize count="$ctrl.tasting.tasting_wines.length"
+            when="{
+              '0':'0 wines',
+              '1':'1 wine',
+              'other':'{} wines'
+            }"></ng-pluralize>
+        </span>
         <div>
           <button ng-click="$ctrl.openTastingWineModal()"><span class="fa fa-plus"></span></button>
           <button ng-click="$ctrl.currentFormState = 3"><span class="fa fa-arrow-right"></span></button>
@@ -86,7 +94,14 @@ export const template = `
         editable="false">
       </guest-list-item>
       <div class="main-form-btns">
-        <span class="descriptor">{{$ctrl.tasting.guests.length}} guests</span>
+        <span class="descriptor">
+          <ng-pluralize count="$ctrl.tasting.guests.length"
+            when="{
+              '0':'0 guests',
+              '1':'1 guest',
+              'other':'{} guests'
+            }"></ng-pluralize>
+        </span>
         <div>
           <button ng-click="$ctrl.openGuestModal()"><span class="fa fa-plus"></span></button>
           <button ui-sref="tasting-show({id:$ctrl.tasting.id})"><span class="fa fa-arrow-right"></span></button>

@@ -20,10 +20,10 @@ export class HostService {
           .then(result=>{
             defer.resolve(result.data);
           })
-          .catch(err=>{
-            this.$log.error("HostService.getHostFromValidation", err);
-            this.$state.go("dashboard");
-          })
+          .catch(()=>{
+            // this.$log.error("HostService.getHostFromValidation", err);
+            this.$state.go("user-host");
+          });
       })
       .catch(err => {
         this.$log.error("HostService.getHostFromValidation", err);

@@ -23,7 +23,7 @@ export const template = `
         <div class="add-guest-form" ng-if="!$ctrl.addGuestStatus.state">
           <div class="main-form-control">
             <label>Email</label>
-            <input type="email" ng-model="email" required>
+            <input type="email" ng-model="$ctrl.user.email" required>
           </div>
         </div>
         <connection-list-item
@@ -37,11 +37,11 @@ export const template = `
       <div class="main-modal-footer">
         <span>&nbsp;</span>
         <div>
-          <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
+          <button type="button" ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button
             type="submit"
             ng-disabled="inviteForm.$invalid"
-            ng-click="$ctrl.searchUserByEmail(email)"
+            ng-click="$ctrl.searchUserByEmail($ctrl.user.email)"
             ng-if="!$ctrl.addGuestStatus.state">
               <span class="fa fa-check"></span>
           </button>
@@ -66,8 +66,10 @@ export const template = `
           <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button ng-click="$ctrl.inviteNewUser()"><span class="fa fa-check"></span></button>
         </div>
-      </div>
+      </div>    
     </div>
+
+    <wait-state wait-on="$ctrl.wait"></wait-state>
 
   </div>
 `

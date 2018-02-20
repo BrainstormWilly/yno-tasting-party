@@ -14,7 +14,7 @@ export const template = `
           <span class="subtitle">Hosted by:<br/></span>
           {{$ctrl.tasting.host.taster.name}}<br/>
           {{$ctrl.tasting.location.phone}}<br/>
-          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address}}</span><br/>
+          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address2}}</span><br/>
           {{$ctrl.tasting.location.city}}, {{$ctrl.tasting.location.state}} {{$ctrl.tasting.location.postal}}
         </p>
         <p ng-show="$ctrl.tasting.description">
@@ -51,7 +51,7 @@ export const template = `
       <guest-list-item
         ng-repeat="guest in $ctrl.tasting.guests"
         guest="guest"
-        editable="$ctrl.guestIsEditable(guest)"
+        editable="$ctrl.tasterIsHost || $ctrl.taster.id==guest.taster_id"
         delete-action="$ctrl.attemptDestroyGuest(guest)"
         select-action="$ctrl.showGuest(guest)">
       </guest-list-item>
@@ -73,7 +73,7 @@ export const template = `
           <span class="subtitle">Hosted by:<br/></span>
           {{$ctrl.tasting.host.taster.name}}<br/>
           {{$ctrl.tasting.location.phone}}<br/>
-          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address}}</span><br/>
+          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address2}}</span><br/>
           {{$ctrl.tasting.location.city}}, {{$ctrl.tasting.location.state}} {{$ctrl.tasting.location.postal}}
         </p>
         <p ng-show="$ctrl.tasting.description">
@@ -96,7 +96,7 @@ export const template = `
         toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
       </toggle-switch>
     </div>
-    <div ng-if="$ctrl.tasting.tasting_progress>1">
+    <div ng-if="$ctrl.tasting.tasting_progress>0">
       <h3>Progress</h3>
       <progress-bar value="$ctrl.tasting.taster_progress" ng-hide="$ctrl.openViewState"></progress-bar>
       <progress-bar value="$ctrl.tasting.tasting_progress" ng-show="$ctrl.openViewState"></progress-bar>
@@ -124,7 +124,7 @@ export const template = `
       <guest-list-item
         ng-repeat="guest in $ctrl.tasting.guests"
         guest="guest"
-        editable="$ctrl.guestIsEditable(guest)"
+        editable="$ctrl.tasterIsHost || $ctrl.taster.id==guest.taster_id"
         delete-action="$ctrl.attemptDestroyGuest(guest)"
         select-action="$ctrl.showGuest(guest)">
       </guest-list-item>
@@ -145,7 +145,7 @@ export const template = `
           <span class="subtitle">Hosted by:<br/></span>
           {{$ctrl.tasting.host.taster.name}}<br/>
           {{$ctrl.tasting.location.phone}}<br/>
-          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address}}</span><br/>
+          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address2}}</span><br/>
           {{$ctrl.tasting.location.city}}, {{$ctrl.tasting.location.state}} {{$ctrl.tasting.location.postal}}
         </p>
         <p ng-show="$ctrl.tasting.description">
@@ -205,7 +205,6 @@ export const template = `
         select-action="$ctrl.showGuest(guest)">
       </guest-list-item>
     </div>
-
   </div>
 
   <div class='tasting-detail-container' ng-if="$ctrl.tasting.is_completed">
@@ -217,7 +216,7 @@ export const template = `
           <span class="subtitle">Hosted by:<br/></span>
           {{$ctrl.tasting.host.taster.name}}<br/>
           {{$ctrl.tasting.location.phone}}<br/>
-          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address}}</span><br/>
+          {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address2}}</span><br/>
           {{$ctrl.tasting.location.city}}, {{$ctrl.tasting.location.state}} {{$ctrl.tasting.location.postal}}
         </p>
         <p ng-show="$ctrl.tasting.description">

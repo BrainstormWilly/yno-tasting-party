@@ -5,6 +5,12 @@ class GuestMailer < ApplicationMailer
 
   include Devise::Controllers::UrlHelpers # Optional. eg. `confirmation_url`
 
+  # Host notifies guest of tasting cancellation
+  def cancel_tasting_to_guest(guest)
+    @guest = guest
+    mail(to: @guest.taster.user.email, subject: "Yno Tasting has been cancelled")
+  end
+
   # Host invites user not in system
   def invite_new_user(guest, token, local_open_at)
     @guest = guest
@@ -47,9 +53,12 @@ class GuestMailer < ApplicationMailer
     mail(to: @guest.tasting.host.taster.user.email, subject: "A guest has left your Yno Tasting")
   end
 
-  def cancel_tasting_to_guest(guest)
+  # Host updates taster on tasting changes
+  def update_tasting_to_guest(guest, local_open_at)
     @guest = guest
-    mail(to: @guest.taster.user.email, subject: "Yno Tasting has been cancelled")
+    @local_open_at = local_open_at
+    @url = "#{ENV['HOST_URL']}/tastings/#{guest.tasting_id}"
+    mail(to: @guest.taster.user.email, subject: "Important Update to Yno Tasting '#{guest.tasting.name}'")
   end
 
 end

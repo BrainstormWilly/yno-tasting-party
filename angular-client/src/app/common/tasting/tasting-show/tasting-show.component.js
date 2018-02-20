@@ -33,7 +33,6 @@ export const TastingShowComponent = {
     }
 
     $onInit(){
-
       if( this.tasterIsHost && this.tasting.host_is_not_tasting ){
         this.tasterNumber = 0;
       }else{
@@ -45,7 +44,7 @@ export const TastingShowComponent = {
           }
         }
       }
-      
+
     }
   }
 }

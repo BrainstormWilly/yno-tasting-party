@@ -1,0 +1,10 @@
+<%= @guest.tasting.host.taster.name %> has updated Yno Tasting Party "<%= @guest.tasting.name %>
+================================================================================================
+
+Name: <%= @guest.tasting.name %>
+Host: <%= @guest.tasting.host.taster.name %>
+When: <%= @local_open_at %>
+Where: <%= @guest.tasting.location.to_short_string %>
+Description: <%= @guest.tasting.description %>
+
+Follow this link for more info: <%= @url %>.

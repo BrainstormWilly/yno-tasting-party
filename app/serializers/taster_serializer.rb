@@ -1,8 +1,23 @@
 class TasterSerializer < ActiveModel::Serializer
-  attributes :id, :name, :handle, :user_id, :user, :tasting_count, :review_count, :invite_count, :status
+  attributes :id,
+    :full_handle,
+    :name, :handle,
+    :is_host,
+    :user_id,
+    :user,
+    :tasting_count,
+    :review_count,
+    :invite_count, 
+    :status
 
   def user
     ::UserSerializer.new(object.user, {scope: scope})
+  end
+
+  def full_handle
+    return "#{object.name} (#{object.handle})" if object.handle && object.name
+    return object.name if object.name
+    object.user.email.gsub(/.{0,4}@/, "***@")
   end
 
   def tasting_count
@@ -23,6 +38,10 @@ class TasterSerializer < ActiveModel::Serializer
 
   def invite_count
     object.invites.count
+  end
+
+  def is_host
+    return object.host!=nil
   end
 
 end

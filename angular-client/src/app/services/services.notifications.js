@@ -20,7 +20,7 @@ export class NotificationsService {
       this.$interval.cancel(this.displayTimer);
     }
     this.message = message;
-    this.displayTimer = this.$interval(this.endNotification, 4000, 1, true, this);
+    this.displayTimer = this.$interval(this.endNotification, 3000, 1, true, this);
     this.$rootScope.$broadcast('set-notifications-event', message);
   }
 

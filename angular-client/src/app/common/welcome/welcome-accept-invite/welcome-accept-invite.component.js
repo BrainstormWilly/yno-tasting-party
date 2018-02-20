@@ -31,6 +31,7 @@ export const WelcomeAcceptInviteComponent = {
       this.UserService.acceptInvite(this.taster.user)
         .then(user=>{
           this.taster.id = user.taster.id;
+          this.taster.status = "active";
           this.TasterService.update(this.taster);
         });
     }

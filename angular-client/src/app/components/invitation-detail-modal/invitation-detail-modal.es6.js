@@ -17,8 +17,9 @@ export const template = `
       </div>
     </div>
     <div class="main-modal-footer">
-      <div><button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button></div>
+      <span>&nbsp;</span>
       <div>
+        <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
         <button ng-click="$ctrl.denyInvitation()"><span class="fa fa-thumbs-down"></span></button>
         <button ng-click="$ctrl.confirmInvitation()"><span class="fa fa-thumbs-up"></span></button>
       </div>

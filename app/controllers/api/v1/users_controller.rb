@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
     if current_host
       user = User.find_by(email: params[:email])
       if user
-        render json: true
+        render json: user, serializer: ::UserSerializer
       else
         render json: nil
       end
@@ -31,7 +31,11 @@ class Api::V1::UsersController < ApplicationController
 
   def resetUserPassword
     user = User.reset_password_by_token(valid_reset_password_params)
-    render json: user, serializer: Users::UserSerializer
+    if user.errors.empty?
+      render json: User.find(user.id), serializer: Users::UserSerializer
+    else
+      render json: { error: "Unable to reset pasword.", status: 400 }, status: 400
+    end
   end
 
   def show

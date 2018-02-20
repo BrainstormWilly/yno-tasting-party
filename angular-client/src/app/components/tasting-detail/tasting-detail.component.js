@@ -44,7 +44,8 @@ export const TastingDetailComponent = {
             this.displayTime = "Closes " + $filter("utcToLocalTimeFromNowFilter")(this.tasting.close_at);
             if( moment(this.tasting.close_at).diff(moment(), 'seconds')<0 ){
               if( this.tasterIsHost ){
-                this.tasting.closed_at = moment().utc();
+                // this.$log.log(this.tasting.open_at);
+                this.tasting.closed_at = moment();
                 this.TastingService.updateTasting(this.tasting);
               }else{
                 $state.reload();
@@ -54,10 +55,10 @@ export const TastingDetailComponent = {
             this.displayTime = "Opened " + $filter("utcToLocalTimeFromNowFilter")(this.tasting.open_at);
           }
         }else if( this.tasting.is_completed ){
-          this.displayTime = "Completed on " + $filter("utcToLocalDate")(this.tasting.completed_at);
+          this.displayTime = "Completed " + $filter("utcToLocalDate")(this.tasting.completed_at);
           $interval.cancel(displayTimer);
         }else{
-          this.displayTime = "Closed on " + $filter("utcToLocalTimeFromNowFilter")(this.tasting.closed_at);
+          this.displayTime = "Closed " + $filter("utcToLocalTimeFromNowFilter")(this.tasting.closed_at);
           $interval.cancel(displayTimer);
         }
       };
@@ -68,7 +69,12 @@ export const TastingDetailComponent = {
         if( d.taster_id==this.tasting.host.taster_id ){
           $state.reload();
         }else{
-          this.NotificationsService.setNotification("Cancellation emailed to " + d.taster.name);
+          if( this.tasterIsHost && d.taster.id!=this.taster.id ){
+            this.NotificationsService.setNotification("Cancellation emailed to " + d.taster.name);
+          }else if( !this.tasterIsHost ){
+            this.NotificationsService.setNotification("Cancellation emailed to host");
+            $state.go("dashboard");
+          }
           for( let i=0; i<this.tasting.guests.length; i++ ){
             if( this.tasting.guests[i].id==d.id ){
               this.tasting.guests.splice(i,1);
@@ -92,12 +98,13 @@ export const TastingDetailComponent = {
           this.TastingService.destroyTasting(this.tasting.id);
         }
         if( d.code=="closeTasting" && d.action=="confirm" ){
-          this.tasting.closed_at = moment().utc();
+          this.wait = true;
+          this.tasting.closed_at = moment();
           this.TastingService.updateTasting(this.tasting);
         }
         if( d.code=="openTasting" && d.action=="confirm" ){
           this.wait = true;
-          this.tasting.open_at = moment().utc();
+          this.tasting.open_at = moment();
           this.TastingService.updateTasting(this.tasting);
         }
       });
@@ -107,7 +114,7 @@ export const TastingDetailComponent = {
       });
 
       let inviteTasterEvent = $scope.$on("invite-taster-event", (e,d)=>{
-        this.NotificationsService.setNotification("Invitation emailed to " + d.taster.name);
+        this.NotificationsService.setNotification("Invitation emailed to " + d.taster.full_handle);
         this.tasting.guests.unshift(d);
       });
 
@@ -197,11 +204,19 @@ export const TastingDetailComponent = {
     }
 
     attemptDestroyGuest(guest){
-      this.AlertsService.setWarningAlert(
-        "Are you sure you want to delete " + guest.taster.name + " and all their reviews from this tasting?",
-        "destroyGuest",
-        guest
-      )
+      if( this.taster.id==guest.taster_id ){
+        this.AlertsService.setWarningAlert(
+          "Are you sure you want to remove yourself from this tasting? All your wine reviews will be lost.",
+          "destroyGuest",
+          guest
+        )
+      }else{
+        this.AlertsService.setWarningAlert(
+          "Are you sure you want to delete " + guest.taster.name + " and all their reviews from this tasting?",
+          "destroyGuest",
+          guest
+        )
+      }
     }
 
     attemptDestroyTastingWine(tasting_wine){
@@ -221,7 +236,7 @@ export const TastingDetailComponent = {
     }
 
     completeTasting(){
-      this.tasting.completed_at = moment().utc();
+      this.tasting.completed_at = moment();
       this.TastingService.updateTasting(this.tasting);
     }
 
@@ -231,13 +246,6 @@ export const TastingDetailComponent = {
 
     destroyTastingWine(tasting_wine){
       this.TastingWineService.destroy(tasting_wine);
-    }
-
-    guestIsEditable(guest){
-      if( !guest.confirmed ) return false;
-      if( this.tasterIsHost ) return true;
-      if( guest.taster.id==this.taster.id ) return true;
-      return false;
     }
 
     openGuestModal(){

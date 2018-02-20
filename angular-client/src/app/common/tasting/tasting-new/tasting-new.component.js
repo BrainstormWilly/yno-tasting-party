@@ -70,6 +70,12 @@ export const TastingNewComponent = {
         this.tasting.guests.push(d);
       });
 
+      let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
+        if( d.name=="host-location-modal" && d.state=="confirmed"){
+          this.setSelectedHostLocation(d.data);
+        }
+      });
+
       let removeHostAsGuestEvent = $scope.$on("remove-host-as-guest-event", ()=>{
         for( let i=0; i<this.tasting.guests.length; i++ ){
           if(this.tasting.guests[i].taster_id && this.tasting.guests[i].taster_id==this.tasting.host.taster_id){
@@ -87,6 +93,7 @@ export const TastingNewComponent = {
       $scope.$on("$destroy", includeHostAsGuestEvent);
       $scope.$on("$destroy", inviteNewUserEvent);
       $scope.$on("$destroy", inviteTasterEvent);
+      $scope.$on("$destroy", modalStateChangeEvent);
       $scope.$on("$destroy", removeHostAsGuestEvent);
     }
 
@@ -123,6 +130,10 @@ export const TastingNewComponent = {
     editTasting(){
       // this.$log.log("TastingNewComponent.editTasting", this.$state);
       this.$state.go("tasting-show", {"id":this.tasting.id});
+    }
+
+    onOpenAtChange(newValue){
+      this.minCloseDate = moment(newValue).add(1,'h');
     }
 
     openConnectionModal(){

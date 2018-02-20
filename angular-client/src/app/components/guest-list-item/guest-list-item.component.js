@@ -15,7 +15,7 @@ export const GuestListItemComponent = {
     }
 
     $onInit() {
-      // this.$log.log("TastingListItemComponent $onInit");
+      // this.$log.log("GuestListItemComponent.$onInit",this.guest);
       this.inviteStatus = this.parseInviteStatus();
       this.handle = this.parseHandle();
     }

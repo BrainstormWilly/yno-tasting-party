@@ -1,12 +1,17 @@
 import {template} from './host-location-form.es6';
 
 export const HostLocationFormComponent = {
+  bindings:{
+    checkAction: "&",
+    refreshFlag: "<"
+  },
   template,
   controller: class HostLocationFormController{
     constructor($scope, $log, HostLocationService, LocationService, ModalService){
       'ngInject';
 
       this.$log = $log;
+      this.$scope = $scope;
       this.HostLocationService = HostLocationService;
       this.LocationService = LocationService;
       this.ModalService = ModalService;
@@ -20,11 +25,11 @@ export const HostLocationFormComponent = {
         }
       });
 
-      let createLocationEvent = $scope.$on("create-location-event", (e,d)=>{
-        this.host_location.location = d;
-        this.host_location.location_id = d.id;
-        HostLocationService.create(this.host_location);
-      });
+      // let createLocationEvent = $scope.$on("create-location-event", (e,d)=>{
+      //   this.host_location.location = d;
+      //   this.host_location.location_id = d.id;
+      //   HostLocationService.create(this.host_location);
+      // });
 
       let createHostLocationEvent = $scope.$on("create-host-location-event", ()=>{
         this.host_location = {
@@ -34,13 +39,26 @@ export const HostLocationFormComponent = {
       })
       //
       $scope.$on("$destroy", createHostLocationEvent);
-      $scope.$on("$destroy", createLocationEvent);
+      // $scope.$on("$destroy", createLocationEvent);
       $scope.$on("$destroy", modalStateChangeEvent);
     }
 
     $onInit() {
 
     }
+
+    $onChanges(changes){
+      // this.$log.log(changes);
+      if( !changes.refreshFlag.currentValue ){
+        this.host_location = {
+          location:{}
+        }
+        if( this.$scope.newLocationForm ){
+          this.$scope.newLocationForm.$setUntouched();
+        }
+      }
+    }
+
 
     addLocation(){
       this.LocationService.create(this.host_location.location);

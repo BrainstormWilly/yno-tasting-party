@@ -5,6 +5,8 @@ export const template = `
   </header>
 
   <section>
+    <p>{{$ctrl.message}}</p>
+
     <tasting-list-item
       ng-repeat="tasting in $ctrl.tastings | orderBy:'-open_at'"
       ng-class="{'pending':tasting.status=='Pending', 'open':tasting.status=='Open'}"

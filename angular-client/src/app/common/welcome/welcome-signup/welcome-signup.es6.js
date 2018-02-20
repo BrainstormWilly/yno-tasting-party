@@ -16,6 +16,7 @@ export const template = `
       <div class="main-form-control">
         <label>Email</label>
         <input type="email" name="email" id="email"
+          ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
           ng-model="$ctrl.user.email" required>
       </div>
       <div class="main-form-control">
