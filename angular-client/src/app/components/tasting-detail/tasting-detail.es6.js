@@ -266,7 +266,7 @@ export const template = `
 
 
   <tasting-detail-modal tasting="$ctrl.tasting"></tasting-detail-modal>
-  <tasting-wine-modal tasting="$ctrl.tasting"></tasting-wine-modal>
+  <add-wine-modal tasting="$ctrl.tasting"></add-wine-modal>
   <add-guest-modal tasting="$ctrl.tasting"></add-guest-modal>
   <show-guest-modal></show-guest-modal>
   <wine-info-modal wine-type="tastingWine"></wine-info-modal>

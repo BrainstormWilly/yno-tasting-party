@@ -4,15 +4,20 @@ class Wines::WineReviewSerializer < ActiveModel::Serializer
     :tasting_id,
     :tasting,
     :rating,
-    :average_rating,
     :comments,
+    :taster_average_rating,
+    :taster_review_count,
     :wine_number,
     :wine_id,
     :wine,
     :updated_at
 
-  def average_rating
-    object.average_rating
+  def taster_average_rating
+    object.taster_average_rating
+  end
+
+  def taster_review_count
+    object.taster_review_count
   end
 
   def wine

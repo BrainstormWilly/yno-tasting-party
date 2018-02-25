@@ -5,23 +5,24 @@ export const template = `
         <h3>Add Wine</h3>
       </div>
       <form name="tastingWineForm">
-      <div class="add-wine-form">
-        <div class="main-form-control">
+      <div class="main-modal-content">
+        <div class="main-form-control" ng-class="{'error':tastingWineForm.$dirty && tastingWineForm.vintage.$invalid}">
           <label>Vintage</label>
-          <input type="number"
-            ng-model="$ctrl.tastingWine.wine.vintage" placeholder="e.g. 2001 or 0 for non-vintage"
+          <input type="number" name="vintage"
+            ng-model="$ctrl.tastingWine.wine.vintage" placeholder="Year or 0 for non-vintage"
+            ng-pattern="/0{1}|[0-9]{4}/"
             required>
         </div>
         <div class="main-form-control">
           <label>Name</label>
           <input type="text"
-            ng-model="$ctrl.tastingWine.wine.name" placeholder="e.g. Producer Region/Vineyard/Name Varietal"
+            ng-model="$ctrl.tastingWine.wine.name" placeholder="Producer Region/Vineyard/Name Varietal"
             required>
         </div>
         <div class="main-form-control">
           <label>Price</label>
           <input type="number" step=0.01
-            ng-model="$ctrl.tastingWine.price" placeholder="e.g. 19.99"
+            ng-model="$ctrl.tastingWine.price" placeholder="19.99"
             required>
         </div>
       </div>

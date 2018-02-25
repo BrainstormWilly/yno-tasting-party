@@ -8,6 +8,10 @@ class TastingWine < ApplicationRecord
   #   where(wine_number: 0).count == 0
   # end
 
+  def completed_review_count
+    self.wine.wine_reviews.where(tasting_id:self.tasting.id).count
+  end
+
   def is_last_reveal?
     unrevealed = self.class.where(wine_number: 0, tasting: self.tasting)
     return true if unrevealed.count == 1 and unrevealed.first == self

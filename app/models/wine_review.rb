@@ -8,7 +8,7 @@ class WineReview < ApplicationRecord
   validates :taster_id, presence: true
   validates :rating, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
 
-  after_save :check_for_duplicate_wine_id
+  # after_save :check_for_duplicate_wine_id
 
   default_scope { order(wine_number: :asc) }
 
@@ -27,10 +27,13 @@ class WineReview < ApplicationRecord
   end
 
   def taster_average_rating
-    return 3 if self.wine_id==nil
     wrs = self.class.where(taster_id:self.taster_id, wine_id:self.wine_id)
     return self.rating if wrs.count==1
     (wrs.inject(0){ |sum, wr| sum + wr.rating }.to_f/wrs.count).round(1)
+  end
+
+  def taster_review_count
+    wrs = self.class.where(wine_id:self.wine_id, taster_id:self.taster_id).count
   end
 
 
@@ -42,15 +45,15 @@ class WineReview < ApplicationRecord
     str
   end
 
-  def check_for_duplicate_wine_id
-    if self.wine_id
-      self.class
-        .where(tasting_id:self.tasting_id)
-        .where(wine_id:self.wine_id)
-        .where.not(id:self.id)
-        .update_all({wine_id:nil})
-    end
-  end
+  # def check_for_duplicate_wine_id
+  #   if self.wine_id
+  #     self.class
+  #       .where(tasting_id:self.tasting_id)
+  #       .where(wine_id:self.wine_id)
+  #       .where.not(id:self.id)
+  #       .update_all({wine_id:nil})
+  #   end
+  # end
 
   def self.tasting_has_reviews?(tasting)
     reviews = self.where(tasting_id: tasting.id)

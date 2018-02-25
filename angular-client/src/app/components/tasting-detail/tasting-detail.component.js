@@ -26,7 +26,6 @@ export const TastingDetailComponent = {
       this.TastingService = TastingService;
       this.TastingWineService = TastingWineService;
       this.WineService = WineService;
-      this.hostIsNotGuest = false;
       this.openViewState = false;
       this.openViewLabel = "Taster View";
       this.displayTime = null;
@@ -47,6 +46,7 @@ export const TastingDetailComponent = {
                 // this.$log.log(this.tasting.open_at);
                 this.tasting.closed_at = moment();
                 this.TastingService.updateTasting(this.tasting);
+                $interval.cancel(displayTimer);
               }else{
                 $state.reload();
               }
@@ -109,9 +109,9 @@ export const TastingDetailComponent = {
         }
       });
 
-      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", (e,d)=>{
-        this.tasting.guests.unshift(d);
-      });
+      // let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", (e,d)=>{
+      //   this.tasting.guests.unshift(d);
+      // });
 
       let inviteTasterEvent = $scope.$on("invite-taster-event", (e,d)=>{
         this.NotificationsService.setNotification("Invitation emailed to " + d.taster.full_handle);
@@ -153,7 +153,7 @@ export const TastingDetailComponent = {
 
       $scope.$on("$destroy", destroyGuestEvent);
       $scope.$on("$destroy", endAlertsEvent);
-      $scope.$on("$destroy", includeHostAsGuestEvent);
+      // $scope.$on("$destroy", includeHostAsGuestEvent);
       $scope.$on("$destroy", inviteTasterEvent);
       // $scope.$on("$destroy", removeHostAsGuestEvent);
       $scope.$on("$destroy", tastingWineCreateEvent);

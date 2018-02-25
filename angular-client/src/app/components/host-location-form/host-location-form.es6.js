@@ -2,15 +2,15 @@ export const template =`
 
 <form name="newLocationForm">
   <div class="main-form-container">
-    <div class="main-form-control" ng-class="{'error' : newLocationForm.phone.$touched && newLocationForm.phone.$invalid}">
+    <div class="main-form-control" ng-class="{'error' : newLocationForm.phone.$dirty && newLocationForm.phone.$invalid}">
       <label><span>Phone</span></label>
-      <input name="phone" type="tel"
+      <input name="phone" type="tel" required
         placeholder="555-123-4567"
-        
+        ng-pattern="/[0-9]{3}-?[0-9]{3}-?[0-9]{4}/"
         ng-change="$ctrl.checkAction({host_location:$ctrl.host_location})"
-        ng-model="$ctrl.host_location.location.phone" required>
+        ng-model="$ctrl.host_location.location.phone">
     </div>
-    <div class="main-form-control" ng-class="{'error' : newLocationForm.address.$touched && newLocationForm.address.$invalid}">
+    <div class="main-form-control" ng-class="{'error' : newLocationForm.address.$dirty && newLocationForm.address.$invalid}">
       <label><span>Address</span></label>
       <input name="address" type="text"
         ng-change="$ctrl.checkAction({host_location:$ctrl.host_location})"
@@ -18,17 +18,17 @@ export const template =`
     </div>
     <div class="main-form-control">
       <label><span>Address2</span></label>
-      <input name="address2" type="text"
+      <input name="address2" type="text" placeholder="Optional"
         ng-change="$ctrl.checkAction({host_location:$ctrl.host_location})"
         ng-model="$ctrl.host_location.location.address2" >
     </div>
-    <div class="main-form-control" ng-class="{'error' : newLocationForm.city.$touched && newLocationForm.city.$invalid}">
+    <div class="main-form-control" ng-class="{'error' : newLocationForm.city.$dirty && newLocationForm.city.$invalid}">
       <label><span>City</span></label>
       <input name="locationCity" type="text"
         ng-change="$ctrl.checkAction({host_location:$ctrl.host_location})"
         ng-model="$ctrl.host_location.location.city" required>
     </div>
-    <div class="main-form-control" ng-class="{'error' : newLocationForm.state.$touched && newLocationForm.state.$invalid}">
+    <div class="main-form-control" ng-class="{'error' : newLocationForm.state.$dirty && newLocationForm.state.$invalid}">
       <label><span>State</span></label>
       <input name="locationState" type="text" required
         ng-focus="$ctrl.openStateSelector()"
@@ -36,7 +36,7 @@ export const template =`
         ng-change="$ctrl.checkAction({host_location:$ctrl.host_location})"
         ng-readonly="true">
     </div>
-    <div class="main-form-control" ng-class="{'error' : newLocationForm.postal.$touched && newLocationForm.postal.$invalid}">
+    <div class="main-form-control" ng-class="{'error' : newLocationForm.postal.$dirty && newLocationForm.postal.$invalid}">
       <label><span>Postal</span></label>
       <input name="postal" type="text"
         ng-change="$ctrl.checkAction({host_location:$ctrl.host_location})"

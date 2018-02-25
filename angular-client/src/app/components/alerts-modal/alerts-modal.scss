@@ -7,6 +7,11 @@ alerts-modal{
           background-color: $theme-pending-color;
         }
       }
+      .main-modal-content{
+        p{
+          text-align: center;
+        }
+      }
     }
   }
 }

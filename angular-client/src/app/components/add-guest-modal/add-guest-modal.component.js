@@ -67,10 +67,10 @@ export const AddGuestModalComponent = {
         }
       });
 
-      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
-        this.hostTastingStatus.state = true;
-        this.hostTastingStatus.label = "Host Included";
-      });
+      // let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
+      //   this.hostTastingStatus.state = true;
+      //   this.hostTastingStatus.label = "Host Included";
+      // });
 
       let inviteNewUserEvent = $scope.$on("invite-new-user-event", ()=>{
         this.confirmModal();
@@ -95,7 +95,7 @@ export const AddGuestModalComponent = {
       // });
 
       $scope.$on("$destroy", destroyGuestEvent);
-      $scope.$on("$destroy", includeHostAsGuestEvent);
+      // $scope.$on("$destroy", includeHostAsGuestEvent);
       $scope.$on("$destroy", inviteNewUserEvent);
       $scope.$on("$destroy", inviteTasterEvent);
       $scope.$on("$destroy", modalStateChangeEvent);

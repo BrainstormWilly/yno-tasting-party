@@ -36,7 +36,11 @@ export const template = `
       <div class="main-form-control" ng-class="{'error' : newTastingForm.tastingLocation.$touched && newTastingForm.tastingLocation.$invalid}">
         <label><span>Location</span></label>
         <input type="hidden" ng-model="$ctrl.tasting.location.id"></input>
-        <textarea name="tastingLocation" type="text" ng-focus="$ctrl.openHostLocationModal()" ng-readonly="true" ng-model="$ctrl.tasting.location.to_short_string" required></textarea>
+        <textarea name="tastingLocation" type="text" required
+          ng-focus="$ctrl.openHostLocationModal()"
+          ng-readonly="true"
+          ng-model="$ctrl.tasting.location.to_short_string">
+        </textarea>
       </div>
       <div class="main-form-btns">
         <span>&nbsp;</span>
@@ -87,31 +91,29 @@ export const template = `
     <p ng-if="$ctrl.tasting.guests.length==0">You have friends, right?<br>
       Well, then invite them to your tasting and be somebody!
     </p>
-    <div class="main-form-container">
-      <guest-list-item
-        ng-repeat="guest in $ctrl.tasting.guests"
-        guest="guest"
-        editable="false">
-      </guest-list-item>
-      <div class="main-form-btns">
-        <span class="descriptor">
-          <ng-pluralize count="$ctrl.tasting.guests.length"
-            when="{
-              '0':'0 guests',
-              '1':'1 guest',
-              'other':'{} guests'
-            }"></ng-pluralize>
-        </span>
-        <div>
-          <button ng-click="$ctrl.openGuestModal()"><span class="fa fa-plus"></span></button>
-          <button ui-sref="tasting-show({id:$ctrl.tasting.id})"><span class="fa fa-arrow-right"></span></button>
-        </div>
+    <guest-list-item
+      ng-repeat="guest in $ctrl.tasting.guests"
+      guest="guest"
+      editable="false">
+    </guest-list-item>
+    <div class="main-form-btns">
+      <span class="descriptor">
+        <ng-pluralize count="$ctrl.tasting.guests.length"
+          when="{
+            '0':'0 guests',
+            '1':'1 guest',
+            'other':'{} guests'
+          }"></ng-pluralize>
+      </span>
+      <div>
+        <button ng-click="$ctrl.openGuestModal()"><span class="fa fa-plus"></span></button>
+        <button ui-sref="tasting-show({id:$ctrl.tasting.id})"><span class="fa fa-arrow-right"></span></button>
       </div>
     </div>
   </section>
 
   <footer-menu></footer-menu>
-  <host-location-modal host-locations="$ctrl.tasting.host.locations"></host-location-modal>
-  <tasting-wine-modal tasting="$ctrl.tasting"></tasting-wine-modal>
+  <host-location-modal host-locations="$ctrl.tasting.host.locations" selected-location="$ctrl.tasting.location"></host-location-modal>
+  <add-wine-modal tasting="$ctrl.tasting"></add-wine-modal>
   <add-guest-modal tasting="$ctrl.tasting"></add-guest-modal>
   `;

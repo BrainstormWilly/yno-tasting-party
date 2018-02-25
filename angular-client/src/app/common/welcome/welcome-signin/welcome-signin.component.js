@@ -46,7 +46,7 @@ export const WelcomeSigninComponent = {
           this.$state.go('dashboard');
         })
         .catch(() => {
-          this.AlertsService.setFailureAlert("Unable to sign in. Please try later.");
+          this.AlertsService.setFailureAlert("Unable to sign in. Please check your email and password.");
         })
         .finally(()=>{
           this.wait = false; // for resetUserPassword completion

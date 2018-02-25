@@ -21,7 +21,7 @@ export const WineReviewsComponent = {
     }
 
     $onInit() {
-      // this.$log.log("WineReviewsComponent.$onInit", this.reviews);
+      this.$log.log("WineReviewsComponent.$onInit", this.reviews);
 
     }
 
@@ -39,7 +39,7 @@ export const WineReviewsComponent = {
     }
 
     openWineModal(review){
-      this.ModalService.setModalState("open", "wine-info-modal", review.wine);
+      this.ModalService.setModalState("open", "wine-info-modal", review);
     }
 
   }

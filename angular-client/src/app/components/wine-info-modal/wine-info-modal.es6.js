@@ -5,19 +5,44 @@ export const template = `
         <h3>Wine Info</h3>
       </div>
       <div class="main-modal-content">
-        <p ng-hide="$ctrl.wineType=='tastingWine'">
-        <span>Reviews:</span>
-          <ng-pluralize count="$ctrl.wine.review_count"
-            when="{
-              '0': 'None',
-              'one': '1',
-              'other': '{}'
-            }">
-          </ng-pluralize>
-        </p>
-        <p><span>Average Rating:</span> {{$ctrl.averageRating}}</p>
-        <p><span>Vintage:</span> {{$ctrl.wine.vintage}}</p>
-        <p><span>Name:</span> {{$ctrl.wine.name}}</p>
+        <table>
+          <tr>
+            <td>Vintage</td>
+            <td>{{$ctrl.wineContext.wine.vintage}}</td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>{{$ctrl.wineContext.wine.name}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='wine'">
+            <td>Reviews Overall:</td>
+            <td>{{$ctrl.wineContext.wine.review_count}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='wine'">
+            <td>Average Rating Overall:</td>
+            <td>{{$ctrl.wineContext.wine.average_rating}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='wine'">
+            <td>Your Reviews:</td>
+            <td>{{$ctrl.wineContext.taster_review_count}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='wine'">
+            <td>Your Average Rating:</td>
+            <td>{{$ctrl.wineContext.taster_average_rating}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='wine'">
+            <td>Last Reviewed:</td>
+            <td>{{$ctrl.wineContext.updated_at | utcToLocalDate:"MMM-YYYY"}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='tastingWine'">
+            <td>Completed Reviews:</td>
+            <td>{{$ctrl.wineContext.completed_review_count}}</td>
+          </tr>
+          <tr ng-if="$ctrl.wineType=='tastingWine'">
+            <td>Average Rating:</td>
+            <td>{{$ctrl.wineContext.average_rating}}</td>
+          </tr>
+        </table>
       </div>
       <div class="main-modal-footer">
         <span>&nbsp;</span>

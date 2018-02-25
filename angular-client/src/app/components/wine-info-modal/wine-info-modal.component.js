@@ -13,8 +13,11 @@ export const WineInfoModalComponent = {
       this.name = "wine-info-modal";
       this.ModalService = ModalService;
       this.modalState = "closed";
-      this.wine = null;
-      this.averageRating = 3;
+      // this.wine = null;
+      // this.averageRating = 3;
+      // this.averageRatingOverall = 3;
+      // this.tasterAverageRatingOverall = 3;
+      this.wineContext = null;
 
       let $panel = $element.find(".main-modal-container");
 
@@ -22,14 +25,16 @@ export const WineInfoModalComponent = {
         // this.$log.log("WineInfoModalComponent.$onInit", this.wineType);
         if(d.name==this.name ){
           if( d.state=="open" ){
-            if( this.wineType=="tastingWine" ){
-              // $log.log("WineInfoModalComponent.$onInit", d.data);
-              this.wine = d.data.wine;
-              this.averageRating = d.data.average_rating;
-            }else{
-              this.wine = d.data;
-              this.averageRating = d.data.average_rating;
-            }
+            // if( this.wineType=="tastingWine" ){
+            //   // $log.log("WineInfoModalComponent.$onInit", d.data);
+            //   this.wine = d.data.wine;
+            //   this.averageRating = d.data.average_rating;
+            // }else{
+            //   $log.log("WineInfoModalComponent", d.data);
+            //   this.wine = d.data.wine;
+            //   this.averageRating = d.data.average_rating_overall;
+            // }
+            this.wineContext = d.data;
             TweenMax.to($element, 0.5, {autoAlpha:1});
             TweenMax.from($panel, 0.3, {transform:"scale(.5)"});
           }else{

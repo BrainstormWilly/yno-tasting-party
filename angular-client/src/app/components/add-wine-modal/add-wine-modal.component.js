@@ -1,11 +1,11 @@
-import {template} from './tasting-wine-modal.es6';
+import {template} from './add-wine-modal.es6';
 
-export const TastingWineModalComponent = {
+export const AddWineModalComponent = {
   bindings:{
     tasting: "<"
   },
   template,
-  controller: class TastingWineModalController{
+  controller: class AddWineModalController{
     constructor($scope, $log, $element, ModalService, TastingWineService, WineService){
       'ngInject';
       this.$log = $log;

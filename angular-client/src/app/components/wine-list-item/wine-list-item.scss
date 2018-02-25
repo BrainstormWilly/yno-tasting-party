@@ -5,7 +5,7 @@ wine-list-item{
   // border: 2px solid lighten($theme-dark-gray, 20%);
   border-radius: 1.5rem;
   background-color: $theme-dark-gray;
-  margin-bottom: .5rem;
+  margin: .5rem .5rem 0 .5rem;
   padding-right: .25rem;
 
   .wine-list-item-link{
@@ -73,7 +73,7 @@ wine-list-item{
     align-self: center;
   }
 
-  
+
 
 
 }

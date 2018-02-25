@@ -1,5 +1,6 @@
 
 import {AddGuestModalComponent} from './add-guest-modal/add-guest-modal.component';
+import {AddWineModalComponent} from './add-wine-modal/add-wine-modal.component';
 import {AlertsModalComponent} from './alerts-modal/alerts-modal.component';
 import {ConnectionListItemComponent} from './connection-list-item/connection-list-item.component';
 // import {ConnectionSelectorModalComponent} from './connection-selector-modal/connection-selector-modal.component';
@@ -17,10 +18,9 @@ import {TastingListItemComponent} from './tasting-list-item/tasting-list-item.co
 import {TastingDetailComponent} from './tasting-detail/tasting-detail.component';
 import {TastingDetailModalComponent} from './tasting-detail-modal/tasting-detail-modal.component';
 // import {TastingWineListItemComponent} from './tasting-wine-list-item/tasting-wine-list-item.component';
-import {TastingWineModalComponent} from './tasting-wine-modal/tasting-wine-modal.component';
+
 import {ToggleSwitchComponent} from './toggle-switch/toggle-switch.component';
 import {WaitStateComponent} from './wait-state/wait-state.component';
-import {WineAddModalComponent} from './wine-add-modal/wine-add-modal.component';
 import {WineInfoModalComponent} from './wine-info-modal/wine-info-modal.component';
 import {WineListItemComponent} from './wine-list-item/wine-list-item.component';
 // import {WineRevealListItemComponent} from './wine-reveal-list-item/wine-reveal-list-item.component';
@@ -32,6 +32,7 @@ import {WineReviewStatusModalComponent} from './wine-review-status-modal/wine-re
 export const ComponentsModule = angular
   .module('ynoTasting.components', [])
   .component('addGuestModal', AddGuestModalComponent)
+  .component('addWineModal', AddWineModalComponent)
   .component('alertsModal', AlertsModalComponent)
   .component('connectionListItem', ConnectionListItemComponent)
   // .component('connectionSelectorModal', ConnectionSelectorModalComponent)
@@ -49,10 +50,9 @@ export const ComponentsModule = angular
   .component('tastingDetailModal', TastingDetailModalComponent)
   .component('tastingListItem', TastingListItemComponent)
   // .component('tastingWineListItem', TastingWineListItemComponent)
-  .component('tastingWineModal', TastingWineModalComponent)
+
   .component('toggleSwitch', ToggleSwitchComponent)
   .component('waitState', WaitStateComponent)
-  .component('wineAddModal', WineAddModalComponent)
   .component('wineInfoModal', WineInfoModalComponent)
   .component('wineListItem', WineListItemComponent)
   // .component('wineRevealListItem', WineRevealListItemComponent)

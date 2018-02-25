@@ -63,7 +63,7 @@ export class TastingService {
       .then(result=>{
         defer.resolve(result.data);
       })
-      .catch(err=>{
+      .catch(()=>{
         // this.$log.error("TastingService.getTasting", err);
         this.$state.go("dashboard");
       });

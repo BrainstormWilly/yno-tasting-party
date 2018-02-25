@@ -98,8 +98,8 @@ h3{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   border-radius: .75rem;
   background-color: darken($theme-color, 20%);
   color: $theme-header-color;
@@ -285,6 +285,7 @@ section{
     min-height: 3rem;
   }
   textarea{
+    padding-top: .5rem;
     min-height: 6rem;
     resize: none;
   }

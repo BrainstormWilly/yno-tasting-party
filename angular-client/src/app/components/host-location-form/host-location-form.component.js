@@ -35,7 +35,7 @@ export const HostLocationFormComponent = {
         this.host_location = {
           location: {}
         };
-        $scope.newLocationForm.$setUntouched();
+        $scope.newLocationForm.$setPristine();
       })
       //
       $scope.$on("$destroy", createHostLocationEvent);

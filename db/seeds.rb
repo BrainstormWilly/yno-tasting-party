@@ -292,6 +292,7 @@ end
     wr.created_at = 40.hours.ago
     wr.updated_at = 38.hours.ago
     wr.save
+
   end
 end
 
@@ -310,13 +311,13 @@ tasting_completed = Tasting.create(
 )
 # completed tasting guests (confirmed)
 5.times do
-  tt = Guest.create(
+  tt = Guest.create!(
     tasting_id: tasting_completed.id,
     taster_id: tasters.pop.id,
     confirmed: 5.days.ago
   )
   6.times do |i|
-    WineReview.create({
+    wr = WineReview.create({
       tasting_id: tasting_completed.id,
       taster_id: tt.taster.id,
       rating: (1..5).to_a.sample,

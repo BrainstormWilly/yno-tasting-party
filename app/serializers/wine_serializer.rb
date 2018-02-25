@@ -14,9 +14,7 @@ class WineSerializer < ActiveModel::Serializer
   end
 
   def average_rating
-    return 3 if review_count==0
-    total_ratings = object.wine_reviews.inject(0){ |sum,wr| sum + wr.rating }
-    (total_ratings/review_count).round(1)
+    object.average_rating
   end
 
 end

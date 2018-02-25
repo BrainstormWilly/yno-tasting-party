@@ -53,7 +53,6 @@ export const UserComponent = {
           }
         }
         this.user.host.locations.push(d);
-
       });
 
       let createLocationEvent = $scope.$on("create-location-event", (e,d)=>{

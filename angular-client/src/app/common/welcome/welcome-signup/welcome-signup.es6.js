@@ -13,26 +13,28 @@ export const template = `
     <form role="form" class="main-form" name="user_signup"
       ng-submit="$ctrl.signupUser()"
       ng-if="$ctrl.viewState==1">
-      <div class="main-form-control">
+      <div class="main-form-control" ng-class="{'error':user_signup.email.$dirty && user_signup.email.$invalid}">
         <label>Email</label>
         <input type="email" name="email" id="email"
           ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
           ng-model="$ctrl.user.email" required>
+
       </div>
-      <div class="main-form-control">
+      <div class="main-form-control" ng-class="{'error':user_signup.password.$dirty && user_signup.password.$invalid}">
         <label>Password</label>
-        <input type="password" name="password" id="password"
+        <input type="password" name="password" id="password" required
+          placeholder="6 character minimum"
           ng-model="$ctrl.user.password"
-          ng-minlength="6" required>
+          ng-minlength="6">
       </div>
-      <div class="main-form-control">
+      <div class="main-form-control" ng-class="{'error':user_signup.password_confirmation.$dirty && user_signup.password_confirmation.$invalid}">
         <label>
           <span>Password</span>
           <span>Confirmation</span>
         </label>
-        <input type="password" name="password_confirmation" id="password_confirmation"
+        <input type="password" name="password_confirmation" id="password_confirmation" required
           ng-model="$ctrl.user.password_confirmation"
-          ng-minlength="6" required>
+          ng-minlength="6">
       </div>
       <div class="main-form-btns">
         <span>&nbsp;</span>

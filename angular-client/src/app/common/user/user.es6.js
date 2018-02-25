@@ -23,25 +23,36 @@ export const template = `
         Host Your Own Tastings!
     </button>
     <form name="userForm">
-      <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
-        <label for="email">Email</label>
-        <input type="email" ng-model="$ctrl.user.email" name="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+      <div class="main-form-control"
+        ng-class="{'error':userForm.email.$dirty && userForm.email.$invalid}"
+        ng-if="$ctrl.user.taster.status=='active'">
+          <label for="email">Email</label>
+          <input type="email" ng-model="$ctrl.user.email" name="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
       </div>
-      <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
-        <label for="password">Password</label>
-        <input type="password" ng-model="$ctrl.user.password" name="email" ng-minlength="6">
+      <div class="main-form-control"
+        ng-class="{'error':userForm.password.$dirty && userForm.password.$invalid}"
+        ng-if="$ctrl.user.taster.status=='active'">
+          <label for="password">Password</label>
+          <input type="password" name="password" placeholder="6 characters minimum"
+            ng-model="$ctrl.user.password" ng-minlength="6">
       </div>
-      <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
-        <label for="password"><span>Password</span><span>Confirmation</span></label>
-        <input type="password" ng-model="$ctrl.user.password_confirmation" name="email" ng-minlength="6">
+      <div class="main-form-control"
+        ng-class="{'error':userForm.passwordConfirmation.$dirty && userForm.passwordConfirmation.$invalid}"
+        ng-if="$ctrl.user.taster.status=='active'">
+          <label for="password"><span>Password</span><span>Confirmation</span></label>
+          <input type="password" name="passwordConfirmation"
+            ng-model="$ctrl.user.password_confirmation" ng-minlength="6">
       </div>
-      <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
-        <label for="name">Name</label>
-        <input type="text" ng-model="$ctrl.user.taster.name" name="name" required>
+      <div class="main-form-control"
+        ng-class="{'error':userForm.name.$dirty && userForm.name.$invalid}"
+        ng-if="$ctrl.user.taster.status=='active'">
+          <label for="name">Name</label>
+          <input type="text" ng-model="$ctrl.user.taster.name" name="name" required>
       </div>
-      <div class="main-form-control" ng-if="$ctrl.user.taster.status=='active'">
-        <label for="handle">Handle</label>
-        <input type="text" ng-model="$ctrl.user.taster.handle" name="handle" placeholder="Optional">
+      <div class="main-form-control"
+        ng-if="$ctrl.user.taster.status=='active'">
+          <label for="handle">Handle</label>
+          <input type="text" ng-model="$ctrl.user.taster.handle" name="handle" placeholder="Optional">
       </div>
       <div class="main-form-btns">
         <span style="padding-left:1rem;">{{$ctrl.user.taster.status}}</span>
@@ -63,12 +74,13 @@ export const template = `
     </form>
   </div>
   <div ng-show="$ctrl.hostState">
-    <h3>Current Locations</h3>
+    <h3 ng-if="$ctrl.user.host.locations.length>0">Current Locations</h3>
+    <div ng-if="$ctrl.user.host.locations.length>0"><small><span class="fa fa-asterisk"></span> = primary</small></div>
     <div class="user-host-locations" ng-repeat="hl in $ctrl.user.host.locations">
       <div class="primary"><span class="fa fa-asterisk" ng-if="hl.primary"></span></div>
       <div class="location">{{hl.location.to_short_string}}</div>
       <div class="buttons">
-        <button class="small-btn secondary"
+        <button class="small-btn"
           ng-click="$ctrl.changePrimaryHostLocation(hl)"
           ng-disabled="hl.primary || $ctrl.user.host.locations.length==1">
             <span class="fa fa-asterisk"></span>

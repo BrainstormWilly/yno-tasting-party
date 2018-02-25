@@ -6,7 +6,7 @@ export const TastingNewComponent = {
   },
   template,
   controller: class TastingNewController{
-    constructor($scope, $log, $state,
+    constructor($scope, $log, $state, lodash,
       ModalService,
       GuestService,
       TastingService,
@@ -17,6 +17,7 @@ export const TastingNewComponent = {
 
       this.$log = $log;
       this.$state = $state;
+      this._ = lodash;
       this.GuestService = GuestService;
       this.ModalService = ModalService;              // runs host location, wine, and guest modals
       this.TastingService = TastingService;
@@ -35,8 +36,10 @@ export const TastingNewComponent = {
 
 
       let createHostLocationEvent = $scope.$on("create-host-location-event", (e,d)=>{
+        if( d.primary ) this._.each(this.host.locations, (v)=>{v.primary=false});
         this.host.locations.push(d);
-        this.setSelectedHostLocation(d);
+
+        // this.setSelectedHostLocation(d);
       });
 
       let createTastingEvent = $scope.$on("create-tasting-event", (e,d)=>{
@@ -72,7 +75,9 @@ export const TastingNewComponent = {
 
       let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
         if( d.name=="host-location-modal" && d.state=="confirmed"){
-          this.setSelectedHostLocation(d.data);
+          // this.setSelectedHostLocation(d.data);
+          this.tasting.location = d.data;
+          this.tasting.location_id = d.data.id;
         }
       });
 
@@ -177,20 +182,20 @@ export const TastingNewComponent = {
       }
     }
 
-    setSelectedHostLocation(host_location=null){
+    setSelectedHostLocation(location=null){
       // this.$log.log(this.host.locations.length);
-      for( let i=0; i<this.host.locations.length; i++ ){
-        this.host.locations[i].selected = false;
-        if( host_location && this.host.locations[i].id==host_location.id ){
-          this.host.locations[i].selected = true;
-        }else if( !host_location && this.host.locations[i].primary ){
-          this.host.locations[i].selected = true;
-          host_location = this.host.locations[i];
-        }
-      }
-      // this.$log.log(host_location);
-      this.tasting.location = host_location.location;
-      this.tasting.location_id = this.tasting.location.id;
+      // for( let i=0; i<this.host.locations.length; i++ ){
+      //   this.host.locations[i].selected = false;
+      //   if( host_location && this.host.locations[i].id==host_location.id ){
+      //     this.host.locations[i].selected = true;
+      //   }else if( !host_location && this.host.locations[i].primary ){
+      //     this.host.locations[i].selected = true;
+      //     host_location = this.host.locations[i];
+      //   }
+      // }
+      this.$log.log(location);
+      this.tasting.location = location;
+      this.tasting.location_id = location.id;
     }
 
     // toggleHostTastingStatus(){
