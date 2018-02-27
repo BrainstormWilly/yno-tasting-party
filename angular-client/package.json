@@ -4,12 +4,7 @@
   "dependencies": {
     "angular-moment-picker": "^0.10.1",
     "gsap": "^1.20.3",
-    "npm": "^5.6.0"
-  },
-  "scripts": {
-    "test": "gulp test"
-  },
-  "devDependencies": {
+    "npm": "^5.6.0",
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.24.1",
@@ -55,6 +50,12 @@
     "uglify-save-license": "~0.4.1",
     "webpack-stream": "^2.1.1",
     "wiredep": "~2.2.2"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.0",
   },
   "engines": {
     "node": ">=0.10.0"
