@@ -21,6 +21,7 @@ function browserSyncInit(baseDir, browser) {
     routes = {
       '/bower_components': 'bower_components'
     };
+
   }
 
   var server = {
@@ -61,7 +62,7 @@ gulp.task('serve', ['watch'], function () {
 });
 
 gulp.task('rails', function() {
-  exec('rails server -p 8000');
+  exec('../bin/rails s');
 });
 
 gulp.task('serve:full-stack', ['rails', 'serve']);
