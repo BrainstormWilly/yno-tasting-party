@@ -68,7 +68,7 @@ export class GuestService {
 
   includeHost(tasting_id){
     this.$http.get(this.constants.apiUrl + "/guests/include_host/" + tasting_id)
-      .then(result=>{
+      .then(()=>{
         // this.$rootScope.$broadcast("include-host-as-guest-event", result.data);
         this.$state.reload();
       })
