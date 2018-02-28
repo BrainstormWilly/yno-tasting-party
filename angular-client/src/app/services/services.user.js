@@ -122,7 +122,7 @@ export class UserService {
         }
       })
       .catch(error => {
-        // this.$log.error("WelcomeSignupComponent.signupUser", error);
+        this.$log.error("WelcomeSignupComponent.signupUser", error);
         this.AlertsService.setFailureAlert(error.data.errors.full_messages[0]);
       });
     return defer.promise;
