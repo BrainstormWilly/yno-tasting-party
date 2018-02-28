@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   use_doorkeeper
 
-  default_url_options host: "localhost:8000"
+  # default_url_options host: "localhost:8000"
 
   # devise_for :users, :controllers => {
   #   :registrations => "registrations",
