@@ -90,3 +90,5 @@ gem 'active_model_serializers', '~> 0.10.0'
 # Alexa Authentication
 gem 'alexa_verifier'
 gem 'doorkeeper'
+
+ruby '2.3.0'
