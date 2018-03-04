@@ -3,7 +3,7 @@ export function AppConfig($authProvider, $locationProvider, $logProvider, moment
 
   $locationProvider
     .html5Mode(true)
-    .hashPrefix('');
+    .hashPrefix('!');
 
   $logProvider.debugEnabled(constants.enableDebug);
 
