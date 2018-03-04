@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
-  def index
-    render layout: layout_name
-  end
+  # def index
+  #   render layout: layout_name
+  # end
 
 
   private
@@ -42,13 +42,13 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def layout_name
-        if params[:layout] == 0
-            false
-        else
-            'application'
-        end
-    end
+    # def layout_name
+    #     if params[:layout] == 0
+    #         false
+    #     else
+    #         'application'
+    #     end
+    # end
 
     def ssl_configured?
       Rails.env.production?

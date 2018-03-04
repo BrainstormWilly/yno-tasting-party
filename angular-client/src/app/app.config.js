@@ -1,10 +1,6 @@
 export function AppConfig($authProvider, $locationProvider, $logProvider, momentPickerProvider, constants) {
   'ngInject';
 
-  $locationProvider
-    .html5Mode(true)
-    .hashPrefix('');
-
   $logProvider.debugEnabled(constants.enableDebug);
 
   $authProvider

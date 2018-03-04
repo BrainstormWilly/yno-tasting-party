@@ -57,10 +57,10 @@ Rails.application.routes.draw do
 
   # Api routes
 
-  root 'application#index'
-
-  get "*path.html" => "application#index", layout: 0
-  get "*path" => "application#index"
+  # root 'application#index'
+  #
+  # get "*path.html" => "application#index", layout: 0
+  # get "*path" => "application#index"
 
   namespace :api do
     namespace :alexa do
