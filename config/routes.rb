@@ -57,7 +57,6 @@ Rails.application.routes.draw do
 
   # Api routes
 
-
   namespace :api do
     namespace :alexa do
       namespace :v1 do
@@ -100,5 +99,7 @@ Rails.application.routes.draw do
       resources :locations, only: [:create]
     end
   end
+
+  get "/*path" => redirect("/#!/%{path}")
 
 end

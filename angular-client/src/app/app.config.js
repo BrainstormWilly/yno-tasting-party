@@ -2,7 +2,6 @@ export function AppConfig(
   $authProvider,
   $locationProvider,
   $logProvider,
-  $urlRouterProvider,
   momentPickerProvider,
   constants) {
 
@@ -18,14 +17,14 @@ export function AppConfig(
       storage: 'localStorage'
     });
 
-    $urlRouterProvider.otherwise(($stateParams, $location, $state, $log)=>{
-      $log.log("AppConfig");
-      if( $stateParams.go ){
-        $state.go($stateParams.go);
-      }else{
-        $state.go("/");
-      }
-    });
+    // $urlRouterProvider.otherwise(($stateParams, $location, $state, $log)=>{
+    //   $log.log("AppConfig");
+    //   if( $stateParams.go ){
+    //     $state.go($stateParams.go);
+    //   }else{
+    //     $state.go("/");
+    //   }
+    // });
 
     momentPickerProvider.options({
       startView: "month",
