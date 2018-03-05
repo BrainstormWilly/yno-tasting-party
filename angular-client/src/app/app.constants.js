@@ -1,6 +1,6 @@
 export const AppConstants = {
 
-  authUrl: "/",
+  authUrl: "",
   invitationUrl: "/auth/invitation",
   apiUrl: "/api/v1",
   baseUrl: "/",

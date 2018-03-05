@@ -35,9 +35,11 @@ angular
   .constant('constants', AppConstants)
   .component('app', AppComponent)
   .config(AppConfig)
-  .run(function($log){
+  .run( ($log, $location, $window)=>{
     'nginject';
-    // let ary = [1,2,3,3,3,3,4,5,6];
+
+    if( $location.host()=="www.ynotasting.com" ) $window.location.href = "https://ynotasting.com" + $location.path();
+    if( $location.host()=="ynotasting.com" && $location.protocol()=="http" ) $window.location.href = "https://ynotasting.com" + $location.path();
 
     $log.log("AppModule.run");
 
