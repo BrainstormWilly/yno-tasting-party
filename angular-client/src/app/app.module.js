@@ -35,11 +35,8 @@ angular
   .constant('constants', AppConstants)
   .component('app', AppComponent)
   .config(AppConfig)
-  .run( ($log, $location, $window)=>{
+  .run( $log=>{
     'nginject';
-
-    if( $location.host()=="www.ynotasting.com" ) $window.location.href = "https://ynotasting.com" + $location.path();
-    if( $location.host()=="ynotasting.com" && $location.protocol()=="http" ) $window.location.href = "https://ynotasting.com" + $location.path();
 
     $log.log("AppModule.run");
 

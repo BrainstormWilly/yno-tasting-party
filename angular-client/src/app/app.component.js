@@ -3,28 +3,12 @@ export const AppComponent = {
     <ui-view></ui-view>
   `,
   controller: class AppController{
-    constructor($scope, $log, $state){
+    constructor($location, $window){
       'ngInject';
-      this.$log = $log;
-      this.$state = $state;
 
-      // let validationSuccess = $scope.$on('auth:validation-success', (e,d) => {
-      //   $log.log('AppComponent: validationSuccess');
-      //   TasterService.loadTaster(d.id);
-      // });
+      if( $location.host()=="www.ynotasting.com" ) $window.location.href = "https://ynotasting.com" + $location.path();
+      if( $location.host()=="ynotasting.com" && $location.protocol()=="http" ) $window.location.href = "https://ynotasting.com" + $location.path();
 
-      // let tasterChangeEvent = $scope.$on('taster-change-event', (e,d) => {
-      //   $log.log('AppComponent: tasterChangeEvent');
-      //   this.taster = d;
-      // });
-
-      // $scope.$on('$destroy', validationSuccess);
-      // $scope.$on('$destroy', tasterChangeEvent);
-
-    }
-
-    $onInit() {
-      // this.$log.log("AppComponent $onInit");
     }
 
   }
