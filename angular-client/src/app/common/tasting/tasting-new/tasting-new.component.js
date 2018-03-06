@@ -108,6 +108,7 @@ export const TastingNewComponent = {
     */
     $onInit() {
       // this.tasting.open_at = moment();
+      
       this.tasting.host_id = this.host.id;
       this.tasting.host = this.host;
       for( let i=0; i<this.host.locations.length; i++ ){

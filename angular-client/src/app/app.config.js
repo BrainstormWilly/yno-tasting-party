@@ -7,7 +7,7 @@ export function AppConfig(
 
     'ngInject';
 
-    $locationProvider.html5Mode({enabled:true, requireBase:false});
+    $locationProvider.html5Mode({enabled:true, requireBase:true});
 
     $logProvider.debugEnabled(constants.enableDebug);
 

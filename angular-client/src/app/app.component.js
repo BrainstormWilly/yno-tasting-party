@@ -3,8 +3,10 @@ export const AppComponent = {
     <ui-view></ui-view>
   `,
   controller: class AppController{
-    constructor($location, $window){
+    constructor($location, $window, $log){
       'ngInject';
+
+      $log.log(moment());
 
       if( $location.host()=="www.ynotasting.com" ) $window.location.href = "https://ynotasting.com" + $location.path();
       if( $location.host()=="ynotasting.com" && $location.protocol()=="http" ) $window.location.href = "https://ynotasting.com" + $location.path();
