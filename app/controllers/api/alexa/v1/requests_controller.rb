@@ -1,5 +1,5 @@
 class Api::Alexa::V1::RequestsController < ApplicationController
-
+  include DeviseTokenAuth::Concerns::SetUserByToken
   prepend_before_action :set_access_token_in_params
   before_action :doorkeeper_authorize!
 
