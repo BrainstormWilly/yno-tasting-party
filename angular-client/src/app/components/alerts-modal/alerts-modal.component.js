@@ -51,6 +51,7 @@ export const AlertsModalComponent = {
     $onInit() {
 
       this.ModalService.registerModal(this);
+      this.AlertsService.broadcastAlerts(); // need to guard against $onInit race conditions
 
     }
 

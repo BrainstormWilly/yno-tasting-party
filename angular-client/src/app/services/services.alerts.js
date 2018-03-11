@@ -8,6 +8,12 @@ export class AlertsService {
     this.alertIndex = 0;
   }
 
+  broadcastAlerts(){
+    for(let i=0; i<this.alerts.length; i++){
+      this.$rootScope.$broadcast('set-alerts-event', this.alerts[i]);
+    }
+  }
+
   setFailureAlert(message){
     let alert = {
       id: this.alertIndex++,

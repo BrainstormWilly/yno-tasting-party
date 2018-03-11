@@ -1,16 +1,16 @@
-import {template} from './welcome-signin.es6';
+import {template} from '../../welcome/welcome-signin/welcome-signin.es6';
+import {WelcomeSigninComponent} from '../../welcome/welcome-signin/welcome-signin.component';
 
 
-export const WelcomeSigninComponent = {
+export const AlexaSigninComponent = {
   bindings:{
     user: "<"
   },
   template,
-  controller: class WelcomeSigninComponent{
+  controller: class AlexaSigninController{
     constructor($location, $log, $scope, $state, UserService, AlertsService){
       'ngInject';
       this.redirect_url = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/user/password/reset";
-      this.$location = $location;
       this.$log = $log;
       this.$state = $state;
       this.$scope = $scope;
@@ -25,11 +25,6 @@ export const WelcomeSigninComponent = {
         this.$state.go("dashboard");
       }else{
         this.user = {};
-      }
-
-      if( this.$location.search().alert=='alexa-link' ){
-        this.$log.log("working");
-        this.AlertsService.setConfirmationAlert("In order to link the Yno Tasting Skill to your Alexa app you first need to sign into your Yno Tasting account. Once signed in, go back to your Alexa app and disable/enable account linking again.");
       }
       // this.$log.log("WelcomeSigninComponent.$onInit", this.user);
     }
