@@ -100,7 +100,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root "welcome#index"
-  get "/*path", to: "welcome#index"
+  root "application#main"
+  get "/*path", to: "application#main"
 
 end
