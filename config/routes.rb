@@ -101,6 +101,6 @@ Rails.application.routes.draw do
   end
 
   root "application#main"
-  get "/*path", to: redirect("/#!/%{path}")
+  get "/*path", to: redirect{ |params, request| "/#!/%{path}?#{request.query_string}" }
 
 end
