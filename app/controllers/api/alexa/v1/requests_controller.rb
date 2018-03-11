@@ -1,23 +1,23 @@
-class Api::Alexa::V1::RequestsController < Api::BaseController
-  
+class Api::Alexa::V1::RequestsController < ApplicationController
+  include DeviseTokenAuth::Concerns::SetUserByToken
   prepend_before_action :set_access_token_in_params
   before_action :doorkeeper_authorize!
 
   def default
     # Alexa Verification
-    # verifier = AlexaVerifier.build do |c|
-    #   c.verify_signatures = true
-    #   c.verify_timestamps = true
-    #   c.timestamp_tolerance = 60 # seconds
-    # end
-    # verification_success = verifier.verify!(
-    #   request.headers['SignatureCertChainUrl'],
-    #   request.headers['Signature'],
-    #   request.body.read
-    # )
+    verifier = AlexaVerifier.build do |c|
+      c.verify_signatures = true
+      c.verify_timestamps = true
+      c.timestamp_tolerance = 60 # seconds
+    end
+    verification_success = verifier.verify!(
+      request.headers['SignatureCertChainUrl'],
+      request.headers['Signature'],
+      request.body.read
+    )
 
     # Testing w/o Amazon SSL verification
-    verification_success = true
+    # verification_success = true
 
     request_type = params["request"]["type"]
 
