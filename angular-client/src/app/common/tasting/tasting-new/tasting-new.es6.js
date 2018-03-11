@@ -18,6 +18,7 @@ export const template = `
         <input name="tastingOpenAt"
           moment-picker="$ctrl.tasting.open_at"
           ng-model="$ctrl.tasting.open_at"
+          min-date="$ctrl.minOpenDate"
           change="$ctrl.onOpenAtChange(newValue, oldValue)"
           required>
       </div>

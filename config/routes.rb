@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     end
   end
 
+  root "welcome#index"
   get "/*path" => redirect("/#!/%{path}")
 
 end
