@@ -5,7 +5,7 @@ export const template = `
   </a>
 
   <div class="welcome-container">
-    <a class="info-btn" ui-sref="welcome-signin"><i class="fa fa-glass"></i></a>
+    <a class="info-btn" ui-sref="welcome-privacy"><i class="fa fa-glass"></i></a>
     <a class="welcome-signin-btn" ui-sref="welcome-signin">Sign In</a>
     <a class="welcome-signup-btn" ui-sref="welcome-signup">Sign Up</a>
   </div>
