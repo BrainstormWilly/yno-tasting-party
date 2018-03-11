@@ -1,22 +1,25 @@
-class Api::Alexa::V1::RequestsController < Api::BaseController
+class Api::Alexa::V1::RequestsController < ApplicationController
 
   prepend_before_action :set_access_token_in_params
   before_action :doorkeeper_authorize!
 
   def default
     # Alexa Verification
-    verifier = AlexaVerifier.build do |c|
-      c.verify_signatures = true
-      c.verify_timestamps = true
-      c.timestamp_tolerance = 60 # seconds
-    end
-    verification_success = verifier.verify!(
-      request.headers['SignatureCertChainUrl'],
-      request.headers['Signature'],
-      request.body.read
-    )
+    # verifier = AlexaVerifier.build do |c|
+    #   c.verify_signatures = true
+    #   c.verify_timestamps = true
+    #   c.timestamp_tolerance = 60 # seconds
+    # end
+    # verification_success = verifier.verify!(
+    #   request.headers['SignatureCertChainUrl'],
+    #   request.headers['Signature'],
+    #   request.body.read
+    # )
 
-    request = params["request"]["type"]
+    # Testing w/o Amazon SSL verification
+    verification_success = true
+
+    request_type = params["request"]["type"]
 
     # Verification invalid
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
@@ -24,18 +27,18 @@ class Api::Alexa::V1::RequestsController < Api::BaseController
     host = current_doorkeeper_host
 
     # User is not a host
-    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to ynotasting dot com slash alexa to learn more.") unless host
+    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.") unless host
 
     open_tasting = Tasting.get_open_for_host(host)
 
     # No open tastings
-    return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to ynotasting dot com slash alexa to learn more.") unless open_tasting
+    return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to wino tasting dot com slash alexa to learn more.") unless open_tasting
 
     # Launch request
-    return play_preamble(open_tasting) if request == "LaunchRequest"
+    return play_preamble(open_tasting) if request_type == "LaunchRequest"
 
     # Intent request
-    if request == "IntentRequest"
+    if request_type == "IntentRequest"
       intent = params["request"]["intent"]["name"]
       if intent == "RateWineIntent"
         svc = Alexa::RateWineIntent.new(open_tasting, params)

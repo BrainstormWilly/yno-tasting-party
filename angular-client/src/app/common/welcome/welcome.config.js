@@ -31,16 +31,11 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
           return $stateParams.invitation_token
         }
       }
+    })
+    .state('welcome-privacy',{
+      url: '/privacy',
+      component: 'welcomePrivacy'
     });
-    // .state('welcome-reset-password',{
-    //   url: '/user/password/reset',
-    //   component: 'welcomeResetPassword',
-    //   resolve: {
-    //     token: ($stateParams) =>{
-    //       return $stateParams.reset_password_token
-    //     }
-    //   }
-    // });
 
 
   $urlRouterProvider.otherwise('/');

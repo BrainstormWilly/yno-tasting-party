@@ -4,9 +4,6 @@ Rails.application.routes.draw do
       registrations: "registrations",
       invitations: "invitations"
   }
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-    omniauth_callbacks: 'omniauth' 
-  }, via: [:get, :post]
 
   use_doorkeeper
 
@@ -103,7 +100,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root "welcome#index"
-  get "/*path" => redirect("/#!/%{path}")
+  # root "welcome#index"
+  # get "/*path" => redirect("/#!/%{path}")
 
 end
