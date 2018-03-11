@@ -4,6 +4,9 @@ Rails.application.routes.draw do
       registrations: "registrations",
       invitations: "invitations"
   }
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+    omniauth_callbacks: 'omniauth' 
+  }, via: [:get, :post]
 
   use_doorkeeper
 
