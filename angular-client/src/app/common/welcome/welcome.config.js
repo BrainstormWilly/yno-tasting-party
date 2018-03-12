@@ -16,6 +16,13 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
         user: UserService => UserService.getUserByValidation()
       }
     })
+    .state('welcome-signin-alexa',{
+      url: '/signin/alexa',
+      component: 'welcomeSignin',
+      resolve: {
+        user: UserService => UserService.getUserByValidation()
+      }
+    })
     .state('welcome-signup',{
       url: '/signup',
       component: 'welcomeSignup',

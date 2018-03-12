@@ -9,7 +9,7 @@ Doorkeeper.configure do
     # Example implementation:
     #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
     #current_user || warden.authenticate!(scope: :user)
-    current_user || redirect_to("/signin?alert=alexa-link")
+    current_user || redirect_to("/signin/alexa")
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.

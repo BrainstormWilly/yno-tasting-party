@@ -7,16 +7,18 @@ export const WelcomeSigninComponent = {
   },
   template,
   controller: class WelcomeSigninComponent{
-    constructor($location, $log, $scope, $state, UserService, AlertsService){
+    constructor($location, $log, $scope, $state, lodash, UserService, AlertsService){
       'ngInject';
       this.redirect_url = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/user/password/reset";
       this.$location = $location;
       this.$log = $log;
       this.$state = $state;
       this.$scope = $scope;
+      this._ = lodash;
       this.AlertsService = AlertsService
       this.UserService = UserService;
       this.viewState = 1;
+      this.alexaSignin = true;
       this.wait = false;
     }
 
@@ -27,9 +29,10 @@ export const WelcomeSigninComponent = {
         this.user = {};
       }
 
-      if( this.$location.search().alert=='alexa-link' ){
-        this.$log.log("working");
-        this.AlertsService.setConfirmationAlert("In order to link the Yno Tasting Skill to your Alexa app you first need to sign into your Yno Tasting account. Once signed in, go back to your Alexa app and disable/enable account linking again.");
+      this.$log.log(this.$location.path());
+
+      if( this.$location.path().indexOf('alexa') > -1 ){
+        this.alexaSignin = true;
       }
       // this.$log.log("WelcomeSigninComponent.$onInit", this.user);
     }

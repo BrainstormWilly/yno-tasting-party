@@ -6,6 +6,7 @@ export const template = `
 
   <div class="welcome-container">
     <h3 ng-if="$ctrl.viewState==1">Come on in. The wine is fine.</h3>
+    <p ng-if="$ctrl.alexaSignin">You're linking to your Alexa device? Excellent! After signing in you will need to return to your Alexa app and disable/enable the Yno Tasting Skill to complete linking.</p>
     <h3 ng-if="$ctrl.viewState==2">Lost your password?</h3>
     <p ng-if="$ctrl.viewState==2">We'll email you a code to reset it.</p>
     <h3 ng-if="$ctrl.viewState==3">Email on the way!</h3>
