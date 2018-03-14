@@ -34,7 +34,7 @@ class Alexa::AmazonIntents
   end
 
   def help_speak
-    "It's easy<break time='1s'/> Say<break time='.5s'/> Rate a wine. Or<break time='.5s'/> Comment on a wine. Or<break time='.5s'/> Get tasting stats. Or<break time='.5s'/> Get average wine rating<break time='.5s'/> <prosody pitch='high'>Try it</prosody>"
+    "It's easy<break time='1s'/> Say<break time='.5s'/> Rate a wine. Or<break time='.5s'/> Add a wine comment. Or<break time='.5s'/> Get tasting stats. Or<break time='.5s'/> Get average wine rating<break time='.5s'/> <prosody pitch='high'>Try it</prosody>"
   end
 
 end

@@ -1,4 +1,4 @@
-class Alexa::AddCommentIntent
+class Alexa::AddWineCommentIntent
 
   def initialize(tasting, params)
     @tasting = tasting
