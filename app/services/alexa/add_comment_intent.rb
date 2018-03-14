@@ -1,18 +1,15 @@
-class Alexa::RateWineIntent
+class Alexa::AddCommentIntent
 
   def initialize(tasting, params)
     @tasting = tasting
     @params = params
+    @wine_review = nil
     if taster
       @guest = Guest.where(tasting: @tasting, taster_number: taster).first
     end
     if wine
       @wine_review = WineReview.find_by(wine_number: wine, tasting: @tasting)
     end
-  end
-
-  def confirmationStatus
-    @params["request"]["intent"]["confirmationStatus"] rescue "NONE"
   end
 
   def dialogState
@@ -23,38 +20,28 @@ class Alexa::RateWineIntent
     @params["request"]["intent"]["slots"]["wine"]["value"].to_i rescue nil
   end
 
-  def rating
-    @params["request"]["intent"]["slots"]["rating"]["value"].to_i rescue nil
-  end
-
   def taster
     @params["request"]["intent"]["slots"]["taster"]["value"].to_i rescue nil
   end
 
-  def taster_name
-    @guest.taster.handle || @guest.taster.name
+  def comment
+    @params["request"]["intent"]["slots"]["comment"]["value"] rescue nil
   end
 
-  def reviews_left
-    @guest.reviews_left || 0
-  end
-  def reviews_left_to_str
-    return "All your reviews are in." if reviews_left == 0
-    "You have #{reviews_left} wine #{"review".pluralize(reviews_left)} remaining"
+  def response
+    return confirm_body if dialogState == "COMPLETED"
+    delegate_body
   end
 
   def has_all_slots?
-    wine && rating && taster
-  end
-
-  def has_a_slot?
-    wine || rating || taster
+    wine && taster && comment
   end
 
   def process_request
     wr = WineReview.find_by(wine_number: wine, tasting: @tasting, taster_number: taster)
     return false if !wr
-    wr.update(rating: rating)
+    comments = wr.comments.split(",") << comment
+    wr.update(comment: comments.join(","))
   end
 
   def response
@@ -93,7 +80,7 @@ class Alexa::RateWineIntent
           "type" => "SSML",
           "ssml" => "
             <speak>
-              Let's see. <break time='.5s'/> I have a rating of #{rating}. On wine number #{wine}. For taster #{taster_name}. <break time='.5s'/> Is that correct?
+              OK. <break time='.5s'/> You want to add comment #{comment}. For wine number #{wine}. <break time='.5s'/> Is that correct?
             </speak>"
         },
         "shouldEndSession" => false,
@@ -112,7 +99,7 @@ class Alexa::RateWineIntent
       "response": {
         "outputSpeech": {
           "type": "PlainText",
-          "text": "Thank you. You're rating is recorded. #{reviews_left_to_str}"
+          "text": "Done. <break time='.5s'/> I've added comment #{comment}. For wine number #{wine}."
         },
         "shouldEndSession": true
       }
@@ -144,6 +131,5 @@ class Alexa::RateWineIntent
       }
     }
   end
-
 
 end

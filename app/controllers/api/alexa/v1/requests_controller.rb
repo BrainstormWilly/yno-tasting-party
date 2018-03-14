@@ -46,6 +46,8 @@ class Api::Alexa::V1::RequestsController < ApplicationController
         svc = Alexa::GetTastingStatsIntent.new(open_tasting, params)
       elsif intent == "GetAverageWineRatingIntent"
         svc = Alexa::GetAverageWineRatingIntent.new(open_tasting, params)
+      elsif intent == "AddWineCommentIntent"
+        svc = Alexa::AddWineCommentIntent.new(open_tasting, params)
       else
         svc = Alexa::AmazonIntents.new(params)
       end
@@ -65,6 +67,7 @@ class Api::Alexa::V1::RequestsController < ApplicationController
   def current_doorkeeper_user
     @current_doorkeeper_user ||= User.find(doorkeeper_token.resource_owner_id)
   end
+
 
 
   private
@@ -101,7 +104,7 @@ class Api::Alexa::V1::RequestsController < ApplicationController
           "ssml" => "<speak>
                       <s>Welcome to<break time='.1s'/> why no Wine Tasting</s>
                       <s>Your tasting<break time='.1s'/> <prosody pitch='low'>#{tasting.name}</prosody><break time='.1s'/> is currently open</s>
-                      <s>While tasting you can ask me to do the following<break time='.5s'/> rate a wine<break time='.5s'/> get an average rating for a wine<break time='.5s'/> or<break time='.5s'/> get tasting statistics</s>
+                      <s>While tasting you can ask me to do the following<break time='.5s'/> rate a wine<break time='.5s'/> get an average rating for a wine<break time='.5s'/> add a comment to a wine<break time='.5s'/>or<break time='.5s'/> get tasting statistics</s>
                       <s>Which would you like to do?</s>
                     </speak>"
         },
