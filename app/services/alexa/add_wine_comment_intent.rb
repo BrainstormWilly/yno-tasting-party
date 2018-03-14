@@ -29,14 +29,10 @@ class Alexa::AddWineCommentIntent
     @params["request"]["intent"]["slots"]["comment"]["value"] rescue nil
   end
 
-  def response
-    return confirm_body if dialogState == "COMPLETED"
-    delegate_body
-  end
 
-  def has_all_slots?
-    wine && taster && comment
-  end
+  # def has_all_slots?
+  #   wine && taster && comment
+  # end
 
   def process_request
     wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: taster).first
