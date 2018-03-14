@@ -97,8 +97,11 @@ class Alexa::AddWineCommentIntent
       "version": "1.0",
       "response": {
         "outputSpeech": {
-          "type": "PlainText",
-          "text": "Done. <break time='.5s'/> I've added comment #{comment}. For wine number #{wine}."
+          "type": "SSML",
+          "ssml" => "
+            <speak>
+              Done. <break time='.5s'/> I've added comment #{comment}. For wine number #{wine}.
+            </speak>"
         },
         "shouldEndSession": true
       }
