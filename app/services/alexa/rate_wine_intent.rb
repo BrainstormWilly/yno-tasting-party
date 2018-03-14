@@ -6,9 +6,6 @@ class Alexa::RateWineIntent
     if taster
       @guest = Guest.where(tasting: @tasting, taster_number: taster).first
     end
-    if wine
-      @wine_review = WineReview.find_by(wine_number: wine, tasting: @tasting)
-    end
   end
 
   def confirmationStatus
@@ -32,11 +29,11 @@ class Alexa::RateWineIntent
   end
 
   def taster_name
-    @guest.taster.handle || @guest.taster.name
+    @guest.taster.handle || @guest.taster.name rescue "unknown"
   end
 
   def reviews_left
-    @guest.reviews_left || 0
+    @guest.reviews_left rescue 0
   end
   def reviews_left_to_str
     return "All your reviews are in." if reviews_left == 0
@@ -52,7 +49,7 @@ class Alexa::RateWineIntent
   end
 
   def process_request
-    wr = WineReview.find_by(wine_number: wine, tasting: @tasting, taster_number: taster)
+    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_number: taster).first
     return false if !wr
     wr.update(rating: rating)
   end

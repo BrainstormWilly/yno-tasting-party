@@ -7,9 +7,6 @@ class Alexa::AddWineCommentIntent
     if taster
       @guest = Guest.where(tasting: @tasting, taster_number: taster).first
     end
-    if wine
-      @wine_review = WineReview.find_by(wine_number: wine, tasting: @tasting)
-    end
   end
 
   def dialogState
@@ -38,7 +35,7 @@ class Alexa::AddWineCommentIntent
   end
 
   def process_request
-    wr = WineReview.find_by(wine_number: wine, tasting: @tasting, taster_number: taster)
+    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_number: taster).first
     return false if !wr
     comments = wr.comments.split(",") << comment
     wr.update(comment: comments.join(","))
