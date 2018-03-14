@@ -9,6 +9,10 @@ class Alexa::AddWineCommentIntent
     end
   end
 
+  def confirmationStatus
+    @params["request"]["intent"]["confirmationStatus"] rescue "NONE"
+  end
+
   def dialogState
     @params["request"]["dialogState"] rescue "STARTED"
   end
@@ -35,7 +39,7 @@ class Alexa::AddWineCommentIntent
   end
 
   def process_request
-    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_number: taster).first
+    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: taster).first
     return false if !wr
     comments = wr.comments.split(",") << comment
     wr.update(comment: comments.join(","))
