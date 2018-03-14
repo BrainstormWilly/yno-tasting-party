@@ -40,28 +40,29 @@ class Alexa::RateWineIntent
     "You have #{reviews_left} wine #{"review".pluralize(reviews_left)} remaining"
   end
 
-  def has_all_slots?
-    wine && rating && taster
-  end
-
-  def has_a_slot?
-    wine || rating || taster
-  end
+  # def has_all_slots?
+  #   wine && rating && taster
+  # end
+  #
+  # def has_a_slot?
+  #   wine || rating || taster
+  # end
 
   def process_request
     wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: taster).first
     return false if !wr
+    return false if !rating
     wr.update(rating: rating)
   end
 
   def response
     if confirmationStatus == "CONFIRMED"
-      return completed_body if process_request
+      return confirm_body if process_request
       return failed_body
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return confirm_body if dialogState == "COMPLETED"
+    return completed_body if dialogState == "COMPLETED"
     delegate_body
   end
 

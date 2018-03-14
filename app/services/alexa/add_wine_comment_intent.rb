@@ -41,18 +41,20 @@ class Alexa::AddWineCommentIntent
   def process_request
     wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: taster).first
     return false if !wr
-    comments = wr.comments.split(",") << comment
-    wr.update(comment: comments.join(","))
+    return false if !comment
+    comments = wr.comments.split(",") rescue []
+    comments = comments << comment
+    wr.update(comments: comments.join(","))
   end
 
   def response
     if confirmationStatus == "CONFIRMED"
-      return completed_body if process_request
+      return confirm_body if process_request
       return failed_body
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return confirm_body if dialogState == "COMPLETED"
+    return completed_body if dialogState == "COMPLETED"
     delegate_body
   end
 
