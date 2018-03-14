@@ -49,12 +49,12 @@ class Alexa::AddWineCommentIntent
 
   def response
     if confirmationStatus == "CONFIRMED"
-      return confirm_body if process_request
+      return completed_body if process_request
       return failed_body
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return completed_body if dialogState == "COMPLETED"
+    return confirm_body if dialogState == "COMPLETED"
     delegate_body
   end
 
