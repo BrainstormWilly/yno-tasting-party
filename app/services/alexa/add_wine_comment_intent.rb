@@ -3,10 +3,14 @@ class Alexa::AddWineCommentIntent
   def initialize(tasting, params)
     @tasting = tasting
     @params = params
-    @wine_review = nil
-    if taster
-      @guest = Guest.where(tasting: @tasting, taster_number: taster).first
-    end
+    # @wine_review = nil
+    # if taster
+    #   @guest = Guest.where(tasting: @tasting, taster_number: taster).first
+    # end
+  end
+
+  def guest
+    Guest.where(tasting: @tasting, taster_number: taster).first
   end
 
   def confirmationStatus
@@ -35,8 +39,7 @@ class Alexa::AddWineCommentIntent
   # end
 
   def process_request
-    g = Guest.where(tasting: @tasting, taster_number: taster).first
-    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: g.taster_id).first
+    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: guest.taster_id).first
     return false if !wr
     return false if !comment
     comments = wr.comments.split(",") rescue []
