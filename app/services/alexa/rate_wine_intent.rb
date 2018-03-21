@@ -49,7 +49,8 @@ class Alexa::RateWineIntent
   # end
 
   def process_request
-    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: taster).first
+    g = Guest.where(tasting: @tasting, taster_number: taster).first
+    wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: g.taster_id).first
     return false if !wr
     return false if !rating
     wr.update(rating: rating)
