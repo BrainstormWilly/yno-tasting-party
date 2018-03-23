@@ -30,11 +30,11 @@ class Alexa::AmazonIntents
   end
 
   def stop_speak
-    "<s>OK</s><s>Come back anytime</s>"
+    "<s><say-as interpret-as='interjection'>okey dokey</say-as></s>"
   end
 
   def help_speak
-    "It's easy<break time='1s'/> Say<break time='.5s'/> Rate a wine. Or<break time='.5s'/> Add a wine comment. Or<break time='.5s'/> Get tasting stats. Or<break time='.5s'/> Get average wine rating<break time='.5s'/> <prosody pitch='high'>Try it</prosody>"
+    "<s>It's easy<s/> <s>Say<break time='.3s'/> Rate a wine. Or<break time='.3s'/> Add a comment. Or<break time='.3s'/> Get tasting stats. Or<break time='.3s'/> Get average wine rating</s> <prosody pitch='high'>Try it</prosody>"
   end
 
 end

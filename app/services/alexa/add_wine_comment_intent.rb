@@ -13,6 +13,10 @@ class Alexa::AddWineCommentIntent
     Guest.where(tasting: @tasting, taster_number: taster).first
   end
 
+  def taster_name
+    guest.taster.handle || guest.taster.name rescue "unknown"
+  end
+
   def confirmationStatus
     @params["request"]["intent"]["confirmationStatus"] rescue "NONE"
   end
@@ -54,7 +58,7 @@ class Alexa::AddWineCommentIntent
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return confirm_body if dialogState == "COMPLETED"
+    return confirm_body if dialogState == "COMPLETED" #deprecated
     delegate_body
   end
 
@@ -75,6 +79,7 @@ class Alexa::AddWineCommentIntent
     }
   end
 
+  # deprecated. no longer confirming intent.
   def confirm_body
     {
       "version" => "1.0",
@@ -104,7 +109,8 @@ class Alexa::AddWineCommentIntent
           "type": "SSML",
           "ssml" => "
             <speak>
-              Done. <break time='.5s'/> I've added comment #{comment}. For wine number #{wine}.
+              <s>Done.</s>
+              <s>I've added comment #{comment} for #{taster_name} on wine number #{wine}.</s>
             </speak>"
         },
         "shouldEndSession": true
@@ -117,8 +123,13 @@ class Alexa::AddWineCommentIntent
       "version": "1.0",
       "response": {
         "outputSpeech": {
-          "type": "PlainText",
-          "text": "I'm sorry, I wasn't able to save your request. Please try again."
+          "type": "SSML",
+          "ssml": "
+            <speak>
+              <s><say-as interpret-as='interjection'>d'oh</say-as></s>
+              <s>I wasn't able to save your request. Please try again.</s>
+            </speak>
+          "
         },
         "shouldEndSession": true
       }
@@ -130,8 +141,13 @@ class Alexa::AddWineCommentIntent
       "version": "1.0",
       "response": {
         "outputSpeech": {
-          "type": "PlainText",
-          "text": "OK. Try and start again and I'll see if I can get it right."
+          "type": "SSML",
+          "ssml": "
+            <speak>
+              <s><say-as interpret-as='interjection'>uh oh</say-as></s>
+              <s>Try again and I'll see if I can get it right.</s>
+            </speak>
+          "
         },
         "shouldEndSession": true
       }

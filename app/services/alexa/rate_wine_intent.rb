@@ -67,7 +67,7 @@ class Alexa::RateWineIntent
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return confirm_body if dialogState == "COMPLETED"
+    return confirm_body if dialogState == "COMPLETED" # deprecated
     delegate_body
   end
 
@@ -88,19 +88,20 @@ class Alexa::RateWineIntent
     }
   end
 
+  # deprecated. no longer confirming intent
   def confirm_body
     {
-      "version" => "1.0",
-      "response" => {
-        "outputSpeech" => {
-          "type" => "SSML",
-          "ssml" => "
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "SSML",
+          "ssml": "
             <speak>
               Let's see. <break time='.5s'/> I have a rating of #{rating}. On wine number #{wine}. For taster #{taster_name}. <break time='.5s'/> Is that correct?
             </speak>"
         },
-        "shouldEndSession" => false,
-        "directives" => [
+        "shouldEndSession": false,
+        "directives": [
           {
             "type" => "Dialog.ConfirmIntent"
           }
@@ -127,8 +128,13 @@ class Alexa::RateWineIntent
       "version": "1.0",
       "response": {
         "outputSpeech": {
-          "type": "PlainText",
-          "text": "I'm sorry, I wasn't able to save your request. Please try again."
+          "type": "SSML",
+          "ssml": "
+            <speak>
+              <s><say-as interpret-as='interjection'>d'oh</say-as></s>
+              <s>I wasn't able to save your request. Please try again.</s>
+            </speak>
+          "
         },
         "shouldEndSession": true
       }
@@ -140,8 +146,13 @@ class Alexa::RateWineIntent
       "version": "1.0",
       "response": {
         "outputSpeech": {
-          "type": "PlainText",
-          "text": "OK. Try and start again and I'll see if I can get it right."
+          "type": "SSML",
+          "ssml": "
+            <speak>
+              <s><say-as interpret-as='interjection'>uh oh</say-as></s>
+              <s>Try again and I'll see if I can get it right.</s>
+            </speak>
+          "
         },
         "shouldEndSession": true
       }

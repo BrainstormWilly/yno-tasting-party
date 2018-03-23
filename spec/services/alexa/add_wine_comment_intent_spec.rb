@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Alexa::RateWineIntent, type: :model do
+RSpec.describe Alexa::AddWineCommentIntent, type: :model do
 
   let(:user){ create(:user) }
   let(:taster){ create(:taster, user: user) }
