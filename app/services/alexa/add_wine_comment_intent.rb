@@ -110,7 +110,8 @@ class Alexa::AddWineCommentIntent
           "type": "SSML",
           "ssml": "
             <speak>
-              <s>Done. Your comment has been succesfully added.</s>
+              <s>Done.</s>
+              <s>Your comment has been succesfully added.</s>
             </speak>"
         },
         "shouldEndSession": true

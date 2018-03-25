@@ -119,7 +119,7 @@ class Alexa::RateWineIntent
           "ssml": "
             <speak>
               <s>#{taster_name}.</s>
-              <s>I've given wine number #{wine} a rating of #{rating}</s>
+              <s>I've given wine number #{wine} your rating of #{rating}</s>
               <s>#{reviews_left_to_str}</s>
             </speak>"
         },
