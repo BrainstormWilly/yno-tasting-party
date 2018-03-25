@@ -24,7 +24,7 @@ class Alexa::GetTastingStatsIntent
   def response
     {
       "version": "1.0",
-      "response" {
+      "response": {
         "outputSpeech": {
           "type": "SSML",
           "ssml": "
