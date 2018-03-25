@@ -18,13 +18,13 @@ class Alexa::AmazonIntents
 
   def response_body(speak, end_session=false)
     {
-      "version" => "1.0",
-      "response" => {
-        "outputSpeech" => {
-          "type" => "SSML",
-          "ssml" => "<speak>#{speak}</speak>"
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "SSML",
+          "ssml": "<speak>#{speak}</speak>"
         },
-        "shouldEndSession" => end_session
+        "shouldEndSession": end_session
       }
     }
   end
