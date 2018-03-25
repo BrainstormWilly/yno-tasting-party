@@ -32,7 +32,7 @@ class Alexa::GetTasterWineRatingsIntent
       str << "<s>a #{wr.rating} for wine number #{wr.wine_number}</s>"
     end
     str << "<s>All your ratings are in.</s><s><say-as interpret-as='interjection'>well done</say-as></s>" if left==0
-    str << "<s>You have #{left} wine #{"review".pluralize(reviews_left)} remaining</s>"
+    str << "<s>You have #{left} wine #{"review".pluralize(left)} remaining</s>" unless left==0
     str
   end
 
