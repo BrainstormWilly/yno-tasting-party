@@ -88,7 +88,7 @@ class Alexa::AddWineCommentIntent
           "ssml": "
             <speak>
               <s>#{taster_name}.</s>
-              <s>You want to add comment <prosody pitch='low'>#{comment}</prosody> for wine number #{wine}.</s>
+              <s>You want to add comment <break time='.3s'/><prosody pitch='low'>#{comment}</prosody><break time='.3s'/> for wine number<break time='.1s'/> #{wine}.</s>
               <s>Is that correct?</s>
             </speak>"
         },
