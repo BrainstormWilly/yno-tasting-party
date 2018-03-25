@@ -37,11 +37,11 @@ class Alexa::RateWineIntent
   end
 
   def reviews_left
-    guest.reviews_left rescue 0
+    guest.reviews_left.count
   end
 
   def reviews_left_to_str
-    return "All your reviews are in." if guest.reviews_left == 0
+    return "All your reviews are in." if reviews_left == 0
     "You have #{reviews_left} wine #{"review".pluralize(reviews_left)} remaining"
   end
 
@@ -76,14 +76,14 @@ class Alexa::RateWineIntent
 
   def delegate_body
     {
-      "version" => "1.0",
-      "response" => {
-        "directives" => [
+      "version": "1.0",
+      "response": {
+        "directives": [
           {
-            "type" => "Dialog.Delegate"
+            "type": "Dialog.Delegate"
           }
         ],
-        "shouldEndSession" => false
+        "shouldEndSession": false
       }
     }
   end
@@ -103,7 +103,7 @@ class Alexa::RateWineIntent
         "shouldEndSession": false,
         "directives": [
           {
-            "type" => "Dialog.ConfirmIntent"
+            "type": "Dialog.ConfirmIntent"
           }
         ]
       }

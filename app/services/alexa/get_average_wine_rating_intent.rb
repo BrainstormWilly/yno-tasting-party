@@ -23,30 +23,30 @@ class Alexa::GetAverageWineRatingIntent
 
   def delegate_body
     {
-      "version" => "1.0",
-      "response" => {
-        "directives" => [
+      "version": "1.0",
+      "response": {
+        "directives": [
           {
-            "type" => "Dialog.Delegate"
+            "type": "Dialog.Delegate"
           }
         ],
-        "shouldEndSession" => false
+        "shouldEndSession": false
       }
     }
   end
 
   def confirm_body
     {
-      "version" => "1.0",
-      "response" => {
-        "outputSpeech" => {
-          "type" => "SSML",
-          "ssml" => "
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "SSML",
+          "ssml": "
             <speak>
               Currently. The average rating for wine number #{wine} is #{@tasting.average_rating_for_wine(wine)} with #{@tasting.selected_wine(wine)["recorded_reviews"]} #{"review".pluralize(@tasting.selected_wine(wine)["recorded_reviews"])} completed.
             </speak>"
         },
-        "shouldEndSession" => true
+        "shouldEndSession": true
       }
     }
   end

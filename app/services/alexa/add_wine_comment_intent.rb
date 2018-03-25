@@ -46,9 +46,9 @@ class Alexa::AddWineCommentIntent
     wr = WineReview.where(wine_number: wine, tasting: @tasting, taster_id: guest.taster_id).first
     return false if !wr
     return false if !comment
-    comments = wr.comments.split(",") rescue []
-    comments = comments << comment
-    wr.update(comments: comments.join(","))
+    comments = wr.comments.split(",").map{ |e| e.strip } rescue []
+    comments = comments << comment unless comments.include?(comment)
+    wr.update(comments: comments.join(", "))
   end
 
   def response
@@ -58,7 +58,7 @@ class Alexa::AddWineCommentIntent
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return confirm_body if dialogState == "COMPLETED" #deprecated
+    return confirm_body if dialogState == "COMPLETED"
     delegate_body
   end
 
@@ -67,34 +67,35 @@ class Alexa::AddWineCommentIntent
 
   def delegate_body
     {
-      "version" => "1.0",
-      "response" => {
-        "directives" => [
+      "version": "1.0",
+      "response": {
+        "directives": [
           {
-            "type" => "Dialog.Delegate"
+            "type": "Dialog.Delegate"
           }
         ],
-        "shouldEndSession" => false
+        "shouldEndSession": false
       }
     }
   end
 
-  # deprecated. no longer confirming intent.
   def confirm_body
     {
-      "version" => "1.0",
-      "response" => {
-        "outputSpeech" => {
-          "type" => "SSML",
-          "ssml" => "
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "SSML",
+          "ssml": "
             <speak>
-              OK. <break time='.5s'/> You want to add comment #{comment}. For wine number #{wine}. <break time='.5s'/> Is that correct?
+              <s>OK.</s>
+              <s>You want to add comment #{comment} for wine number #{wine}.</s>
+              <s>Is that correct?</s>
             </speak>"
         },
-        "shouldEndSession" => false,
-        "directives" => [
+        "shouldEndSession": false,
+        "directives": [
           {
-            "type" => "Dialog.ConfirmIntent"
+            "type": "Dialog.ConfirmIntent"
           }
         ]
       }
@@ -107,7 +108,7 @@ class Alexa::AddWineCommentIntent
       "response": {
         "outputSpeech": {
           "type": "SSML",
-          "ssml" => "
+          "ssml": "
             <speak>
               <s>Done.</s>
               <s>I've added comment #{comment} for #{taster_name} on wine number #{wine}.</s>
