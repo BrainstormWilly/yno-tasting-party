@@ -87,8 +87,8 @@ class Alexa::AddWineCommentIntent
           "type": "SSML",
           "ssml": "
             <speak>
-              <s>OK.</s>
-              <s>You want to add comment #{comment} for wine number #{wine}.</s>
+              <s>#{taster_name}.</s>
+              <s>You want to add comment <prosody pitch='low'>#{comment}</prosody> for wine number #{wine}.</s>
               <s>Is that correct?</s>
             </speak>"
         },
@@ -110,8 +110,7 @@ class Alexa::AddWineCommentIntent
           "type": "SSML",
           "ssml": "
             <speak>
-              <s>Done.</s>
-              <s>I've added comment #{comment} for #{taster_name} on wine number #{wine}.</s>
+              <s>Done. Your comment has been succesfully added.</s>
             </speak>"
         },
         "shouldEndSession": true

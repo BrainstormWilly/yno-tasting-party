@@ -61,13 +61,13 @@ class Alexa::RateWineIntent
   end
 
   def response
-    if confirmationStatus == "CONFIRMED"
+    if dialogState == "COMPLETED"
       return completed_body if process_request
       return failed_body
     elsif confirmationStatus == "DENIED"
       return denied_body
     end
-    return confirm_body if dialogState == "COMPLETED" # deprecated
+    # return confirm_body if dialogState == "COMPLETED" # deprecated
     delegate_body
   end
 
@@ -115,8 +115,13 @@ class Alexa::RateWineIntent
       "version": "1.0",
       "response": {
         "outputSpeech": {
-          "type": "PlainText",
-          "text": "Thank you. You're rating is recorded. #{reviews_left_to_str}"
+          "type": "SSML",
+          "ssml": "
+            <speak>
+              <s>#{taster_name}.</s>
+              <s>I've given wine number #{wine} a rating of #{rating}</s>
+              <s>#{reviews_left_to_str}</s>
+            </speak>"
         },
         "shouldEndSession": true
       }
