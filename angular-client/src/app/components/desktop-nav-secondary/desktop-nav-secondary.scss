@@ -1,0 +1,24 @@
+desktop-nav-secondary{
+
+  display: none;
+
+  @media (min-width: 800px) and (orientation: landscape){
+    display: flex;
+    flex-direction: column;
+
+    a{
+      color: $theme-neutral-color;
+      opacity: 1;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      text-align: right;
+      &.on{
+        color: #fff;
+      }
+    }
+    a:hover{
+      color: #fff;
+    }
+  }
+
+}

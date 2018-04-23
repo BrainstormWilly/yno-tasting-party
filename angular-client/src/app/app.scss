@@ -8,19 +8,31 @@ $theme-pending-color: rgb(135, 125,0);
 $theme-open-color: rgb(0, 108, 0);
 $theme-neutral-color: rgb(167, 159, 148);
 $theme-info-color: rgb(159, 168, 218);
-$theme-color: rgb(198, 0, 53);
+$theme-color: rgb(67, 0, 46);
 $theme-color-dark: darken($theme-color, 20%);
 $theme-dark-gray: #222;
 $theme-header-color: lighten($theme-neutral-color, 20%);
+
+@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Lato:300,400');
 
 
 body {
   background-color: $theme-bkg-color;
   color: $theme-neutral-color;
-  font-family: sans-serif;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  line-height: 1.4;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+h1,h2,h3,h4{
+  font-weight: 400;
+}
+h3,h4{
+  margin: 0;
 }
 
 a.disabled{

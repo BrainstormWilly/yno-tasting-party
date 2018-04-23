@@ -1,0 +1,57 @@
+desktop-nav-primary{
+
+  display: none;
+
+  @media (min-width: 800px) and (orientation: landscape){
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 12%; bottom: 12%; left: 43%; right: 40%;
+    // border: 1px solid blue;
+    a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid $theme-neutral-color;
+      height: 7rem;
+      width: 7rem;
+      font-size: 3rem;
+      border-radius: 50%;
+      color: $theme-neutral-color;
+      text-decoration: none;
+      opacity: .6;
+      &.on{
+        color: $theme-bkg-color;
+        background-color: $theme-neutral-color;
+      }
+
+    }
+    a:hover{
+      opacity: 1;
+    }
+    a:nth-child(2){
+      position: relative;
+      top: -1rem;
+      align-self: flex-end;
+    }
+    a:nth-child(3){
+      position: relative;
+      top: 1rem;
+      align-self: flex-end;
+    }
+  }
+
+  @media (min-width: 1280px) and (orientation: landscape){
+    top: 14%; bottom: 14%; left: 45%; right: 40%;
+    a{
+      height: 8rem;
+      width: 8rem;
+      span{
+        font-size: 4rem;
+      }
+
+    }
+  }
+
+}

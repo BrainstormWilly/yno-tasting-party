@@ -3,13 +3,15 @@ import {AddGuestModalComponent} from './add-guest-modal/add-guest-modal.componen
 import {AddWineModalComponent} from './add-wine-modal/add-wine-modal.component';
 import {AlertsModalComponent} from './alerts-modal/alerts-modal.component';
 import {ConnectionListItemComponent} from './connection-list-item/connection-list-item.component';
-// import {ConnectionSelectorModalComponent} from './connection-selector-modal/connection-selector-modal.component';
+import {DesktopNavPrimaryComponent} from './desktop-nav-primary/desktop-nav-primary.component';
+import {DesktopNavSecondaryComponent} from './desktop-nav-secondary/desktop-nav-secondary.component';
 import {FooterMenuComponent} from './footer-menu/footer-menu.component';
 import {GuestListItemComponent} from './guest-list-item/guest-list-item.component';
 import {HostLocationFormComponent} from './host-location-form/host-location-form.component';
 import {HostLocationModalComponent} from './host-location-modal/host-location-modal.component';
 import {InvitationDetailModalComponent} from './invitation-detail-modal/invitation-detail-modal.component';
 import {NotificationComponent} from './notification/notification.component';
+import {MobileNavComponent} from './mobile-nav/mobile-nav.component';
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ShowGuestModalComponent} from './show-guest-modal/show-guest-modal.component';
 import {SortBarComponent} from './sort-bar/sort-bar.component';
@@ -35,12 +37,14 @@ export const ComponentsModule = angular
   .component('addWineModal', AddWineModalComponent)
   .component('alertsModal', AlertsModalComponent)
   .component('connectionListItem', ConnectionListItemComponent)
-  // .component('connectionSelectorModal', ConnectionSelectorModalComponent)
+  .component('desktopNavPrimary', DesktopNavPrimaryComponent)
+  .component('desktopNavSecondary', DesktopNavSecondaryComponent)
   .component('footerMenu', FooterMenuComponent)
   .component('guestListItem', GuestListItemComponent)
   .component('hostLocationForm', HostLocationFormComponent)
   .component('hostLocationModal', HostLocationModalComponent)
   .component('invitationDetailModal', InvitationDetailModalComponent)
+  .component('mobileNav', MobileNavComponent)
   .component('notification', NotificationComponent)
   .component('progressBar', ProgressBarComponent)
   .component('showGuestModal', ShowGuestModalComponent)

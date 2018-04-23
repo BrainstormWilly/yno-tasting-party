@@ -9,6 +9,10 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
         user: UserService => UserService.getUserByValidation()
       }
     })
+    .state('welcome-how',{
+      url: '/',
+      component: 'welcomeHow'
+    })
     .state('welcome-signin',{
       url: '/signin',
       component: 'welcomeSignin',
@@ -39,9 +43,17 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('welcome-who',{
+      url: '/who',
+      component: 'welcomeWho'
+    })
     .state('welcome-privacy',{
       url: '/privacy',
       component: 'welcomePrivacy'
+    })
+    .state('welcome-why',{
+      url: '/why',
+      component: 'welcomeWhy'
     });
 
 

@@ -4,11 +4,10 @@ import {template} from './welcome-privacy.es6';
 export const WelcomePrivacyComponent = {
   template,
   controller: class WelcomePrivacyController{
-    constructor(){
+    constructor($state, welcomeConstants){
       'ngInject';
-    }
-
-    $onInit() {
+      this.$state = $state;
+      this.constants = welcomeConstants;
     }
 
   }
