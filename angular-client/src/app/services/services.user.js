@@ -117,7 +117,7 @@ export class UserService {
             user: response.data.data
           });
         }else{
-          // this.AlertsService.setFailureAlert(response.data.errors.full_messages[0]);
+          this.AlertsService.setFailureAlert(response.data.data);
           this.$log.error("WelcomeSignupComponent.signupUser", response.data.data);
         }
       })

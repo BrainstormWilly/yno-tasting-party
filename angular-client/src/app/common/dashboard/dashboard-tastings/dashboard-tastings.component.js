@@ -1,12 +1,12 @@
-import {template} from './tasting-list.es6';
+import {template} from './dashboard-Tastings.es6';
 
-export const TastingListComponent = {
+export const DashboardTastingsComponent = {
   bindings:{
     taster: "<",
     tastings: "<"
   },
   template,
-  controller: class TastingListController{
+  controller: class DashboardTastingsController{
     constructor($log, $state, lodash)
     {
       'ngInject';

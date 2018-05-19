@@ -16,6 +16,7 @@ import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ShowGuestModalComponent} from './show-guest-modal/show-guest-modal.component';
 import {SortBarComponent} from './sort-bar/sort-bar.component';
 import {StateSelectorModalComponent} from './state-selector-modal/state-selector-modal.component';
+import {TasterPanelComponent} from './taster-panel/taster-panel.component';
 import {TastingListItemComponent} from './tasting-list-item/tasting-list-item.component';
 import {TastingDetailComponent} from './tasting-detail/tasting-detail.component';
 import {TastingDetailModalComponent} from './tasting-detail-modal/tasting-detail-modal.component';
@@ -50,6 +51,7 @@ export const ComponentsModule = angular
   .component('showGuestModal', ShowGuestModalComponent)
   .component('sortBar', SortBarComponent)
   .component('stateSelectorModal', StateSelectorModalComponent)
+  .component('tasterPanel', TasterPanelComponent)
   .component('tastingDetail', TastingDetailComponent)
   .component('tastingDetailModal', TastingDetailModalComponent)
   .component('tastingListItem', TastingListItemComponent)

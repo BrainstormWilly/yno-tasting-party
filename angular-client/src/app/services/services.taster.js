@@ -1,8 +1,9 @@
 export class TasterService {
-  constructor ($rootScope, $log, $http, $auth, $q, $state, constants) {
+  constructor ($rootScope, $log, $http, $auth, $q, $state, constants, AlertsService) {
     'ngInject';
 
     this.constants = constants;
+    this.AlertsService = AlertsService;
     this.$log = $log;
     this.$http = $http;
     this.$rootScope = $rootScope;
@@ -61,12 +62,16 @@ export class TasterService {
   }
 
   update(taster){
+    this.$rootScope.$broadcast("service-init-event");
     this.$http.put(this.constants.apiUrl + "/tasters/" + taster.id, taster)
       .then(result=>{
         this.$rootScope.$broadcast("taster-update-event", result.data);
       })
-      .catch(err=>{
-        this.$log.error("TasterService.update", err);
+      .catch(()=>{
+        this.AlertsService.setFailureAlert("There was an error in updating taster. Please try later.");
+      })
+      .finally(()=>{
+        this.$rootScope.$broadcast("service-complete-event");
       })
   }
 
@@ -86,8 +91,8 @@ export class TasterService {
       .then(() => {
         this.$state.go("dashboard");
       })
-      .catch(error => {
-        this.$log.error("TasterService.signupTaster", error);
+      .catch(() => {
+        this.AlertsService.setFailureAlert("There was an error in taster sign up. Please try later.");
       })
   }
 

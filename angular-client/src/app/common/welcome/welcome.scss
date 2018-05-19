@@ -1,147 +1,141 @@
 
 
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: flex-start;
-  // min-height: 36rem;
-  //
-  // .welcome-signin-btn {
-  //   @extend .circle-btn;
-  //   height: 8rem;
-  //   width: 8rem;
-  //   font-size: 1.5rem;
-  //   margin-top: 1rem;
-  //   background-color: $theme-neutral-color;
-  //   color: $theme-bkg-color;
-  // }
-  //
-  // .welcome-signup-btn {
-  //   @extend .circle-btn;
-  //   height: 6rem;
-  //   width: 6rem;
-  //   font-size: 1.2rem;
-  //   margin-top: 1rem;
-  // }
-
-
   .welcome-background{
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     background: radial-gradient(circle at 50% 0%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
+
+    .welcome-hero{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      top: -20%; right: 0; left: 0;
+
+      img{
+        max-width: 80%;
+      }
+      span{
+        font-family: 'Averia Serif Libre', cursive;
+        text-shadow: 2px 2px 4px $theme-bkg-color;
+        text-align: center;
+        padding-left: 1rem; padding-right: 1rem;
+        color: #fff;
+      }
+    }
+
+    .welcome-logo{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      top: -15%; right: 0; left: 0;
+      height: 5rem;
+      // border: 1px solid blue;
+      img{
+        width: 5rem;
+      }
+    }
+
+    .welcome-copy{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      top: -15%;
+      // border: 1px solid blue;
+      &.top{
+        justify-content: flex-start;
+        padding: 0 1rem;
+      }
+      &.bottom {
+        justify-content: flex-start;
+        padding: 0 1rem;
+      }
+      &.full{
+        align-items: center;
+        padding: 1rem;
+      }
+      form{
+        width: 100%;
+        // border: 1px solid blue;
+      }
+    }
+
+    
+
   }
 
-  .welcome-hero{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    top: -20%; right: 0; left: 0;
-    img{
-      max-width: 80%;
-    }
-    span{
-      font-family: 'Averia Serif Libre', cursive;
-      text-shadow: 2px 2px 4px $theme-bkg-color;
-      text-align: center;
-      padding-left: 1rem; padding-right: 1rem;
-      color: #fff;
-    }
-  }
-
-  .welcome-logo{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    top: -15%; right: 0; left: 0;
-    height: 5rem;
-    // border: 1px solid blue;
-    img{
-      width: 5rem;
-    }
-  }
-
-  .welcome-copy{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    top: -15%;
-    &.top{
-      justify-content: flex-start;
-      padding: 0 1rem;
-    }
-    &.bottom{
-      justify-content: flex-start;
-      padding: 0 1rem;
-    }
-  }
 
 
   @media (min-width: 800px) and (orientation: landscape){
     .welcome-background{
-      // position: fixed;
-      // top: 0; right: 0; bottom: 0; left: 0;
       background: radial-gradient(circle at 30% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
-    }
 
-    .welcome-hero{
-      position: fixed;
-      flex-direction: row;
-      justify-content: flex-start;
-      // border: 1px solid blue;
-      top: 0; right: 0; bottom: 0; left: 0;
-      img{
-        max-width: 50%;
-      }
-      span{
-        text-align: left;
-        padding: 0;
-      }
-    }
-
-    .welcome-hero-cover{
-      position: fixed;
-      top: 0; bottom: 0; left: 0;
-      width: 40%;
-      background: linear-gradient(to right, rgba(0,0,0,1) 30%, rgba(0,0,0,0))
-    }
-
-    .welcome-logo{
-      position: fixed;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      top: 50%; right: 87%; bottom: 0; left: 0;
-      // border: 1px solid blue;
-      img{
-        position: relative;
-        top: -1rem;
-        width: 5rem;
-        margin-bottom: 1rem;
-      }
-
-    }
-
-    .welcome-copy{
-      position: fixed;
-      display: flex;
-      flex-direction: column;
-
-      // border: 1px solid blue;
-      left: 63%; right: 0;
-      &.top{
-        justify-content: flex-end;
-        top: 0; bottom: 50%;
-        padding: 1rem 1rem 2rem 0;
-      }
-      &.bottom{
+      .welcome-hero{
+        position: absolute;
+        flex-direction: row;
         justify-content: flex-start;
-        top: 50%; bottom: 0;
-        padding: 2rem 1rem 0 0;
+        // border: 1px solid blue;
+        top: 0; right: 0; bottom: 0; left: 0;
+        img{
+          max-width: 50%;
+        }
+        span{
+          text-align: left;
+          padding: 0;
+        }
       }
-    }
 
+      .welcome-hero-cover{
+        position: absolute;
+        top: 0; bottom: 0; left: 0;
+        width: 40%;
+        background: linear-gradient(to right, rgba(0,0,0,1) 30%, rgba(0,0,0,0))
+      }
+
+      .welcome-logo{
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        top: 50%; right: 87%; bottom: 0; left: 0;
+        // border: 1px solid blue;
+        img{
+          position: relative;
+          top: -1rem;
+          width: 5rem;
+          margin-bottom: 1rem;
+        }
+      }
+
+      .welcome-copy{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        // border: 1px solid blue;
+        left: 63%; right: 0;
+        &.top{
+          justify-content: flex-end;
+          top: 0; bottom: 50%;
+          padding: 1rem 1rem 2rem 0;
+        }
+        &.bottom{
+          justify-content: flex-start;
+          top: 50%; bottom: 0;
+          padding: 2rem 1rem 0 0;
+        }
+        &.full{
+          justify-content: center;
+          top: 0; bottom: 0;
+          padding: 1rem;
+        }
+      }
+
+      .mobile-nav-spacer{
+        display: none;
+      }
+
+    }
   }
 
 
@@ -150,18 +144,16 @@
 
     .welcome-background{
       background: radial-gradient(circle at 40% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
-    }
 
-    .welcome-hero{
-      img{
-        max-width: 45%;
+      .welcome-hero{
+        img{
+          max-width: 45%;
+        }
+        left: 10%;
       }
-      left: 10%;
+
+      .welcome-logo{
+        right: 90%;
+      }
     }
-
-    .welcome-logo{
-      right: 90%;
-    }
-
-
   }

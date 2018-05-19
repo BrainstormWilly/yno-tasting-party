@@ -6,11 +6,12 @@ export const WelcomeComponent = {
   },
   template,
   controller: class WelcomeComponent{
-    constructor($log, $state, welcomeConstants){
+    constructor($log, $state, welcomeConstants, AlertsService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
       this.constants = welcomeConstants;
+      this.AlertsService = AlertsService;
       // this.navOn = false;
       this.welcomeState = this.constants.WELCOME_LANDING_STATE;
       this.heroImg = this.constants.WELCOME_LANDING_HERO;
@@ -20,6 +21,8 @@ export const WelcomeComponent = {
     $onInit() {
       if( this.user ){
         this.$state.go("dashboard");
+      }else{
+        this.AlertsService.broadcastAlerts();
       }
     }
 

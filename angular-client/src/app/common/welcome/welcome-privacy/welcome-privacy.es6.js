@@ -10,7 +10,7 @@ export const template = `
     <div class="welcome-hero-cover"></div>
 
     <div class="welcome-logo">
-      <a href ng-click="$ctrl.$state.go('welcome')"><img src='assets/images/yno_tasting_logo_white.svg'></a>
+      <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
       <desktop-nav-secondary welcome-state="$ctrl.constants.WELCOME_PRIVACY_STATE"></desktop-nav-secondary>
     </div>
 
@@ -18,7 +18,7 @@ export const template = `
       <h2>Privacy</h2>
       <h3>What we store</h3>
       <p><strong>For all tasters:</strong> email, birthdate, name, handle, wines, ratings, and comments.<br>
-      <strong>For all hosts:</strong> same as tasters as well as host location.</p>
+      <strong>For all hosts:</strong> same as tasters as well as host locations.</p>
     </div>
 
     <div class="welcome-copy bottom">
@@ -29,6 +29,7 @@ export const template = `
     </div>
 
     <desktop-nav-primary></desktop-nav-primary>
+    <div class="mobile-nav-spacer"></div>
 
   </div>
 

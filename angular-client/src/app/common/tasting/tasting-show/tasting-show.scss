@@ -1,0 +1,45 @@
+.tasting{
+
+  .tasting-detail{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $theme-dark-gray;
+    padding: 1rem;
+
+    svg{
+      height: 3rem;
+      width: 3rem;
+      margin-right: 1rem;
+      path{
+        fill: $theme-neutral-color;
+      }
+    }
+    h3{
+      text-align: left;
+      flex-grow: 1;
+    }
+  }
+
+  .tasting-taster{
+    display: flex;
+    align-items: center;
+    top: 0; right: 0; left: 0;
+    height: 5rem; min-height: 5rem;
+    background-color: $theme-color;
+
+    .tasting-taster-number{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      width: 3rem;
+      margin-right: 1rem; margin-left: 1rem;
+      border-radius: 50%;
+      background-color: $theme-neutral-color;
+      color: $theme-color;
+      font-size: 1.7rem;
+      font-weight: bold;
+    }
+  }
+}

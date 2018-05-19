@@ -1,11 +1,12 @@
-import {template} from './wine-reviews.es6';
+import {template} from './dashboard-reviews.es6';
 
-export const WineReviewsComponent = {
+export const DashboardReviewsComponent = {
   bindings: {
+    taster: "<",
     reviews: "<"
   },
   template,
-  controller: class WineReviewsController{
+  controller: class DashboardReviewsController{
     constructor($scope, $log, $state, ModalService){
       'ngInject';
       this.$log = $log;
@@ -21,7 +22,7 @@ export const WineReviewsComponent = {
     }
 
     $onInit() {
-      this.$log.log("WineReviewsComponent.$onInit", this.reviews);
+      // this.$log.log("WineReviewsComponent.$onInit", this.reviews);
 
     }
 

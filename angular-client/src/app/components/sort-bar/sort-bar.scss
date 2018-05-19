@@ -1,11 +1,9 @@
 sort-bar{
-  position: fixed;
   display: flex;
   align-items: center;
-  top: 4rem;
-  right: 0;
-  left: 0;
+  right: 0; left: 0;
   height: 2rem;
+  margin-bottom: .5rem;
   // border: 1px solid blue;
   background-color: $theme-dark-gray;
   .sort-field{
@@ -25,9 +23,14 @@ sort-bar{
       color: $theme-dark-gray;
       opacity: 1;
     }
+    &:last-child{
+      border-right: none;
+    }
   }
-  .sort-field:last-child{
-    border-right: none;
-  }
-
 }
+
+// @media (min-width: 800px) and (orientation: landscape){
+//   sort-bar{
+//     border-radius: 50%;
+//   }
+// }

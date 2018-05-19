@@ -7,10 +7,11 @@ export const WelcomeSignupComponent = {
   },
   template,
   controller: class WelcomeSignupComponent{
-    constructor($scope, $state, $log, UserService, TasterService){
+    constructor($scope, $state, $log, welcomeConstants, UserService, TasterService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
+      this.constants = welcomeConstants;
       this.UserService = UserService;
       this.TasterService = TasterService;
       this.viewState = 1;

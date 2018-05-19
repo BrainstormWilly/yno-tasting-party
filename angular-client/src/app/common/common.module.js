@@ -6,7 +6,6 @@ import {TastingModule} from './tasting/tasting.module.js';
 
 import {UserModule} from './user/user.module.js';
 import {WelcomeModule} from './welcome/welcome.module.js';
-import {WineReviewsModule} from './wine-reviews/wine-reviews.module.js';
 
 
 export const CommonModule = angular
@@ -15,7 +14,6 @@ export const CommonModule = angular
     InvitationsModule,
     WelcomeModule,
     TastingModule,
-    UserModule,
-    WineReviewsModule
+    UserModule
   ])
   .name;

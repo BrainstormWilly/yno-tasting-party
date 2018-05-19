@@ -5,8 +5,10 @@ wine-list-item{
   // border: 2px solid lighten($theme-dark-gray, 20%);
   border-radius: 1.5rem;
   background-color: $theme-dark-gray;
-  margin: .5rem .5rem 0 .5rem;
+  // margin: .5rem .5rem 0 .5rem;
+  margin-bottom: .5rem;
   padding-right: .25rem;
+  // padding-bottom: 20rem;
 
   .wine-list-item-link{
     display: flex;
@@ -27,6 +29,15 @@ wine-list-item{
       background-color: $theme-color-dark;
       &.unrated{
         background-color: $theme-dark-gray;
+      }
+      &.good{
+        background-color: darken($theme-good-color, 30%);
+      }
+      &.fair{
+        background-color: darken($theme-ok-color, 30%);
+      }
+      &.bad{
+        background-color: darken($theme-bad-color, 30%);
       }
       span:first-child{
         font-size: .9rem;

@@ -9,9 +9,16 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
         user: UserService => UserService.getUserByValidation()
       }
     })
+    .state('welcome-alexa',{
+      url: '/alexa',
+      component: 'welcomeAlexa'
+    })
     .state('welcome-how',{
-      url: '/',
-      component: 'welcomeHow'
+      url: '/how',
+      component: 'welcomeHow',
+      resolve: {
+        taster: TasterService => TasterService.getTasterFromValidation()
+      }
     })
     .state('welcome-signin',{
       url: '/signin',
@@ -46,6 +53,10 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
     .state('welcome-who',{
       url: '/who',
       component: 'welcomeWho'
+    })
+    .state('welcome-password-reset',{
+      url: '/password_reset',
+      component: 'welcomePasswordReset'
     })
     .state('welcome-privacy',{
       url: '/privacy',

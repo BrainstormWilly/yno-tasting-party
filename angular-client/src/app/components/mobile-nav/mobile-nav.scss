@@ -1,56 +1,67 @@
 mobile-nav{
 
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  right: 1rem; bottom: 1rem; left: 1rem;
-  border-radius: 2rem;
+
   // border: 1px solid blue;
-  .nav-button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4rem; height: 4rem;
-    border-radius: 50%;
-    border: 2px solid $theme-bad-color;
-    background-color: $theme-bkg-color;
-    z-index: 1;
-    img{
-      width: 1.75rem;
-    }
-  }
-  nav{
-    position: relative;
+  .nav-wrapper{
+    position: fixed;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    bottom: 1rem;
-    opacity: 1;
-    transition: bottom .5s, opacity 1s;
-    // border: 1px solid blue;
-    &.off{
-      bottom: -30rem;
-      opacity: 0;
+    align-items: flex-end;
+    top: 0; right: 0; bottom: 0; left: 0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 1s;
+    &.on{
+      background-color: rgba(0, 0, 0, .8);
     }
-    a{
+    .nav-button{
+      position: absolute;
       display: flex;
-      justify-content: space-between;
-
-      padding: 1rem;
-      border-bottom: 1px solid $theme-bkg-color;;
-      background-color: $theme-neutral-color;
-      color: $theme-bkg-color;
-      text-decoration: none;
+      align-items: center;
+      justify-content: center;
+      bottom: 1rem; right: 1rem;
+      width: 4rem; height: 4rem;
+      border-radius: 50%;
+      // border: 2px solid $theme-neutral-color;
+      background-color: $theme-color;
+      z-index: 1;
+      pointer-events: all;
+      img{
+        width: 1.75rem;
+      }
     }
-    a:first-child{
-      border-top-left-radius: 1rem;
-      border-top-right-radius: 1rem;
-    }
-    a:last-child{
-      border-bottom-left-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-      border-bottom: none;
+    nav{
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      left: 1rem; right: 1rem;
+      bottom: 6rem;
+      opacity: 1;
+      transition: bottom .5s, opacity 1s;
+      // border: 1px solid blue;
+      &.off{
+        bottom: -100%;
+        opacity: 0;
+      }
+      a{
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid $theme-bkg-color;;
+        background-color: $theme-neutral-color;
+        color: $theme-bkg-color;
+        text-decoration: none;
+        pointer-events: all;
+      }
+      a:first-child{
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+      }
+      a:last-child{
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        border-bottom: none;
+      }
     }
   }
 

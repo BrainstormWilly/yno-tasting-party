@@ -8,7 +8,9 @@ export const template = `
       <span>Wine {{$ctrl.wineItem.wine_number}}</span>
       <span>{{$ctrl.wineItem.average_rating}}</span>
     </div>
-    <div class="wine-list-item-tab" ng-show="$ctrl.wineView=='wines'">
+    <div class="wine-list-item-tab"
+      ng-class="{good:$ctrl.wineItem.rating>3, fair:$ctrl.wineItem.rating==3, bad:$ctrl.wineItem.rating<3}"
+      ng-if="$ctrl.wineView=='wines'">
       <span>Rating</span>
       <span>{{$ctrl.wineItem.rating}}</span>
     </div>

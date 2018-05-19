@@ -3,8 +3,8 @@ export const template = `
   <div class="welcome-background">
 
     <div class="welcome-hero">
-      <img src='{{$ctrl.heroImg}}'>
-      <span>{{$ctrl.tagline}}</span>
+      <img src='assets/images/welcome/welcome-landing-hero.png'>
+      <span>It’s the answer to finding that perfect wine... and other stupid ideas.</span>
     </div>
 
     <div class="welcome-hero-cover"></div>
@@ -16,18 +16,19 @@ export const template = `
 
     <div class="welcome-copy top">
       <h2>Welcome to Yno</h2>
-      <p>How do you choose wine? Pretentious point scores? Snooty experts? Trendy advertising? Pretty labels? So, how’s that working for you? The truth is one man’s favorite syrah is another’s swill. Discovering wine is a journey. There are no perfect wines, just your wines. Let’s find them!</p>
+      <p>How do you choose wine? Pretentious point scores? Snooty experts? Trendy advertising? Pretty labels? So, how’s that working for you? Still hit and miss? The truth is one man’s syrah is another woman’s swill. Discovering wine is personal and Yno is here to help with that journey. Just remember there is no perfect wine...only your next wine. So, let’s get started!</p>
     </div>
 
-    <div class="welcome-copy bottom">
-      <p>Yno Tasting is a wine tasting party platform. It’s a fun way to for you and your friends to discover new wines they same way the experts do. Maybe you’ve seen <strong>Somm</strong> or heard about the blind wine tastings experts have to perform to get their certification. The same method is the best way for anyone to learn what wines they like.</p>
-      <p>Sounds intimidating? Maybe too scary? Nobody said learning about wine was easy...but it sure beats an evening of Parcheesi and Cheetos.</p>
+    <div class="welcome-copy bottom" >
+      <p>Yno Tasting is a wine tasting party platform. It’s a fun way to for you and your friends to discover new wines the same way the experts do. Not sure where to start? No problem. Sign up now and we’ll send you your first curated tasting list with full instructions on how to host a tasting party.</p>
+      <button class='text-btn' ui-sref="welcome-signin">Wine Up Now!</button>
     </div>
 
     <desktop-nav-primary></desktop-nav-primary>
-
+    <div class="mobile-nav-spacer"></div>
   </div>
 
   <mobile-nav></mobile-nav>
+  <alerts-modal></alerts-modal>
 
 `

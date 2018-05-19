@@ -12,14 +12,6 @@ export function TastingConfig($stateProvider, $urlRouterProvider) {
         tasterIsHost: function(taster, tasting){ return taster.id==tasting.host.taster.id }
       }
     })
-    .state('tasting-list',{
-      url: '/tastings/list/',
-      component: 'tastingList',
-      resolve: {
-        taster: TasterService => TasterService.getTasterFromValidation(),
-        tastings: TastingService => TastingService.getTastingList()
-      }
-    })
     .state('tasting-new',{
       url: '/tastings/new',
       component: 'tastingNew',

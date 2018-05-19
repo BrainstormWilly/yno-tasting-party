@@ -1,11 +1,21 @@
 export const template = `
 
-  <a class="welcome-logo-header" ui-sref="welcome">
-    <img src='assets/images/yno_tasting_logo_white.svg'>
-  </a>
+<div class="welcome-background">
 
-  <div class="welcome-container">
-    <p>Setup up your account and we'll get you on to your tastings!</p>
+  <div class="welcome-hero">
+    <img src='assets/images/welcome/welcome-landing-hero.png'>
+  </div>
+
+  <div class="welcome-hero-cover"></div>
+
+  <div class="welcome-logo">
+    <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
+    <desktop-nav-secondary></desktop-nav-secondary>
+  </div>
+
+  <div class="welcome-copy full">
+    <h2>Come on in. The wine is fine.</h2>
+    <p>Set up up your account so we can get you on to your tasting!</p>
     <form name="acceptInviteForm" ng-submit="$ctrl.acceptInvite()">
       <div class="main-form-control" ng-class="{'error':acceptInviteForm.name.$dirty && acceptInviteForm.name.$invalid}">
         <label>Name</label>
@@ -29,7 +39,7 @@ export const template = `
           ng-minlength="6">
       </div>
       <div class="main-form-btns">
-        <span>&nbsp;</span>
+        <span class='descriptor'>Accept Invite</span>
         <button type="submit"
           ng-disabled="acceptInviteForm.$invalid || $ctrl.taster.user.password!=$ctrl.taster.user.password_confirmation">
           <i class="fa fa-check"></i>
@@ -37,5 +47,12 @@ export const template = `
       </div>
     </form>
   </div>
+
+  <desktop-nav-primary welcome-state="$ctrl.constants.WELCOME_SIGNIN_STATE"></desktop-nav-primary>
+
+</div>
+<mobile-nav></mobile-nav>
+<wait-state></wait-state>
+<alerts-modal></alerts-modal>
 
 `;

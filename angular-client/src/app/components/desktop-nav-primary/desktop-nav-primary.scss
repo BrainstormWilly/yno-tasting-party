@@ -1,14 +1,15 @@
 desktop-nav-primary{
 
   display: none;
+  // border: 1px solid blue;
 
   @media (min-width: 800px) and (orientation: landscape){
-    position: fixed;
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     top: 12%; bottom: 12%; left: 43%; right: 40%;
-    // border: 1px solid blue;
+    max-height: 60rem;
     a{
       display: flex;
       align-items: center;
@@ -25,21 +26,21 @@ desktop-nav-primary{
         color: $theme-bkg-color;
         background-color: $theme-neutral-color;
       }
+      &:hover{
+        opacity: 1;
+      }
+      &:nth-child(2){
+        position: relative;
+        top: -1rem;
+        align-self: flex-end;
+      }
+      &:nth-child(3){
+        position: relative;
+        top: 1rem;
+        align-self: flex-end;
+      }
+    }
 
-    }
-    a:hover{
-      opacity: 1;
-    }
-    a:nth-child(2){
-      position: relative;
-      top: -1rem;
-      align-self: flex-end;
-    }
-    a:nth-child(3){
-      position: relative;
-      top: 1rem;
-      align-self: flex-end;
-    }
   }
 
   @media (min-width: 1280px) and (orientation: landscape){

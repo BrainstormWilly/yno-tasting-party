@@ -1,0 +1,13 @@
+.dashboard{
+  .dashboard-reviews-wrapper{
+    .dashboard-reviews-header{
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .dashboard-reviews{
+      height: calc(100vh - 19rem);
+      padding: 1rem;
+      overflow-y: auto;
+    }
+  }
+}

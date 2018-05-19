@@ -1,3 +1,4 @@
+
 $theme-bkg-color: rgb(0, 0, 0);
 // $theme-primary-btn-color: rgb(255, 245, 157);
 // $theme-primary-focus-color: rgba(255, 245, 157, .2);
@@ -10,13 +11,33 @@ $theme-neutral-color: rgb(167, 159, 148);
 $theme-info-color: rgb(159, 168, 218);
 $theme-color: rgb(67, 0, 46);
 $theme-color-dark: darken($theme-color, 20%);
-$theme-dark-gray: #222;
+$theme-light-gray: darken($theme-neutral-color, 30%);
+$theme-dark-gray: darken($theme-neutral-color, 50%);
 $theme-header-color: lighten($theme-neutral-color, 20%);
 
 @import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Lato:300,400');
 
 
-body {
+  ui-view{
+    &.ng-enter, &.ng-leave{
+      transition: 0.5s all;
+    }
+    &.ng-enter{
+      opacity: 0;
+      &.ng-enter-active{
+        opacity: 1;
+      }
+    }
+    &.ng-leave{
+      opacity: 1;
+      &.ng-leave-active{
+        opacity: 0;
+      }
+    }
+  }
+
+
+body{
   background-color: $theme-bkg-color;
   color: $theme-neutral-color;
   font-family: 'Lato', sans-serif;
@@ -28,11 +49,17 @@ body {
   box-sizing: border-box;
 }
 
+
 h1,h2,h3,h4{
   font-weight: 400;
 }
 h3,h4{
   margin: 0;
+}
+
+a{
+  color: #fff;
+  text-decoration: none;
 }
 
 a.disabled{
@@ -45,18 +72,22 @@ button{
   height: 3rem;
   width: 3rem;
   border-radius: 1.5rem;
-  border: 2px solid $theme-color;
-  background-color: $theme-bkg-color;
+  border: none;
+  border: 2px solid $theme-light-gray;
+  background-color: $theme-dark-gray;
   color: #fff;
   font-size: 1.2rem;
   margin: 0 .25rem 0 .25rem;
   cursor: pointer;
   &:hover, &:focus{
     outline: none;
-    border: 2px solid #fff;
-    color: $theme-color;
+    border: none;
+    background-color: $theme-neutral-color;
+    color: $theme-bkg-color;
   }
   &:disabled{
+    pointer-events: none;
+    background-color: $theme-dark-gray;
     border: 2px solid $theme-dark-gray;
     color: lighten($theme-dark-gray, 20%);
   }
@@ -65,8 +96,8 @@ button{
     width: 2rem;
     border-radius: 1rem;
     border: none;
-    background-color: $theme-color;
-    color: #fff;
+    background-color: $theme-neutral-color;
+    color: $theme-color;
     font-size: 1rem;
     margin: 0 0.1rem 0 0.1rem;
     &.secondary{
@@ -75,7 +106,7 @@ button{
     }
     &:disabled{
       background-color: $theme-dark-gray;
-      color: lighten($theme-dark-gray, 20%);
+      color: $theme-light-gray;
     }
   }
   &.text-btn{
@@ -83,9 +114,9 @@ button{
     height: auto;
     width: auto;
     border-radius: 1.5rem;
-    border: 2px solid $theme-color;
-    background-color: $theme-bkg-color;
-    color: $theme-header-color;
+    border: none;
+    background-color: $theme-color;
+    color: #fff;
     font-size: 1.2rem;
     margin: .5rem;
     padding: 0 1rem 0 1rem;
@@ -97,6 +128,10 @@ button{
       border: 2px solid $theme-dark-gray;
       background-color: $theme-dark-gray;
       color: lighten($theme-dark-gray, 20%);
+    }
+    &:hover, &:focus{
+      background-color: #fff;
+      color: $theme-color;
     }
   }
 }
@@ -163,6 +198,10 @@ h3{
   overflow-y: auto;
 }
 
+.mobile-nav-spacer{
+  height: 6rem;
+}
+
 header, .main-header{
   position: fixed;
   left: 0;
@@ -226,7 +265,7 @@ section{
   // min-height: 3rem;
   // width: 100%;
   border-radius: 1.5rem;
-  border: 2px solid lighten($theme-dark-gray, 20%);
+  border: 2px solid $theme-light-gray;
   background-color: $theme-dark-gray;
   color: $theme-neutral-color;
   margin: .5rem;
@@ -242,7 +281,7 @@ section{
       display: flex;
       align-items: center;
       min-height: 3rem;
-      border-left: 2px solid lighten($theme-dark-gray, 20%);
+      border-left: 2px solid $theme-light-gray;
       padding-left: .5rem;
     }
   }
@@ -288,7 +327,7 @@ section{
     width: 100%;
     background: rgba(255,255,255,0);
     border: none;
-    border-left: 2px solid lighten($theme-dark-gray, 20%);
+    border-left: 2px solid $theme-light-gray;
     padding-left: .5rem;
     font-size: .9rem;
     color: $theme-neutral-color;
@@ -327,13 +366,10 @@ section{
 
 .main-modal-wrapper{
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 0; right: 0; bottom: 0; left: 0;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
+  justify-content: center;
   padding: 1rem;
   background-color: rgba(0,0,0,.8);
 
@@ -352,7 +388,7 @@ section{
       height: 4rem;
       border-radius: 1.5rem 1.5rem 0 0;
       color: $theme-header-color;
-      background-color: darken($theme-color, 20%);
+      background-color: $theme-color;
       padding-left: 1rem;
     }
     .main-modal-subheader{
@@ -444,6 +480,12 @@ section{
   }
 }
 
+@media (min-width: 800px) and (orientation: landscape){
+  .main-modal-wrapper{
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
 
 /* LIST STYLES */
 
@@ -482,7 +524,6 @@ section{
   }
 
   }
-
 
 
 

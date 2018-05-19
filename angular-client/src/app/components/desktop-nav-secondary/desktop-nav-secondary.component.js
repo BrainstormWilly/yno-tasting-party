@@ -2,7 +2,9 @@ import {template} from './desktop-nav-secondary.es6';
 
 export const DesktopNavSecondaryComponent = {
   bindings:{
-    welcomeState: "<"
+    welcomeState: "<",
+    howState: "<",
+    signoutState: "<"
   },
   template,
   controller: class DesktopNavSecondaryController{
