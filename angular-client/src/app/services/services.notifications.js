@@ -16,6 +16,7 @@ export class NotificationsService {
   }
 
   setNotification(message){
+    // this.$log.log(message);
     if( this.message ){
       this.$interval.cancel(this.displayTimer);
     }

@@ -1,45 +1,69 @@
-.tasting{
-
-  .tasting-detail{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: $theme-dark-gray;
-    padding: 1rem;
-
-    svg{
-      height: 3rem;
-      width: 3rem;
-      margin-right: 1rem;
-      path{
-        fill: $theme-neutral-color;
-      }
-    }
-    h3{
-      text-align: left;
-      flex-grow: 1;
-    }
-  }
-
-  .tasting-taster{
-    display: flex;
-    align-items: center;
-    top: 0; right: 0; left: 0;
-    height: 5rem; min-height: 5rem;
-    background-color: $theme-color;
-
-    .tasting-taster-number{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 3rem;
-      width: 3rem;
-      margin-right: 1rem; margin-left: 1rem;
-      border-radius: 50%;
-      background-color: $theme-neutral-color;
-      color: $theme-color;
-      font-size: 1.7rem;
-      font-weight: bold;
-    }
-  }
-}
+// .tasting{
+//
+//
+//     .tasting-mode{
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+//       height: 2rem;
+//       min-height: 2rem;
+//       padding: .5rem;
+//       transition: background-color .7s;
+//       &.inverse{
+//         background-color: $theme-light-gray;
+//       }
+//     }
+//
+//     .tasting-panel{
+//       .tasting-status{
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         background-color: $theme-light-gray;
+//         border-bottom: 1px solid $theme-light-gray;
+//         height: 2rem;
+//         min-height: 2rem;
+//         padding-left: 1rem;
+//         &.pending{
+//           background-color: $theme-pending-color;
+//           color: $theme-bkg-color;
+//         }
+//         &.open{
+//           background-color: darken($theme-open-color, 5%);
+//           color: #fff;
+//         }
+//         &.closed{
+//           background-color: darken($theme-bad-color, 40%);
+//           color: #fff;
+//         }
+//         &.completed-inverse{
+//           background-color: $theme-dark-gray;
+//         }
+//       }
+//     }
+//
+// }
+//
+//
+//
+// @media (min-width: 800px) and (orientation: landscape){
+//
+//   .tasting{
+//     .tasting-panel{
+//       .tasting-mode{
+//         &.inverse{
+//           border-top-left-radius: 1rem;
+//           border-top-right-radius: 1rem;
+//         }
+//       }
+//       .tasting-status{
+//         &.no-view{
+//           border-top-left-radius: 1rem;
+//           border-top-right-radius: 1rem;
+//         }
+//       }
+//     }
+//   }
+//
+//
+// }

@@ -21,7 +21,7 @@ export const template = `
 
     <div class="welcome-copy bottom" >
       <p>Yno Tasting is a wine tasting party platform. It’s a fun way to for you and your friends to discover new wines the same way the experts do. Not sure where to start? No problem. Sign up now and we’ll send you your first curated tasting list with full instructions on how to host a tasting party.</p>
-      <button class='text-btn' ui-sref="welcome-signin">Wine Up Now!</button>
+      <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
     </div>
 
     <desktop-nav-primary></desktop-nav-primary>
@@ -30,5 +30,6 @@ export const template = `
 
   <mobile-nav></mobile-nav>
   <alerts-modal></alerts-modal>
+  <notification></notification>
 
 `

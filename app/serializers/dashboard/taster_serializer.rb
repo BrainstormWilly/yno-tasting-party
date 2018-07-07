@@ -1,5 +1,15 @@
 class Dashboard::TasterSerializer < ActiveModel::Serializer
-  attributes :id, :full_handle, :name, :handle, :user_id, :user, :tasting_count, :review_count, :invite_count
+  attributes
+    :id,
+    :full_handle,
+    :name,
+    :handle,
+    :is_host,
+    :user_id,
+    :user,
+    :tasting_count,
+    :review_count,
+    :invite_count
 
   def user
     UserSerializer.new(object.user)
@@ -29,6 +39,10 @@ class Dashboard::TasterSerializer < ActiveModel::Serializer
 
   def invite_count
     object.invites.count
+  end
+
+  def is_host
+    !object.host.nil?
   end
 
 end

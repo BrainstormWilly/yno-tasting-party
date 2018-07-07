@@ -37,6 +37,7 @@ export class GuestService {
   }
 
   inviteNewUser(tasting_id, user_email){
+    this.$rootScope.$broadcast("service-init-event");
     this.$http.post(this.constants.apiUrl + "/guests/invite_new_user", {tasting_id:tasting_id, email:user_email})
       .then(result=>{
         this.$rootScope.$broadcast("invite-taster-event", result.data);
@@ -44,15 +45,22 @@ export class GuestService {
       .catch(err=>{
         this.$log.error("GuestService.inviteNewUser", err);
       })
+      .finally(()=>{
+        this.$rootScope.$broadcast("service-complete-event");
+      })
   }
 
   inviteTaster(tasting_id, taster_id){
+    this.$rootScope.$broadcast("service-init-event");
     this.$http.post(this.constants.apiUrl + "/guests/invite_taster", {tasting_id:tasting_id, taster_id:taster_id})
       .then(result=>{
         this.$rootScope.$broadcast("invite-taster-event", result.data);
       })
       .catch(err=>{
         this.$log.error("GuestService.inviteTaster", err);
+      })
+      .finally(()=>{
+        this.$rootScope.$broadcast("service-complete-event");
       })
   }
 
@@ -69,8 +77,8 @@ export class GuestService {
   includeHost(tasting_id){
     this.$http.get(this.constants.apiUrl + "/guests/include_host/" + tasting_id)
       .then(()=>{
-        // this.$rootScope.$broadcast("include-host-as-guest-event", result.data);
-        this.$state.reload();
+        this.$rootScope.$broadcast("include-host-as-guest-event");
+        // this.$state.reload();
       })
       .catch(err=>{
         this.$log.error("GuestService.includeHost", err);

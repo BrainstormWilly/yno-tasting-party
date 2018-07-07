@@ -4,11 +4,14 @@ wine-review-status-modal{
     .main-modal-container{
       .main-modal-content{
         table{
-          // th, td:first-child{
-          //   width: 80%;
-          // }
-          th:last-child, td:last-child{
+          th:first-child{
+            width: 70%;
+          }
+          td{
             text-align: center;
+          }
+          td:first-child{
+            text-align: right;
           }
         }
       }

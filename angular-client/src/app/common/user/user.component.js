@@ -94,7 +94,7 @@ export const UserComponent = {
     }
 
     $onInit() {
-      this.$log.log("UserComponent $onInit", this.user);
+      // this.$log.log("UserComponent $onInit", this.user);
     }
 
     activateTaster(){

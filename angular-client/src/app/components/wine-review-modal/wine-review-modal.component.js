@@ -16,9 +16,9 @@ export const WineReviewModalComponent = {
       this.pending_review = {};
       this.ratings = [
         {number:1, label:"Bad", cls:"bad"},
-        {number:2, label:"", cls:""},
+        {number:2, label:"", cls:"poor"},
         {number:3, label:"OK", cls:"ok"},
-        {number:4, label:"", cls:""},
+        {number:4, label:"", cls:"good"},
         {number:5, label:"Excellent", cls:"excellent"}
       ];
 

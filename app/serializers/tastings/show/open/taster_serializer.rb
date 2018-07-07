@@ -1,5 +1,5 @@
 class Tastings::Show::Open::TasterSerializer < ActiveModel::Serializer
-  attributes :id, :full_handle, :name, :handle, :user_id, :user, :status
+  attributes :id, :full_handle, :name, :handle, :user_id, :user, :status, :is_host
 
   def user
     ::UserSerializer.new(object.user)
@@ -9,6 +9,10 @@ class Tastings::Show::Open::TasterSerializer < ActiveModel::Serializer
     return "#{object.name} (#{object.handle})" if object.handle && object.name
     return object.name if object.name
     object.user.email.gsub(/.{0,4}@/, "***@")
+  end
+
+  def is_host
+    !object.host.nil?
   end
 
 end

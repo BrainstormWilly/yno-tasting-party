@@ -66,10 +66,8 @@ export const template = `
           <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button ng-click="$ctrl.inviteNewUser()"><span class="fa fa-check"></span></button>
         </div>
-      </div>    
+      </div>
     </div>
-
-    <wait-state wait-on="$ctrl.wait"></wait-state>
 
   </div>
 `

@@ -32,7 +32,6 @@ export const AddGuestModalComponent = {
         state:false,
         label:"Include Host"
       };
-      this.wait = false;
 
       let $panel = $element.find(".main-modal-container");
 
@@ -67,17 +66,16 @@ export const AddGuestModalComponent = {
         }
       });
 
-      // let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
-      //   this.hostTastingStatus.state = true;
-      //   this.hostTastingStatus.label = "Host Included";
-      // });
+      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
+        this.hostTastingStatus.state = true;
+        this.hostTastingStatus.label = "Host Included";
+      });
 
       let inviteNewUserEvent = $scope.$on("invite-new-user-event", ()=>{
         this.confirmModal();
       });
 
       let inviteTasterEvent = $scope.$on("invite-taster-event", (e,d)=>{
-        this.wait = false;
         this.viewState = 1;
         for( let i=0; i<this.connections.length; i++ ){
           // $log.log("AddGuestModalComponent.constructor", this.connections[i], d);
@@ -95,7 +93,7 @@ export const AddGuestModalComponent = {
       // });
 
       $scope.$on("$destroy", destroyGuestEvent);
-      // $scope.$on("$destroy", includeHostAsGuestEvent);
+      $scope.$on("$destroy", includeHostAsGuestEvent);
       $scope.$on("$destroy", inviteNewUserEvent);
       $scope.$on("$destroy", inviteTasterEvent);
       $scope.$on("$destroy", modalStateChangeEvent);
@@ -142,12 +140,10 @@ export const AddGuestModalComponent = {
     }
 
     confirmModal(){
-      this.wait = false;
       this.ModalService.setModalState("confirmed", this.name);
     }
 
     inviteNewUser(){
-      this.wait = true;
       if( this.user.id ){
         this.TasterService.getTasterFromUser(this.user.id)
           .then(taster=>{
@@ -159,12 +155,10 @@ export const AddGuestModalComponent = {
     }
 
     inviteConnection(connection){
-      connection.wait = true;
       this.GuestService.inviteTaster(this.tasting.id, connection.taster_id);
     }
 
     searchUserByEmail(email){
-      this.wait = true;
       this.UserService.getUserByEmail(email)
         .then(user=>{
           this.viewState = 2;
@@ -179,9 +173,6 @@ export const AddGuestModalComponent = {
             this.result.body = "Send them an invitation to join Yno Tasting?";
           }
         })
-        .finally(()=>{
-          this.wait = false;
-        })
     }
 
     toggleAddGuestMethod(){
@@ -190,7 +181,7 @@ export const AddGuestModalComponent = {
         this.addGuestStatus.label = "Invite New User";
       }else{
         this.addGuestStatus.state = true;
-        this.addGuestStatus.label = "Invite Connected Taster";
+        this.addGuestStatus.label = "Invite Connection";
       }
     }
 

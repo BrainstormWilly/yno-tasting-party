@@ -26,15 +26,15 @@ tasting-list-item{
       background-color: lighten($theme-dark-gray, 20%);
       &.pending{
         // border: 2px solid $theme-pending-color;
-        background-color: $theme-pending-color;
+        background-color: $theme-tasting-pending-color;
       }
       &.open{
         // border: 2px solid $theme-open-color;
-        background-color: $theme-open-color;
+        background-color: $theme-tasting-open-color;
       }
       &.closed{
         // border: 2px solid $theme-open-color;
-        background-color: $theme-color;
+        background-color: $theme-tasting-closed-color;
       }
       span:first-child{
         font-size: 1rem;

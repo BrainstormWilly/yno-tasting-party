@@ -6,54 +6,123 @@
   flex-direction: column;
   top: 0; right: 0; bottom: 0; left: 0;
 
-  .tasting-logo{
-    display: none;
+  .tasting-panel{
+    // border: 1px solid red;
+    // height: 100%;
+    .tasting-mode{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 3rem; min-height: 3rem;
+      padding: 0 .5rem;
+      transition: background-color .7s;
+      &.inverse{
+        background-color: $theme-light-gray;
+      }
+    }
+    .tasting-status{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $theme-light-gray;
+      border-bottom: 1px solid $theme-light-gray;
+      height: 2rem; min-height: 2rem;
+      &.pending{
+        background-color: $theme-pending-color;
+        color: $theme-bkg-color;
+      }
+      &.open{
+        background-color: darken($theme-open-color, 5%);
+        color: #fff;
+      }
+      &.closed{
+        background-color: darken($theme-bad-color, 40%);
+        color: #fff;
+      }
+      &.completed-inverse{
+        background-color: $theme-dark-gray;
+      }
+    }
+    .tasting-section{
+      .tasting-header{
+        display: flex;
+        align-items: center;
+        // justify-content: space-between;
+        background-color: $theme-dark-gray;
+        border-radius: 0;
+        border-bottom: 1px solid $theme-light-gray;
+        // border: 1px solid blue;
+        height: 5rem; min-height: 5rem;
+        padding: 0 1rem;
+        // padding-right: 1rem;
+        transition: background-color .7s;
+        &.inverse{
+          background-color: $theme-light-gray;
+          color: $theme-dark-gray;
+          border-color: $theme-dark-gray;
+        }
+        a{
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+
+          // padding: 1rem;
+          // border: 1px solid blue;
+          svg{
+            height: 3rem;
+            width: 3rem;
+            margin-right: 1rem;
+            path{
+              fill: $theme-neutral-color;
+            }
+          }
+          h3{
+            text-align: left;
+            color: $theme-neutral-color;
+          }
+        }
+
+      }
+      .tasting-section-list{
+        // border: 1px solid blue;
+        height: calc(100vh - 16rem);
+        overflow-y: auto;
+        padding: .5rem;
+        // padding-left: 1rem; padding-right: 1rem;
+        &.tasting-info{
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+    }
   }
 
-  .tasting-btn{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 2px solid $theme-neutral-color;
-    color: $theme-neutral-color;
-    text-decoration: none;
-    height: 8rem;
-    width: 8rem;
-    margin-top: 1rem;
-    span{
-      transition: .5s opacity;
-    }
-    &:hover{
-      border: 2px solid #fff;
-      span{
-        opacity: 0;
-      }
-      img{
-        opacity: 1;
-      }
-    }
-    &.disabled{
-      pointer-events: none;
-      opacity: .5;
-    }
-    img{
-      transition: .5s opacity;
-      position: absolute;
-      opacity: .2;
-      height: 6rem;
-    }
-    .dashboard-btn-number{
-        font-size: 4rem;
-        font-weight: bold;
-        margin-top: -1rem;
-        margin-bottom: -1rem;
-    }
-    .dashboard-btn-title{
-      font-size: 1.2rem;
-    }
+}
 
+
+@media (min-width: 800px) and (orientation: landscape){
+
+  .tasting{
+    flex-direction: row;
+    align-items: center;
+    background: radial-gradient(circle at 40% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
+    // border: 1px solid blue;
+
+    .tasting-panel{
+      flex-grow: 2;
+      max-width: 40rem;
+      min-width: 20rem;
+      margin: 1rem 2rem 1rem 4rem;
+      border: 2px solid $theme-light-gray;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      .tasting-mode{
+        &.inverse{
+          border-top-left-radius: 1rem;
+          border-top-right-radius: 1rem;
+        }
+      }
+    }
   }
 
 }

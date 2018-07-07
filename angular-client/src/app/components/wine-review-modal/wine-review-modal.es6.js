@@ -6,20 +6,19 @@ export const template = `
         <h3 ng-hide="$ctrl.tasting.is_open">Your Review for Wine {{$ctrl.pending_review.wine_number}}</h3>
       </div>
       <div class="wine-review-form">
-        <div class="ratings">
+        <div class="ratings" ng-if="$ctrl.tasting.is_open">
           <button class="text-btn {{rating.cls}}"
-            ng-show="$ctrl.tasting.is_open"
             ng-repeat="rating in $ctrl.ratings"
             ng-click="$ctrl.pending_review.rating = rating.number"
             ng-class="{'selected':$ctrl.pending_review.rating==rating.number}">
               <span>{{rating.number}}</span>
           </button>
         </div>
-        <div class="main-form-control" ng-show="$ctrl.tasting.is_open">
+        <div class="main-form-control" ng-if="$ctrl.tasting.is_open">
           <label>Comments</label>
           <textarea ng-model="$ctrl.pending_review.comments"></textarea>
         </div>
-        <div class="closed" ng-hide="$ctrl.tasting.is_open">
+        <div class="closed" ng-if="!$ctrl.tasting.is_open">
           <div class="closed-rating" ng-hide="$ctrl.tasting.is_open">
             {{$ctrl.pending_review.rating}}
           </div>

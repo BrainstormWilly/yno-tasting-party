@@ -23,6 +23,14 @@ export function DashboardConfig($stateProvider, $urlRouterProvider) {
         taster: TasterService => TasterService.getTasterFromValidation(),
         reviews: WineReviewService => WineReviewService.index()
       }
+    })
+    .state('dashboard-invitations',{
+      url: '/dashboard/invitations',
+      component: 'dashboardInvitations',
+      resolve: {
+        taster: TasterService => TasterService.getTasterFromValidation(),
+        invitations: GuestService => GuestService.getInvitations()
+      }
     });
 
   $urlRouterProvider.otherwise('/');

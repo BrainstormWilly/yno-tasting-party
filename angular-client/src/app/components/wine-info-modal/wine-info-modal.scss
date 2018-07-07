@@ -1,15 +1,16 @@
 wine-info-modal{
   visibility: hidden;
-  // .main-modal-content{
-  //   text-align: left;
-  //   padding: 0 1rem 0 1rem;
-  //   p{
-  //     margin-bottom: 0rem;
-  //     margin-top: 0rem;
-  //     span{
-  //       color: darken($theme-neutral-color, 20%);
-  //     }
-  //   }
-  //
-  // }
+  .main-modal-wrapper{
+    .main-modal-container{
+      .main-modal-content{
+        table{
+          td:first-child{
+            width: 30%;
+            text-align: right;
+            color: darken($theme-neutral-color, 20%);
+          }
+        }
+      }
+    }
+  }
 }

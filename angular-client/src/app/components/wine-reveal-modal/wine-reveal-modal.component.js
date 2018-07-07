@@ -21,6 +21,7 @@ export const WineRevealModalComponent = {
       let modalStateChangeEvent = $scope.$on("modal-state-change-event", (e,d)=>{
         if(d.name==this.name ){
           if( d.state=="open" ){
+            $log.log(d.data);
             this.pending_review = angular.copy(d.data);
             TweenMax.to($element, 0.5, {autoAlpha:1});
             TweenMax.from($panel, 0.3, {transform:"scale(.5)"});
@@ -31,19 +32,26 @@ export const WineRevealModalComponent = {
         }
       });
 
-      let wineReviewUpdateEvent = $scope.$on("wine-review-update-event", ()=>{
+      // let wineReviewUpdateEvent = $scope.$on("wine-review-update-event", ()=>{
+      //   this.pending_review = null;
+      //   this.confirmModal(null);
+      // });
+
+      let wineRevealEvent = $scope.$on("wine-reveal-event", ()=>{
         this.pending_review = null;
         this.confirmModal(null);
       });
 
       let tastingWineUpdateEvent = $scope.$on("tasting-wine-update-event", (e,d)=>{
         this.pending_review.wine_id = d.wine_id;
-        this.WineReviewService.updateReview(this.pending_review);
+        this.WineReviewService.reveal(this.pending_review);
       });
 
       $scope.$on("$destroy", modalStateChangeEvent);
       $scope.$on("$destroy", tastingWineUpdateEvent);
-      $scope.$on("$destroy", wineReviewUpdateEvent);
+      $scope.$on("$destroy", wineRevealEvent);
+      // this.pending_review = null;
+
     }
 
     $onInit() {

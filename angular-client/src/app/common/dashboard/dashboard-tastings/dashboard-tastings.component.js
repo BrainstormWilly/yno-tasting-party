@@ -18,7 +18,6 @@ export const DashboardTastingsComponent = {
     }
 
     $onInit(){
-      // this.$log.log(this._.findIndex(this.tastings, "is_open") ~ 0);
       if( this._.findIndex(this.tastings, "is_open")>-1 ){
         this.message = "You have an open tasting. Better get busy!";
       }else if( this._.findIndex(this.tastings, "is_pending")>-1 ){

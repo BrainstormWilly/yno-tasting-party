@@ -1,28 +1,48 @@
 wine-review-modal{
 
+
+
   visibility: hidden;
   .wine-review-form{
-    padding: .5rem;
+    // padding: .5rem;
+
     .ratings{
       display: flex;
-      button.text-btn{
-        flex-grow: 1;
-        min-height: 3rem;
-        border-color: lighten($theme-dark-gray, 20%);
-        padding: .5rem;
+      padding: .5rem;
+      button{
+        margin-right: .5rem;
+        background-color: $theme-neutral-color;
+        color: $theme-color;
+        &:last-child{
+          margin-right: 0;
+        }
+        &.text-btn{
+          flex-grow: 1;
+          min-height: 3rem;
+        }
         &.bad{
-          border-color: $theme-color-dark;
+          background-color: $review-bad-color;
+          color: #fff;
+        }
+        &.poor{
+          background-color: $review-bad-ok-color;
+          color: #fff;
         }
         &.ok{
-          border-color: $theme-pending-color;
+          background-color: $review-ok-color;
+          color: #fff;
+        }
+        &.good{
+          background-color: $review-ok-good-color;
+          color: #fff;
         }
         &.excellent{
-          border-color: $theme-open-color;
+          background-color: $review-good-color;
+          color: #fff;
         }
         &.selected{
-          background-color: $theme-header-color;
-          border-color: $theme-header-color;
-          color: $theme-bkg-color;
+          background-color: #fff;
+          color: $theme-color;
         }
       }
     }
@@ -30,6 +50,7 @@ wine-review-modal{
       display: flex;
       flex-direction: row;
       text-align: left;
+      padding: .5rem;
       .closed-rating{
         display: flex;
         flex-shrink: 0;
@@ -45,6 +66,12 @@ wine-review-modal{
       span{
         color: lighten($theme-dark-gray, 20%);
       }
+    }
+  }
+
+  @media (min-width: 800px) and (orientation: landscape){
+    .wine-review-form{
+      width: 40rem;
     }
   }
 }

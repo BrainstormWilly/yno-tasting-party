@@ -7,7 +7,7 @@ class TasterSerializer < ActiveModel::Serializer
     :user,
     :tasting_count,
     :review_count,
-    :invite_count, 
+    :invite_count,
     :status
 
   def user
@@ -41,7 +41,7 @@ class TasterSerializer < ActiveModel::Serializer
   end
 
   def is_host
-    return object.host!=nil
+    !object.host.nil?
   end
 
 end

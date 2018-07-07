@@ -290,7 +290,7 @@ export const template = `
       <guest-list-item
         ng-repeat="guest in $ctrl.tasting.guests"
         guest="guest"
-        select-action="$ctrl.showGuest(guest)">
+        select-action="$ctrl.openGuestInfoModal(guest)">
       </guest-list-item>
     </div>
   </div>

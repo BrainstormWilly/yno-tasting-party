@@ -4,7 +4,6 @@ toggle-switch{
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  margin-top: .5rem;
 
   button, button:active, button:hover, button:focus{
     display: flex;
@@ -12,14 +11,16 @@ toggle-switch{
     align-items: center;
     justify-content: flex-end;
     height: 2rem;
-    width: 4rem;
-    background-color: $theme-dark-gray;
+    width: 3rem;
+    min-width: 3rem;
+    background-color: $theme-neutral-color;
     border-radius: 1rem;
-    border: 2px solid lighten($theme-dark-gray, 20%);
-    &:disabled{
-      border: none;
+    border: none;
+    // border: 2px solid lighten($theme-dark-gray, 20%);
+    &.inverse{
+      background-color: $theme-color;
       div{
-        opacity: .5;
+        background-color: $theme-neutral-color;
       }
     }
     div{

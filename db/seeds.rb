@@ -344,19 +344,19 @@ end
 ################## UNCONNECTED USER #####################
 #########################################################
 
-gmail_user_me = User.create(
-  email: "brainstormwilly@gmail.com",
-  password: "123456",
-  password_confirmation: "123456"
-)
-
-gmail_taster_me = Taster.create(
-  user_id: gmail_user_me.id,
-  name: "William Langley",
-  handle: "Brainstorm Willy",
-  status: "active"
-)
-
-gmail_host_me = Host.create(
-  taster_id: gmail_taster_me.id,
-)
+# gmail_user_me = User.create(
+#   email: "brainstormwilly@gmail.com",
+#   password: "123456",
+#   password_confirmation: "123456"
+# )
+#
+# gmail_taster_me = Taster.create(
+#   user_id: gmail_user_me.id,
+#   name: "William Langley",
+#   handle: "Brainstorm Willy",
+#   status: "active"
+# )
+#
+# gmail_host_me = Host.create(
+#   taster_id: gmail_taster_me.id,
+# )

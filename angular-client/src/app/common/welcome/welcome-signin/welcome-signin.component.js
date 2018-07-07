@@ -24,6 +24,7 @@ export const WelcomeSigninComponent = {
     }
 
     $onInit() {
+      // this.$log.log("WelcomeSigninComponent.$onInit", this.user);
       if( this.user ){
         this.$state.go("dashboard");
       }else{
@@ -36,7 +37,7 @@ export const WelcomeSigninComponent = {
         this.subtitle = this.constants.SIGNIN_ALEXA_SUBTITLE;
         this.copy = this.constants.SIGNIN_ALEXA_COPY;
       }
-      // this.$log.log("WelcomeSigninComponent.$onInit", this.user);
+
     }
 
     // setViewState(state){

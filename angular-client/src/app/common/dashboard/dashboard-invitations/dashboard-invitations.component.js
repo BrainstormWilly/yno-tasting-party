@@ -1,12 +1,12 @@
-import {template} from './invitations.es6';
+import {template} from './dashboard-invitations.es6';
 
-export const InvitationsComponent = {
+export const DashboardInvitationsComponent = {
   bindings: {
     taster: "<",
     invitations: "<"
   },
   template,
-  controller: class InvitationsComponent{
+  controller: class DashboardInvitationsController{
     constructor($scope, $log, $state, ModalService, TasterService){
       'ngInject';
       this.$log = $log;

@@ -100,6 +100,7 @@ export class UserService {
     // this.state = "user_unset";
     this.$auth.signOut()
       .then(()=>{
+        // this.$log.log("UserService","signed out");
         this.$state.go("welcome");
       })
       .catch(err=>{

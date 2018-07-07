@@ -37,7 +37,19 @@ export class WineReviewService {
   updateReview(review){
     this.$http.put(this.constants.apiUrl + "/wine_reviews/" + review.id, review)
       .then(result=>{
+        // this.$log.log("WineReviewService", result.data);
         this.$rootScope.$broadcast("wine-review-update-event", result.data)
+      })
+      .catch(err=>{
+        this.$log.error("WineReviewService.updateReview", err);
+      })
+  }
+
+  reveal(review){
+    // this.$log.log(review);
+    this.$http.post(this.constants.apiUrl + "/wine_reviews/reveal", {wine_review:review})
+      .then(result=>{
+        this.$rootScope.$broadcast("wine-reveal-event", result.data)
       })
       .catch(err=>{
         this.$log.error("WineReviewService.updateReview", err);

@@ -12,6 +12,5 @@ export const TastingPanelComponent = {
       'ngInject';
       this.$log = $log;
     }
-
   }
 }

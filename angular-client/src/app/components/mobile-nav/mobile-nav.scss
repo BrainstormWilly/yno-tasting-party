@@ -13,6 +13,7 @@ mobile-nav{
     transition: background-color 1s;
     &.on{
       background-color: rgba(0, 0, 0, .8);
+      pointer-events: auto;
     }
     .nav-button{
       position: absolute;

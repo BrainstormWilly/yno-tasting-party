@@ -9,18 +9,17 @@ export const NotificationComponent = {
       this.$log = $log;
       this.$element = $element;
       this.NotificationsService = NotificationsService;
-      this.message = "";
+      this.message = null;
 
       // let $panel = $element.find(".main-modal-container");
 
       let setNotificationsEvent = $scope.$on("set-notifications-event", (e,d)=>{
-        this.animateIn(d);
+        this.message = d;
 
       });
 
       let endNotificationsEvent = $scope.$on("end-notifications-event", ()=>{
-        // TweenMax.to($element, .3, {autoAlpha:0});
-        this.animateOut();
+        this.message = null;
       });
 
       $scope.$on("$destroy", setNotificationsEvent);
@@ -29,18 +28,7 @@ export const NotificationComponent = {
 
     $onInit() {
       // this.$log.log("NotificationComponent.$oninit", this.NotificationsService.message);
-      this.animateIn(this.NotificationsService.message)
-    }
-
-    animateIn(message){
-      if( message ){
-        this.message = message;
-        TweenMax.fromTo(this.$element, .5, {top:"-4rem"}, {top:0, autoAlpha:1});
-      }
-    }
-
-    animateOut(){
-      TweenMax.to(this.$element, .5, {top:"-4rem", autoAlpha:0});
+      this.message = this.NotificationsService.message;
     }
 
   }

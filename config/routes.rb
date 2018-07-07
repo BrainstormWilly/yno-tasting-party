@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       post "guests/invite_new_user" => "guests#inviteNewUser"
       post "guests/invite_taster" => "guests#inviteTaster"
       put "users/invitation/accept/:invitation_token" => "users#acceptInvitation"
+      post "wine_reviews/reveal" => "wine_reviews#reveal"
       # resources :connections, only: [:index]
       resources :guests, only: [:create, :destroy, :show]
       resources :hosts, only: [:create]

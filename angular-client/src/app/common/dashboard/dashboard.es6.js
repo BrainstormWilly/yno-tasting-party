@@ -1,19 +1,15 @@
 export const template = `
   <div class="dashboard">
-    <div class="dashboard-logo">
-      <img src='assets/images/yno_tasting_logo_white.svg'>
-      <desktop-nav-secondary signout-state="true"></desktop-nav-secondary>
+    <div class="desktop-logo">
+      <div class="desktop-logo-top"></div>
+      <div class="desktop-logo-bottom">
+        <a href><img src='assets/images/yno_tasting_logo_white.svg'></a>
+        <desktop-nav-secondary signout-state="true"></desktop-nav-secondary>
+      </div>
     </div>
     <taster-panel taster='$ctrl.taster'></taster-panel>
-    <!--<div class="dashboard-user">
-      <a ui-sref='user'><span class="fas fa-user-circle"></span></a>
-      <div>
-        <h3>{{$ctrl.taster.name}}</h3>
-        <h4 ng-if='$ctrl.taster.handle'>“{{$ctrl.taster.handle}}”</h4>
-      </div>
-    </div>-->
     <div class="dashboard-btns">
-      <a class="dashboard-btn" ui-sref="invitations"
+      <a class="dashboard-btn" ui-sref="dashboard-invitations"
         ng-class="{disabled: $ctrl.taster.invite_count==0}">
         <img src='assets/images/glasses-with-wine.svg'>
         <span class="dashboard-btn-number">{{$ctrl.taster.invite_count}}</span>
@@ -33,6 +29,7 @@ export const template = `
           <span>Wines</span>
       </a>
     </div>
+    <div class="dashboard-panel-spacer"></div>
   </div>
 
   <mobile-nav signed-in="true"></mobile-nav>

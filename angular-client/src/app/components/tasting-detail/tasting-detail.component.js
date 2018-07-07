@@ -73,7 +73,7 @@ export const TastingDetailComponent = {
             this.NotificationsService.setNotification("Cancellation emailed to " + d.taster.name);
           }else if( !this.tasterIsHost ){
             this.NotificationsService.setNotification("Cancellation emailed to host");
-            $state.go("dashboard");
+            // $state.go("dashboard");
           }
           for( let i=0; i<this.tasting.guests.length; i++ ){
             if( this.tasting.guests[i].id==d.id ){

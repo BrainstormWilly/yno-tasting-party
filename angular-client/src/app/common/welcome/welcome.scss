@@ -52,8 +52,10 @@
         padding: 0 1rem;
       }
       &.full{
-        align-items: center;
         padding: 1rem;
+      }
+      h2{
+        align-self: center;
       }
       form{
         width: 100%;
@@ -61,7 +63,7 @@
       }
     }
 
-    
+
 
   }
 

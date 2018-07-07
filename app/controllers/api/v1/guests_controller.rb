@@ -165,7 +165,7 @@ class Api::V1::GuestsController < Api::BaseController
       if guest.destroy
         if current_host && guest.tasting.host==current_host && current_taster!=guest.taster
           GuestMailer.remove_guest_from_host(guest).deliver
-        else
+        elsif !current_host || current_host.taster!=current_taster
           GuestMailer.remove_guest_to_host(guest).deliver
         end
         render json: guest, serializer: Tastings::New::GuestSerializer

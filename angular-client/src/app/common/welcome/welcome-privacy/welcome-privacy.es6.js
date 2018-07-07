@@ -33,6 +33,6 @@ export const template = `
 
   </div>
 
-  <mobile-nav></mobile-nav>
+  <mobile-nav signed-in="$ctrl.taster"></mobile-nav>
 
 `

@@ -61,7 +61,14 @@ export const template = `
 
     <div class="welcome-copy full">
       <h2>Step 1. Yno Taster.</h2>
-      <p>Start by <a ui-sref='welcome-signup'>signing up to be a Yno Taster.</a> Tasters can participate to Yno Tastings, search tasting trends, view their tasting history, and download their initial tasting list. Signing up is free and secure with no commitments. In the future, tasters will be able to opt into being invited to public Yno Tastings in their area.</p>
+      <p>Start by <a ui-sref='welcome-signup'>signing up to be a Yno Taster.</a></p>
+      <p>Tasters can:<br>
+        <ul>
+          <li>receive invitations to Yno Tastings</li>
+          <li>view the latest tasting trends</li>
+          <li>review their own tasting history.</li>
+          </ul>
+          <p>Signing up is free and secure with no commitments. In the future, tasters will be able to opt into public tastings.</p>
       <div class="text-btns">
         <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> How to Yno</button>
         <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Step 2</button>
@@ -230,7 +237,7 @@ export const template = `
 
     <div class="welcome-copy full">
       <h2>Step 2. Yno Guy Tasting List.</h2>
-      <p>All new tasters will be emailed a starter <a href='http://ynoguy.com' target='_blank'>Yno Guy</a> Tasting List. This list will consist of 18 wines divided into 3 price groups of 6 wines available for purchase in most locations. This list is intended to inspire every Yno Taster to <a ui-sref='welcome-signup'>become a Yno Host</a> and host their own tasting party.</p>
+      <p>All new tasters will be emailed a starter <a href='http://ynoguy.com' target='_blank'>Yno Guy</a> Tasting List. The list consists of 18 wines divided into 3 price groups of 6 available for purchase in most US locations. This list is intended to inspire every Yno Taster to <a ui-sref='welcome-signup'>become a Yno Host</a> and host their own tasting parties.</p>
       <div class="text-btns">
         <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 1</button>
         <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Step 3</button>
@@ -275,7 +282,16 @@ export const template = `
 
     <div class="welcome-copy full">
       <h2>Step 3. Yno Host.</h2>
-      <p><a ui-sref='user-host'>Sign up to be a Yno Host</a> to register your locations and begin hosting your own Yno Tastings. Yno Hosts will receive new tastings lists based on the results of each tasting they host. The more tastings, the more lists. After a while, you’ll cruising a wine aisle with ease.</p>
+      <p><a ui-sref='user-host'>Sign up as a Yno Host</a> to register your locations and begin hosting your own Yno Tastings.</p>
+      <p>Yno Hosts can:<br>
+        <ul>
+          <li>get the same privileges as Yno Tasters</li>
+          <li>invite guests and host their own tastings</li>
+          <li>review their previous tasting results</li>
+          <li>download curated suggested tasting lists</li>
+        </ul>
+        </p>
+        <p>Don’t be shy. If you're uncomfortable choosing your own wines, download a curated tasting list. After each completed tasting we’ll send you a new list based on your results. Soon, you’ll be choosing your own wines like a pro!</p>
       <div class="text-btns">
         <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 2</button>
         <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Step 4</button>
@@ -591,7 +607,7 @@ export const template = `
     <div class="welcome-copy full">
       <h2>Step 5. Reveal Results!</h2>
       <p>When all your ratings are in or your tasting time is up, Yno Tasting will reveal your wines to your guests. Your tasting is now complete! Based on your results, a new tasting list will be sent to the host for her next party.</p>
-      <p>Every Yno Taster can return to ynotasting.com anytime to review past tastings, wines, and new tasting invites. Over time tasters will become more familiar with the wines they like which helps them with their next tasting and choosing wines in the future.</p>
+      <p>Every Yno Taster can return to ynotasting.com anytime to review past tastings, wines, and new tasting invites. Over time tasters will become more familiar with the wines they like.</p>
       <div class="text-btns">
         <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
         <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 4</button>

@@ -44,11 +44,28 @@ class Api::V1::WineReviewsController < Api::BaseController
     end
   end
 
+  def reveal
+    if current_host
+      # p "@@@@@@@@@@@@@@@@@@@@@@@ Wine Id: #{reveal_attributes[:tasting_id]}"
+      WineReview.where(tasting_id: reveal_attributes[:tasting_id]).where(wine_id: reveal_attributes[:wine_id]).update_all(wine_id: nil)
+      WineReview.where(tasting_id: reveal_attributes[:tasting_id]).where(wine_number: reveal_attributes[:wine_number]).update_all(wine_id: reveal_attributes[:wine_id])
+      taster = WineReview.where(tasting_id: reveal_attributes[:tasting_id]).first.taster
+      reviews = WineReview.where(tasting_id: reveal_attributes[:tasting_id]).where(taster: taster)
+      render json: reviews, each_serializer: Tastings::Show::Completed::WineReviewSerializer
+    else
+      render json: { error: "Only hosts can reveal wines", status: 403 }, status: 403
+    end
+  end
+
 
   private
 
   def update_attributes
     params.require(:wine_review).permit(:rating, :comments, :wine_number, :taster_id, :wine_id)
+  end
+
+  def reveal_attributes
+    params.require(:wine_review).permit(:tasting_id, :wine_number, :wine_id)
   end
 
   def wine_review_serializer(wine_review)

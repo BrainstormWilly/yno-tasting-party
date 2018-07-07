@@ -17,6 +17,7 @@ class Tastings::Show::Open::TastingSerializer < ActiveModel::Serializer
     :is_closed,
     :is_completed,
     :taster_progress,
+    :tasting_wines,
     :taster_wine_reviews,
     :tasting_progress
 
@@ -42,6 +43,12 @@ class Tastings::Show::Open::TastingSerializer < ActiveModel::Serializer
     guest = object.guests.select{ |g| g.taster.user_id==current_user.id }.first
     return 0 unless guest
     Tastings::Show::Open::GuestSerializer.new(guest).tasting_progress
+  end
+
+  def tasting_wines
+    object.tasting_wines.map do |tw|
+      ::TastingWineSerializer.new(tw)
+    end
   end
 
   def taster_wine_reviews

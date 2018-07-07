@@ -1,8 +1,11 @@
 export const template = `
 
-<button ng-click="$ctrl.toggleTrigger()" ng-disabled="$ctrl.toggleDisabled">
+<button
+  ng-class="$ctrl.toggleStyle"
+  ng-click="$ctrl.toggleTrigger()"
+  ng-disabled="$ctrl.toggleDisabled">
   <div class="toggle-knob"></div>
 </button>
-<span>{{$ctrl.toggleLabel}}</span>
+<span ng-if="$ctrl.toggleLabel">{{$ctrl.toggleLabel}}</span>
 
 `

@@ -1,5 +1,5 @@
 export const template = `
-<a ng-if="$ctrl.signoutState" ui-sref='welcome-signin' >
+<a ng-if="$ctrl.signoutState" href ng-click="$ctrl.signoutUser()" >
   Sign Out
 </a>
 <a ng-if="$ctrl.howState" ui-sref='welcome-signin' >

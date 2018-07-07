@@ -9,7 +9,9 @@ export function TastingConfig($stateProvider, $urlRouterProvider) {
         tasting: ($stateParams, TastingService) => {
           return TastingService.getTasting($stateParams.id)
         },
-        tasterIsHost: function(taster, tasting){ return taster.id==tasting.host.taster.id }
+        tasterIsHost: function(taster, tasting){ return taster.id==tasting.host.taster.id },
+        hostIsTasting: function(tasting, tasterIsHost){ return tasterIsHost && !tasting.host_is_not_tasting},
+        tastingIsFrozen: function(tasting){ return tasting.is_closed || tasting.is_completed }
       }
     })
     .state('tasting-new',{

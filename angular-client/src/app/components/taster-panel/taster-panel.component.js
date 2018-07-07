@@ -2,7 +2,8 @@ import {template} from './taster-panel.es6';
 
 export const TasterPanelComponent = {
   bindings: {
-    taster: "<"
+    taster: "<",
+    tasterNumber: "<"
   },
   template,
   controller: class TasterPanelController{

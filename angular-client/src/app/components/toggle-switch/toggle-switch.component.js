@@ -5,7 +5,8 @@ export const ToggleSwitchComponent = {
     toggleTrigger: "&",
     toggleState: "<",
     toggleLabel: "<",
-    toggleDisabled: "<"
+    toggleDisabled: "<",
+    toggleStyle: "<"
   },
   template,
   controller: class ToggleSwitchController{
@@ -22,7 +23,7 @@ export const ToggleSwitchComponent = {
     }
 
     $onChanges(changeObj){
-      // this.$log.log("ToggleSwitchComponent.$onChanges", changeObj);
+      // this.$log.log("ToggleSwitchComponent.$onChanges", changeObj.toggleDisabled);
       if( changeObj.toggleState ){
         if( changeObj.toggleState.currentValue ){
           this.$button.css("justify-content", "flex-end");
@@ -31,14 +32,16 @@ export const ToggleSwitchComponent = {
         }
       }
       if( changeObj.toggleDisabled ){
-        if( changeObj.toggleDisabled.currentValue ){
-          this.$knob.css("opacity",.5);
-        }else{
-          this.$knob.css("opacity",1);
-        }
+        // if( changeObj.toggleDisabled.currentValue ){
+        //   this.$knob.css("opacity",.5);
+        // }else{
+        //   this.$knob.css("opacity",1);
+        // }
+        
       }
-      TweenMax.fromTo(this.$span, .8, {opacity:0}, {opacity:1});
+      if( changeObj.toggleLabel && changeObj.toggleLabel.currentValue ){
+        TweenMax.fromTo(this.$span, .8, {opacity:0}, {opacity:1});
+      }
     }
-
   }
 }

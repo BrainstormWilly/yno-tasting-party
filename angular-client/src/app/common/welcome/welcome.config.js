@@ -60,7 +60,10 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
     })
     .state('welcome-privacy',{
       url: '/privacy',
-      component: 'welcomePrivacy'
+      component: 'welcomePrivacy',
+      resolve: {
+        taster: TasterService => TasterService.getTasterFromValidation()
+      }
     })
     .state('welcome-why',{
       url: '/why',

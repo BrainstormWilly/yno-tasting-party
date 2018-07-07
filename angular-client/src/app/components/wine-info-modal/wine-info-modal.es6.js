@@ -7,11 +7,11 @@ export const template = `
       <div class="main-modal-content">
         <table>
           <tr>
-            <td>Vintage</td>
+            <td>Vintage:</td>
             <td>{{$ctrl.wineContext.wine.vintage}}</td>
           </tr>
           <tr>
-            <td>Name</td>
+            <td>Name:</td>
             <td>{{$ctrl.wineContext.wine.name}}</td>
           </tr>
           <tr ng-if="$ctrl.wineType=='wine'">
