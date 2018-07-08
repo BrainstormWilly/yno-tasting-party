@@ -1,6 +1,5 @@
 class Dashboard::TasterSerializer < ActiveModel::Serializer
-  attributes
-    :id,
+  attributes :id,
     :full_handle,
     :name,
     :handle,
