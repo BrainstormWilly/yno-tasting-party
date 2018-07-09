@@ -82,7 +82,7 @@ class Api::V1::GuestsController < Api::BaseController
         guest = Guest.new({tasting_id:invite_new_params[:tasting_id], taster_id:taster.id})
         guest.invited = Time.current
         if guest.save
-          GuestMailer.invite_new_user(guest, user.raw_invitation_token, client_timezone_str(guest.tasting.open_at)).deliver
+          GuestMailer.invite_new_user(guest, user.raw_invitation_token, client_timezone_str(guest.tasting.open_at, false, guest.tasting.location.time_zone)).deliver
           render json: guest, serializer: Tastings::New::GuestSerializer
         else
           render json: { error: "Unknown Error saving guest", status: 400 }, status: 400
@@ -105,7 +105,7 @@ class Api::V1::GuestsController < Api::BaseController
           guest = Guest.new({tasting_id:invite_taster_params[:tasting_id], taster_id:taster.id})
           guest.invited = Time.current
           if guest.save
-            GuestMailer.invite_taster(guest, client_timezone_str(guest.tasting.open_at)).deliver
+            GuestMailer.invite_taster(guest, client_timezone_str(guest.tasting.open_at, false, guest.tasting.location.time_zone)).deliver
             render json: guest, serializer: Tastings::New::GuestSerializer
           else
             render json: { error: "Unknown Error saving guest", status: 400 }, status: 400
@@ -124,7 +124,7 @@ class Api::V1::GuestsController < Api::BaseController
       guest = Guest.new(create_guest_params)
       guest.invited = Time.current
       if guest.save
-        GuestMailer.invite_taster(guest, client_timezone_str(guest.tasting.open_at)).deliver
+        GuestMailer.invite_taster(guest, client_timezone_str(guest.tasting.open_at, false, guest.tasting.location.time_zone)).deliver
         render json: guest, serializer: Tastings::New::GuestSerializer
       else
         render json: { error: "Unknown Error saving guest", status: 400 }, status: 400

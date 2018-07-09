@@ -94,6 +94,10 @@ export const template = `
             {{$ctrl.tasting.location.address}}<span ng-show="$ctrl.tasting.location.address2"> {{$ctrl.tasting.location.address2}}</span><br/>
             {{$ctrl.tasting.location.city}}, {{$ctrl.tasting.location.state}} {{$ctrl.tasting.location.postal}}
           </p>
+          <p>
+            Opens: {{ $ctrl.tasting.open_at | utcToLocalDate:"MMMM D, YYYY h:mm a" }}<br>
+            Duration: {{ $ctrl.tastingDuration() }}
+          </p>
           <p ng-show="$ctrl.tasting.description">
             <span class="subtitle">Description:<br/></span>
             {{$ctrl.tasting.description}}

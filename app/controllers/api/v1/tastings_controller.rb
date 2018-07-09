@@ -52,7 +52,7 @@ class Api::V1::TastingsController < Api::BaseController
         if tasting.update(valid_update_params)
           if !tasting.is_completed?
             tasting.guests.each do |g|
-              GuestMailer.update_tasting_to_guest(g, client_timezone_str(tasting.open_at)).deliver
+              GuestMailer.update_tasting_to_guest(g, client_timezone_str(tasting.open_at, false, tasting.location.time_zone)).deliver
             end
           else
             tasting.guests.each do |g|

@@ -14,6 +14,11 @@ class Dashboard::TasterSerializer < ActiveModel::Serializer
     UserSerializer.new(object.user)
   end
 
+  def name
+    return "(Unconfirmed invite)" if object.name.nil?
+    object.name
+  end
+
   def full_handle
     return "#{object.name} (#{object.handle})" if object.handle && object.name
     return object.name if object.name

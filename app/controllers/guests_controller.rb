@@ -103,6 +103,7 @@ class GuestsController < ApplicationController
     @guest.taster = @taster
     @guest.invited = Time.current
     if @guest.save
+
       TasterMailer.invite_taster(@guest, client_timezone_str(@tasting.open_at)).deliver
       flash[:notice] = "Invite successfully sent to #{@taster.name}."
       redirect_to tasting_guests_new_path(@tasting)

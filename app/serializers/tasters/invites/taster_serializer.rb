@@ -16,4 +16,10 @@ class Tasters::Invites::TasterSerializer < ActiveModel::Serializer
   def is_host
     !object.host.nil?
   end
+
+  def name
+    return "(Unconfirmed invite)" if object.name.nil?
+    object.name
+  end
+
 end

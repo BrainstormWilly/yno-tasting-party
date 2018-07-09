@@ -15,7 +15,7 @@ notification{
     transition: opacity .5s, height .5s;
     &.on{
       opacity: 1;
-      height: 5rem;
+      min-height: 5rem;
     }
   }
 

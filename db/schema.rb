@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227171912) do
+ActiveRecord::Schema.define(version: 20180708235514) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20171227171912) do
     t.integer  "host_id"
     t.integer  "location_id"
     t.boolean  "primary"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["host_id"], name: "index_host_locations_on_host_id"
     t.index ["location_id"], name: "index_host_locations_on_location_id"
   end
@@ -65,10 +65,12 @@ ActiveRecord::Schema.define(version: 20171227171912) do
     t.string   "city"
     t.string   "state"
     t.string   "postal"
-    t.string   "country",    default: "US"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.string   "time_zone",  default: "America/Los Angeles", null: false
+    t.string   "country",                             default: "US"
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
+    t.string   "time_zone",                           default: "America/Los Angeles", null: false
+    t.decimal  "longitude",  precision: 10, scale: 6
+    t.decimal  "latitude",   precision: 10, scale: 6
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|

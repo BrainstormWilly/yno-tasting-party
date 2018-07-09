@@ -78,7 +78,7 @@ export const TastingShowComponent = {
           $state.reload();
         }else{
           if( this.tasterIsHost ){
-            this.NotificationsService.setNotification("Cancellation emailed to " + d.taster.name);
+            this.NotificationsService.setNotification("Cancellation emailed to " + d.taster.full_handle);
             this._.remove(this.tasting.guests, {
               id: d.id
             });
@@ -227,7 +227,7 @@ export const TastingShowComponent = {
     }
 
     $onInit(){
-      // this.$log.log(this.tasting);
+      this.$log.log(this.tasting);
       if( !this.hostIsTasting ){
         this.tasterNumber = 0;
         this.toggleViewState();
@@ -357,6 +357,16 @@ export const TastingShowComponent = {
     showWinesView(){
       if( this.tasting.is_completed ) return "completed"
       return "tastingPending"
+    }
+
+    tastingDuration(){
+      if( this.tasting.completed_at ){
+        return "completed in " + moment(this.tasting.completed_at).diff(moment(this.tasting.open_at), "hours") + " hours";
+      }
+      if( this.tasting.close_at ){
+        return moment(this.tasting.close_at).diff(moment(this.tasting.open_at), "hours") + " hours";
+      }
+      return "undetermined";
     }
 
     toggleViewState(){
