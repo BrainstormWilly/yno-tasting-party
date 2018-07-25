@@ -15,10 +15,7 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
     })
     .state('welcome-how',{
       url: '/how',
-      component: 'welcomeHow',
-      resolve: {
-        taster: TasterService => TasterService.getTasterFromValidation()
-      }
+      component: 'welcomeHow'
     })
     .state('welcome-signin',{
       url: '/signin',

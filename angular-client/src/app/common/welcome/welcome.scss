@@ -71,6 +71,7 @@
 
   @media (min-width: 800px) and (orientation: landscape){
     .welcome-background{
+      min-height: 50rem;
       background: radial-gradient(circle at 30% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
 
       .welcome-hero{
