@@ -22,8 +22,8 @@ export const template = `
     <div class="welcome-copy bottom">
       <p>On tasting day, Yno does all the work. Your guests simply log in on their mobile devices and record their rating and comments on each wine. They can even use an <a ui-sref='welcome-alexa'>Alexa</a> device to record hands free. When your tasting is complete, use Yno to reveal your wines and review your results.</p>
       <div class="text-btns">
-        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
         <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Learn More</button>
+        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>  
       </div>
     </div>
 
@@ -609,8 +609,8 @@ export const template = `
       <p>When all your ratings are in or your tasting time is up, Yno Tasting will reveal your wines to your guests. Your tasting is now complete! Based on your results, a new tasting list will be sent to the host for her next party.</p>
       <p>Every Yno Taster can return to ynotasting.com anytime to review past tastings, wines, and new tasting invites. Over time tasters will become more familiar with the wines they like.</p>
       <div class="text-btns">
-        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
         <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 4</button>
+        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
       </div>
     </div>
 

@@ -160,3 +160,11 @@
       }
     }
   }
+
+  @media (min-width: 1280px) and (orientation: landscape){
+
+    .welcome-background{
+      min-height: 60rem;
+
+    }
+  }

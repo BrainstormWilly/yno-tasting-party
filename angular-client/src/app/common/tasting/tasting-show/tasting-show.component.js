@@ -73,8 +73,8 @@ export const TastingShowComponent = {
       };
 
       let destroyGuestEvent = $scope.$on("destroy-guest-event", (e,d)=>{
-        $log.log("destroyGuestEvent", d);
-        if( d.taster_id==this.tasting.host.taster_id ){
+        // $log.log("destroyGuestEvent", d.taster_id, this.tasting );
+        if( d.taster_id==this.tasting.host.taster.id ){
           $state.reload();
         }else{
           if( this.tasterIsHost ){
@@ -121,6 +121,10 @@ export const TastingShowComponent = {
           this.tasting.open_at = moment();
           this.TastingService.updateTasting(this.tasting);
         }
+      });
+
+      let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
+        $state.reload();
       });
 
       let inviteTasterEvent = $scope.$on("invite-taster-event", (e,d)=>{
@@ -215,6 +219,7 @@ export const TastingShowComponent = {
       });
       $scope.$on("$destroy", destroyGuestEvent);
       $scope.$on("$destroy", endAlertsEvent);
+      $scope.$on("$destroy", includeHostAsGuestEvent);
       $scope.$on("$destroy", inviteTasterEvent);
       $scope.$on("$destroy", modalStateChangeEvent);
       $scope.$on("$destroy", tastingWineCreateEvent);
@@ -227,7 +232,7 @@ export const TastingShowComponent = {
     }
 
     $onInit(){
-      this.$log.log(this.tasting);
+      this.$log.log("TastingShowComponent", this.tasting);
       if( !this.hostIsTasting ){
         this.tasterNumber = 0;
         this.toggleViewState();

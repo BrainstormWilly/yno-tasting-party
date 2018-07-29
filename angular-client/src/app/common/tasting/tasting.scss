@@ -9,6 +9,7 @@
   .tasting-panel{
     // border: 1px solid red;
     // height: 100%;
+
     .tasting-mode{
       display: flex;
       align-items: center;
@@ -110,7 +111,7 @@
 
     .tasting-panel{
       flex-grow: 2;
-      max-width: 40rem;
+      max-width: 50rem;
       min-width: 20rem;
       margin: 1rem 2rem 1rem 4rem;
       border: 2px solid $theme-light-gray;

@@ -1,4 +1,7 @@
 export const template = `
+<a ui-sref='dashboard' >
+  Dashboard
+</a>
 <a ng-if="$ctrl.signoutState" href ng-click="$ctrl.signoutUser()" >
   Sign Out
 </a>

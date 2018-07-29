@@ -416,14 +416,14 @@ section{
   flex-direction: column;
   justify-content: center;
   padding: 1rem;
-  background-color: rgba($theme-neutral-color, .9);
-
+  background-color: rgba($theme-bkg-color, .75);
+  color: $theme-bkg-color;
 
   .main-modal-container{
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: $theme-dark-gray;
+    background-color: $theme-neutral-color;
     border-radius: 1.5rem;
     // border: 2px solid darken($theme-color, 20%);
 
@@ -442,7 +442,8 @@ section{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: $theme-bkg-color;
+      background-color: $theme-light-gray;
+      color: $theme-neutral-color;
       // background-color: $theme-dark-gray;
       min-height: 3rem;
       padding: .5rem;
@@ -456,6 +457,17 @@ section{
       // padding: .5rem;
       // overflow-x: hidden;
       // border: 1px solid blue;
+      .main-form-control{
+        background-color: $theme-neutral-color;
+        color: $theme-bkg-color;
+        input, textarea{
+          color: $theme-bkg-color;
+        }
+        label{
+          color: $theme-bkg-color;
+          font-weight: bold;
+        }
+      }
       ul{
         margin: 0;
         padding: 0;
@@ -466,6 +478,18 @@ section{
           border-bottom: 1px solid $theme-light-gray;
           text-align: left;
           // border: 1px dashed blue;
+          &:first-child{
+            a{
+              border-top-left-radius: 1.5rem;
+              border-top-right-radius: 1.5rem;
+            }
+          }
+          &:last-child{
+            a{
+              border-bottom-left-radius: 1.5rem;
+              border-bottom-right-radius: 1.5rem;
+            }
+          }
           a{
             display: flex;
             flex-direction: row;
@@ -477,20 +501,23 @@ section{
             padding: 0 1rem 0 1rem;
             min-height: 3rem;
           }
+
           a:hover{
-            background-color: lighten($theme-dark-gray, 5%);
+            background-color: darken($theme-neutral-color, 5%);
           }
+
           a.selected{
-            background-color: $theme-medium-gray;
+            background-color: darken($theme-neutral-color, 10%);
           }
         }
       }
       table{
         width: 100%;
         table-layout: fixed;
+        color: $theme-bkg-color;
         // border: 1px dashed blue;
         th{
-          color: darken($theme-neutral-color, 20%);
+          font-weight: 400;
           text-align: center;
         }
         th, td{
@@ -503,7 +530,7 @@ section{
           width: 25%;
         }
         tr:nth-child(even){
-          background-color: lighten($theme-dark-gray, 5%);
+          background-color: darken($theme-neutral-color, 10%);
         }
         // tr:first-child{
         //   td{
@@ -528,7 +555,11 @@ section{
       min-height: 4rem;
       border-radius: 0 0 1.5rem 1.5rem;
       padding: 0 .5rem 0 .5rem;
-      background-color: $theme-bkg-color;
+      background-color: $theme-medium-gray;
+      button:disabled{
+        background-color: $theme-medium-gray;
+        color: $theme-neutral-color;
+      }
       // border-top: 2px solid lighten($theme-dark-gray, 20%);
     }
   }

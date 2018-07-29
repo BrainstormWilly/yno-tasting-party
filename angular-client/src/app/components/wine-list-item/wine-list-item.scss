@@ -23,7 +23,7 @@ wine-list-item{
       justify-content: center;
       width: 6rem;
       height: 100%;
-      color: $theme-header-color;
+      color: #fff;
       border-radius: 1.5rem 0 0 1.5rem;;
       // border: 1px solid $theme-color;
       background-color: $theme-color;
@@ -31,20 +31,20 @@ wine-list-item{
         background-color: $theme-dark-gray;
       }
       &.good{
-        background-color: darken($theme-good-color, 30%);
+        background-color: $review-good-color;
       }
       &.fair{
-        background-color: darken($theme-ok-color, 30%);
+        background-color: $review-ok-color;
       }
       &.bad{
-        background-color: darken($theme-bad-color, 30%);
+        background-color: $review-bad-color;
       }
       span:first-child{
         font-size: .9rem;
         opacity: .8;
       }
       span:last-child{
-        font-size: 1rem;
+        font-size: 1.2rem;
       }
     }
     .wine-list-item-title{
