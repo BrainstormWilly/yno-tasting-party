@@ -62,6 +62,7 @@ export const TastingNewComponent = {
       });
 
       let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", (e,d)=>{
+        // this.$log.log("includeHostAsGuestEvent",d);
         this.tasting.guests.push(d);
       });
 
@@ -108,7 +109,7 @@ export const TastingNewComponent = {
     */
     $onInit() {
       // this.tasting.open_at = moment();
-      
+
       this.tasting.host_id = this.host.id;
       this.tasting.host = this.host;
       for( let i=0; i<this.host.locations.length; i++ ){

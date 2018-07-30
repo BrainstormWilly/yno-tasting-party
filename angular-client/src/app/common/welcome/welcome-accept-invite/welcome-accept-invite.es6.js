@@ -46,6 +46,7 @@ export const template = `
         </button>
       </div>
     </form>
+    <div class="mobile-nav-spacer"></div>
   </div>
 
   <desktop-nav-primary welcome-state="$ctrl.constants.WELCOME_SIGNIN_STATE"></desktop-nav-primary>

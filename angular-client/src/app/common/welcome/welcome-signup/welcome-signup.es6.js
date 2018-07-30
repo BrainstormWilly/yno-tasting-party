@@ -71,9 +71,10 @@ export const template = `
         <button type="submit" ng-disabled="taster_signup.$invalid">
           <i class="fa fa-user"></i>
         </button>
+
       </div>
     </form>
-
+    <div class="mobile-nav-spacer"></div>
   </div>
 
   <desktop-nav-primary welcome-state="$ctrl.constants.WELCOME_SIGNIN_STATE"></desktop-nav-primary>
