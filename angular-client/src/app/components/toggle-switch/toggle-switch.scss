@@ -6,16 +6,17 @@ toggle-switch{
   justify-content: flex-start;
 
   button, button:active, button:hover, button:focus{
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
     align-items: center;
     justify-content: flex-end;
     height: 2rem;
     width: 3rem;
     min-width: 3rem;
     background-color: $theme-neutral-color;
+    padding: 0 .25rem 0 .25rem;
     border-radius: 1rem;
     border: none;
+    transition: justify-content 1s;
     // border: 2px solid lighten($theme-dark-gray, 20%);
     &.inverse{
       background-color: $theme-color;
@@ -23,9 +24,9 @@ toggle-switch{
         background-color: $theme-neutral-color;
       }
     }
-    div{
-      height: 1rem;
-      width: 1rem;
+    .toggle-knob{
+      height: 1rem; min-width: 1rem;
+      width: 1rem; min-height: 1rem;
       border-radius: .5rem;
       background-color: $theme-color;
     }

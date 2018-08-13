@@ -84,11 +84,11 @@ export const template = `
           </div>
         </div>
       </form>
+      <div class="mobile-nav-spacer"></div>
     </div>
 
     <div class="user-panel-section"  ng-if="$ctrl.hostState">
-      <h3 ng-if="$ctrl.user.host.locations.length>0">Current Locations</h3>
-      <p ng-if="$ctrl.user.host.locations.length>0"><small><span class="fa fa-asterisk"></span> = primary</small></p>
+      <h3 ng-if="$ctrl.user.host.locations.length>0">Current Locations <small>(<span class="fa fa-asterisk"></span> = primary)</small></h3>
       <div class="user-host-locations" ng-repeat="hl in $ctrl.user.host.locations">
         <div class="primary"><span class="fa fa-asterisk" ng-if="hl.primary"></span></div>
         <div class="location">{{hl.location.to_short_string}}</div>

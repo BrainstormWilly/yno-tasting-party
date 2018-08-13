@@ -16,12 +16,12 @@ export const template = `
 
       <div class="tasting-mode"
         ng-class="{inverse:!$ctrl.viewState}">
-        <h4>{{ $ctrl.viewLabel }}</h4>
         <toggle-switch
           toggle-trigger="$ctrl.toggleViewState(state)"
           toggle-state="$ctrl.viewState"
           toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
         </toggle-switch>
+        <h4>{{ $ctrl.viewLabel }}</h4>
       </div>
 
       <div class="tasting-status"
@@ -37,12 +37,39 @@ export const template = `
 
       <!--
 
+        TASTER REVIEWS
+
+      -->
+
+      <div class="tasting-section"
+        ng-if="$ctrl.viewState">
+        <div class="tasting-header" ng-class="{inverse:!$ctrl.viewState}">
+          <a href>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
+            <h3>Your Reviews</h3>
+          </a>
+        </div>
+        <div class="tasting-section-list">
+          <wine-list-item
+            ng-if="$ctrl.viewState"
+            ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
+            wine-view="{{$ctrl.wineListItemView()}}"
+            wine-item="review"
+            select-action="$ctrl.openWineReviewModal(review)">
+          </wine-list-item>
+          <div class="mobile-nav-spacer"></div>
+        </div>
+      </div>
+
+
+      <!--
+
         TASTING DETAILS
 
       -->
 
-      <div class="tasting-section" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_DETAILS">
-        <div class="tasting-header" ng-class="{inverse:!$ctrl.viewState}">
+      <div class="tasting-section" ng-if="!$ctrl.viewState && ($ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_DETAILS)">
+        <div class="tasting-header">
           <a href
             ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_DETAILS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -131,8 +158,8 @@ export const template = `
       -->
 
       <div class="tasting-section"
-        ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_WINES">
-        <div class="tasting-header" ng-class="{inverse:!$ctrl.viewState}">
+        ng-if="!$ctrl.viewState && ($ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_WINES)">
+        <div class="tasting-header">
           <a href ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_WINES : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                width="371.234px" height="371.234px" viewBox="0 0 371.234 371.234" style="enable-background:new 0 0 371.234 371.234;"
@@ -187,8 +214,8 @@ export const template = `
       -->
 
       <div class="tasting-section"
-        ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_GUESTS">
-        <div class="tasting-header" ng-class="{inverse:!$ctrl.viewState}">
+        ng-if="!$ctrl.viewState && ($ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_GUESTS)">
+        <div class="tasting-header">
           <a href ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_GUESTS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M192 256c61.9 0 112-50.1 112-112S253.9 32 192 32 80 82.1 80 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C51.6 288 0 339.6 0 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zM480 256c53 0 96-43 96-96s-43-96-96-96-96 43-96 96 43 96 96 96zm48 32h-3.8c-13.9 4.8-28.6 8-44.2 8s-30.3-3.2-44.2-8H432c-20.4 0-39.2 5.9-55.7 15.4 24.4 26.3 39.7 61.2 39.7 99.8v38.4c0 2.2-.5 4.3-.6 6.4H592c26.5 0 48-21.5 48-48 0-61.9-50.1-112-112-112z"/></svg>
             <h3>Guests</h3>
@@ -214,19 +241,18 @@ export const template = `
 
       <!--
 
-        REVIEWS
+        GUEST REVIEWS
 
       -->
 
       <div class="tasting-section"
-        ng-if="$ctrl.showReviews()">
-        <div class="tasting-header" ng-class="{inverse:!$ctrl.viewState}">
+        ng-if="!$ctrl.viewState && $ctrl.showReviews()">
+        <div class="tasting-header">
           <a href
             ng-class="{inverse:!$ctrl.viewState}"
             ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_REVIEWS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
-            <h3 ng-show="$ctrl.viewState">Your Reviews</h3>
-            <h3 ng-hide="$ctrl.viewState">Tasting Reviews</h3>
+            <h3>Guest Reviews</h3>
           </a>
           <button class="small-btn" ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_REVIEWS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
             <span class="fas fa-angle-down" ng-hide="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVIEWS"></span>
@@ -235,14 +261,6 @@ export const template = `
         </div>
         <div class="tasting-section-list" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVIEWS">
           <wine-list-item
-            ng-if="$ctrl.viewState"
-            ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
-            wine-view="{{$ctrl.wineListItemView()}}"
-            wine-item="review"
-            select-action="$ctrl.openWineReviewModal(review)">
-          </wine-list-item>
-          <wine-list-item
-            ng-if="!$ctrl.viewState"
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
             wine-view="{{$ctrl.wineListItemView()}}"
             wine-item="review"
@@ -260,7 +278,7 @@ export const template = `
       -->
 
       <div class="tasting-section"
-        ng-if="$ctrl.showReveals()">
+        ng-if="!$ctrl.viewState && $ctrl.showReveals()">
         <div class="tasting-header inverse">
           <a href class="inverse"
             ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_REVEALS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
@@ -288,8 +306,8 @@ export const template = `
         </div>
       </div>
 
-    </div>
-  </div>
+    </div> <!-- end tasting panel -->
+  </div> <!-- end tasting -->
 
 
   <mobile-nav signed-in="true" is-host="$ctrl.taster.is_host"></mobile-nav>
@@ -304,5 +322,4 @@ export const template = `
   <alerts-modal></alerts-modal>
   <notification></notification>
   <wait-state wait-on="$ctrl.wait"></wait-state>
-
-  `
+`

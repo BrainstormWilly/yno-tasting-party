@@ -13,12 +13,14 @@
     .tasting-mode{
       display: flex;
       align-items: center;
-      justify-content: space-between;
       height: 3rem; min-height: 3rem;
       padding: 0 .5rem;
       transition: background-color .7s;
       &.inverse{
         background-color: $theme-light-gray;
+      }
+      h4{
+        margin-left: 1rem;
       }
     }
     .tasting-status{
@@ -110,10 +112,10 @@
     // border: 1px solid blue;
 
     .tasting-panel{
-      flex-grow: 2;
-      max-width: 50rem;
-      min-width: 20rem;
-      margin: 1rem 2rem 1rem 4rem;
+      flex-grow: 1;
+      width: 30rem; max-width: 30rem;
+      margin-right: 2rem;
+      margin-left: 4rem;
       border: 2px solid $theme-light-gray;
       border-top-left-radius: 1rem;
       border-top-right-radius: 1rem;
@@ -123,7 +125,23 @@
           border-top-right-radius: 1rem;
         }
       }
+      .tasting-section{
+        .tasting-section-list{
+          height: calc(100vh - 22rem);
+        }
+      }
     }
   }
 
+}
+
+@media (min-width: 1200px) and (orientation: landscape){
+  .tasting{
+    .tasting-panel{
+      flex-grow: 1;
+      width: 40rem; max-width: 40rem;
+      margin-right: 2rem;
+      margin-left: 4rem;
+    }
+  }
 }

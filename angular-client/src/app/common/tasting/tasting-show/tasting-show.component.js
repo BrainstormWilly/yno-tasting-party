@@ -233,6 +233,9 @@ export const TastingShowComponent = {
 
     $onInit(){
       this.$log.log("TastingShowComponent", this.tasting);
+      if( this.tasting.is_pending ){
+        this.viewState = false;
+      }
       if( !this.hostIsTasting ){
         this.tasterNumber = 0;
         this.toggleViewState();
@@ -379,7 +382,7 @@ export const TastingShowComponent = {
       if( this.viewState ){
         this.viewLabel = "Taster View";
       }else{
-        this.viewLabel = "Tasting View";
+        this.viewLabel = "Tasting Info";
       }
     }
 

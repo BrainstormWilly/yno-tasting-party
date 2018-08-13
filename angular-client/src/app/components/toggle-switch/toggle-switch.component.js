@@ -37,7 +37,7 @@ export const ToggleSwitchComponent = {
         // }else{
         //   this.$knob.css("opacity",1);
         // }
-        
+
       }
       if( changeObj.toggleLabel && changeObj.toggleLabel.currentValue ){
         TweenMax.fromTo(this.$span, .8, {opacity:0}, {opacity:1});
