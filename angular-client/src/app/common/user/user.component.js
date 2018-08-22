@@ -24,7 +24,7 @@ export const UserComponent = {
       this.TasterService = TasterService;
       this.UserService = UserService;
       this.hostState = false;
-      this.hostStateLabel = "Taster View";
+      this.hostStateLabel = "Taster Profile";
       this.newHostLocation = null;
       this.newHostLocationInvalid = true;
 
@@ -150,9 +150,9 @@ export const UserComponent = {
     toggleHostState(){
       this.hostState = !this.hostState;
       if( this.hostState ){
-        this.hostStateLabel = "Host View";
+        this.hostStateLabel = "Host Profile";
       }else{
-        this.hostStateLabel = "Taster View";
+        this.hostStateLabel = "Taster Profile";
       }
     }
 

@@ -39,6 +39,7 @@ export const TastingShowComponent = {
       this.viewState = true; // Taster View = true
       this.viewLabel = "Taster View";
       this.unrevealedWines = [];
+      this.lastWineItems = [];
 
 
       let setDisplayTime = ()=>{
@@ -123,6 +124,10 @@ export const TastingShowComponent = {
         }
       });
 
+      let getTastingRefresh = ()=>{
+        this.TastingService.refreshTasting(this.tasting.id)
+      };
+
       let includeHostAsGuestEvent = $scope.$on("include-host-as-guest-event", ()=>{
         $state.reload();
       });
@@ -136,6 +141,14 @@ export const TastingShowComponent = {
         if( d.state=="confirmed" && d.name=="tasting-detail-modal" ){
           this.tasting = d.data;
         }
+      });
+
+      let tastingRefreshTimer = $interval(getTastingRefresh, 10000);
+
+      let tastingRefreshEvent = $scope.$on("tasting-refresh-event", (e,d)=>{
+        d.last_wine_items = this.tasting.taster_wine_reviews;
+        this.tasting = d;
+        // $log.log(d);
       });
 
       let tastingWineCreateEvent = $scope.$on("tasting-wine-create-event", (e,d)=>{
@@ -216,12 +229,14 @@ export const TastingShowComponent = {
 
       $scope.$on("$destroy", ()=>{
         $interval.cancel(displayTimer);
+        $interval.cancel(tastingRefreshTimer);
       });
       $scope.$on("$destroy", destroyGuestEvent);
       $scope.$on("$destroy", endAlertsEvent);
       $scope.$on("$destroy", includeHostAsGuestEvent);
       $scope.$on("$destroy", inviteTasterEvent);
       $scope.$on("$destroy", modalStateChangeEvent);
+      $scope.$on("$destroy", tastingRefreshEvent);
       $scope.$on("$destroy", tastingWineCreateEvent);
       $scope.$on("$destroy", tastingWineDestroyEvent);
       $scope.$on("$destroy", tastingWineUpdateEvent);
@@ -233,6 +248,7 @@ export const TastingShowComponent = {
 
     $onInit(){
       this.$log.log("TastingShowComponent", this.tasting);
+      this.tasting.last_wine_items = [];
       if( this.tasting.is_pending ){
         this.viewState = false;
       }
@@ -300,6 +316,14 @@ export const TastingShowComponent = {
         "Are you sure you want to open tasting? Confirming means all your tasters are present and ready to begin",
         "openTasting"
       )
+    }
+
+    changeExpandState(state){
+      if( state === this.expandState ){
+        this.expandState = this.constants.EXPAND_STATE_NONE;
+      }else{
+        this.expandState = state;
+      }
     }
 
     completeTasting(){

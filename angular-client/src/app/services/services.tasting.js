@@ -71,6 +71,16 @@ export class TastingService {
     // return this.$http.get(this.constants.apiUrl + "/tastings/" + tasting_id);
   }
 
+  refreshTasting(tasting_id){
+    this.$http.get(this.constants.apiUrl + "/tastings/" + tasting_id)
+      .then(result=>{
+        this.$rootScope.$broadcast("tasting-refresh-event", result.data);
+      })
+      .catch(()=>{
+        // die silently
+      });
+  }
+
   getTastingList(){
     let defer = this.$q.defer();
     this.$http.get(this.constants.apiUrl + "/tastings/")

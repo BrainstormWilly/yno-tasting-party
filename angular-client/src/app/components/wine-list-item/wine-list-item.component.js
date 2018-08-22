@@ -6,7 +6,8 @@ export const WineListItemComponent = {
     deleteAction: "&",
     selectAction: "&",
     editable: "<",
-    wineView: "@"
+    wineView: "@",
+    lastWineItem: "<"
   },
   template,
   controller: class WineListItemController{
@@ -18,7 +19,7 @@ export const WineListItemComponent = {
       this.$ratingInteger = $element.find(".wine-list-item-rating-integer");
       this.rating = 1;
 
-      // $log.log("WineListItemComponent.constructor");
+      // $log.log("WineListItemComponent.constructor", this.$progress.css("width"));
 
       let wineReviewUpdateEvent = $scope.$on('wine-review-update-event', (e,d) => {
         // $log.log("WineListItemComponent", d);
@@ -27,7 +28,7 @@ export const WineListItemComponent = {
           this.wineItem.comments = d.comments;
           this.wineItem.unrated = false;
           TweenMax.to(this.$progress, 1, {width: (100*this.wineItem.rating/5)+"%"});
-          TweenMax.to(this, 1, {rating:this.wineItem.rating, onUpdate:this.onUpdateRating.bind(this)})
+          TweenMax.to(this, 1, {rating:this.wineItem.rating, onUpdate:this.onUpdateRating.bind(this)});
         }
       });
 
@@ -35,12 +36,14 @@ export const WineListItemComponent = {
     }
 
     $onInit() {
-      // this.$log.log("WineListItem",this.wineItem)
+      this.$log.log("WineListItemComponent", this.lastWineItem);
       if( this.wineView=="averageRating" ){
-        TweenMax.to(this.$progress, 1, {width: (100*this.wineItem.average_rating/5)+"%"});
+        this.rating = this.lastWineItem ? this.lastWineItem.average_rating : 1;
+        TweenMax.fromTo(this.$progress, 1, {width: (100*this.rating/5)+"%"}, {width: (100*this.wineItem.average_rating/5)+"%"});
         TweenMax.to(this, 1, {rating:this.wineItem.average_rating, onUpdate:this.onUpdateRating.bind(this)});
       }else if( this.wineView=="tasterRating" ){
-        TweenMax.to(this.$progress, 1, {width: (100*this.wineItem.rating/5)+"%"});
+        this.rating = this.lastWineItem ? this.lastWineItem.rating : 1;
+        TweenMax.fromTo(this.$progress, 1, {width: (100*this.rating/5)+"%"}, {width: (100*this.wineItem.rating/5)+"%"});
         TweenMax.to(this, 1, {rating:this.wineItem.rating, onUpdate:this.onUpdateRating.bind(this)});
       }
     }

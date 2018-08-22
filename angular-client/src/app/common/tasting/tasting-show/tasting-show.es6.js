@@ -55,6 +55,7 @@ export const template = `
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
             wine-view="{{$ctrl.wineListItemView()}}"
             wine-item="review"
+            last-wine-item="$ctrl.tasting.last_wine_items[$index]"
             select-action="$ctrl.openWineReviewModal(review)">
           </wine-list-item>
           <div class="mobile-nav-spacer"></div>
@@ -71,7 +72,7 @@ export const template = `
       <div class="tasting-section" ng-if="!$ctrl.viewState && ($ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_DETAILS)">
         <div class="tasting-header">
           <a href
-            ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_DETAILS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
+            ng-click="$ctrl.changeExpandState($ctrl.constants.EXPAND_STATE_DETAILS)">
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                width="366.182px" height="366.182px" viewBox="0 0 366.182 366.182" style="enable-background:new 0 0 366.182 366.182;"
                xml:space="preserve">
@@ -160,7 +161,7 @@ export const template = `
       <div class="tasting-section"
         ng-if="!$ctrl.viewState && ($ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_WINES)">
         <div class="tasting-header">
-          <a href ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_WINES : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
+          <a href ng-click="$ctrl.changeExpandState($ctrl.constants.EXPAND_STATE_WINES)">
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                width="371.234px" height="371.234px" viewBox="0 0 371.234 371.234" style="enable-background:new 0 0 371.234 371.234;"
                xml:space="preserve">
@@ -216,7 +217,7 @@ export const template = `
       <div class="tasting-section"
         ng-if="!$ctrl.viewState && ($ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE || $ctrl.expandState==$ctrl.constants.EXPAND_STATE_GUESTS)">
         <div class="tasting-header">
-          <a href ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_GUESTS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
+          <a href ng-click="$ctrl.changeExpandState($ctrl.constants.EXPAND_STATE_GUESTS)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M192 256c61.9 0 112-50.1 112-112S253.9 32 192 32 80 82.1 80 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C51.6 288 0 339.6 0 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zM480 256c53 0 96-43 96-96s-43-96-96-96-96 43-96 96 43 96 96 96zm48 32h-3.8c-13.9 4.8-28.6 8-44.2 8s-30.3-3.2-44.2-8H432c-20.4 0-39.2 5.9-55.7 15.4 24.4 26.3 39.7 61.2 39.7 99.8v38.4c0 2.2-.5 4.3-.6 6.4H592c26.5 0 48-21.5 48-48 0-61.9-50.1-112-112-112z"/></svg>
             <h3>Guests</h3>
           </a>
@@ -230,7 +231,7 @@ export const template = `
           <guest-list-item
             ng-repeat="guest in $ctrl.tasting.guests"
             guest="guest"
-            editable="!$ctrl.tasterIsHost || !$ctrl.tastingIsFrozen"
+            editable="($ctrl.tasterIsHost || guest.taster.id==$ctrl.taster.id) && !$ctrl.tastingIsFrozen"
             delete-action="$ctrl.attemptDestroyGuest(guest)"
             select-action="$ctrl.openGuestInfoModal(guest)">
           </guest-list-item>
@@ -245,12 +246,12 @@ export const template = `
 
       -->
 
-      <div class="tasting-section"
+      <div id="tastingReviews" class="tasting-section"
         ng-if="!$ctrl.viewState && $ctrl.showReviews()">
         <div class="tasting-header">
           <a href
             ng-class="{inverse:!$ctrl.viewState}"
-            ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_REVIEWS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
+            ng-click="$ctrl.changeExpandState($ctrl.constants.EXPAND_STATE_REVIEWS)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
             <h3>Guest Reviews</h3>
           </a>
@@ -264,6 +265,7 @@ export const template = `
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
             wine-view="{{$ctrl.wineListItemView()}}"
             wine-item="review"
+            last-wine-item="$ctrl.tasting.last_wine_items[$index]"
             select-action="$ctrl.openWineReviewStatusModal(review)">
           </wine-list-item>
           <div class="mobile-nav-spacer"></div>
@@ -281,7 +283,7 @@ export const template = `
         ng-if="!$ctrl.viewState && $ctrl.showReveals()">
         <div class="tasting-header inverse">
           <a href class="inverse"
-            ng-click="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_NONE ? $ctrl.expandState=$ctrl.constants.EXPAND_STATE_REVEALS : $ctrl.expandState=$ctrl.constants.EXPAND_STATE_NONE">
+            ng-click="$ctrl.changeExpandState($ctrl.constants.EXPAND_STATE_REVEALS)">
               <svg aria-hidden="true" data-prefix="fas" data-icon="award" class="svg-inline--fa fa-award fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M97.12 362.63l-5.3-5.3a9.004 9.004 0 0 0-4.02-2.32L72 350.77c-9.51-2.55-17.87-7.45-25.43-13.32L1.2 448.7c-4.39 10.77 3.81 22.47 15.43 22.03l52.69-2.01L105.56 507c8 8.44 22.04 5.81 26.43-4.96l52.05-127.62c-10.84 6.04-22.87 9.58-35.31 9.58-19.5 0-37.82-7.59-51.61-21.37zM382.8 448.7l-45.37-111.24c-7.56 5.88-15.92 10.77-25.43 13.32l-15.8 4.23a9.004 9.004 0 0 0-4.02 2.32l-5.3 5.3C273.09 376.41 254.76 384 235.26 384c-12.44 0-24.47-3.55-35.31-9.58L252 502.04c4.39 10.77 18.44 13.4 26.43 4.96l36.25-38.28 52.69 2.01c11.62.44 19.82-11.27 15.43-22.03zM263 340l5.21-5.3c5-5.09 11.22-8.75 18.05-10.61l15.53-4.23c13.89-3.79 24.75-14.84 28.47-28.98l4.16-15.81a41.145 41.145 0 0 1 10.42-18.37l11.37-11.57c10.17-10.35 14.14-25.44 10.42-39.58l-4.16-15.81a41.657 41.657 0 0 1 0-21.21l4.16-15.81c3.72-14.14-.25-29.23-10.42-39.58l-11.37-11.57c-5-5.09-8.59-11.42-10.42-18.37l-4.16-15.8c-3.72-14.14-14.58-25.19-28.47-28.98l-15.53-4.24c-6.83-1.86-13.05-5.52-18.05-10.61L256.84 12c-10.17-10.35-25-14.4-38.89-10.61l-15.53 4.24a39.614 39.614 0 0 1-20.84 0L166.05 1.4c-13.89-3.79-28.72.25-38.89 10.61l-11.37 11.57c-5 5.09-11.22 8.74-18.05 10.61l-15.53 4.24c-13.89 3.79-24.75 14.84-28.47 28.98l-4.16 15.8a41.145 41.145 0 0 1-10.42 18.37l-11.37 11.57c-10.17 10.35-14.15 25.44-10.42 39.58l4.16 15.8a41.657 41.657 0 0 1 0 21.21l-4.16 15.8c-3.72 14.14.25 29.23 10.42 39.59l11.37 11.57c5 5.09 8.59 11.42 10.42 18.37l4.16 15.8c3.72 14.14 14.58 25.19 28.47 28.98l15.53 4.23c6.83 1.86 13.05 5.52 18.05 10.61L121 340c13.23 13.47 33.84 15.88 49.74 5.82a39.676 39.676 0 0 1 42.53 0c15.89 10.06 36.5 7.65 49.73-5.82zM97.66 175.96c0-53.03 42.24-96.02 94.34-96.02s94.34 42.99 94.34 96.02-42.24 96.02-94.34 96.02-94.34-42.99-94.34-96.02z"></path></svg>
             <h3>Reveal Wines</h3>
           </a>
@@ -295,6 +297,7 @@ export const template = `
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
             wine-view="reveal"
             wine-item="review"
+            last-wine-item="$ctrl.tasting.last_wine_items[$index]"
             select-action="$ctrl.openWineRevealModal(review)">
           </wine-list-item>
           <button class="text-btn"
