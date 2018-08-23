@@ -21,7 +21,7 @@ export const template = `
         <label>Email</label>
         <input type="email" name="email" required
           ng-model="$ctrl.user.email"
-          ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+          ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
       </div>
       <div class="main-form-control" ng-class="{'error':signinForm.password.$dirty && signinForm.password.$invalid}">
         <label>Password</label>

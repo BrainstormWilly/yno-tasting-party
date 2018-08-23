@@ -182,36 +182,12 @@ export const TastingShowComponent = {
       });
 
       let wineReviewUpdateEvent = $scope.$on("wine-review-update-event", (e,d)=>{
-        // let old_review = lodash.find(this.tasting.taster_wine_reviews, review=>{
-        //   return review.wine_id==d.wine_id ? review : null;
-        // });
-        // let chgd_review = lodash.find(this.tasting.taster_wine_reviews, review=>{
-        //   return review.id==d.id;
-        // });
-        // if( old_review ){
-        //   old_review.wine_id = null;
-        // }
-        // chgd_review.wine_id = d.wine_id
-        // chgd_review.rating = d.rating;
-        // chgd_review.comments = d.comments;
         lodash.each(this.tasting.taster_wine_reviews, review=>{
           if( review.id==d.id ){
             review = d;
             return;
           }
         });
-
-        // this.TastingService.getTasting(this.tasting.id)
-        //   .then(result=>{
-        //     $log.log("TastingDetailComponent.constructor", result);
-        //     // this.tasting = result;
-        //     if( !this.completeNotice && this.allWinesRevealed() ){
-        //       this.completeNotice = true;
-        //       this.AlertsService.setConfirmationAlert(
-        //         "You have revealed all your wines. Press 'Complete Tasting' to commit your research!"
-        //       );
-        //     }
-        //   });
       });
 
       let wineRevealEvent = $scope.$on("wine-reveal-event", (e,d)=>{
@@ -250,15 +226,15 @@ export const TastingShowComponent = {
       this.$log.log("TastingShowComponent", this.tasting);
       this.tasting.last_wine_items = [];
       if( this.tasting.is_pending ){
-        this.viewState = false;
-      }
-      if( !this.hostIsTasting ){
+        this.toggleViewState();
+      }else if( !this.hostIsTasting ){
         this.tasterNumber = 0;
         this.toggleViewState();
       }else{
         let that = this;
         this.tasterNumber = this._.find(this.tasting.guests, g=>g.taster_id==that.taster.id).taster_number
       }
+
       // this.NotificationsService.setNotification("Hello World");
     }
 

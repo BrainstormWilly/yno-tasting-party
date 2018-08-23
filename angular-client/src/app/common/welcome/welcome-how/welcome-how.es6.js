@@ -22,8 +22,8 @@ export const template = `
     <div class="welcome-copy bottom">
       <p>On tasting day, Yno does all the work. Your guests simply log in on their mobile devices and record their rating and comments on each wine. They can even use an <a ui-sref='welcome-alexa'>Alexa</a> device to record hands free. When your tasting is complete, use Yno to reveal your wines and review your results.</p>
       <div class="text-btns">
-        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Learn More</button>
-        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>  
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Learn More</button>
+        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
       </div>
     </div>
 
@@ -70,8 +70,8 @@ export const template = `
           </ul>
           <p>Signing up is free and secure with no commitments. In the future, tasters will be able to opt into public tastings.</p>
       <div class="text-btns">
-        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> How to Yno</button>
-        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Step 2</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;How to Yno</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Step 2</button>
       </div>
     </div>
 
@@ -293,8 +293,8 @@ export const template = `
         </p>
         <p>Don’t be shy. If you're uncomfortable choosing your own wines, download a curated tasting list. After each completed tasting we’ll send you a new list based on your results. Soon, you’ll be choosing your own wines like a pro!</p>
       <div class="text-btns">
-        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 2</button>
-        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Step 4</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Step 2</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Step 4</button>
       </div>
     </div>
 
@@ -534,8 +534,8 @@ export const template = `
     <p>Get your party on! Use Yno Tasting set your party name and date, pick your wines, and invite your guests. On party day, open, bag, and tag your wines prior to your guests’ arrival. While you’re tasting Yno will track your progress. Guests can rate, comment, and revisit wines on their mobile device or Alexa until their host closes the tasting. </p>
     <p>TIP: to make your tasting ”double blind” bag your wines first and have your first guest tag them while you’re not looking. Then, select <em>Host is Tasting</em> in the Yno Tasting admin.</p>
       <div class="text-btns">
-        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 3</button>
-        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span> Finish</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Step 3</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Finish</button>
       </div>
     </div>
 
@@ -609,7 +609,7 @@ export const template = `
       <p>When all your ratings are in or your tasting time is up, Yno Tasting will reveal your wines to your guests. Your tasting is now complete! Based on your results, a new tasting list will be sent to the host for her next party.</p>
       <p>Every Yno Taster can return to ynotasting.com anytime to review past tastings, wines, and new tasting invites. Over time tasters will become more familiar with the wines they like.</p>
       <div class="text-btns">
-        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span> Step 4</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Step 4</button>
         <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
       </div>
     </div>

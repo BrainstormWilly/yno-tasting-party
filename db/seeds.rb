@@ -297,7 +297,7 @@ end
 end
 
 # COMPLETED TASTING
-tasters = Taster.all.to_a.shuffle
+tasters = Taster.where.not(id:taster_me.id).to_a.shuffle
 wines = Wine.all.to_a.shuffle
 tasting_completed = Tasting.create(
   host_id: host_me.id,
@@ -327,6 +327,23 @@ tasting_completed = Tasting.create(
       updated_at: 38.hours.ago
     })
   end
+end
+# add me to tasting to populate some wine reviews
+Guest.create(
+  tasting_id: tasting_completed.id,
+  taster_id: taster_me.id,
+  confirmed: 5.days.ago
+)
+6.times do |i|
+  wr = WineReview.create({
+    tasting_id: tasting_completed.id,
+    taster_id: taster_me.id,
+    rating: (1..5).to_a.sample,
+    wine_id: wines[i].id,
+    wine_number: i+1,
+    created_at: 40.hours.ago,
+    updated_at: 38.hours.ago
+  })
 end
 # completed tasting wines
 6.times do |i|

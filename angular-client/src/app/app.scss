@@ -74,6 +74,16 @@ body{
   box-sizing: border-box;
 }
 
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select:focus,
+textarea{
+  font-size: 1.5rem;
+}
+
 
 h1,h2,h3,h4{
   font-weight: 400;

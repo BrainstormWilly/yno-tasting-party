@@ -9,7 +9,7 @@
   .tasting-panel{
     // border: 1px solid red;
     // height: 100%;
-    min-height: calc(100vh - 4rem);
+    // min-height: calc(100vh - 4rem);
 
     .tasting-mode{
       display: flex;
@@ -63,7 +63,7 @@
         align-items: center;
         // justify-content: space-between;
         background-color: $theme-dark-gray;
-        border-radius: 0;
+        // border-radius: 0;
         border-bottom: 1px solid $theme-light-gray;
         // border: 1px solid blue;
         height: 5rem; min-height: 5rem;
@@ -136,11 +136,13 @@
     .tasting-panel{
       flex-grow: 1;
       width: 30rem; max-width: 30rem;
+      min-height: calc(100vh - 9rem);
       margin-right: 2rem;
       margin-left: 4rem;
       border: 2px solid $theme-light-gray;
       border-top-left-radius: 1rem;
       border-top-right-radius: 1rem;
+      // border: 1px solid blue;
       transition: height linear 1s;
       .tasting-mode{
         &.inverse{
@@ -149,8 +151,9 @@
         }
       }
       .tasting-section{
+
         .tasting-section-list{
-          height: calc(100vh - 22rem);
+          height: calc(100vh - 20rem); max-height: calc(100vh - 20rem);
         }
       }
     }
@@ -161,10 +164,7 @@
 @media (min-width: 1200px) and (orientation: landscape){
   .tasting{
     .tasting-panel{
-      flex-grow: 1;
       width: 40rem; max-width: 40rem;
-      margin-right: 2rem;
-      margin-left: 4rem;
     }
   }
 }

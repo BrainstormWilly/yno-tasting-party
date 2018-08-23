@@ -15,11 +15,11 @@ export const template = `
   <div class="tasting-panel">
 
     <div class="tasting-section" ng-if="$ctrl.currentFormState==1">
-      <div class="tasting-header">
+      <div class="tasting-header new">
         <h3 ng-if="!$ctrl.tasting.name">New Tasting</h3>
         <h3 ng-if="$ctrl.tasting.name">{{$ctrl.tasting.name}}</h3>
       </div>
-      <div class="tasting-section-list">
+      <div class="tasting-section-list new">
         <p>Let's Get Started</p>
         <form name="tastingForm" ng-submit="$ctrl.createTasting()">
         <div class="main-form-container">
@@ -34,6 +34,7 @@ export const template = `
               ng-model="$ctrl.tasting.open_at"
               min-date="$ctrl.minOpenDate"
               change="$ctrl.onOpenAtChange(newValue, oldValue)"
+              ng-readonly="true"
               required>
           </div>
           <div class="main-form-control">
@@ -41,7 +42,8 @@ export const template = `
             <input name="tastingCloseAt"
               moment-picker="$ctrl.tasting.close_at"
               ng-model="$ctrl.tasting.close_at"
-              min-date="$ctrl.minCloseDate">
+              min-date="$ctrl.minCloseDate"
+              ng-readonly="true">
           </div>
           <div class="main-form-control">
             <label><span>Details</span><span>(Optional)</span></label>
@@ -73,10 +75,10 @@ export const template = `
       </div>
     </div>
     <div class="tasting-section" ng-if="$ctrl.currentFormState==2">
-      <div class="tasting-header">
+      <div class="tasting-header new">
         <h3>{{$ctrl.tasting.name}}</h3>
       </div>
-      <div class="tasting-section-list">
+      <div class="tasting-section-list new">
         <p ng-if="$ctrl.tasting.tasting_wines.length==0">A tasting with no wines is just...sad.<br>However, you can add them later if you wish.</p>
         <p ng-if="$ctrl.tasting.tasting_wines.length>0 && $ctrl.tasting.tasting_wines.length<6">Keep going...</p>
         <p ng-if="$ctrl.tasting.tasting_wines.length==6">Just right!</p>
@@ -106,10 +108,10 @@ export const template = `
       </div>
     </div>
     <div class="tasting-section" ng-if="$ctrl.currentFormState==3">
-      <div class="tasting-header">
+      <div class="tasting-header new">
         <h3>{{$ctrl.tasting.name}}</h3>
       </div>
-      <div class="tasting-section-list">
+      <div class="tasting-section-list new">
         <p ng-if="$ctrl.tasting.guests.length==0">You have friends, right?<br>
           Well, then invite them to your tasting and be somebody!
         </p>

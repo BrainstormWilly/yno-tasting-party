@@ -1,19 +1,19 @@
-.dashboard{
-  .dashboard-tastings{
-    overflow-y: auto;
-    // border: 1px solid blue;
-    padding: 1rem;
-    padding-bottom: 5rem;
-  }
-}
-
-@media (min-width: 800px) and (orientation: landscape){
-  .dashboard{
-    .dashboard-tastings{
-      flex-grow: 1;
-      margin-left: 2rem;
-      margin-right: 2rem;
-      // border: 1px solid blue;
-    }
-  }
-}
+// .dashboard{
+//   .dashboard-tastings{
+//     overflow-y: auto;
+//     // border: 1px solid blue;
+//     padding: 1rem;
+//     padding-bottom: 5rem;
+//   }
+// }
+//
+// @media (min-width: 800px) and (orientation: landscape){
+//   .dashboard{
+//     .dashboard-tastings{
+//       flex-grow: 1;
+//       margin-left: 2rem;
+//       margin-right: 2rem;
+//       // border: 1px solid blue;
+//     }
+//   }
+// }
