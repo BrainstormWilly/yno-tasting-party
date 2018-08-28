@@ -21,6 +21,9 @@ class Api::Alexa::V1::RequestsController < ApplicationController
 
     request_type = params["request"]["type"]
 
+    p "@@@@@@@@@ Request Type: #{request_type}"
+    p "@@@@@@@@@ Verification Success: #{verification_success}"
+
     # Verification invalid
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
 
