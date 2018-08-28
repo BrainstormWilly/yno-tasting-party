@@ -33,6 +33,7 @@ class Api::Alexa::V1::RequestsController < ApplicationController
     return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.") unless host
 
     open_tasting = Tasting.get_open_for_host(host)
+    p "@@@@@@@@@ Open Tasting: #{open_tasting.name}"
 
     # No open tastings
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to wino tasting dot com slash alexa to learn more.") unless open_tasting
@@ -40,9 +41,12 @@ class Api::Alexa::V1::RequestsController < ApplicationController
     # Launch request
     return play_preamble(open_tasting) if request_type == "LaunchRequest"
 
+
+
     # Intent request
     if request_type == "IntentRequest"
       intent = params["request"]["intent"]["name"]
+      p "@@@@@@@@@ Intent Request: #{intent}"
       if intent == "RateWineIntent"
         svc = Alexa::RateWineIntent.new(open_tasting, params)
       elsif intent == "GetTastingStatsIntent"
