@@ -3,6 +3,9 @@ require "action_view"
 class Tasting < ApplicationRecord
   include ActionView::Helpers::DateHelper
   include ActionView::Helpers::NumberHelper
+
+  default_scope { order(open_at: :desc) }
+
   belongs_to :host
   belongs_to :location
   has_many :tasting_wines, dependent: :destroy
