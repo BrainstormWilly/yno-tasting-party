@@ -7,10 +7,11 @@ export const DashboardReviewsComponent = {
   },
   template,
   controller: class DashboardReviewsController{
-    constructor($scope, $log, $state, ModalService){
+    constructor($scope, $log, $state, welcomeConstants, ModalService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
+      this.constants = welcomeConstants;
       this.ModalService = ModalService;
       this.sortFields = [
         {name:"Rating", code:"rating", selected:true},

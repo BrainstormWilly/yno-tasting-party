@@ -1,0 +1,11 @@
+<% if @taster.id %>
+    Yno Taster: <%= @taster.name %> (<%= @taster.handle %>)
+    Email: <%= @taster.user.email %>
+    Status: <%= @taster.status %>
+    Host: <%= @taster.host.present? ? "yes" : "no" %>
+    Reviews: <%= @taster.wine_reviews.count %>
+<% end %>
+================================================================================
+
+Reply To: <%= @email %>
+<%= @content %>

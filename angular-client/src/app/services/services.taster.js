@@ -12,16 +12,14 @@ export class TasterService {
     this.$state = $state;
   }
 
-  // approveInvite(taster, tasting){
-  //   this.$http.get(this.constants.apiUrl + "/tasters/" + taster + "/approve_invite/" + tasting)
-  //     .then(() => {
-  //       // go to dashboard
-  //     })
-  //     .catch(error => {
-  //       this.$log.error(error);
-  //     });
-  // }
-  getTasterFromValidation(){
+  sendContactUs(message, taster){
+    this.$http.put(this.constants.apiUrl + "/tasters/" + taster + "/contact_us", {message: message})
+      .then(result => {
+        this.AlertsService.setConfirmationAlert(result.data.message);
+      })
+  }
+
+  getTasterFromValidation(redirect=true){
     let defer = this.$q.defer();
     this.$auth.validateUser()
       .then(user => {
@@ -33,14 +31,17 @@ export class TasterService {
               defer.resolve(result.data);
             }
           })
-          .catch(err=>{
-            this.$log.error("TasterService: getTaster", err);
-            this.$state.go("welcome");
+          .catch(()=>{
+            // this.$log.error("TasterService: getTaster", err);
+            defer.resolve(null)
+            if(redirect) this.$state.go("welcome");
           })
       })
-      .catch(err => {
-        this.$log.error("TasterService: validateUser", err);
-        this.$state.go("welcome");
+      .catch(() => {
+        // this.$log.error("TasterService: validateUser", err);
+        // defer.reject("no authorized taster")
+        defer.resolve(null)
+        if(redirect) this.$state.go("welcome");
       });
     return defer.promise;
   }

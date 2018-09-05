@@ -5,6 +5,9 @@ welcome-how{
 
   .welcome-background{
     position: relative;
+    &.how{
+      background-image: url("/assets/images/welcome/welcome-how-bkg.jpg");
+    }
 
     &.how-step{
       display: flex;

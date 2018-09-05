@@ -54,6 +54,9 @@
       &.full{
         padding: 1rem;
       }
+      &.scrollable{
+        padding: 0 1rem 0 1rem;
+      }
       h2{
         align-self: center;
       }
@@ -71,9 +74,11 @@
 
   @media (min-width: 800px) and (orientation: landscape){
     .welcome-background{
-      min-height: 50rem;
-      background: radial-gradient(circle at 30% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
-
+      // border: 1px solid red;
+      background: radial-gradient(circle at 35% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
+      // background-image: url("/assets/images/welcome/welcome-landing-bkg.jpg");
+      // background-repeat: no-repeat;
+      // background-size: cover;
       .welcome-hero{
         position: absolute;
         flex-direction: row;
@@ -132,6 +137,10 @@
           top: 0; bottom: 0;
           padding: 1rem;
         }
+        &.scrollable{
+          top: 12%; bottom: 12%;
+          overflow-y: scroll;
+        }
       }
 
       .mobile-nav-spacer{
@@ -158,13 +167,5 @@
       .welcome-logo{
         right: 90%;
       }
-    }
-  }
-
-  @media (min-width: 1280px) and (orientation: landscape){
-
-    .welcome-background{
-      min-height: 60rem;
-
     }
   }

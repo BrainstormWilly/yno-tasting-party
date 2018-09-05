@@ -2,9 +2,7 @@ import {template} from './desktop-nav-secondary.es6';
 
 export const DesktopNavSecondaryComponent = {
   bindings:{
-    welcomeState: "<",
-    howState: "<",
-    signoutState: "<"
+    welcomeState: "<"
   },
   template,
   controller: class DesktopNavSecondaryController{
@@ -14,7 +12,15 @@ export const DesktopNavSecondaryComponent = {
       this.$log = $log;
       this.constants = welcomeConstants;
       this.UserService = UserService;
+      this.signedIn = null;
+    }
 
+    $onInit(){
+      let promise = this.UserService.getUserByValidation();
+      promise.then(data=>{
+        this.$log.log(data);
+        this.signedIn = data;
+      })
     }
 
     signoutUser(){

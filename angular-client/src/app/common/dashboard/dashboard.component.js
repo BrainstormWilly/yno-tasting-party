@@ -6,10 +6,11 @@ export const DashboardComponent = {
   },
   template,
   controller: class DashboardController{
-    constructor($scope, $log, $state, TasterService, UserService){
+    constructor($scope, $log, $state, welcomeConstants, TasterService, UserService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
+      this.constants = welcomeConstants;
       this.UserService = UserService;
       this.TasterService = TasterService;
       // this._ = _;

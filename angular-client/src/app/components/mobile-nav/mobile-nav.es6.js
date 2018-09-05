@@ -7,9 +7,9 @@ export const template =`
     <a ui-sref='welcome-why' ng-if="!$ctrl.signedIn">Why Yno<span class="fas fa-question"></span></a>
     <a ui-sref='welcome-who' ng-if="!$ctrl.signedIn">Who can Yno<span class="fas fa-users"></span></a>
     <a ui-sref='welcome-how' >How to Yno<span class="fas fa-wine-glass"></a>
-    <a ui-sref='tasting-new' ng-if="$ctrl.signedIn && $ctrl.isHost">Host New Tasting</a>
+    <a ui-sref='tasting-new' ng-if="$ctrl.signedIn">Host New Tasting</a>
     <a href="http://ynoguy.com" target='_blank'>Blog</a>
-    <a href >Contact</a>
+    <a ui-sref='welcome-contact' >Contact</a>
     <a ui-sref='welcome-privacy' >Privacy</a>
   </nav>
   <a class="nav-button" href ng-click="$ctrl.navOn=!$ctrl.navOn; $event.stopPropagation()">

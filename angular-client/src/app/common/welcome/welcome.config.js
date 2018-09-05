@@ -13,12 +13,17 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
       url: '/alexa',
       component: 'welcomeAlexa'
     })
+    .state('welcom-alexa-terms',{
+      url: '/alexa/terms',
+      component: 'welcomeAlexaTerms'
+    })
+    .state('welcome-contact', {
+      url: '/contact',
+      component: 'welcomeContact'
+    })
     .state('welcome-how',{
       url: '/how',
-      component: 'welcomeHow',
-      resolve: {
-        taster: TasterService => TasterService.getTasterFromValidation()
-      }
+      component: 'welcomeHow'
     })
     .state('welcome-signin',{
       url: '/signin',
@@ -60,10 +65,7 @@ export function WelcomeConfig($stateProvider, $urlRouterProvider) {
     })
     .state('welcome-privacy',{
       url: '/privacy',
-      component: 'welcomePrivacy',
-      resolve: {
-        taster: TasterService => TasterService.getTasterFromValidation()
-      }
+      component: 'welcomePrivacy'
     })
     .state('welcome-why',{
       url: '/why',

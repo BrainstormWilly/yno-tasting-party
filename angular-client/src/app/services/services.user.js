@@ -50,18 +50,20 @@ export class UserService {
     return defer.promise;
   }
 
-  // do not redirect in case user is in welcome screen
-  getUserByValidation(){
+  // most of the time redirect is not desired
+  getUserByValidation(redirect=false){
     let defer = this.$q.defer();
     this.$auth.validateUser()
       .then(user=>{
         if( user.errors ){
+          if(redirect) this.$state.go('welcome')
           defer.resolve(null);
         }else{
           defer.resolve(user);
         }
       })
       .catch(()=>{
+        if(redirect) this.$state.go('welcome')
         defer.resolve(null)
       });
     return defer.promise

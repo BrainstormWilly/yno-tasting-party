@@ -1,6 +1,8 @@
 
 import {WelcomeAcceptInviteComponent} from './welcome-accept-invite/welcome-accept-invite.component';
-import {WelcomeAlexatComponent} from './welcome-alexa/welcome-alexa.component';
+import {WelcomeAlexaComponent} from './welcome-alexa/welcome-alexa.component';
+import {WelcomeAlexaTermsComponent} from './welcome-alexa-terms/welcome-alexa-terms.component';
+import {WelcomeContactComponent} from './welcome-contact/welcome-contact.component';
 import {WelcomeHowComponent} from './welcome-how/welcome-how.component';
 import {WelcomeSigninComponent} from './welcome-signin/welcome-signin.component';
 import {WelcomeSignupComponent} from './welcome-signup/welcome-signup.component';
@@ -17,7 +19,9 @@ export const WelcomeModule = angular
   .module('welcome',[])
   .component('welcome', WelcomeComponent)
   .component('welcomeAcceptInvite', WelcomeAcceptInviteComponent)
-  .component('welcomeAlexa', WelcomeAlexatComponent)
+  .component('welcomeAlexa', WelcomeAlexaComponent)
+  .component('welcomeAlexaTerms', WelcomeAlexaTermsComponent)
+  .component('welcomeContact', WelcomeContactComponent)
   .component('welcomeHow', WelcomeHowComponent)
   .component('welcomePasswordReset', WelcomePasswordResetComponent)
   .component('welcomePrivacy', WelcomePrivacyComponent)

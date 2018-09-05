@@ -6,6 +6,8 @@ export const WelcomeConstants = {
   WELCOME_LANDING_STATE: "landingState",
   WELCOME_PRIVACY_STATE: "privacyState",
   WELCOME_SIGNIN_STATE: "signinState",
+  WELCOME_CONTACT_STATE: "contactState",
+  DASHBOARD_STATE: "dashboardState",
 
   SIGNIN_SUBTITLE: "Welcome back! We missed you, too.",
   SIGNIN_COPY: "",

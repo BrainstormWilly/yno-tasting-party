@@ -11,7 +11,7 @@ export const template = `
 
     <div class="welcome-logo">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.WELCOME_HOW_STATE"></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy top">
@@ -56,7 +56,7 @@ export const template = `
 
     <div class="welcome-logo" ng-if="$ctrl.step==1">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary how-state="true" ></desktop-nav-secondary>
+      <desktop-nav-secondary welcome-state="$ctrl.constants.WELCOME_HOW_STATE" ></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy full">
@@ -232,7 +232,7 @@ export const template = `
 
     <div class="welcome-logo" ng-if="$ctrl.step==2">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary how-state="true" ></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.WELCOME_HOW_STATE" ></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy full">
@@ -277,7 +277,7 @@ export const template = `
 
     <div class="welcome-logo" ng-if="$ctrl.step==3">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary how-state="true" ></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.WELCOME_HOW_STATE" ></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy full">
@@ -526,7 +526,7 @@ export const template = `
 
     <div class="welcome-logo" ng-if="$ctrl.step==4">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary how-state="true" ></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.WELCOME_HOW_STATE" ></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy full">
@@ -601,7 +601,7 @@ export const template = `
 
     <div class="welcome-logo" ng-if="$ctrl.step==5">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary how-state="true" ></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.WELCOME_HOW_STATE" ></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy full">
@@ -616,6 +616,6 @@ export const template = `
 
   </div>
 
-  <mobile-nav signed-in="$ctrl.taster"></mobile-nav>
+  <mobile-nav></mobile-nav>
 
 `

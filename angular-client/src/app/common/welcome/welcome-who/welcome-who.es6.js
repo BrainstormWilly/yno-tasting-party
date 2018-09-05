@@ -11,7 +11,7 @@ export const template = `
 
     <div class="welcome-logo">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.WELCOME_WHO_STATE"></desktop-nav-secondary>
     </div>
 
     <div class="welcome-copy top">

@@ -1,10 +1,6 @@
 import {template} from './mobile-nav.es6';
 
 export const MobileNavComponent = {
-  bindings:{
-    signedIn: "<",
-    isHost: "<"
-  },
   template,
   controller: class MobileNavController{
     constructor($scope, $log, UserService){
@@ -12,7 +8,15 @@ export const MobileNavComponent = {
       this.$scope = $scope;
       this.$log = $log;
       this.UserService = UserService;
+      this.signedIn = null;
       this.navOn = false;
+    }
+
+    $onInit(){
+      let promise = this.UserService.getUserByValidation();
+      promise.then(data=>{
+        this.signedIn = data;
+      })
     }
 
     signoutUser(){

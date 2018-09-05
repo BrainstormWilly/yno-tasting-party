@@ -6,7 +6,7 @@ export const template = `
     <div class="desktop-logo-top"></div>
     <div class="desktop-logo-bottom">
       <a ui-sref="dashboard"><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary signout-state="true"></desktop-nav-secondary>
+      <desktop-nav-secondary  welcome-state="$ctrl.constants.DASHBOARD_STATE"></desktop-nav-secondary>
     </div>
   </div>
 
@@ -141,7 +141,7 @@ export const template = `
 
 </div>
 
-<mobile-nav signed-in="true" is-host="true"></mobile-nav>
+<mobile-nav></mobile-nav>
 <host-location-modal host-locations="$ctrl.tasting.host.locations" selected-location="$ctrl.tasting.location"></host-location-modal>
 <add-wine-modal tasting="$ctrl.tasting"></add-wine-modal>
 <add-guest-modal tasting="$ctrl.tasting"></add-guest-modal>

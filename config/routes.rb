@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       # get "guests/invite_taster/:taster_id" => "guests#inviteTaster"
       get "hosts/user/:id" => "hosts#hostFromUser"
       # get "tasters/:id" => "tasters#show"
+      put "tasters/:id/contact_us" => "tasters#contactUs"
       get "tasters/:id/invites" => "tasters#invites"
       get "tasters/:id/invite_tastings" => "tasters#inviteTastings"
       get "tasters/:id/invite_tasting/:tasting_id" => "tasters#inviteTastingDetail"

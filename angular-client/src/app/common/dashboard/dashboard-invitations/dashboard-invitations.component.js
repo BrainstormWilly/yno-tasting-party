@@ -7,10 +7,11 @@ export const DashboardInvitationsComponent = {
   },
   template,
   controller: class DashboardInvitationsController{
-    constructor($scope, $log, $state, ModalService, TasterService){
+    constructor($scope, $log, $state, welcomeConstants, ModalService, TasterService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
+      this.constants = welcomeConstants;
       this.ModalService = ModalService;
       this.TasterService = TasterService;
 

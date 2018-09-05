@@ -7,13 +7,14 @@ export const DashboardTastingsComponent = {
   },
   template,
   controller: class DashboardTastingsController{
-    constructor($log, $state, lodash)
+    constructor($log, $state, lodash, welcomeConstants)
     {
       'ngInject';
 
       this.$log = $log;
       this.$state = $state;
       this._ = lodash;
+      this.constants = welcomeConstants;
       this.message = "You have no tastings. Better host one yourself!";
     }
 

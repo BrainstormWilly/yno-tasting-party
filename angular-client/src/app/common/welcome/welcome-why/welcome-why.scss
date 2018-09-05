@@ -1,0 +1,7 @@
+@media (min-width: 800px) and (orientation: landscape){
+  .welcome-background{
+    &.why{
+      background-image: url("/assets/images/welcome/welcome-why-bkg.jpg");
+    }
+  }
+}

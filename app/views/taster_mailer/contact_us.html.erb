@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <% if @taster.id %>
+      <h2>
+        Yno Taster: <%= @taster.name %> <small>(<%= @taster.handle %>)</small><br>
+        Email: <%= @taster.user.email %><br>
+        Status: <%= @taster.status %><br>
+        Host: <%= @taster.host.present? ? "yes" : "no" %><br>
+        Reviews: <%= @taster.wine_reviews.count %>
+      </h2>
+    <% end %>
+    <p>Reply to: <%= @email %>
+    <p><%= @content %></p>
+  </body>
+</html>

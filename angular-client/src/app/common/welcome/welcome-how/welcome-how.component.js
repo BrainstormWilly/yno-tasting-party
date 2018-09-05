@@ -1,9 +1,6 @@
 import {template} from './welcome-how.es6';
 
 export const WelcomeHowComponent = {
-  bindings: {
-    taster: "<"
-  },
   template,
   controller: class WelcomeHowController{
     constructor($log, $state, $element, welcomeConstants){
@@ -12,6 +9,7 @@ export const WelcomeHowComponent = {
       this.$log = $log;
       this.$state = $state;
       this.constants = welcomeConstants;
+      this.taster = null;
       this.step = 0;
     }
 

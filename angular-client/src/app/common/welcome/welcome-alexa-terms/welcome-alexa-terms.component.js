@@ -1,8 +1,8 @@
-import {template} from './welcome-alexa.es6';
+import {template} from './welcome-alexa-terms.es6';
 
-export const WelcomeAlexaComponent = {
+export const WelcomeAlexaTermsComponent = {
   template,
-  controller: class WelcomeAlexaController{
+  controller: class WelcomeAlexaTermsController{
     constructor($log, $state, welcomeConstants){
       'ngInject';
       this.$log = $log;

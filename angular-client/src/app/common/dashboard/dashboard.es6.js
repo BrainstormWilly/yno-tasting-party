@@ -4,7 +4,7 @@ export const template = `
       <div class="desktop-logo-top"></div>
       <div class="desktop-logo-bottom">
         <a href><img src='assets/images/yno_tasting_logo_white.svg'></a>
-        <desktop-nav-secondary signout-state="true"></desktop-nav-secondary>
+        <desktop-nav-secondary welcome-state="$ctrl.constants.DASHBOARD_STATE"></desktop-nav-secondary>
       </div>
     </div>
     <taster-panel taster='$ctrl.taster'></taster-panel>
@@ -32,5 +32,5 @@ export const template = `
     <div class="dashboard-panel-spacer"></div>
   </div>
 
-  <mobile-nav signed-in="true"></mobile-nav>
+  <mobile-nav></mobile-nav>
 `
