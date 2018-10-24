@@ -1,11 +1,8 @@
 export const template = `
 
-  <div id='step0' class="welcome-background">
+  <div id='step0' class="welcome-background how">
 
-    <div class="welcome-hero">
-      <img src="assets/images/welcome/welcome-how-hero.png">
-      <span>It’s blind wine tastings with friends... what could go wrong?</span>
-    </div>
+    <div class="welcome-tagline">Plan it. Bag it. Tag it. Taste it. Rate it. Reveal it. Got it?</div>
 
     <div class="welcome-hero-cover"></div>
 
@@ -15,24 +12,81 @@ export const template = `
     </div>
 
     <div class="welcome-copy top">
-      <h2>Bag it. Tag it. Taste it. Rate it. Repeat.</h2>
-      <p>Tasting wine blind is simple. Sign up as a Yno Tasting Host. Use a <a href="http://ynoguy.com" target="_blank">Yno Guy</a> curated tasting list or choose 6 wines of your own. Use the Yno Tasting platform to name/date your event and invite your friends. Then...get ready to party!</p>
+      <h2>How to Yno</h2>
+      <p>Blind tasting wine is simple. First, <a ui-sref="signup">sign up</a> as a Yno Tasting Host. Use a suggested tasting list or choose 6 wines of your own. Use the Yno Tasting platform to invite friends and plan your event. Then, get ready for tasting day.</p>
     </div>
 
     <div class="welcome-copy bottom">
-      <p>On tasting day, Yno does all the work. Your guests simply log in on their mobile devices and record their rating and comments on each wine. They can even use an <a ui-sref='welcome-alexa'>Alexa</a> device to record hands free. When your tasting is complete, use Yno to reveal your wines and review your results.</p>
+      <p>On tasting day, Yno does all the work. Your guests simply log in on their mobile devices and record their rating and comments for each wine. They can even use an <a ui-sref='welcome-alexa'>Alexa</a> device to record hands free. When your tasting is complete, use Yno to reveal your wines and review your results.</p>
       <div class="text-btns">
-        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Learn More</button>
-        <button class='text-btn' ui-sref="welcome-signup">Wine Up Now!</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Tell Me More</button>
       </div>
     </div>
 
-    <desktop-nav-primary id="desktop-nav" welcome-state="$ctrl.constants.WELCOME_HOW_STATE"></desktop-nav-primary>
+    <div id="step1" class="welcome-copy full how-step">
+      <h2>How to Yno: Wine Up!</h2>
+      <p>In order to participate in Yno Tastings you need to <a ui-sref="welcome-signup">sign up</a> as a Yno Taster. There is no cost or obligation. Yno Tasters can participate in tastings they are invited to as well as review previous tastings and wines they’ve reviewed.</p>
+      <p>Taking the extra step of signing up as a Yno Host enables you to host you’re own tastings. There is no cost or obligation to using Yno Tasting as a host or taster. So, what are you waiting for?</p>
+      <div class="text-btns">
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Back</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Plan it</button>
+      </div>
+    </div>
+
+    <div id="step2" class="welcome-copy full how-step">
+      <h2>How to Yno: Plan It</h2>
+      <p>A Yno Tasting is essentially a party – and every party needs a plan. Use the Yno Tasting platform to: name your event, set a time and location, and choose your wines. You can also use Yno to email invites to your guests and track their confirmations. On party day Yno will automatically “open” your tasting to allow your guests to enter their ratings and comments. It will even close your tasting if you set an end date.</p>
+      <p>PRO HINT: Do not exceed 6 wines. First of all, 6 2oz pours = 3 glasses of wine. Taste responsibly! Besides, <a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two" target="_blank">studies show</a> we humans can’t remember much more anyway.</p>
+      <div class="text-btns">
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Wine Up</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Bag It</button>
+      </div>
+    </div>
+
+    <div id="step3" class="welcome-copy full how-step">
+      <h2>How to Yno: Bag It.</h2>
+      <p>You don’t have to bag your wines, but what’s the fun in that? If you really want to <em>discover</em> new wines you need to taste them blind. So, get some bottle bags and watch your friends get nervous.</p>
+      <p>PRO HINT: Start saving bottles from your favorite wine. Then, sterlize them with boiling water and re-use them for your tasting wines. Now your less savory guests can’t make guesses based on bottle shape.</p>
+      <div class="text-btns">
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Plan It</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Tag It</button>
+      </div>
+    </div>
+
+    <div id="step4" class="welcome-copy full how-step">
+      <h2>How to Yno: Tag It.</h2>
+      <p>Label each bag numerically from 1 to 6. Your guests will reference each wine by the corresponding number using Yno and <a target="_blank" ui-sref="welcome-alexa">Alexa</a>.</p>
+      <p>PRO HINT: Hosts wishing to taste double-blind should bag their wines, but have another guest label them. No peaking!</p>
+      <div class="text-btns">
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Bag It</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Rate It</button>
+      </div>
+    </div>
+
+    <div id="step5" class="welcome-copy full how-step">
+      <h2>How to Yno: Rate It.</h2>
+      <p>No fancy 100 point ratings here. Yno wines are rated on a simple 1-5 scale with 1 being worst and 5 being best. Yno keeps track of ratings for each guest as well as each wine’s tasting average.</p>
+      <p>PRO HINT: Often times guests will want to “drop out” of a tasting leaving incomplete ratings. Not to worry. Yno will give unrated wines a 3 which neutralizes their results.</p>
+      <div class="text-btns">
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Tag It</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(1)"><span class='fas fa-angle-down'></span>&nbsp;Reveal It</button>
+      </div>
+    </div>
+
+    <div id="step6" class="welcome-copy full how-step">
+      <h2>How to Yno: Reveal It.</h2>
+      <p>After all the ratings are in the host is ready to “close” the tasting. Once closed, guests will no longer be able to add new ratings and comments. Hosts can close a tasting by logging into the tasting and clicking the edit (pencil) button next to the tasting name.</p>
+      <p>A closed tasting will enable the “Reveal Wines” menu addition to the host. This is where the wine numbers are matched to the actual wines. Once all the wines are revealed, Yno will prompt the host to “complete” the tasting and put it in the history books.</p>
+      <div class="text-btns">
+        <button class='text-btn' ng-click="$ctrl.nextStep(-1)"><span class='fas fa-angle-up'></span>&nbsp;Rate It</button>
+        <button class='text-btn' ng-click="$ctrl.nextStep(-6)"><span class='fas fa-angle-down'></span>&nbsp;Got it!</button>
+      </div>
+    </div>
 
   </div>
 
 
-  <div id='step1' class="welcome-background how-step">
+  <!--<div id='step1' class="welcome-background how-step">
 
     <div class="welcome-how-hero">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -614,7 +668,7 @@ export const template = `
       </div>
     </div>
 
-  </div>
+  </div>-->
 
   <mobile-nav></mobile-nav>
 

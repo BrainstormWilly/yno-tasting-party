@@ -2,12 +2,9 @@ export const template = `
 
   <div class="welcome-background">
 
-    <div class="welcome-hero">
-      <img src='assets/images/welcome/welcome-landing-hero.png'>
-      <span>No lawyers were hired nor harmed while writing this copy.</span>
-    </div>
-
     <div class="welcome-hero-cover"></div>
+
+    <div class="welcome-tagline">No lawyers were hired nor harmed while <br class="tag-break">writing this copy</div>
 
     <div class="welcome-logo">
       <a ui-sref='welcome'><img src='assets/images/yno_tasting_logo_white.svg'></a>
@@ -28,7 +25,6 @@ export const template = `
       <p>We take your privacy seriously. Emails are never shared within or outside the Yno platform. All tasters are identified by name or handle. We promise to never share emails regardless of future policy changes.</p>
     </div>
 
-    <desktop-nav-primary></desktop-nav-primary>
     <div class="mobile-nav-spacer"></div>
 
   </div>

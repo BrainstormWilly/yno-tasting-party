@@ -1,14 +1,11 @@
 export const template = `
-<div class="user">
 
-  <div class="desktop-logo">
-    <div class="desktop-logo-top"></div>
-    <div class="desktop-logo-bottom">
-      <a ui-sref="dashboard"><img src='assets/images/yno_tasting_logo_white.svg'></a>
-      <desktop-nav-secondary></desktop-nav-secondary>
-    </div>
+
+  <div class="desktop-nav">
+    <a href><img src='assets/images/yno_tasting_logo_white.svg'></a>
+    <desktop-nav-secondary></desktop-nav-secondary>
   </div>
-
+<div class="user">
   <taster-panel taster="$ctrl.user.taster"></taster-panel>
 
 

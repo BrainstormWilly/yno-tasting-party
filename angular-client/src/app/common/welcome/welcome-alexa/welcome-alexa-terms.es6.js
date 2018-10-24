@@ -1,10 +1,6 @@
 export const template = `
 
-  <div class="welcome-background">
-
-    <div class="welcome-hero">
-      <img src="assets/images/welcome/welcome-alexa-hero.png">
-    </div>
+  <div class="welcome-background alexa">
 
     <div class="welcome-hero-cover"></div>
 
@@ -40,7 +36,6 @@ You are granted a non-exclusive, personal, revocable, non- transferable license 
 
     </div>
 
-    <desktop-nav-primary welcome-state="$ctrl.constants.WELCOME_HOW_STATE"></desktop-nav-primary>
     <div class="mobile-nav-spacer"></div>
   </div>
 

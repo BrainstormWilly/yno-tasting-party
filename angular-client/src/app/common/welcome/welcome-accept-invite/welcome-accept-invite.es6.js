@@ -2,10 +2,6 @@ export const template = `
 
 <div class="welcome-background">
 
-  <div class="welcome-hero">
-    <img src='assets/images/welcome/welcome-landing-hero.png'>
-  </div>
-
   <div class="welcome-hero-cover"></div>
 
   <div class="welcome-logo">
@@ -48,8 +44,6 @@ export const template = `
     </form>
     <div class="mobile-nav-spacer"></div>
   </div>
-
-  <desktop-nav-primary welcome-state="$ctrl.constants.WELCOME_SIGNIN_STATE"></desktop-nav-primary>
 
 </div>
 <mobile-nav></mobile-nav>

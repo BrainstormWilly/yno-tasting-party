@@ -2,10 +2,6 @@ export const template = `
 
 <div class="welcome-background">
 
-  <div class="welcome-hero">
-    <img src='assets/images/welcome/welcome-landing-hero.png'>
-  </div>
-
   <div class="welcome-hero-cover"></div>
 
   <div class="welcome-logo">
@@ -15,7 +11,7 @@ export const template = `
 
   <div class="welcome-copy full">
     <h2>Come on in. The wine is fine.</h2>
-    <p>Every new Yno Taster receives a free “Classic California” tasting list. This list contains 18 wines in 3 price ranges handpicked by the <a href="http://ynoguy.com" target="_blank">Yno Guy</a> to represent 6 classic varieties of California wine. These wines are readily available in most states and will kickstart your blind tasting adventure.</p>
+    <p>Every new Yno Host receives a free suggested tasting list. This list contains 18 wines in 3 price ranges that are readily available in most states and will kickstart your blind tasting adventure.</p>
     <form role="form" class="main-form" name="user_signup"
       ng-if="!$ctrl.taster"
       ng-submit="$ctrl.signupUser()">
@@ -76,8 +72,6 @@ export const template = `
     </form>
     <div class="mobile-nav-spacer"></div>
   </div>
-
-  <desktop-nav-primary welcome-state="$ctrl.constants.WELCOME_SIGNIN_STATE"></desktop-nav-primary>
   <div class="mobile-nav-spacer"></div>
 </div>
 

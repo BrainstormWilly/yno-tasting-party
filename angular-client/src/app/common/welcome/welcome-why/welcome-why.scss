@@ -1,7 +1,55 @@
+.welcome-background{
+  &.why{
+    background-image: url("/assets/images/welcome/welcome-why-mobile-bkg.jpg");
+    .welcome-logo{
+      top: 32%;
+    }
+
+    .welcome-tagline{
+      top: 45%;
+    }
+
+    // .welcome-copy{
+    //   top: 45%;
+    // }
+  }
+
+}
+
 @media (min-width: 800px) and (orientation: landscape){
   .welcome-background{
     &.why{
       background-image: url("/assets/images/welcome/welcome-why-bkg.jpg");
+      .welcome-logo{
+        top: 51%;
+      }
+
+      .welcome-tagline{
+        top: 50%;
+      }
+
+      .welcome-copy{
+        &.top{
+          justify-content: flex-end;
+          top: 0; bottom: 50%;
+          padding: 1rem 1rem 1rem 0;
+        }
+        &.bottom{
+          justify-content: flex-start;
+          top: 50%; bottom: 0;
+          padding: 2rem 1rem 0 0;
+        }
+      }
     }
   }
 }
+
+// @media (min-width: 1280px) and (orientation: landscape){
+//   .welcome-background{
+//     &.why{
+//       .welcome-copy{
+//         width: 30rem;
+//       }
+//     }
+//   }
+// }

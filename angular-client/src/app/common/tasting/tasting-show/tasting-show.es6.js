@@ -1,20 +1,17 @@
 export const template = `
 
+  <div class="desktop-nav">
+    <a href><img src='assets/images/yno_tasting_logo_white.svg'></a>
+    <desktop-nav-secondary></desktop-nav-secondary>
+  </div>
+
   <div class="tasting">
-
-    <div class="desktop-logo">
-      <div class="desktop-logo-top"></div>
-      <div class="desktop-logo-bottom">
-        <a ui-sref="dashboard"><img src='assets/images/yno_tasting_logo_white.svg'></a>
-        <desktop-nav-secondary  welcome-state="$ctrl.constants.DASHBOARD_STATE"></desktop-nav-secondary>
-      </div>
-    </div>
-
     <taster-panel taster="$ctrl.taster" taster-number="$ctrl.tasterNumber"></taster-panel>
 
     <div class="tasting-panel">
 
       <div class="tasting-mode"
+        ng-if="!$ctrl.tasting.host_is_not_tasting"
         ng-class="{inverse:!$ctrl.viewState}">
         <toggle-switch
           toggle-trigger="$ctrl.toggleViewState(state)"

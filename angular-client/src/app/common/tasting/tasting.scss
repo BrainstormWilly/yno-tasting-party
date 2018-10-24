@@ -130,11 +130,11 @@
   .tasting{
     flex-direction: row;
     align-items: center;
-    background: radial-gradient(circle at 40% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
-    // border: 1px solid blue;
+    justify-content: space-between;
+    background: radial-gradient(circle at 30% 50%,darken($theme-neutral-color,20%),$theme-bkg-color 40%);
+    margin-left: 15%;
 
     .tasting-panel{
-      flex-grow: 1;
       width: 30rem; max-width: 30rem;
       min-height: calc(100vh - 9rem);
       margin-right: 2rem;
@@ -161,7 +161,7 @@
 
 }
 
-@media (min-width: 1200px) and (orientation: landscape){
+@media (min-width: 1600px) and (orientation: landscape){
   .tasting{
     .tasting-panel{
       width: 40rem; max-width: 40rem;

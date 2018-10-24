@@ -285,31 +285,56 @@ section{
 .desktop-logo{
   display: none;
 }
+.desktop-nav{
+  display: none;
+}
 @media (min-width: 800px) and (orientation: landscape){
-  .desktop-logo{
-    // position: fixed;
-    // position: absolute;
+  // .desktop-logo{
+  //   // position: fixed;
+  //   // position: absolute;
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: flex-end;
+  //   height: 100%; width: 15%;
+  //   margin-right: 2rem;
+  //
+  //   .desktop-logo-top{
+  //     // border: 1px solid red;
+  //     height: 50%;
+  //   }
+  //   .desktop-logo-bottom{
+  //     // border: 1px solid blue;
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: flex-end;
+  //     height: 50%;
+  //     img{
+  //       margin-bottom: 1rem;
+  //       width: 5rem;
+  //     }
+  //   }
+  // }
+  .desktop-nav{
+
+    position: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    height: 100%; width: 15%;
-    margin-right: 2rem;
+    align-items: flex-end;
+    top: 51%; right: 87%; bottom: 0; left: 0;
+    // border: 1px solid blue;
+    img{
+      position: relative;
+      top: -1rem;
+      width: 5rem;
+      margin-bottom: 1rem;
+    }
+  }
 
-    .desktop-logo-top{
-      // border: 1px solid red;
-      height: 50%;
-    }
-    .desktop-logo-bottom{
-      // border: 1px solid blue;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      height: 50%;
-      img{
-        margin-bottom: 1rem;
-        width: 5rem;
-      }
-    }
+  .desktop-hero-cover{
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 40%;
+    background: linear-gradient(to right, rgba(0,0,0,1) 30%, rgba(0,0,0,0))
   }
 }
 

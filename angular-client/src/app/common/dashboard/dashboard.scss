@@ -1,3 +1,4 @@
+
 .dashboard{
   // border: 1px solid blue;
   position: fixed;
@@ -5,9 +6,7 @@
   flex-direction: column;
   top: 0; right: 0; bottom: 0; left: 0;
 
-  // .dashboard-logo{
-  //   display: none;
-  // }
+
 
   // .dashboard-user{
   //   display: flex;
@@ -108,10 +107,20 @@
 @media (min-width: 800px) and (orientation: landscape){
 
   .dashboard{
+    // background-image: url("/assets/images/wineglass-bkg.jpg");
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: center;
+
+    // taster-panel{
+    //   margin-left: 15%;
+    // }
+
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background: radial-gradient(circle at 40% 50%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
+    background: radial-gradient(circle at 30% 50%,darken($theme-neutral-color,20%),$theme-bkg-color 40%);
+    margin-left: 15%;
 
     // .dashboard-logo{
     //   // position: fixed;
@@ -140,12 +149,11 @@
     // }
 
     .dashboard-btns{
-      justify-content: space-between;
-      flex-grow: 1;
-      max-width: 20rem;
-      min-height: 35rem;
-      height: 70%;
       // border: 1px solid blue;
+      justify-content: space-between;
+      max-width: 20rem; min-width: 20rem;
+      min-height: 35rem; height: 70%;
+      margin-right: 15%;
       .dashboard-btn{
         width: 10rem;
         height: 10rem;
@@ -156,8 +164,7 @@
     }
 
     .dashboard-panel{
-      flex-grow: 1;
-      width: 30rem; max-width: 30rem;
+      width: 30rem; min-width: 30rem;
       margin-right: 2rem;
       margin-left: 4rem;
       border: 2px solid $theme-light-gray;
@@ -173,10 +180,6 @@
           height: calc(100vh - 15rem); max-height: calc(100vh - 15rem);
         }
       }
-    }
-
-    .dashboard-panel-spacer{
-      flex-grow: 2;
     }
   }
 

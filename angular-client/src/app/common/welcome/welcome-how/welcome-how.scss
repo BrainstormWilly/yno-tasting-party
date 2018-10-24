@@ -1,107 +1,161 @@
-welcome-how{
+
   // position: relative;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
 
   .welcome-background{
-    position: relative;
+    // position: relative;
     &.how{
-      background-image: url("/assets/images/welcome/welcome-how-bkg.jpg");
-    }
+      background-image: url("/assets/images/welcome/welcome-how-mobile-bkg.jpg");
 
-    &.how-step{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: $theme-bkg-color;
-      // background: radial-gradient(circle at 50% 20%,darken($theme-neutral-color,10%),$theme-bkg-color 30%);
-    }
-    .welcome-logo{
-      margin-top: 1rem;
-    }
-    .welcome-how-hero{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: darken($theme-neutral-color, 40%);
-      border-radius: 50%;
-      width: 15rem;
-      height: 15rem;
-      svg{
-        width: 20rem;
-        height: auto;
-        .element{
-          fill: $theme-neutral-color;
+      .welcome-logo{
+        top: 12%;
+      }
+
+      .welcome-tagline{
+        top: 35%;
+      }
+
+      .welcome-copy{
+
+        top: 30%;
+        &.how-step{
+          position: absolute;
+          top: 30%;
+          visibility: hidden;
         }
       }
+
     }
 
-    .text-btns{
-      visibility: hidden;
-    }
+    // &.how-step{
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: center;
+    //   justify-content: center;
+    //   background: $theme-bkg-color;
+    // }
+
+    // .welcome-how-hero{
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   background: darken($theme-neutral-color, 40%);
+    //   border-radius: 50%;
+    //   width: 15rem;
+    //   height: 15rem;
+    //   svg{
+    //     width: 20rem;
+    //     height: auto;
+    //     .element{
+    //       fill: $theme-neutral-color;
+    //     }
+    //   }
+    // }
+
+    // .text-btns{
+    //   visibility: hidden;
+    // }
 
   }
-
-
 
   @media (min-width: 800px) and (orientation: landscape){
     .welcome-background{
-      position: absolute;
+      &.how{
+        background-image: url("/assets/images/welcome/welcome-how-bkg.jpg");
 
-      &.how-step{
-        top: 100%;
-        bottom: -100%;
-        display: none;
-        background: radial-gradient(circle at 40% 52%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
-      }
+        .tag-break{
+          display: none;
+        }
 
-      .welcome-how-hero{
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: darken($theme-neutral-color, 50%);
-        border-radius: 50%;
-        // border: 2px solid $theme-neutral-color;
-        top: 25%; left: 20%;
-        width: 25rem;
-        height: 25rem;
-        svg{
-          width: 25rem;
-          height: auto;
-          .element{
-            fill: $theme-neutral-color;
+        .welcome-logo{
+          top: 51%;
+        }
+
+        .welcome-tagline{
+          top: 50%;
+        }
+
+        .welcome-copy{
+          &.top{
+            justify-content: flex-end;
+            top: 0; bottom: 50%;
+            padding: 1rem 1rem 1rem 0;
+          }
+          &.bottom{
+            justify-content: flex-start;
+            top: 50%; bottom: 0;
+            padding: 2rem 1rem 0 0;
+          }
+          &.how-step{
+            top: 0;
           }
         }
       }
-
-      .text-btns{
-        visibility: visible;
-      }
-
-    }
-
-
-
-    #step0{
-      display: flex;
-      top: 0;
-      bottom: 0;
     }
   }
 
-  @media (min-width: 1280px) and (orientation: landscape){
-    &.how-step{
-      background: radial-gradient(circle at 30% 55%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
-    }
-    .welcome-how-hero{
-      width: 30rem;
-      height: 30rem;
-      svg{
-        width: 30rem;
-      }
-    }
-  }
 
-}
+
+
+  // @media (min-width: 800px) and (orientation: landscape){
+  //   .welcome-background{
+  //     position: absolute;
+  //     &.how{
+  //       background-image: url("/assets/images/welcome/welcome-how-bkg.jpg");
+  //     }
+  //
+  //     &.how-step{
+  //       top: 100%;
+  //       bottom: -100%;
+  //       display: none;
+  //       background: radial-gradient(circle at 40% 52%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
+  //     }
+  //
+  //     .welcome-how-hero{
+  //       position: absolute;
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+  //       background: darken($theme-neutral-color, 50%);
+  //       border-radius: 50%;
+  //       // border: 2px solid $theme-neutral-color;
+  //       top: 25%; left: 20%;
+  //       width: 25rem;
+  //       height: 25rem;
+  //       svg{
+  //         width: 25rem;
+  //         height: auto;
+  //         .element{
+  //           fill: $theme-neutral-color;
+  //         }
+  //       }
+  //     }
+  //
+  //     .text-btns{
+  //       visibility: visible;
+  //     }
+  //
+  //   }
+  //
+  //
+  //
+  //   #step0{
+  //     display: flex;
+  //     top: 0;
+  //     bottom: 0;
+  //   }
+  // }
+  //
+  // @media (min-width: 1280px) and (orientation: landscape){
+  //   &.how-step{
+  //     background: radial-gradient(circle at 30% 55%,darken($theme-neutral-color,10%),$theme-bkg-color 40%);
+  //   }
+  //   .welcome-how-hero{
+  //     width: 30rem;
+  //     height: 30rem;
+  //     svg{
+  //       width: 30rem;
+  //     }
+  //   }
+  // }

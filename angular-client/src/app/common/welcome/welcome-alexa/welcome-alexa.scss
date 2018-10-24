@@ -1,0 +1,81 @@
+.welcome-background{
+  // position: relative;
+  &.alexa{
+    background-image: url("/assets/images/welcome/welcome-alexa-mobile-bkg.jpg");
+
+    .welcome-logo{
+      top: 3%;
+    }
+
+    .welcome-tagline{
+      top: 35%;
+    }
+
+    .welcome-copy{
+      top: 30%;
+    }
+  }
+
+  // &.how-step{
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   justify-content: center;
+  //   background: $theme-bkg-color;
+  // }
+
+  // .welcome-how-hero{
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   background: darken($theme-neutral-color, 40%);
+  //   border-radius: 50%;
+  //   width: 15rem;
+  //   height: 15rem;
+  //   svg{
+  //     width: 20rem;
+  //     height: auto;
+  //     .element{
+  //       fill: $theme-neutral-color;
+  //     }
+  //   }
+  // }
+
+  // .text-btns{
+  //   visibility: hidden;
+  // }
+
+}
+
+@media (min-width: 800px) and (orientation: landscape){
+  .welcome-background{
+    &.alexa{
+      background-image: url("/assets/images/welcome/welcome-alexa-bkg.jpg");
+
+      .tag-break{
+        display: none;
+      }
+
+      .welcome-logo{
+        top: 51%;
+      }
+
+      .welcome-tagline{
+        top: 50%;
+      }
+
+      .welcome-copy{
+        &.top{
+          justify-content: flex-end;
+          top: 0; bottom: 50%;
+          padding: 1rem 1rem 1rem 0;
+        }
+        &.bottom{
+          justify-content: flex-start;
+          top: 50%; bottom: 0;
+          padding: 2rem 1rem 0 0;
+        }
+      }
+    }
+  }
+}

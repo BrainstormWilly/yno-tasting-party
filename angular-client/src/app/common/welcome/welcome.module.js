@@ -1,7 +1,7 @@
 
 import {WelcomeAcceptInviteComponent} from './welcome-accept-invite/welcome-accept-invite.component';
 import {WelcomeAlexaComponent} from './welcome-alexa/welcome-alexa.component';
-import {WelcomeAlexaTermsComponent} from './welcome-alexa-terms/welcome-alexa-terms.component';
+import {WelcomeAlexaTermsComponent} from './welcome-alexa/welcome-alexa-terms.component';
 import {WelcomeContactComponent} from './welcome-contact/welcome-contact.component';
 import {WelcomeHowComponent} from './welcome-how/welcome-how.component';
 import {WelcomeSigninComponent} from './welcome-signin/welcome-signin.component';
