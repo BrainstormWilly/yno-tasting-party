@@ -64,6 +64,9 @@ Rails.application.routes.draw do
       end
     end
     namespace :v1 do
+      post "admin/contact_us" => "admin#contactUs"
+      put "admin/new_sign_up/:taster_id" => "admin#newSignUp"
+      put "admin/new_tasting/:tasting_id" => "admin#newTasting"
       get "guests/include_host/:tasting_id" => "guests#includeHost"
       # get "guests/remove_host/:tasting_id" => "guests#removeHost"
       get "guests/invitations" => "guests#invitations"
@@ -72,7 +75,7 @@ Rails.application.routes.draw do
       # get "guests/invite_taster/:taster_id" => "guests#inviteTaster"
       get "hosts/user/:id" => "hosts#hostFromUser"
       # get "tasters/:id" => "tasters#show"
-      put "tasters/:id/contact_us" => "tasters#contactUs"
+      # put "tasters/:id/contact_us" => "tasters#contactUs"
       get "tasters/:id/invites" => "tasters#invites"
       get "tasters/:id/invite_tastings" => "tasters#inviteTastings"
       get "tasters/:id/invite_tasting/:tasting_id" => "tasters#inviteTastingDetail"

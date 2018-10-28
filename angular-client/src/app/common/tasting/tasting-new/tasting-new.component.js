@@ -11,7 +11,8 @@ export const TastingNewComponent = {
       GuestService,
       TastingService,
       TastingWineService,
-      WineService)
+      WineService,
+      MailerService)
     {
       'ngInject';
 
@@ -45,6 +46,7 @@ export const TastingNewComponent = {
       let createTastingEvent = $scope.$on("create-tasting-event", (e,d)=>{
         this.currentFormState = 2;
         this.tasting = d;
+        MailerService.newTasting(d.id);
       });
 
       let createTastingWineEvent = $scope.$on("tasting-wine-create-event", (e,d)=>{

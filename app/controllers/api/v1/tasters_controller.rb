@@ -1,14 +1,15 @@
 class Api::V1::TastersController < Api::BaseController
 
-  def contactUs
-    if params[:id]!=0
-      taster = Taster.find(params[:id])
-    else
-      taster = Taster.new(name:contact_us_params[:name])
-    end
-    TasterMailer.contact_us(contact_us_params[:email], contact_us_params[:content], taster).deliver
-    render json: {message: "Thank you! We’ll get back to you soon...promise."}
-  end
+  # moved to AdminController
+  # def contactUs
+  #   if params[:id]!=0
+  #     taster = Taster.find(params[:id])
+  #   else
+  #     taster = Taster.new(name:contact_us_params[:name])
+  #   end
+  #   TasterMailer.contact_us(contact_us_params[:email], contact_us_params[:content], taster).deliver
+  #   render json: {message: "Thank you! We’ll get back to you soon...promise."}
+  # end
 
   def show
     # @taster = Taster.find_by(user_id: params[:id])
@@ -55,7 +56,7 @@ class Api::V1::TastersController < Api::BaseController
   def create
     taster = Taster.new(create_attributes)
     if taster.save
-      render json: taster
+      render json: taster, serializer: TasterSerializer
     else
       render json: { error: "Unknown Error", status: 400 }, status: 400
     end
@@ -82,9 +83,9 @@ class Api::V1::TastersController < Api::BaseController
     params.require(:taster).permit(:name, :handle, :status)
   end
 
-  def contact_us_params
-    params.require(:message).permit(:name, :content, :email)
-  end
+  # def contact_us_params
+  #   params.require(:message).permit(:name, :content, :email)
+  # end
 
 
 end

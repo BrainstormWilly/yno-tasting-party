@@ -18,11 +18,11 @@ class TasterMailer < ApplicationMailer
     mail(to: @user.email, subject: "You are invited to a Yno Tasting Party")
   end
 
-  def contact_us(email, content, taster)
-    @taster = taster
-    @content = content
-    @email = email
-    mail(to: "brainstormwilly@gmail.com", subject: "Contact request from #{taster.name}")
-  end
+  # def contact_us(email, content, taster)
+  #   @taster = taster
+  #   @content = content
+  #   @email = email
+  #   mail(to: "brainstormwilly@gmail.com", subject: "Contact request from #{taster.name}")
+  # end
 
 end

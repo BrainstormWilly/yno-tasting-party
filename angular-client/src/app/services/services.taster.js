@@ -1,9 +1,10 @@
 export class TasterService {
-  constructor ($rootScope, $log, $http, $auth, $q, $state, constants, AlertsService) {
+  constructor ($rootScope, $log, $http, $auth, $q, $state, constants, AlertsService, MailerService) {
     'ngInject';
 
     this.constants = constants;
     this.AlertsService = AlertsService;
+    this.MailerService = MailerService;
     this.$log = $log;
     this.$http = $http;
     this.$rootScope = $rootScope;
@@ -12,12 +13,7 @@ export class TasterService {
     this.$state = $state;
   }
 
-  sendContactUs(message, taster){
-    this.$http.put(this.constants.apiUrl + "/tasters/" + taster + "/contact_us", {message: message})
-      .then(result => {
-        this.AlertsService.setConfirmationAlert(result.data.message);
-      })
-  }
+
 
   getTasterFromValidation(redirect=true){
     let defer = this.$q.defer();
@@ -89,7 +85,8 @@ export class TasterService {
   signupTaster(taster){
     // this.$log.log(taster);
     this.$http.post(this.constants.apiUrl + "/tasters", {taster: taster})
-      .then(() => {
+      .then((result) => {
+        this.MailerService.newSignUp(result.data.id)
         this.$state.go("dashboard");
       })
       .catch(() => {

@@ -3,27 +3,25 @@ import {template} from './welcome-contact.es6';
 export const WelcomeContactComponent = {
   template,
   controller: class WelcomeContactController{
-    constructor($log, $state, welcomeConstants, TasterService){
+    constructor($log, $state, welcomeConstants, MailerService){
       'ngInject';
       this.$log = $log;
       this.$state = $state;
       this.constants = welcomeConstants;
-      this.TasterService = TasterService;
-      this.taster = null;
+      this.MailerService = MailerService;
       this.message = {};
     }
 
-    $onInit(){
-      let promise = this.TasterService.getTasterFromValidation(false);
-      promise.then(data=>{
-        this.taster = data;
-      })
-    }
+    // $onInit(){
+    //   this.TasterService.getTasterFromValidation(false)
+    //     .then(data=>{
+    //       message.taster_id = data.;
+    //     })
+    // }
 
     sendContactInfo(){
       // this.$log.log(this.message);
-      let taster_id = this.taster ? this.taster.id : 0;
-      this.TasterService.sendContactUs(this.message, taster_id);
+      this.MailerService.sendContactUs(this.message);
     }
   }
 }

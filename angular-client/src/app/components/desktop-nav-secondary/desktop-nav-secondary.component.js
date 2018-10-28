@@ -18,7 +18,7 @@ export const DesktopNavSecondaryComponent = {
     $onInit(){
       let promise = this.UserService.getUserByValidation();
       promise.then(data=>{
-        this.$log.log(data);
+        // this.$log.log(data);
         this.signedIn = data;
       })
     }

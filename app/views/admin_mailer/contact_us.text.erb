@@ -4,6 +4,8 @@
     Status: <%= @taster.status %>
     Host: <%= @taster.host.present? ? "yes" : "no" %>
     Reviews: <%= @taster.wine_reviews.count %>
+<% else %>
+    Yno Vistor: <%= @taster.name %>
 <% end %>
 ================================================================================
 

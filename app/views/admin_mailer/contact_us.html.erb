@@ -12,6 +12,10 @@
         Host: <%= @taster.host.present? ? "yes" : "no" %><br>
         Reviews: <%= @taster.wine_reviews.count %>
       </h2>
+    <% else %>
+      <h2>
+        Yno Vistor: <%= @taster.name %>
+      </h2>
     <% end %>
     <p>Reply to: <%= @email %>
     <p><%= @content %></p>

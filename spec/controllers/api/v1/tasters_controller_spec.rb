@@ -153,7 +153,7 @@ RSpec.describe Api::V1::TastersController, type: :controller do
         post :create, params: {taster: {name: "Jane Doe", handle: "Wine Diva", user_id: @user3.id}}
         taster = ActiveSupport::JSON.decode(response.body)
         expect(taster["name"]).to eq "Jane Doe"
-        expect(taster["id"]).to be
+        expect(taster["id"]).not_to be_nil
         expect(taster["user_id"]).to eq @user3.id
       end
     end

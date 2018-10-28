@@ -4,6 +4,7 @@ import {GuestService} from './services.guest';
 import {HostService} from './services.host';
 import {HostLocationService} from './services.host_location';
 import {LocationService} from './services.location';
+import {MailerService} from './services.mailer';
 import {NotificationsService} from './services.notifications';
 import {TasterService} from './services.taster';
 import {TastingService} from './services.tasting';
@@ -20,6 +21,7 @@ export const ServicesModule = angular
   .service('HostService', HostService)
   .service('HostLocationService', HostLocationService)
   .service('LocationService', LocationService)
+  .service('MailerService', MailerService)
   .service('ModalService', ModalService)
   .service('NotificationsService', NotificationsService)
   .service('TasterService', TasterService)
