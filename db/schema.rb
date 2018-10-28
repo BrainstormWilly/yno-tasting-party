@@ -189,10 +189,10 @@ ActiveRecord::Schema.define(version: 20180708235514) do
     t.integer  "tasting_id"
     t.integer  "taster_id"
     t.integer  "wine_id"
-    t.integer  "rating"
+    t.integer  "rating",      default: 3
     t.text     "comments"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "wine_number"
     t.index ["taster_id"], name: "index_wine_reviews_on_taster_id"
     t.index ["tasting_id"], name: "index_wine_reviews_on_tasting_id"
