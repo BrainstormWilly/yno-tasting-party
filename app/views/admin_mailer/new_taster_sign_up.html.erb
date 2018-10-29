@@ -7,6 +7,7 @@
     <h2>
       Yno Taster: <%= @taster.name %> <small>(<%= @taster.handle %>)</small><br>
       Email: <%= @taster.user.email %><br>
+      Created: <%= @taster.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%a, %b %-d %Y %I:%M%P %Z") %><br>
       Status: <%= @taster.status %>
     </h2>
   </body>

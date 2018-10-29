@@ -5,9 +5,11 @@
     Host: <%= @taster.host.present? ? "yes" : "no" %>
     Reviews: <%= @taster.wine_reviews.count %>
 <% else %>
-    Yno Vistor: <%= @taster.name %>
+    Yno Visitor: <%= @taster.name %>
 <% end %>
 ================================================================================
 
+Posted On: <%= Time.now.in_time_zone("Pacific Time (US & Canada)").strftime("%a, %b %-d %Y %I:%M%P %Z") %>
 Reply To: <%= @email %>
-<%= @content %>
+
+Message: <%= @content %>

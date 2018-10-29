@@ -14,10 +14,11 @@
       </h2>
     <% else %>
       <h2>
-        Yno Vistor: <%= @taster.name %>
+        Yno Visitor: <%= @taster.name %>
       </h2>
     <% end %>
-    <p>Reply to: <%= @email %>
+    <p>Posted On: <%= Time.now.in_time_zone("Pacific Time (US & Canada)").strftime("%a, %b %-d %Y %I:%M%P %Z") %><br>
+    Reply to: <%= @email %></p>
     <p><%= @content %></p>
   </body>
 </html>
