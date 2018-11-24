@@ -5,16 +5,7 @@ class Api::Alexa::V1::RequestsController < ApplicationController
 
   def default
     # Alexa Verification
-    verifier = AlexaVerifier.build do |c|
-      c.verify_signatures = true
-      c.verify_timestamps = true
-      c.timestamp_tolerance = 60 # seconds
-    end
-    verification_success = verifier.verify!(
-      request.headers['SignatureCertChainUrl'],
-      request.headers['Signature'],
-      request.body.read
-    )
+    verification_success = AlexaVerifier.valid?(request)
 
     # Testing w/o Amazon SSL verification
     # verification_success = true
