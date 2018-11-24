@@ -2,7 +2,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
   include DeviseTokenAuth::Concerns::SetUserByToken
   force_ssl if: :ssl_configured?
   prepend_before_action :set_access_token_in_params
-  before_action :doorkeeper_authorize!
+  # before_action :doorkeeper_authorize!
 
   def default
     # Alexa Verification
