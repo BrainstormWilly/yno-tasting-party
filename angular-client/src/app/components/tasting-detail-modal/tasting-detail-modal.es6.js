@@ -11,42 +11,41 @@ export const template = `
     <div class="main-modal-content">
       <div>
         <div class="main-form-control" ng-class="{'error' : newTastingForm.tastingName.$touched && newTastingForm.tastingName.$invalid}">
-          <label><span>Name</span></label>
           <input name="tastingName" type="text" ng-model="$ctrl.pending_tasting.name" required>
+            <label><span>Name</span></label>
         </div>
         <div class="main-form-control"
           ng-class="{
             'error' : newTastingForm.tastingOpenAt.$touched && newTastingForm.tastingOpenAt.$invalid,
             'disabled' : !$ctrl.pending_tasting.is_pending
           }">
-          <label><span>Start</span></label>
           <input name="tastingOpenAt"
             moment-picker="$ctrl.pending_tasting.open_at"
             ng-model="$ctrl.pending_tasting.open_at"
             ng-disabled="!$ctrl.pending_tasting.is_pending"
             disable="!$ctrl.pending_tasting.is_pending"
             required>
+            <label><span>Start</span></label>
         </div>
         <div class="main-form-control"
           ng-class="{'disabled':$ctrl.pending_tasting.is_closed || $ctrl.pending_tasting.is_completed}">
-          <label><span>End</span><span>(Optional)</span></label>
           <input name="tastingCloseAt"
             moment-picker="$ctrl.pending_tasting.close_at"
             min-date="$ctrl.minCloseDate"
             ng-model="$ctrl.pending_tasting.close_at"
             ng-disabled="$ctrl.pending_tasting.is_closed || $ctrl.pending_tasting.is_completed"
             disable="$ctrl.pending_tasting.is_closed || $ctrl.pending_tasting.is_completed">
+            <label><span>End</span><span>(Optional)</span></label>
         </div>
         <div class="main-form-control">
-          <label><span>Details</span><span>(Optional)</span></label>
           <textarea name="tastingDescription" type="text" ng-model="$ctrl.pending_tasting.description"></textarea>
+            <label><span>Details</span><span>(Optional)</span></label>
         </div>
         <div class="main-form-control"
           ng-class="{
             'error' : newTastingForm.tastingLocation.$touched && newTastingForm.tastingLocation.$invalid,
             'disabled' : !$ctrl.pending_tasting.is_pending
           }">
-          <label><span>Location</span></label>
           <input type="hidden" ng-model="$ctrl.pending_tasting.location.id"></input>
           <textarea name="tastingLocation" type="text" required
             ng-focus="$ctrl.openHostLocationModal()"
@@ -54,12 +53,13 @@ export const template = `
             ng-model="$ctrl.pending_tasting.location.to_short_string"
             ng-disabled="!$ctrl.pending_tasting.is_pending">
           </textarea>
+          <label><span>Location</span></label>
         </div>
       </div>
     </div>
 
     <div class="main-modal-footer">
-      <div>&nbsp;</div>
+      <div class="descriptor">&nbsp;</div>
       <div>
         <button type="button" ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
         <button type="submit"><span class="fa fa-check"></span></button>

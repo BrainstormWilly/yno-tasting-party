@@ -16,26 +16,29 @@ export const template = `
       ng-if="!$ctrl.taster"
       ng-submit="$ctrl.signupUser()">
       <div class="main-form-control" ng-class="{'error':user_signup.email.$dirty && user_signup.email.$invalid}">
-        <label>Email</label>
+
         <input type="email" name="email" id="email"
           ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
           ng-model="$ctrl.user.email" required>
+        <label for="email">Email</label>
       </div>
       <div class="main-form-control" ng-class="{'error':user_signup.password.$dirty && user_signup.password.$invalid}">
-        <label>Password</label>
+
         <input type="password" name="password" id="password" required
           placeholder="6 character minimum"
           ng-model="$ctrl.user.password"
           ng-minlength="6">
+        <label>Password</label>
       </div>
       <div class="main-form-control" ng-class="{'error':user_signup.password_confirmation.$dirty && user_signup.password_confirmation.$invalid}">
+
+        <input type="password" name="password_confirmation" id="password_confirmation" required
+          ng-model="$ctrl.user.password_confirmation"
+          ng-minlength="6">
         <label>
           <span>Password</span>
           <span>Confirmation</span>
         </label>
-        <input type="password" name="password_confirmation" id="password_confirmation" required
-          ng-model="$ctrl.user.password_confirmation"
-          ng-minlength="6">
       </div>
       <div class="main-form-btns">
         <span class="descriptor">Sign Up</span>
@@ -51,20 +54,22 @@ export const template = `
       ng-if="$ctrl.taster"
       ng-submit="$ctrl.signupTaster()">
       <div class="main-form-control">
-        <label>Name</label>
         <input type="text" name="name" id="name"
           placeholder="e.g. Jane Doe"
           ng-model="$ctrl.taster.name" required>
+        <label class="main-form-control-label">Name</label>
       </div>
       <div class="main-form-control">
-        <label>Handle</label>
         <input type="text" name="name" id="name"
           placeholder="e.g. Wine Diva"
           ng-model="$ctrl.taster.handle" required>
+        <label>Handle</label>
       </div>
       <div class="main-form-btns">
-        <span>&nbsp;</span>
-        <button type="submit" ng-disabled="taster_signup.$invalid">
+        <span class="descriptor">&nbsp;</span>
+        <button type="submit"
+          class="primary"
+          ng-disabled="taster_signup.$invalid">
           <i class="fa fa-user"></i>
         </button>
 

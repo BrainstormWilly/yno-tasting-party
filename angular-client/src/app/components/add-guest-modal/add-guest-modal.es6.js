@@ -22,8 +22,8 @@ export const template = `
       <div class="main-modal-content">
         <div class="add-guest-form" ng-if="!$ctrl.addGuestStatus.state">
           <div class="main-form-control">
-            <label>Email</label>
             <input type="email" ng-model="$ctrl.user.email" required>
+              <label>Email</label>
           </div>
         </div>
         <connection-list-item
@@ -35,7 +35,7 @@ export const template = `
         </connection-list-item>
       </div>
       <div class="main-modal-footer">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button type="button" ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button
@@ -61,7 +61,7 @@ export const template = `
         </div>
       </div>
       <div class="main-modal-footer">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button ng-click="$ctrl.inviteNewUser()"><span class="fa fa-check"></span></button>

@@ -40,7 +40,7 @@ export const template = `
         <p>{{$ctrl.currentAlert.message}}</p>
       </div>
       <div class="main-modal-footer">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button ng-click="$ctrl.closeModal()"><span class="fa fa-check"></span></button>
         </div>

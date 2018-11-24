@@ -227,7 +227,7 @@ export const TastingShowComponent = {
       this.tasting.last_wine_items = [];
       if( this.tasting.is_pending ){
         this.toggleViewState();
-      }else if( !this.hostIsTasting ){
+      }else if( !this.hostIsTasting && this.tasterIsHost ){
         this.tasterNumber = 0;
         this.toggleViewState();
       }else{

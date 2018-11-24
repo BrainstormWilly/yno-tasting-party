@@ -25,7 +25,7 @@ export const template = `
       </table>
     </div>
     <div class="main-modal-footer">
-      <div>&nbsp;</div>
+      <div class="descriptor">&nbsp;</div>
       <div>
         <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
       </div>

@@ -82,6 +82,9 @@ input[type="tel"],
 select:focus,
 textarea{
   font-size: 1.5rem;
+  &::placeholder{
+    color: $theme-light-gray;
+  }
 }
 
 
@@ -126,6 +129,15 @@ button{
     background-color: $theme-dark-gray;
     // border: 2px solid $theme-dark-gray;
     color: $theme-light-gray;
+  }
+  &.primary{
+    background-color: #fff;
+    &:disabled{
+      pointer-events: none;
+      background-color: $theme-dark-gray;
+      // border: 2px solid $theme-dark-gray;
+      color: $theme-light-gray;
+    }
   }
   &.small-btn{
     height: 2rem;
@@ -350,7 +362,7 @@ section{
 
 .main-form-control{
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   // align-items: center;
   // align-self: center;
   // justify-content: flex-start;
@@ -364,6 +376,7 @@ section{
   padding: 0 .5rem 0 .5rem;
 
   &.checkbox{
+    flex-direction: row;
     label{
       span:first-child{
         font-size: 1.5rem;
@@ -373,8 +386,8 @@ section{
       display: flex;
       align-items: center;
       min-height: 3rem;
-      border-left: 2px solid $theme-light-gray;
-      padding-left: .5rem;
+      // border-left: 2px solid $theme-light-gray;
+      // padding-left: .5rem;
     }
   }
 
@@ -416,6 +429,9 @@ section{
   }
 
   input, textarea{
+    &::placeholder{
+      visibility: hidden;
+    }
     width: 100%;
     background: rgba(255,255,255,0);
     border: none;
@@ -433,9 +449,15 @@ section{
     resize: none;
   }
   input:focus, textarea:focus{
+    &::placeholder{
+      visibility: visible;
+    }
+    +label{
+      display: none;
+    }
+    border-left: none;
     outline: none;
   }
-
 }
 
 .main-form-btns{
@@ -448,19 +470,28 @@ section{
   border: 2px solid $theme-dark-gray;
   min-height: 3rem;
   margin: 1rem .5rem 1rem .5rem;
-  padding-right: 5rem;
+  // padding-right: 5rem;
   .descriptor{
-    padding-left: 1rem;
-
+    display: none;
+    // padding-left: 1rem;
   }
   button{
-    margin-left: .5rem;
+    margin-left: 0;
+    margin-right: .5rem;
   }
 }
 
 @media (min-width: 800px) and (orientation: landscape){
   .main-form-btns{
     padding-right: 0;
+    .descriptor{
+      display: inline;
+      padding-left: 1rem;
+    }
+    button{
+      margin-left: .5rem;
+      margin-right: 0;
+    }
   }
 }
 
@@ -615,6 +646,9 @@ section{
       border-radius: 0 0 1.5rem 1.5rem;
       padding: 0 .5rem 0 .5rem;
       background-color: $theme-medium-gray;
+      .descriptor{
+        display: none;
+      }
       button:disabled{
         background-color: $theme-medium-gray;
         color: $theme-neutral-color;
@@ -631,7 +665,13 @@ section{
     .main-modal-container{
       width: 40rem;
       align-self: center;
+      .main-modal-footer{
+        .descriptor{
+          display: inline;
+        }
+      }
     }
+
   }
 }
 

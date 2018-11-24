@@ -20,11 +20,11 @@ export const template = `
         <form name="tastingForm" ng-submit="$ctrl.createTasting()">
         <div class="main-form-container">
           <div class="main-form-control" ng-class="{'error' : newTastingForm.tastingName.$touched && newTastingForm.tastingName.$invalid}">
-            <label><span>Name</span></label>
+
             <input name="tastingName" type="text" ng-model="$ctrl.tasting.name" required>
+            <label><span>Name</span></label>
           </div>
           <div class="main-form-control" ng-class="{'error' : newTastingForm.tastingOpenAt.$touched && newTastingForm.tastingOpenAt.$invalid}">
-            <label><span>Start</span></label>
             <input name="tastingOpenAt"
               moment-picker="$ctrl.tasting.open_at"
               ng-model="$ctrl.tasting.open_at"
@@ -32,35 +32,38 @@ export const template = `
               change="$ctrl.onOpenAtChange(newValue, oldValue)"
               ng-readonly="true"
               required>
+            <label><span>Start</span></label>
           </div>
           <div class="main-form-control">
-            <label><span>End</span><span>(Optional)</span></label>
             <input name="tastingCloseAt"
               moment-picker="$ctrl.tasting.close_at"
               ng-model="$ctrl.tasting.close_at"
               min-date="$ctrl.minCloseDate"
               ng-readonly="true">
+                <label><span>End</span><span>(Optional)</span></label>
           </div>
           <div class="main-form-control">
-            <label><span>Details</span><span>(Optional)</span></label>
             <textarea name="tastingDescription" type="text" ng-model="$ctrl.tasting.description"></textarea>
+              <label><span>Details</span><span>(Optional)</span></label>
           </div>
           <div class="main-form-control" ng-class="{'error' : newTastingForm.tastingLocation.$touched && newTastingForm.tastingLocation.$invalid}">
-            <label><span>Location</span></label>
-            <input type="hidden" ng-model="$ctrl.tasting.location.id"></input>
+            <input type="hidden" ng-model="$ctrl.tasting.location.id"></input>    
             <textarea name="tastingLocation" type="text" required
               ng-focus="$ctrl.openHostLocationModal()"
               ng-readonly="true"
               ng-model="$ctrl.tasting.location.to_short_string">
             </textarea>
+            <label><span>Location</span></label>
           </div>
           <div class="main-form-btns">
-            <span>&nbsp;</span>
+            <span class="descriptor">&nbsp;</span>
             <div>
               <button type="reset">
                 <span class="fa fa-refresh"></span>
               </button>
-              <button type="submit" ng-disabled="tastingForm.$invalid">
+              <button type="submit"
+                class="primary"
+                ng-disabled="tastingForm.$invalid">
                 <span class="fa fa-arrow-right"></span>
               </button>
             </div>

@@ -6,25 +6,28 @@ export const template = `
   </div>
   <div class="dashboard">
     <taster-panel taster='$ctrl.taster'></taster-panel>
-    <div class="dashboard-btns">
-      <a class="dashboard-btn" ui-sref="dashboard-invitations"
-        ng-class="{disabled: $ctrl.taster.invite_count==0}">
-        <img src='assets/images/glasses-with-wine.svg'>
-        <span class="dashboard-btn-number">{{$ctrl.taster.invite_count}}</span>
-        <span class="dashboard-btn-title">Invites</span>
-      </a>
-      <a class="dashboard-btn" ui-sref="dashboard-tastings"
-        ng-class="{disabled: $ctrl.taster.tasting_count==0}">
-        <img src='assets/images/glass-with-wine.svg'>
-          <span class="dashboard-btn-number">{{$ctrl.taster.tasting_count}}</span>
-          <span>Tastings</span>
-      </a>
-      <a class="dashboard-btn" ui-sref="dashboard-reviews"
-        ng-class="{disabled: $ctrl.taster.review_count==0}">
-          <img src='assets/images/wine-bottle-1.svg'>
-          <span class="dashboard-btn-number">{{$ctrl.taster.review_count}}</span>
-          <span>Wines</span>
-      </a>
+    <div class="dashboard-btns-wrapper">
+      <div class="dashboard-btns">
+        <a class="dashboard-btn" ui-sref="dashboard-invitations"
+          ng-class="{disabled: $ctrl.taster.invite_count==0}">
+          <img src='assets/images/glasses-with-wine.svg'>
+          <span class="dashboard-btn-number">{{$ctrl.taster.invite_count}}</span>
+          <span class="dashboard-btn-title">Invites</span>
+        </a>
+        <a class="dashboard-btn" ui-sref="dashboard-tastings"
+          ng-class="{disabled: $ctrl.taster.tasting_count==0}">
+          <img src='assets/images/glass-with-wine.svg'>
+            <span class="dashboard-btn-number">{{$ctrl.taster.tasting_count}}</span>
+            <span>Tastings</span>
+        </a>
+        <a class="dashboard-btn" ui-sref="dashboard-reviews"
+          ng-class="{disabled: $ctrl.taster.review_count==0}">
+            <img src='assets/images/wine-bottle-1.svg'>
+            <span class="dashboard-btn-number">{{$ctrl.taster.review_count}}</span>
+            <span>Wines</span>
+        </a>
+      </div>
+      <div class="mobile-nav-spacer"></div>
     </div>
   </div>
 

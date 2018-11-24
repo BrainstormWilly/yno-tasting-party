@@ -22,7 +22,7 @@ export const template = `
       </div>
 
       <div class="main-modal-footer">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button ng-click="$ctrl.viewState=2" ng-if="$ctrl.viewState==1"><span class="fa fa-plus"></span></button>
@@ -31,7 +31,8 @@ export const template = `
           <button
             ng-click="$ctrl.confirmModal()"
             ng-if="$ctrl.viewState==2"
-            ng-disabled="$ctrl.newHostLocationInvalid">
+            ng-disabled="$ctrl.newHostLocationInvalid"
+            class="primary">
               <span class="fa fa-check"></span>
           </button>
         </div>

@@ -14,16 +14,17 @@ export const template = `
     <p>{{$ctrl.copy}}</p>
     <form name="pwdResetForm" ng-submit="$ctrl.requestPasswordReset()" ng-if="$ctrl.viewState==1">
       <div class="main-form-control" ng-class="{'error':pwdResetForm.email.$dirty && pwdResetForm.email.$invalid}">
-        <label>Email</label>
         <input name="email" type="email" required
           ng-model="$ctrl.user.email"
           ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+        <label>Email</label>
       </div>
       <div class="main-form-btns">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button type="button" ui-sref="welcome-signin"><i class="fa fa-sign-in"></i></button>
           <button type="submit"
+            class="primary"
             ng-disabled="pwdResetForm.$invalid">
             <i class="fa fa-check"></i>
           </button>
@@ -32,27 +33,28 @@ export const template = `
     </form>
     <form name="updatePasswordForm" ng-submit="$ctrl.resetUserPassword()" ng-if="$ctrl.viewState==2">
       <div class="main-form-control" ng-class="{'error':updatePasswordForm.token.$dirty && updatePasswordForm.token.$invalid}">
-        <label>Code</label>
         <input ng-model="$ctrl.user.reset_password_token" type="text" name="token" required>
+        <label>Code</label>
       </div>
       <div class="main-form-control" ng-class="{'error':updatePasswordForm.password.$dirty && updatePasswordForm.password.$invalid}">
-        <label>Password</label>
         <input type="password" name="password" placeholder="6 characters minimum" required
           ng-minlength="6"
           ng-model="$ctrl.user.password"
           ng-class="{'error':updatePasswordForm.password.$dirty && updatePasswordForm.password.$invalid}">
+        <label>Password</label>
       </div>
       <div class="main-form-control" ng-class="{'error':updatePasswordForm.passwordConfirmation.$dirty && updatePasswordForm.passwordConfirmation.$invalid}">
-        <label><span>Password</span><span>Confirmation</span></label>
         <input type="password" name="passwordConfirmation" required
           ng-model="$ctrl.user.password_confirmation"
           ng-minlength="6">
+        <label><span>Password</span><span>Confirmation</span></label>
       </div>
       <div class="main-form-btns">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button type="button" ng-click="$ctrl.setViewState()"><i class="fa fa-sign-in"></i></button>
           <button type="submit"
+            class="primary"
             ng-disabled="updatePasswordForm.$invalid || $ctrl.user.password!=$ctrl.user.password_confirmation">
             <i class="fa fa-check"></i>
           </button>

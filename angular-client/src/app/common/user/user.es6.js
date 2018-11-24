@@ -35,36 +35,41 @@ export const template = `
         <div class="main-form-control"
           ng-class="{'error':userForm.email.$dirty && userForm.email.$invalid}"
           ng-if="$ctrl.user.taster.status=='active'">
-            <label for="email">Email</label>
+
             <input type="email" ng-model="$ctrl.user.email" name="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+            <label for="email">Email</label>
         </div>
         <div class="main-form-control"
           ng-class="{'error':userForm.password.$dirty && userForm.password.$invalid}"
           ng-if="$ctrl.user.taster.status=='active'">
-            <label for="password">Password</label>
+
             <input type="password" name="password" placeholder="6 characters minimum"
               ng-model="$ctrl.user.password" ng-minlength="6">
+            <label for="password">Password</label>
         </div>
         <div class="main-form-control"
           ng-class="{'error':userForm.passwordConfirmation.$dirty && userForm.passwordConfirmation.$invalid}"
           ng-if="$ctrl.user.taster.status=='active'">
-            <label for="password"><span>Password</span><span>Confirmation</span></label>
+
             <input type="password" name="passwordConfirmation"
               ng-model="$ctrl.user.password_confirmation" ng-minlength="6">
+            <label for="password"><span>Password</span><span>Confirmation</span></label>
         </div>
         <div class="main-form-control"
           ng-class="{'error':userForm.name.$dirty && userForm.name.$invalid}"
           ng-if="$ctrl.user.taster.status=='active'">
-            <label for="name">Name</label>
+
             <input type="text" ng-model="$ctrl.user.taster.name" name="name" required>
+            <label for="name">Name</label>
         </div>
         <div class="main-form-control"
           ng-if="$ctrl.user.taster.status=='active'">
-            <label for="handle">Handle</label>
+
             <input type="text" ng-model="$ctrl.user.taster.handle" name="handle" placeholder="Optional">
+            <label for="handle">Handle</label>
         </div>
         <div class="main-form-btns">
-          <span style="padding-left:1rem;">{{$ctrl.user.taster.status}}</span>
+          <span style="padding-left:1rem;" class="primary">{{$ctrl.user.taster.status}}</span>
           <div>
             <button ng-click="$ctrl.attemptDeactivateTaster()" ng-if="$ctrl.user.taster.status=='active'">
               <span class="fa fa-user-times"></span>
@@ -73,6 +78,7 @@ export const template = `
               <span class="fa fa-user-plus"></span>
             </button>
             <button
+              class="primary"
               ng-click="$ctrl.updateUser()"
               ng-if="$ctrl.user.taster.status=='active'"
               ng-disabled="userForm.$invalid || ($ctrl.user.password && $ctrl.user.password!==$ctrl.user.password_confirmation)">
@@ -108,13 +114,14 @@ export const template = `
         refresh-flag="$ctrl.newHostLocation">
       </host-location-form>
       <div class="main-form-btns">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button
             ng-click="$ctrl.refreshLocation()">
               <span class="fa fa-refresh"></span>
           </button>
           <button
+            class="primary"
             ng-click="$ctrl.addLocation()"
             ng-disabled="$ctrl.newHostLocationInvalid">
               <span class="fa fa-check"></span>

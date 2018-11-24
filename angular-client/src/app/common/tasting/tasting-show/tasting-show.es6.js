@@ -10,17 +10,6 @@ export const template = `
 
     <div class="tasting-panel">
 
-      <div class="tasting-mode"
-        ng-if="!$ctrl.tasting.host_is_not_tasting"
-        ng-class="{inverse:!$ctrl.viewState}">
-        <toggle-switch
-          toggle-trigger="$ctrl.toggleViewState(state)"
-          toggle-state="$ctrl.viewState"
-          toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
-        </toggle-switch>
-        <h4>{{ $ctrl.viewLabel }}</h4>
-      </div>
-
       <div class="tasting-status"
         ng-class="{
           'no-view': $ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting,
@@ -30,6 +19,17 @@ export const template = `
           'completed-inverse': $ctrl.tasting.is_completed && !$ctrl.viewState
         }">
         <p>{{$ctrl.displayTime}}</p>
+      </div>
+
+      <div class="tasting-mode"
+        ng-if="$ctrl.hostIsTasting || !$ctrl.tasterIsHost"
+        ng-class="{inverse:!$ctrl.viewState}">
+        <toggle-switch
+          toggle-trigger="$ctrl.toggleViewState(state)"
+          toggle-state="$ctrl.viewState"
+          toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
+        </toggle-switch>
+        <h4>{{ $ctrl.viewLabel }}</h4>
       </div>
 
       <!--

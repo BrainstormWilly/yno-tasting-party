@@ -15,8 +15,9 @@ export const template = `
           </button>
         </div>
         <div class="main-form-control" ng-if="$ctrl.tasting.is_open">
-          <label>Comments</label>
+
           <textarea ng-model="$ctrl.pending_review.comments"></textarea>
+          <label>Comments</label>
         </div>
         <div class="closed" ng-if="!$ctrl.tasting.is_open">
           <div class="closed-rating" ng-hide="$ctrl.tasting.is_open">
@@ -29,7 +30,7 @@ export const template = `
         </div>
       </div>
       <div class="main-modal-footer">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button ng-click="$ctrl.closeModal()"><span class="fa fa-times"></span></button>
           <button ng-click="$ctrl.updateReview()" ng-show="$ctrl.tasting.is_open"><span class="fa fa-check"></span></button>

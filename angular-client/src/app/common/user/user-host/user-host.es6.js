@@ -19,10 +19,11 @@ export const template = `
         check-action="$ctrl.onNewHostLocationChange(host_location)">
       </host-location-form>
       <div class="main-form-btns">
-        <span>&nbsp;</span>
+        <span class="descriptor">&nbsp;</span>
         <div>
           <button type="reset"><span class="fa fa-refresh"></span></button>
           <button
+            class="primary"
             ng-click="$ctrl.addHostLocation()"
             ng-disabled="$ctrl.newHostLocationInvalid">
               <span class="fa fa-check"></span>
