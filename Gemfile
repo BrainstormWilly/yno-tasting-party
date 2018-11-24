@@ -38,9 +38,11 @@ end
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-# Use SCSS for stylesheets
+
+# Use SCSS for stylesheets (removed with introduction of AngularJS)
 # gem 'sass-rails', '~> 5.0'
 gem 'sassc-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -92,4 +94,4 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'alexa_verifier', '~> 1.0'
 gem 'doorkeeper', '~> 4.2.6'
 
-ruby '2.3.3'
+ruby '2.5.3'
