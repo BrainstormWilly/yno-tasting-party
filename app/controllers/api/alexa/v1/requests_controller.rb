@@ -5,20 +5,19 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
   # before_action :doorkeeper_authorize!
 
   def default
-    # Alexa Verification
+    # Alexa Request Header Verification
     verification_success = AlexaVerifier.valid?(request)
-
 
     request_type = params["request"]["type"]
 
     p "@@@@@@@@@ Request Type: #{request_type}"
     p "@@@@@@@@@ Verification Success: #{verification_success}"
 
+    # Verification invalid
+    return make_plaintext_response("I'm sorry. I am unable to verify your request.") unless verification_success
+
     # No accessToken
     return request_account_linking unless token_from_params
-
-    # Verification invalid
-    return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
 
     # host = Host.find_by(amazon_access_token: token_from_params)
     host = ::Alexa::AccessTokenFinder.new(token_from_params).yno_host
