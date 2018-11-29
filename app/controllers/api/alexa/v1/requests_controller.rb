@@ -14,7 +14,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     p "@@@@@@@@@ Verification Success: #{verification_success}"
 
     # Verification invalid
-    return make_plaintext_response("I'm sorry. I am unable to verify your request.") unless verification_success
+    return render json: {error: "Bad RequestsController"}.to_json, status: 400 unless verification_success
 
     # No accessToken
     return request_account_linking unless token_from_params
