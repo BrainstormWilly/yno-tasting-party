@@ -1,28 +1,30 @@
 class Api::Alexa::V1::RequestsController < ActionController::Base
   include DeviseTokenAuth::Concerns::SetUserByToken
-  force_ssl if: :ssl_configured?
-  prepend_before_action :set_access_token_in_params
-  before_action :doorkeeper_authorize!
+  # force_ssl if: :ssl_configured?
+  # prepend_before_action :set_access_token_in_params
+  # before_action :doorkeeper_authorize!
 
   def default
     # Alexa Verification
     verification_success = AlexaVerifier.valid?(request)
 
-    # Testing w/o Amazon SSL verification
-    # verification_success = true
 
     request_type = params["request"]["type"]
 
     p "@@@@@@@@@ Request Type: #{request_type}"
     p "@@@@@@@@@ Verification Success: #{verification_success}"
 
+    # No accessToken
+    return request_account_linking unless token_from_params
+
     # Verification invalid
     return make_plaintext_response("Alexa? Is that you? I am unable to verify.") unless verification_success
 
-    host = current_doorkeeper_host
+    # host = Host.find_by(amazon_access_token: token_from_params)
+    host = ::Alexa::AccessTokenFinder.new(token_from_params).yno_host
 
     # User is not a host
-    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.") unless host
+    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.") unless host.present?
 
     open_tasting = Tasting.get_open_for_host(host)
     p "@@@@@@@@@ Open Tasting: #{open_tasting.name}"
@@ -40,17 +42,17 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
       intent = params["request"]["intent"]["name"]
       p "@@@@@@@@@ Intent Request: #{intent}"
       if intent == "RateWineIntent"
-        svc = Alexa::RateWineIntent.new(open_tasting, params)
+        svc = ::Alexa::RateWineIntent.new(open_tasting, params)
       elsif intent == "GetTastingStatsIntent"
-        svc = Alexa::GetTastingStatsIntent.new(open_tasting, params)
+        svc = ::Alexa::GetTastingStatsIntent.new(open_tasting, params)
       elsif intent == "GetAverageWineRatingIntent"
-        svc = Alexa::GetAverageWineRatingIntent.new(open_tasting, params)
+        svc = ::Alexa::GetAverageWineRatingIntent.new(open_tasting, params)
       elsif intent == "AddWineCommentIntent"
-        svc = Alexa::AddWineCommentIntent.new(open_tasting, params)
+        svc = ::Alexa::AddWineCommentIntent.new(open_tasting, params)
       elsif intent == "GetTasterWineRatingsIntent"
-        svc = Alexa::GetTasterWineRatingsIntent.new(open_tasting, params)
+        svc = ::Alexa::GetTasterWineRatingsIntent.new(open_tasting, params)
       else
-        svc = Alexa::AmazonIntents.new(params)
+        svc = ::Alexa::AmazonIntents.new(params)
       end
 
       render json: svc.response
@@ -72,10 +74,6 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
 
   private
-
-  def set_access_token_in_params
-    request.parameters[:access_token] = token_from_params
-  end
 
   def token_from_params
     params["session"]["user"]["accessToken"] rescue nil
@@ -118,6 +116,23 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
         "shouldEndSession": false
       }
     }
+
+    def request_account_linking
+      render json: {
+        "version": "1.0",
+        "response": {
+          "outputSpeech": {
+            "type": "PlainText",
+            "text": "You must authenticate with your Amazon Account to use this skill. I sent instructions for how to do this in your Alexa App"
+          },
+          "card": {
+            "type": "LinkAccount"
+          },
+          "shouldEndSession": true
+        },
+        "sessionAttributes": {}
+      }
+    end
   end
 
 end

@@ -94,4 +94,4 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'alexa_verifier', '~> 1.0'
 gem 'doorkeeper', '~> 4.2.6'
 
-ruby '2.5.3'
+ruby '2.4.5'

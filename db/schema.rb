@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180708235514) do
+ActiveRecord::Schema.define(version: 20181125203956) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
@@ -52,9 +52,10 @@ ActiveRecord::Schema.define(version: 20180708235514) do
 
   create_table "hosts", force: :cascade do |t|
     t.integer  "taster_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "amazon_id"
+    t.text     "amazon_access_token"
     t.index ["taster_id"], name: "index_hosts_on_taster_id"
   end
 
@@ -189,10 +190,10 @@ ActiveRecord::Schema.define(version: 20180708235514) do
     t.integer  "tasting_id"
     t.integer  "taster_id"
     t.integer  "wine_id"
-    t.integer  "rating",      default: 3
+    t.integer  "rating"
     t.text     "comments"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "wine_number"
     t.index ["taster_id"], name: "index_wine_reviews_on_taster_id"
     t.index ["tasting_id"], name: "index_wine_reviews_on_tasting_id"

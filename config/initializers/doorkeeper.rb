@@ -88,7 +88,7 @@ Doorkeeper.configure do
   # strings and the flows they enable are:
   #
   # "authorization_code" => Authorization Code Grant Flow
-  # "implicit"           => Implicit Grant Flow
+  # "implicit"           => Implicit Grant Flo
   # "password"           => Resource Owner Password Credentials Grant Flow
   # "client_credentials" => Client Credentials Grant Flow
   #
@@ -100,7 +100,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  grant_flows %w(authorization_code)
+  grant_flows %w(authorization_code client_credentials implicit)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
