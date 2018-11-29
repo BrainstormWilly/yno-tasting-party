@@ -115,23 +115,23 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
         "shouldEndSession": false
       }
     }
+  end
 
-    def request_account_linking
-      render json: {
-        "version": "1.0",
-        "response": {
-          "outputSpeech": {
-            "type": "PlainText",
-            "text": "You must authenticate with your Amazon Account to use this skill. I sent instructions for how to do this in your Alexa App"
-          },
-          "card": {
-            "type": "LinkAccount"
-          },
-          "shouldEndSession": true
+  def request_account_linking
+    render json: {
+      "version": "1.0",
+      "response": {
+        "outputSpeech": {
+          "type": "PlainText",
+          "text": "You must authenticate with your Amazon Account to use this skill. I sent instructions for how to do this in your Alexa App"
         },
-        "sessionAttributes": {}
-      }
-    end
+        "card": {
+          "type": "LinkAccount"
+        },
+        "shouldEndSession": true
+      },
+      "sessionAttributes": {}
+    }
   end
 
 end
