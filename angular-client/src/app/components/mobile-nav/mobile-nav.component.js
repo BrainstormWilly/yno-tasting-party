@@ -3,10 +3,11 @@ import {template} from './mobile-nav.es6';
 export const MobileNavComponent = {
   template,
   controller: class MobileNavController{
-    constructor($scope, $log, UserService){
+    constructor($scope, $log, $state, UserService){
       'ngInject';
       this.$scope = $scope;
       this.$log = $log;
+      this.$state = $state;
       this.UserService = UserService;
       this.signedIn = null;
       this.navOn = false;
@@ -17,6 +18,14 @@ export const MobileNavComponent = {
       promise.then(data=>{
         this.signedIn = data;
       })
+    }
+
+    newTasting(){
+      if( this.signedIn && this.signedIn.host )
+        this.$state.go("tasting-new")
+      else {
+        this.$state.go("user-host")
+      }
     }
 
     signoutUser(){

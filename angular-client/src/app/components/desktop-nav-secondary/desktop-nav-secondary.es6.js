@@ -6,6 +6,9 @@ export const template = `
 <a ng-if="$ctrl.signedIn" href ng-click="$ctrl.signoutUser()" >
   Sign Out
 </a>
+<a ng-if="$ctrl.signedIn" href ng-click="$ctrl.newTasting()">
+  Host New Tasting
+</a>
 <a ng-if="!$ctrl.signedIn" ui-sref='welcome-signin'
   ng-class="{'on': $ctrl.welcomeState==$ctrl.constants.WELCOME_SIGNIN_STATE}">
   Sign In

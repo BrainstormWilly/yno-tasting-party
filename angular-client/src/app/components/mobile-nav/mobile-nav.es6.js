@@ -4,10 +4,10 @@ export const template =`
     <a ui-sref='welcome-signin' ng-if="!$ctrl.signedIn">Sign In/Up<span class="fas fa-sign-in-alt"></span></a>
     <a ng-click="$ctrl.signoutUser()" ng-if="$ctrl.signedIn">Sign Out<span class="fas fa-sign-out-alt"></span></a>
     <a ui-sref='dashboard' ng-if="$ctrl.signedIn">Dashboard<span class="fas fa-tachometer-alt"></span></a>
+    <a ng-click="$ctrl.newTasting()" ng-if="$ctrl.signedIn">Host New Tasting</a>
     <a ui-sref='welcome-why' ng-if="!$ctrl.signedIn">Why Yno<span class="fas fa-question"></span></a>
     <a ui-sref='welcome-who' ng-if="!$ctrl.signedIn">Who can Yno<span class="fas fa-users"></span></a>
     <a ui-sref='welcome-how' >How to Yno<span class="fas fa-wine-glass"></a>
-    <a ui-sref='tasting-new' ng-if="$ctrl.signedIn">Host New Tasting</a>
     <a href="http://ynoguy.com" target='_blank'>Blog</a>
     <a ui-sref='welcome-contact' >Contact</a>
     <a ui-sref='welcome-privacy' >Privacy</a>

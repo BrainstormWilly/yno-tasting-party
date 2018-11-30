@@ -23,6 +23,14 @@ export const DesktopNavSecondaryComponent = {
       })
     }
 
+    newTasting(){
+      if( this.signedIn && this.signedIn.host )
+        this.$state.go("tasting-new")
+      else {
+        this.$state.go("user-host")
+      }
+    }
+
     signoutUser(){
       this.UserService.signoutUser();
     }

@@ -16,8 +16,9 @@ class Taster < ApplicationRecord
 
   private
 
-    def default_status
-      self.status ||= :pending
-    end
+  def default_status
+    self.status ||= :active
+  end
+
 
 end
