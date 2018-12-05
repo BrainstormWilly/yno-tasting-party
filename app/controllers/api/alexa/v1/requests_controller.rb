@@ -10,8 +10,8 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
 
     request_type = params["request"]["type"]
 
-    p "@@@@@@@@@ Request Type: #{request_type}"
-    p "@@@@@@@@@ Verification Success: #{verification_success}"
+    # p "@@@@@@@@@ Request Type: #{request_type}"
+    # p "@@@@@@@@@ Verification Success: #{verification_success}"
 
     # Verification invalid
     return render json: {error: "Bad RequestsController"}.to_json, status: 400 unless verification_success
@@ -26,7 +26,6 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.") unless host.present?
 
     open_tasting = Tasting.get_open_for_host(host)
-    p "@@@@@@@@@ Open Tasting: #{open_tasting.name}"
 
     # No open tastings
     return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to wino tasting dot com slash alexa to learn more.") unless open_tasting

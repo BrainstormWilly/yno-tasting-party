@@ -10,41 +10,42 @@
     // border: 1px solid red;
     // height: 100%;
     // min-height: calc(100vh - 4rem);
-
-    .tasting-mode{
-      display: flex;
-      align-items: center;
-      height: 3rem; min-height: 3rem;
-      padding: 0 .5rem;
-      transition: background-color .7s;
-      &.inverse{
+    .tasting-panel-menu-wrapper{
+      .tasting-mode{
+        display: flex;
+        align-items: center;
+        height: 3rem; min-height: 3rem;
+        padding: 0 .5rem;
+        transition: background-color .7s;
+        &.inverse{
+          background-color: $theme-light-gray;
+        }
+        h4{
+          margin-left: 1rem;
+        }
+      }
+      .tasting-status{
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: $theme-light-gray;
-      }
-      h4{
-        margin-left: 1rem;
-      }
-    }
-    .tasting-status{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: $theme-light-gray;
-      border-bottom: 1px solid $theme-light-gray;
-      height: 2rem; min-height: 2rem;
-      &.pending{
-        background-color: $theme-pending-color;
-        color: $theme-bkg-color;
-      }
-      &.open{
-        background-color: darken($theme-open-color, 5%);
-        color: #fff;
-      }
-      &.closed{
-        background-color: darken($theme-bad-color, 40%);
-        color: #fff;
-      }
-      &.completed-inverse{
-        background-color: $theme-dark-gray;
+        border-bottom: 1px solid $theme-light-gray;
+        height: 2rem; min-height: 2rem;
+        &.pending{
+          background-color: $theme-pending-color;
+          color: $theme-bkg-color;
+        }
+        &.open{
+          background-color: darken($theme-open-color, 5%);
+          color: #fff;
+        }
+        &.closed{
+          background-color: darken($theme-bad-color, 40%);
+          color: #fff;
+        }
+        &.completed-inverse{
+          background-color: $theme-dark-gray;
+        }
       }
     }
     .tasting-section{
@@ -144,10 +145,12 @@
       border-top-right-radius: 1rem;
       // border: 1px solid blue;
       transition: height linear 1s;
-      .tasting-mode{
-        &.inverse{
-          border-top-left-radius: 1rem;
-          border-top-right-radius: 1rem;
+      .tasting-panel-menu-wrapper{
+        .tasting-mode{
+          &.inverse{
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+          }
         }
       }
       .tasting-section{

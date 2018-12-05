@@ -19,6 +19,7 @@ export const template = `
     <div class="welcome-copy bottom">
       <p>Ask Alexa:<br>
         <ul>
+          <li>Alexa, open wine tasting</li>
           <li>Alexa, tell wine tasting to rate wine 1</li>
           <li>Alexa, tell wine tasting to add a comment for wine 1</li>
           <li>Alexa, ask wine tasting what the average rating is for wine 1</li>

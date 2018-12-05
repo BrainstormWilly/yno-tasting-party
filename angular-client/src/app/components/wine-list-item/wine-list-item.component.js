@@ -36,7 +36,7 @@ export const WineListItemComponent = {
     }
 
     $onInit() {
-      this.$log.log("WineListItemComponent", this.lastWineItem);
+      // this.$log.log("WineListItemComponent", this.lastWineItem);
       if( this.wineView=="averageRating" ){
         this.rating = this.lastWineItem ? this.lastWineItem.average_rating : 1;
         TweenMax.fromTo(this.$progress, 1, {width: (100*this.rating/5)+"%"}, {width: (100*this.wineItem.average_rating/5)+"%"});

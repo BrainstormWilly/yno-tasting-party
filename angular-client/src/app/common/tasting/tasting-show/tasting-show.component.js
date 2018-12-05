@@ -40,6 +40,7 @@ export const TastingShowComponent = {
       this.viewLabel = "Taster View";
       this.unrevealedWines = [];
       this.lastWineItems = [];
+      this.tasterMenu = false;
 
 
       let setDisplayTime = ()=>{
@@ -375,6 +376,11 @@ export const TastingShowComponent = {
         return moment(this.tasting.close_at).diff(moment(this.tasting.open_at), "hours") + " hours";
       }
       return "undetermined";
+    }
+
+    toggleTasterMenu(){
+      this.$log.log("toggled")
+      this.tasterMenu = !this.tasterMenu
     }
 
     toggleViewState(){

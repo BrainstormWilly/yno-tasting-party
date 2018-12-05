@@ -6,30 +6,37 @@ export const template = `
   </div>
 
   <div class="tasting">
-    <taster-panel taster="$ctrl.taster" taster-number="$ctrl.tasterNumber"></taster-panel>
+    <taster-panel
+      taster="$ctrl.taster"
+      taster-number="$ctrl.tasterNumber"
+      taster-is-host="$ctrl.tasterIsHost"
+      tasting-show="true"
+      toggle-taster-menu="$ctrl.toggleTasterMenu()">
+    </taster-panel>
 
-    <div class="tasting-panel">
+    <div class="tasting-panel" >
+      <div class="tasting-panel-menu-wrapper" ng-show="$ctrl.tasterMenu">
+        <div class="tasting-mode"
+          ng-if="$ctrl.hostIsTasting || !$ctrl.tasterIsHost"
+          ng-class="{inverse:!$ctrl.viewState}">
+          <toggle-switch
+            toggle-trigger="$ctrl.toggleViewState(state)"
+            toggle-state="$ctrl.viewState"
+            toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
+          </toggle-switch>
+          <h4>{{ $ctrl.viewLabel }}</h4>
+        </div>
 
-      <div class="tasting-status"
-        ng-class="{
-          'no-view': $ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting,
-          open: $ctrl.tasting.is_open,
-          closed: $ctrl.tasting.is_closed,
-          pending: $ctrl.tasting.is_pending,
-          'completed-inverse': $ctrl.tasting.is_completed && !$ctrl.viewState
-        }">
-        <p>{{$ctrl.displayTime}}</p>
-      </div>
-
-      <div class="tasting-mode"
-        ng-if="$ctrl.hostIsTasting || !$ctrl.tasterIsHost"
-        ng-class="{inverse:!$ctrl.viewState}">
-        <toggle-switch
-          toggle-trigger="$ctrl.toggleViewState(state)"
-          toggle-state="$ctrl.viewState"
-          toggle-disabled="$ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting">
-        </toggle-switch>
-        <h4>{{ $ctrl.viewLabel }}</h4>
+        <div class="tasting-status"
+          ng-class="{
+            'no-view': $ctrl.tasterIsHost && $ctrl.tasting.host_is_not_tasting,
+            open: $ctrl.tasting.is_open,
+            closed: $ctrl.tasting.is_closed,
+            pending: $ctrl.tasting.is_pending,
+            'completed-inverse': $ctrl.tasting.is_completed && !$ctrl.viewState
+          }">
+          <p>{{$ctrl.displayTime}}</p>
+        </div>
       </div>
 
       <!--

@@ -3,7 +3,10 @@ import {template} from './taster-panel.es6';
 export const TasterPanelComponent = {
   bindings: {
     taster: "<",
-    tasterNumber: "<"
+    tasterNumber: "<",
+    tasterIsHost: "<",
+    tastingShow: "<",
+    toggleTasterMenu: "&"
   },
   template,
   controller: class TasterPanelController{
@@ -12,5 +15,9 @@ export const TasterPanelComponent = {
       this.$log = $log;
     }
 
+    onToggleTasterMenu(){
+      // this.$log.log("onToggleTasterMenu")
+      this.toggleTasterMenu()
+    }
   }
 }
