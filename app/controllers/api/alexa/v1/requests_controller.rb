@@ -38,7 +38,7 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     # Intent request
     if request_type == "IntentRequest"
       intent = params["request"]["intent"]["name"]
-      p "@@@@@@@@@ Intent Request: #{intent}"
+      # p "@@@@@@@@@ Intent Request: #{intent}"
       if intent == "RateWineIntent"
         svc = ::Alexa::RateWineIntent.new(open_tasting, params)
       elsif intent == "GetTastingStatsIntent"
@@ -57,17 +57,18 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     end
   end
 
-  def current_doorkeeper_host
-    Host.find_by(taster: current_doorkeeper_taster)
-  end
-
-  def current_doorkeeper_taster
-    Taster.find_by(user: current_doorkeeper_user )
-  end
-
-  def current_doorkeeper_user
-    @current_doorkeeper_user ||= User.find(doorkeeper_token.resource_owner_id)
-  end
+  # DEPRECATED: no longer using Doorkeeper. Now using Amazon Oauth
+  # def current_doorkeeper_host
+  #   Host.find_by(taster: current_doorkeeper_taster)
+  # end
+  #
+  # def current_doorkeeper_taster
+  #   Taster.find_by(user: current_doorkeeper_user )
+  # end
+  #
+  # def current_doorkeeper_user
+  #   @current_doorkeeper_user ||= User.find(doorkeeper_token.resource_owner_id)
+  # end
 
 
 
