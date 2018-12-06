@@ -15,7 +15,7 @@ export const template = `
     </taster-panel>
 
     <div class="tasting-panel" >
-      <div class="tasting-panel-menu-wrapper" ng-show="$ctrl.tasterMenu">
+      <div class="tasting-panel-menu-wrapper">
         <div class="tasting-mode"
           ng-if="$ctrl.hostIsTasting || !$ctrl.tasterIsHost"
           ng-class="{inverse:!$ctrl.viewState}">
@@ -52,7 +52,7 @@ export const template = `
             <h3>Your Reviews</h3>
           </a>
         </div>
-        <div class="tasting-section-list">
+        <div class="tasting-section-list" ng-class="{'menu-on':$ctrl.tasterMenu}">
           <wine-list-item
             ng-if="$ctrl.viewState"
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
@@ -117,7 +117,9 @@ export const template = `
               <span class="fas fa-angle-up" ng-show="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_DETAILS"></span>
           </button>
         </div>
-        <div class="tasting-section-list tasting-info" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_DETAILS">
+        <div class="tasting-section-list tasting-info"
+          ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_DETAILS"
+          ng-class="{'menu-on':$ctrl.tasterMenu}">
           <p>
             <span class="subtitle">Hosted by:<br/></span>
             {{$ctrl.tasting.host.taster.name}}<br/>
@@ -197,7 +199,9 @@ export const template = `
             <span class="fas fa-angle-up" ng-show="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_WINES"></span>
           </button>
         </div>
-        <div class="tasting-section-list" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_WINES">
+        <div class="tasting-section-list"
+          ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_WINES"
+          ng-class="{'menu-on':$ctrl.tasterMenu}">
           <wine-list-item
             ng-repeat="wine in $ctrl.tasting.tasting_wines"
             wine-item="wine"
@@ -230,7 +234,9 @@ export const template = `
             <span class="fas fa-angle-up" ng-show="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_GUESTS"></span>
           </button>
         </div>
-        <div class="tasting-section-list" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_GUESTS">
+        <div class="tasting-section-list"
+          ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_GUESTS"
+          ng-class="{'menu-on':$ctrl.tasterMenu}">
           <guest-list-item
             ng-repeat="guest in $ctrl.tasting.guests"
             guest="guest"
@@ -263,7 +269,9 @@ export const template = `
             <span class="fas fa-angle-up" ng-show="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVIEWS"></span>
           </button>
         </div>
-        <div class="tasting-section-list" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVIEWS">
+        <div class="tasting-section-list"
+          ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVIEWS"
+          ng-class="{'menu-on':$ctrl.tasterMenu}">
           <wine-list-item
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
             wine-view="{{$ctrl.wineListItemView()}}"
@@ -295,7 +303,9 @@ export const template = `
             <span class="fas fa-angle-up" ng-show="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVEALS"></span>
           </button>
         </div>
-        <div class="tasting-section-list" ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVEALS">
+        <div class="tasting-section-list"
+          ng-if="$ctrl.expandState==$ctrl.constants.EXPAND_STATE_REVEALS"
+          ng-class="{'menu-on':$ctrl.tasterMenu}">
           <wine-list-item
             ng-repeat="review in $ctrl.tasting.taster_wine_reviews"
             wine-view="reveal"

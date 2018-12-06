@@ -10,7 +10,9 @@ export const template = `
       <h4>{{ $ctrl.taster.handle }} <span ng-if="$ctrl.tasterIsHost">(Host)</span></h4>
     </div>
   </a>
-  <button ng-click="$ctrl.onToggleTasterMenu()" ng-if="$ctrl.tastingShow"><span class="fas fa-bars"></span></button>
+  <button ng-click="$ctrl.onToggleTasterMenu()" ng-if="$ctrl.tastingShow">
+    <span ng-class="$ctrl.showMenu ? 'fa-angle-double-up' : 'fa-angle-double-down'" class="fas"></span>
+  </button>
 
 
 `

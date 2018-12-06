@@ -46,9 +46,8 @@ taster-panel{
     color: $theme-neutral-color;
     &:hover, &:focus{
       outline: none;
-      border: none;
       background: $theme-color;
-      color: #fff;
+      color: $theme-neutral-color;
     }
   }
 }

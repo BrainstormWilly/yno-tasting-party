@@ -13,10 +13,12 @@ export const TasterPanelComponent = {
     constructor($log){
       'ngInject';
       this.$log = $log;
+      this.showMenu = false
     }
 
     onToggleTasterMenu(){
       // this.$log.log("onToggleTasterMenu")
+      this.showMenu = !this.showMenu
       this.toggleTasterMenu()
     }
   }

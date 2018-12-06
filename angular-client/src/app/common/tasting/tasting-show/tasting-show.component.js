@@ -10,7 +10,7 @@ export const TastingShowComponent = {
   },
   template,
   controller: class TastingShowController{
-    constructor($scope, $log, $state, $filter, $interval,
+    constructor($scope, $log, $state, $filter, $interval, $element,
       lodash,
       tastingConstants,
       AlertsService,
@@ -25,6 +25,7 @@ export const TastingShowComponent = {
       this._ = lodash;
       this.$log = $log;
       this.$state = $state;
+      this.$tastingOptionsMenu = $element.find(".tasting-panel-menu-wrapper");
       this.AlertsService = AlertsService;
       this.GuestService = GuestService;
       this.ModalService = ModalService;
@@ -379,8 +380,11 @@ export const TastingShowComponent = {
     }
 
     toggleTasterMenu(){
-      this.$log.log("toggled")
+      // this.$log.log("toggled")
       this.tasterMenu = !this.tasterMenu
+      let alpha = this.tasterMenu ? 1 : 0;
+      let display = this.tasterMenu ? "block" : "none";
+      TweenMax.to(this.$tastingOptionsMenu, .5, {autoAlpha: alpha, display: display});
     }
 
     toggleViewState(){
