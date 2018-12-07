@@ -23,12 +23,24 @@ class Api::Alexa::V1::RequestsController < ActionController::Base
     host = ::Alexa::AccessTokenFinder.new(token_from_params).yno_host
 
     # User is not a host
-    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.") unless host.present?
+    return make_plaintext_response("I'm sorry. In order to use me with Yno Wine Tastings, you must be a registered host with an open tasting. Go to wino tasting dot com slash alexa to learn more.", true) unless host.present?
 
     open_tasting = Tasting.get_open_for_host(host)
+    if open_tasting.blank?
+      pending_tasting = Tasting.get_pending_for_host(host)
+      if pending_tasting.present?
+        open_in_secs = (pending_tasting.open_at - Time.current)
+        open_in_secs = open_in_secs.round
+        time_hash = [open_in_secs, "second".pluralize(open_in_secs)]
+        time_hash = [(open_in_secs/60).round, "minute".pluralize(open_in_secs/60)] if time_hash[0]>59
+        time_hash = [(open_in_secs/3600).round, "hour".pluralize(open_in_secs/3600)] if time_hash[0]>59
+        time_hash = [(open_in_secs/86400).round, "day".pluralize(open_in_secs/86400)] if time_hash[0]>24
+        return make_plaintext_response("Hello #{host.taster.handle}, I see a pending tasting called, #{pending_tasting.name}. Come back in #{time_hash[0]} #{time_hash[1]} or after you open it in your wino tasting app.", true)
+      end
+    end
 
-    # No open tastings
-    return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open tastings for you. I can only help you with open tastings. Go to wino tasting dot com slash alexa to learn more.") unless open_tasting
+    # No open or pending tastings
+    return make_plaintext_response("Hello #{host.taster.handle}, I don't see any open or pending tastings for you. I can only help you with open tastings. Go to wino tasting dot com slash alexa to learn more.", true) unless open_tasting
 
     # Launch request
     return play_preamble(open_tasting) if request_type == "LaunchRequest"

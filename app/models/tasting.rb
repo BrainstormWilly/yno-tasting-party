@@ -21,10 +21,16 @@ class Tasting < ApplicationRecord
 
   def self.get_open_for_host(host)
     ts = self.where(host:host)
-    ts.each do |t|
-      return t if t.is_open?
-    end
-    nil
+    return ts.select{ |t| t.is_open? }.first
+    # ts.each do |t|
+    #   return t if t.is_open?
+    # end
+    # nil
+  end
+
+  def self.get_pending_for_host(host)
+    ts = self.where(host:host)
+    return ts.select{ |t| t.is_pending? }.last
   end
 
   def is_pending?

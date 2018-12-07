@@ -31,15 +31,7 @@ class Alexa::AmazonIntents
   end
 
   def stop_speak
-    phrases = [
-      "<s><say-as interpret-as='interjection'>okey dokey</say-as></s>",
-      "<s><say-as interpret-as='interjection'>bonjour</say-as></s>",
-      "<s>OK, I can take a hint</s>",
-      "<s>Fine, be that way</s>",
-      "<s>Well, <prosody rate='x-slow' pitch='high'>excuse</prosody> <prosody rate='x-slow' pitch='low'>me!</prosody></s>",
-      "<s>OK, I hope it wasn't something I said</s>"
-    ]
-    phrases.sample
+    "<s>OK, come back any time</s>"
   end
 
   def help_speak

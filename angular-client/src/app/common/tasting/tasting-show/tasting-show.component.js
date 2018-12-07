@@ -38,10 +38,10 @@ export const TastingShowComponent = {
       this.expandState = this.constants.EXPAND_STATE_NONE;
       this.displayTime = null;
       this.viewState = true; // Taster View = true
-      this.viewLabel = "Taster View";
+      this.viewLabel = "Taster Mode";
       this.unrevealedWines = [];
       this.lastWineItems = [];
-      this.tasterMenu = false;
+      this.tasterMenu = true;
 
 
       let setDisplayTime = ()=>{
@@ -390,9 +390,9 @@ export const TastingShowComponent = {
     toggleViewState(){
       this.viewState = !this.viewState;
       if( this.viewState ){
-        this.viewLabel = "Taster View";
+        this.viewLabel = "Taster Mode";
       }else{
-        this.viewLabel = "Tasting Info";
+        this.viewLabel = "Tasting Mode";
       }
     }
 
