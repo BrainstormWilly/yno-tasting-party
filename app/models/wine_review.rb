@@ -18,7 +18,7 @@ class WineReview < ApplicationRecord
   # end
 
   def unrated?
-    self.created_at == self.updated_at
+    created_at == updated_at
   end
 
   def average_rating

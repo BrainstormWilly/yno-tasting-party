@@ -55,7 +55,7 @@ class Api::V1::TastersController < Api::BaseController
 
   def create
     taster = Taster.new(create_attributes)
-    taster.handle = taster.name unless taster.handle.present?
+    taster.handle = taster.name if taster.handle.blank?
     if taster.save
       render json: taster, serializer: TasterSerializer
     else

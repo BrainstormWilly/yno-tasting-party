@@ -13,7 +13,7 @@ export const template = `
 
     <div class="welcome-copy top">
       <h2>Alexa. Party rescue.</h2>
-      <p>Your wine glass in one hand. Canapé in the other. How do you rate wine 1? Just tell Alexa. Yno Tasting is fully <em>Alexified</em>. Every Yno Guest can use Alexa through out a tasting to rate, comment, and get tasting stats. Yno Hosts add the <a href='https://www.amazon.com/Brainstorm-Creative-Wine-Trivia/dp/B071Y1HRP1/ref=sr_1_1?s=digital-skills&ie=UTF8&qid=1524978656&sr=1-1&keywords=wine+trivia' target='_blank'>Yno Tasting Alexa Skill</a> to any Amazon Echo device. Whenever you have a live tasting in progress you can tell Alexa to, “open wine tastng” and she will find it. Then, you and your guests can record their ratings and comments by referencing the taster number next to their name in the Yno Tasting app.</p>
+      <p>Your wine glass in one hand. Canapé in the other. How do you rate wine 1? Just tell Alexa. Yno Tasting is fully <em>Alexified</em>. <a ui-sref="welcome-how">Yno Hosts</a> can link their account to the <a href='https://www.amazon.com/Brainstorm-Creative-Wine-Trivia/dp/B071Y1HRP1/ref=sr_1_1?s=digital-skills&ie=UTF8&qid=1524978656&sr=1-1&keywords=wine+trivia' target='_blank'>Yno Tasting Alexa Skill</a> on any Amazon Echo device. Whenever you have a live tasting in progress you can tell Alexa to, “open wine tastng” and she will find it. Once signed in, all tasting guests can record their ratings and comments with Alexa by referencing the taster number next to their handle in the Yno Tasting app. If they remember their number they’ll never have look at your phone again until the tasting is over.</p>
     </div>
 
     <div class="welcome-copy bottom">
