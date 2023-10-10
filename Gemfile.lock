@@ -153,7 +153,6 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mailtrap (1.2.1)
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
@@ -322,7 +321,6 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.5)
-  mailtrap
   momentjs-rails (>= 2.9.0)
   omniauth (>= 1.0.0)
   pg
