@@ -11,7 +11,7 @@ class HostLocation < ApplicationRecord
 
     def set_first_primary
       locations = self.class.where(host_id: self.host_id)
-      self.primary = true if locations.count==0
+      self.primary = true if locations.count == 0
     end
 
     def reset_primaries
@@ -22,5 +22,4 @@ class HostLocation < ApplicationRecord
       first_hl = self.class.where(host_id: self.host_id).first
       first_hl.update!(primary: true) if first_hl
     end
-
 end

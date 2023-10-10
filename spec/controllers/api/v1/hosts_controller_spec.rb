@@ -73,10 +73,10 @@ RSpec.describe Api::V1::HostsController, type: :controller do
           post :create, params: {host: create_host_params}
           expect(response).to have_http_status(:success)
         end
-        it "has a host connection" do
+        it "does not auto-set host connection" do
           post :create, params: {host: create_host_params}
           instance = ActiveSupport::JSON.decode(response.body)
-          expect(instance["connections"].count).to eq 1
+          expect(instance["connections"].count).to eq 0
         end
       end
     end

@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-
-  let!(:user){ create(:user, reset_password_token:"asdf2345adsf") }
+  let(:reset_tokens) { Devise.token_generator.generate(User, :reset_password_token) }
+  let!(:user){ create(:user, reset_password_token: reset_tokens[1], reset_password_sent_at: Time.now.utc) }
   let!(:user2){ create(:user) }
   let!(:user3){ create(:user) }
-  let!(:taster){ create(:taster, user: user) }
+  let!(:taster){ create(:taster, user:) }
   let!(:taster2){ create(:taster, user: user2) }
-  let!(:host){ create(:host, taster:taster) }
-  let!(:connection){ create(:connection, host:host, taster:taster2) }
+  let!(:host){ create(:host, taster:) }
+  let!(:connection){ create(:connection, host:, taster: taster2) }
 
   let(:update_user_params){
     {
@@ -21,7 +21,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   let(:reset_user_params){
     {
       user:{
-        reset_password_token: "asdf2345adsf",
+        reset_password_token: reset_tokens[0],
         password: "654321",
         password_confirmation: "654321"
       }

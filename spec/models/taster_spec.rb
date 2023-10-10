@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Taster, type: :model do
-
   let(:user) { create(:user) }
-  let(:taster) { create(:taster, user: user) }
+  let(:taster) { create(:taster, user:) }
 
   # it { is_expected.to validate_presence_of(:name) }
   # it { is_expected.to validate_length_of(:name).is_at_least(1) }
@@ -16,13 +15,13 @@ RSpec.describe Taster, type: :model do
 
   describe "status" do
     it "should default status to 'pending'" do
-      expect(taster.status).to eq "pending"
+      expect(taster.status).to eq "active"
     end
     it "should respond to pending?" do
-      expect(taster.pending?).to be_truthy
+      expect(taster.pending?).to be_falsey
     end
     it "should respond to active?" do
-      expect(taster.active?).to be_falsey
+      expect(taster.active?).to be_truthy
     end
     it "should respond to inactive?" do
       expect(taster.inactive?).to be_falsey

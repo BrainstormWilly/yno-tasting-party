@@ -1,7 +1,7 @@
 class WineReview < ApplicationRecord
   belongs_to :tasting
   belongs_to :taster
-  belongs_to :wine
+  belongs_to :wine, optional: true
 
   validates :wine_number, presence: true, numericality: {greater_than_or_equal_to: 1}
   validates :tasting_id, presence: true

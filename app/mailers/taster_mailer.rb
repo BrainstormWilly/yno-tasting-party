@@ -4,7 +4,7 @@ class TasterMailer < ApplicationMailer
 
   def invite_taster(guest, open_at)
     @taster = guest.taster
-    @url = ENV['HOST_URL']
+    @url = root_url
     @tasting = guest.tasting
     @open_at = open_at
     mail(to: @taster.user.email, subject: "You are invited to a Yno Tasting Party")

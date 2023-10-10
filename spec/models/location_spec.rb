@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Location, type: :model do
 
   let(:user){ create(:user) }
-  let(:taster){ create(:taster, user: user) }
-  let(:host){ create(:host, taster: taster) }
+  let(:taster){ create(:taster, user:) }
+  let(:host){ create(:host, taster:) }
   let(:location){ create(:location) }
-  let(:host_location){ create(:host_location, location: location, host: host) }
+  let(:host_location){ create(:host_location, location:, host:) }
 
   describe "attributes" do
     it "should have 7 attributes" do
@@ -27,6 +27,4 @@ RSpec.describe Location, type: :model do
       expect(location.host_locations).to eq [host_location]
     end
   end
-
-
 end

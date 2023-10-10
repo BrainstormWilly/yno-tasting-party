@@ -19,6 +19,4 @@ class Taster < ApplicationRecord
   def default_status
     self.status ||= :active
   end
-
-
 end

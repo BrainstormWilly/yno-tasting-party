@@ -18,15 +18,15 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 # Factory Girl
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
 
-  # Factory Girl methods
-  config.include FactoryGirl::Syntax::Methods
+  # Factory Bot methods
+  config.include FactoryBot::Syntax::Methods
 
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
