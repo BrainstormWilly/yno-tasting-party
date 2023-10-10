@@ -11,8 +11,8 @@ RSpec.describe GuestsController, type: :controller do
   let(:tasting){ create(:tasting, host: host, location: location) }
   let!(:guest){ create(:guest, tasting: tasting, taster: taster, invited: Time.current) }
   let(:wine){ create(:wine) }
-  let!(:tasting_wine){ create(:tasting_wine, tasting:tasting, wine:wine) }
-  let!(:wine_review){ create(:wine_review, tasting:tasting, taster:taster)}
+  let!(:tasting_wine){ create(:tasting_wine, tasting: tasting, wine: wine) }
+  let!(:wine_review){ create(:wine_review, tasting: tasting, taster: taster)}
   let(:create_params){{
     guest: {
       tasting_id: tasting.id,
@@ -30,7 +30,7 @@ RSpec.describe GuestsController, type: :controller do
     end
     describe "GET #new" do
       it "returns http success" do
-        get :new, params:{tasting_id:tasting.id}
+        get :new, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:success)
       end
       it "creates new @guest" do

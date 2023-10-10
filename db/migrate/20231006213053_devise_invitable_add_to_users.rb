@@ -1,4 +1,4 @@
-class DeviseInvitableAddToUsers < ActiveRecord::Migration
+class DeviseInvitableAddToUsers < ActiveRecord::Migration[7.0]
   def up
     change_table :users do |t|
       t.string     :invitation_token
@@ -8,14 +8,9 @@ class DeviseInvitableAddToUsers < ActiveRecord::Migration
       t.integer    :invitation_limit
       t.references :invited_by, polymorphic: true
       t.integer    :invitations_count, default: 0
-      t.index      :invitations_count
       t.index      :invitation_token, unique: true # for invitable
       t.index      :invited_by_id
     end
-    # Allow null encrypted_password
-    change_column_null :users, :encrypted_password, :string, true
-    # Allow null password_salt (add it if you are using Devise's encryptable module)
-    # change_column_null :users, :password_salt, :string, true
   end
 
   def down

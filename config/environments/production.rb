@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -84,15 +84,16 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # SendGrid settings
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'ynotasting.com' }
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   address: "smtp.sendgrid.net",
-  #   port: 2525,
-  #   domain: "heroku.com",
-  #   authentication: "plain",
-  #   enable_starttls_auto:true,
-  #   user_name: ENV["SENDGRID_USERNAME"],
-  #   password: ENV["SENDGRID_PASSWORD"]
-  # }
+  config.action_mailer.smtp_settings = {
+    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+    :password => ENV.fetch("SENDGRID_API_KEY"), # This is the secret sendgrid API key which was issued during API key creation
+    :domain => "ynotasting.com",
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 end

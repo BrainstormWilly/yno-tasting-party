@@ -32,9 +32,9 @@ class Api::V1::UsersController < ApplicationController
   def resetUserPassword
     user = User.reset_password_by_token(valid_reset_password_params)
     if user.errors.empty?
-      render json: User.find(user.id), serializer: Users::UserSerializer
+      render json: user, serializer: Users::UserSerializer
     else
-      render json: { error: "Unable to reset pasword.", status: 400 }, status: 400
+      render json: { error: "Unable to reset password.", status: 400 }, status: 400
     end
   end
 

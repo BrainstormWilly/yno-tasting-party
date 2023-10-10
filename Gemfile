@@ -2,17 +2,19 @@ source 'https://rubygems.org'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platform: :mri
+  gem 'dotenv-rails'
+  # gem 'byebug', platform: :mri
+  gem 'pry', '~> 0.14.2'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'rspec-rails'
   gem 'rails-controller-testing'
-  gem 'shoulda'
+  gem 'shoulda-matchers', '~> 5.0'
   gem 'faker'
-  gem 'factory_girl_rails', "~> 4.0"
+  gem 'factory_bot_rails'
   gem 'date_validator'
 end
 
@@ -21,7 +23,7 @@ group :development do
   gem 'sqlite3'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
-  gem 'listen', '~> 3.0.5'
+  gem 'listen', '~> 3.5'
   # homebrew libreadline fix
   gem 'rb-readline'
   # allow CORS authorization between localhost ports
@@ -35,7 +37,7 @@ group :production do
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 7.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 
@@ -80,7 +82,6 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.43'
 # Devise 4
 gem 'devise'
 gem 'devise_invitable'
-gem 'figaro'
 gem 'omniauth', '>= 1.0.0'
 gem 'devise_token_auth'
 
@@ -92,6 +93,8 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 # Alexa Authentication
 gem 'alexa_verifier', '~> 1.0'
-gem 'doorkeeper', '~> 4.2.6'
+gem 'doorkeeper', '~> 5.6'
 
-ruby '2.4.5'
+gem 'psych', '< 4.0'
+
+ruby '3.2.2'

@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :admin do
-    user nil
-    name Faker::Name.first_name
+    user { nil }
+    name { Faker::Name.first_name }
   end
 end

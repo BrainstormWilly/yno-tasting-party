@@ -5,8 +5,8 @@ RSpec.describe Admin, type: :model do
   let(:user){ create(:user) }
   let(:admin){ create(:admin, user:user) }
 
-  it { is_expected.to validate_presence_of(:name) }
-  it { is_expected.to validate_length_of(:name).is_at_least(1) }
+  it { should validate_presence_of(:name) }
+  it { should validate_length_of(:name).is_at_least(1) }
 
   describe "attributes" do
     it "should have name, user attributes" do

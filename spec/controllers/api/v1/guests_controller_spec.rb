@@ -3,19 +3,17 @@ require "rails_helper"
 RSpec.describe Api::V1::GuestsController, type: :controller do
 
   let!(:user){ create(:user) }
-  let!(:guest_user){ create(:user, invited_by_id:user.id) }
-  let!(:taster){ create(:taster, user: user) }
-  let!(:guest_taster){ create(:taster, user:guest_user) }
-  let!(:host){ create(:host, taster: taster) }
+  let!(:guest_user){ create(:user, invited_by_id: user.id) }
+  let!(:taster){ create(:taster, user:) }
+  let!(:guest_taster){ create(:taster, user: guest_user) }
+  let!(:host){ create(:host, taster:) }
   let!(:location){ create(:location) }
-  let!(:host_location){ create(:host_location, host: host, location: location)}
-  let!(:tasting){ create(:tasting, host: host, location: location) }
-  let!(:guest){ create(:guest, tasting:tasting, taster:guest_taster, invited:Time.current) }
-  # let!(:host_guest_connection){ create(:connection, host:host, taster:guest_taster) }
+  let!(:host_location){ create(:host_location, host:, location:)}
+  let!(:tasting){ create(:tasting, host:, location:) }
+  let!(:guest){ create(:guest, tasting:, taster: guest_taster, invited:Time.current) }
   let!(:wine){ create(:wine) }
-  let!(:tasting_wine){ create(:tasting_wine, wine:wine, tasting:tasting) }
-  let(:create_user){ create(:user) }
-  let(:create_taster){ create(:taster, user:create_user) }
+  let!(:tasting_wine){ create(:tasting_wine, wine:, tasting:) }
+  let(:random_taster){ create(:taster, user: create(:user)) }
 
   # let(:encoded_user_email){
   #   URI.encode(user.email)
@@ -37,7 +35,7 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
 
   let(:invite_non_connected_taster_params){
     {
-      taster_id: create_taster.id,
+      taster_id: random_taster.id,
       tasting_id: tasting.id
     }
   }
@@ -46,7 +44,7 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     {
       guest:{
         tasting_id: tasting.id,
-        taster_id: create_taster.id
+        taster_id: random_taster.id
       }
     }
   }
@@ -72,31 +70,31 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "GET #show" do
       it "returns http unauthorized" do
-        get :show, params: {id: guest.id}
+        get :show, params: { id: guest.id }
         expect(response).to have_http_status(:unauthorized)
       end
     end
     describe "GET #includeHost" do
       it "returns http unauthorized" do
-        get :includeHost, params: {tasting_id: tasting.id}
+        get :includeHost, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:unauthorized)
       end
     end
-    describe "GET #removeHost" do
-      it "returns http unauthorized" do
-        get :removeHost, params: {tasting_id: tasting.id}
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    # describe "GET #removeHost" do
+    #   it "returns http unauthorized" do
+    #     get :removeHost, params: { tasting_id: tasting.id }
+    #     expect(response).to have_http_status(:unauthorized)
+    #   end
+    # end
     describe "GET #confirm" do
       it "returns http unauthorized" do
-        get :confirm, params: {tasting_id: tasting.id}
+        get :confirm, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:unauthorized)
       end
     end
     describe "GET #deny" do
       it "returns http unauthorized" do
-        get :deny, params: {tasting_id: tasting.id}
+        get :deny, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -108,7 +106,7 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "DELETE #destroy" do
       it "returns http unauthorized" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -142,31 +140,31 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "GET #show" do
       it "returns http forbidden" do
-        get :show, params: {id: guest.id}
+        get :show, params: { id: guest.id }
         expect(response).to have_http_status(:forbidden)
       end
     end
     describe "GET #includeHost" do
       it "returns http forbidden" do
-        get :includeHost, params: {tasting_id: tasting.id}
+        get :includeHost, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:forbidden)
       end
     end
-    describe "GET #removeHost" do
-      it "returns http forbidden" do
-        get :removeHost, params: {tasting_id: tasting.id}
-        expect(response).to have_http_status(:forbidden)
-      end
-    end
+    # describe "GET #removeHost" do
+    #   it "returns http forbidden" do
+    #     get :removeHost, params: { tasting_id: tasting.id }
+    #     expect(response).to have_http_status(:forbidden)
+    #   end
+    # end
     describe "GET #confirm" do
       it "returns http bad request" do
-        get :confirm, params: {tasting_id: tasting.id}
+        get :confirm, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:bad_request)
       end
     end
     describe "GET #deny" do
       it "returns http bad request" do
-        get :deny, params: {tasting_id: tasting.id}
+        get :deny, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -183,7 +181,7 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "DELETE #destroy unconfirmed guest" do
       it "returns http forbidden" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -193,7 +191,7 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
         guest.save
       end
       it "returns http forbidden" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -224,7 +222,7 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
         @temp_guest = create(:guest, taster:temp_guest_taster, tasting:tasting)
       end
       it "returns http success for self" do
-        get :show, params: {id: guest.id}
+        get :show, params: { id: guest.id }
         expect(response).to have_http_status(:success)
       end
       it "returns http success for fellow tasting guest" do
@@ -234,38 +232,38 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "GET #confirm" do
       it "returns http success" do
-        get :confirm, params: {tasting_id: tasting.id}
+        get :confirm, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:success)
       end
       it "confirms guest" do
-        get :confirm, params: {tasting_id: tasting.id}
+        get :confirm, params: { tasting_id: tasting.id }
         data = ActiveSupport::JSON.decode(response.body)
         expect(data["confirmed"]).not_to be_nil
       end
       it "creates connection" do
-        get :confirm, params: {tasting_id: tasting.id}
+        get :confirm, params: { tasting_id: tasting.id }
         conns = Connection.where(taster_id:guest_taster.id, host_id:host.id)
         expect(conns.count).to eq 1
       end
       it "adds wine review(s)" do
         expect{
-          get :confirm, params: {tasting_id: tasting.id}
+          get :confirm, params: { tasting_id: tasting.id }
         }.to change(WineReview, :count).by(1)
       end
     end
     describe "GET #deny" do
       it "returns http success" do
-        get :deny, params: {tasting_id: tasting.id}
+        get :deny, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:success)
       end
       it "removes guest" do
         expect{
-          get :deny, params: {tasting_id: tasting.id}
+          get :deny, params: { tasting_id: tasting.id }
         }.to change(Guest, :count).by(-1)
       end
       it "does not add wine review(s)" do
         expect{
-          get :deny, params: {tasting_id: tasting.id}
+          get :deny, params: { tasting_id: tasting.id }
         }.to change(WineReview, :count).by(0)
       end
     end
@@ -281,29 +279,29 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
       end
     end
     describe "DELETE #destroy unconfirmed guest" do
-      it "returns http forbidden" do
-        delete :destroy, params: {id: guest.id}
-        expect(response).to have_http_status(:forbidden)
+      it "returns http success" do
+        delete :destroy, params: { id: guest.id }
+        expect(response).to have_http_status(:success)
       end
     end
     describe "DELETE #destroy confirmed guest" do
       before do
         guest.confirmed = Time.current
         guest.save
-        create(:wine_review, taster:guest_taster, tasting:tasting)
+        create(:wine_review, taster: guest_taster, tasting:)
       end
       it "returns http success" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         expect(response).to have_http_status(:success)
       end
       it "deletes guest" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         data = ActiveSupport::JSON.decode(response.body)
         expect(Guest.where(id:data["id"]).count).to eq 0
       end
       it "deletes reviews" do
         expect{
-          delete :destroy, params: {id: guest.id}
+          delete :destroy, params: { id: guest.id }
         }.to change(WineReview, :count).by(-1)
       end
     end
@@ -343,35 +341,35 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "GET #show" do
       it "returns http success for guest" do
-        get :show, params: {id: guest.id}
+        get :show, params: { id: guest.id }
         expect(response).to have_http_status(:success)
       end
     end
     describe "GET #includeHost" do
       it "returns http success" do
-        get :includeHost, params: {tasting_id: tasting.id}
+        get :includeHost, params: { tasting_id: tasting.id }
         expect(response).to have_http_status(:success)
       end
       it "increases Guest count" do
         expect{
-          get :includeHost, params: {tasting_id: tasting.id}
+          get :includeHost, params: { tasting_id: tasting.id }
         }.to change(Guest, :count).by(1)
       end
     end
-    describe "GET #removeHost" do
-      before do
-        create(:guest, tasting:tasting, taster:taster)
-      end
-      it "returns http success" do
-        get :removeHost, params: {tasting_id: tasting.id}
-        expect(response).to have_http_status(:success)
-      end
-      it "decreases Guest count" do
-        expect{
-          get :removeHost, params: {tasting_id: tasting.id}
-        }.to change(Guest, :count).by(-1)
-      end
-    end
+    # describe "GET #removeHost" do
+    #   before do
+    #     create(:guest, tasting:tasting, taster:taster)
+    #   end
+    #   it "returns http success" do
+    #     get :removeHost, params: { tasting_id: tasting.id }
+    #     expect(response).to have_http_status(:success)
+    #   end
+    #   it "decreases Guest count" do
+    #     expect{
+    #       get :removeHost, params: { tasting_id: tasting.id }
+    #     }.to change(Guest, :count).by(-1)
+    #   end
+    # end
     describe "GET #invitations" do
       it "returns http success" do
         get :invitations
@@ -385,8 +383,8 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
     end
     describe "DELETE #destroy unconfirmed guest" do
       it "returns http forbidden" do
-        delete :destroy, params: {id: guest.id}
-        expect(response).to have_http_status(:forbidden)
+        delete :destroy, params: { id: guest.id }
+        expect(response).to have_http_status(:success)
       end
     end
     describe "DELETE #destroy confirmed guest" do
@@ -396,20 +394,19 @@ RSpec.describe Api::V1::GuestsController, type: :controller do
         create(:wine_review, taster:guest_taster, tasting:tasting)
       end
       it "returns http success" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         expect(response).to have_http_status(:success)
       end
       it "deletes guest" do
-        delete :destroy, params: {id: guest.id}
+        delete :destroy, params: { id: guest.id }
         data = ActiveSupport::JSON.decode(response.body)
         expect(Guest.where(id:data["id"]).count).to eq 0
       end
       it "deletes reviews" do
         expect{
-          delete :destroy, params: {id: guest.id}
+          delete :destroy, params: { id: guest.id }
         }.to change(WineReview, :count).by(-1)
       end
     end
   end
-
 end

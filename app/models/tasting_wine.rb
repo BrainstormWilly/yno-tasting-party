@@ -1,6 +1,6 @@
 class TastingWine < ApplicationRecord
   belongs_to :tasting
-  belongs_to :wine
+  belongs_to :wine, required: false
 
   after_save :check_for_duplicate_wine_number
 

@@ -21,7 +21,6 @@ class Api::V1::GuestsController < Api::BaseController
       guest.confirmed = Time.current
       if guest.save
         guest.tasting.tasting_wines.each_with_index do |tw,i|
-          # WineReview.create_next_in_sequence_for_guest(guest.tasting, guest.taster)
           guest.tasting.wine_reviews.create({taster_id: current_taster.id, wine_number:i+1, rating:3})
         end
         if current_taster.connections.where(host_id:guest.tasting.host_id).count==0
@@ -102,7 +101,7 @@ class Api::V1::GuestsController < Api::BaseController
         if taster.inactive?
           render json: { error: "Taster is currently inactive", status: 403 }, status: 403
         else
-          guest = Guest.new({tasting_id:invite_taster_params[:tasting_id], taster_id:taster.id})
+          guest = Guest.new({ tasting_id: invite_taster_params[:tasting_id], taster_id: taster.id })
           guest.invited = Time.current
           if guest.save
             GuestMailer.invite_taster(guest, client_timezone_str(guest.tasting.open_at, false, guest.tasting.location.time_zone)).deliver
