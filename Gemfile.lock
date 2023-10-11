@@ -153,6 +153,7 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mailtrap (1.2.1)
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
@@ -254,7 +255,6 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.12.1)
-    ruby_http_client (3.5.5)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -263,8 +263,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sendgrid-ruby (6.6.2)
-      ruby_http_client (~> 3.4)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
     spring (4.1.1)
@@ -321,6 +319,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.5)
+  mailtrap
   momentjs-rails (>= 2.9.0)
   omniauth (>= 1.0.0)
   pg
@@ -334,7 +333,6 @@ DEPENDENCIES
   rb-readline
   rspec-rails
   sassc-rails
-  sendgrid-ruby
   shoulda-matchers (~> 5.0)
   spring
   sqlite3

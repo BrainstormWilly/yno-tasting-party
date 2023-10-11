@@ -84,16 +84,19 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # SendGrid settings
-  config.action_mailer.delivery_method = :smtp
+  # Mailtrap settings
   config.action_mailer.default_url_options = { host: 'ynotasting.com' }
-  config.action_mailer.smtp_settings = {
-    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-    :password => ENV.fetch("SENDGRID_API_KEY"), # This is the secret sendgrid API key which was issued during API key creation
-    :domain => "ynotasting.com",
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
+  config.action_mailer.delivery_method = :mailtrap
+  config.action_mailer.mailtrap_settings = {
+    api_key: ENV.fetch('MAILTRAP_API_KEY')
   }
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  #   :password => ENV.fetch("SENDGRID_API_KEY"), # This is the secret sendgrid API key which was issued during API key creation
+  #   :domain => "ynotasting.com",
+  #   :address => 'smtp.sendgrid.net',
+  #   :port => 587,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
 end

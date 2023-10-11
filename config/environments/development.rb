@@ -32,21 +32,30 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # SendGrid Settings
+  # Mailtrip Test Settings
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: "localhost", port: 3000, protocol: "http" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => "apikey", # This is the string literal "apikey", NOT the ID of your API key
-    :password => ENV.fetch("SENDGRID_API_KEY"), # This is the secret sendgrid API key which was issued during API key creation
-    :domain => "localhost:3000",
-    :address => "smtp.sendgrid.net",
-    :port => 2525,
-    :authentication => :plain,
-    :enable_starttls_auto => true
+    :user_name => ENV.fetch("MAILTRAP_USERNAME"),
+    :password => ENV.fetch("MAILTRAP_PASSWORD"),
+    :address => 'sandbox.smtp.mailtrap.io',
+    :host => 'sandbox.smtp.mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
   }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => "apikey", # This is the string literal "apikey", NOT the ID of your API key
+  #   :password => ENV.fetch("SENDGRID_API_KEY"), # This is the secret sendgrid API key which was issued during API key creation
+  #   :domain => "localhost:3000",
+  #   :address => "smtp.sendgrid.net",
+  #   :port => 2525,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
 
 
   # Print deprecation notices to the Rails logger.
