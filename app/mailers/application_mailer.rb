@@ -2,6 +2,6 @@ class ApplicationMailer < ActionMailer::Base
   include ApplicationHelper
   helper :application
   
-  default from: 'bill@ynoguy.com'
+  default from: 'support@ynotasting.com'
   layout 'mailer'
 end

@@ -85,8 +85,9 @@ gem 'devise_invitable'
 gem 'omniauth', '>= 1.0.0'
 gem 'devise_token_auth'
 
-# SendGrid email
-gem 'sendgrid-ruby'
+# Mailtrap email
+# gem 'sendgrid-ruby'
+gem 'mailtrap'
 
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
